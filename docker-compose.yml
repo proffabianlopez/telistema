@@ -2,11 +2,16 @@ version: '3.3'
 services:
   clasehtml:
     build: Dockerfiles/php-apache/
-    container_name: html-telistema
-    # restart: always
+    container_name: html_telistema
+    restart: always
     ports:
       - "${PHP_TELISTEMA_PORT}:80"
     env_file: .env
     volumes:
       - "./www/:/var/www/html"
-    
+    networks: 
+      - network1
+networks: 
+  network1: 
+    external: 
+      name: ${RED_NOW}    
