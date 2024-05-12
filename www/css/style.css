@@ -528,7 +528,7 @@
 
 @media (min-width: 1200px) {
     .contact-text  {
-        padding-left: calc(((100% - 1140px) / 2) + .75rem);
+        padding-left: calc(((100% - 114px) / 2) + .75rem);
     }
 }
 
