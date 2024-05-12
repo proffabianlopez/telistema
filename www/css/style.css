@@ -528,7 +528,7 @@
 
 @media (min-width: 1200px) {
     .contact-text  {
-        padding-left: calc(((100% - 1140px) / 2) + .75rem);
+        padding-left: calc(((100% - 114px) / 2) + .75rem);
     }
 }
 
@@ -564,3 +564,13 @@
     letter-spacing: 1px;
     box-shadow: none;
 }
+
+    .centered-container {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        height: 80vh !important; /* Ajusta la altura según sea necesario */
+        padding-left: 35%;
+    }
+
+ 
