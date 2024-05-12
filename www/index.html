@@ -511,19 +511,19 @@
                     <div class="bg-primary mb-3" style="width: 60px; height: 2px;"></div>
                     <h1 class="display-5 mb-5">Cotización Gratuita</h1>
                     <p class="mb-4 pb-2">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo erat amet</p>
-                    <form>
+                    <form id="form">
                         <div class="row g-3">
                             <div class="col-12 col-sm-6">
-                                <input type="text" class="form-control border-0" placeholder="Tu Nombre" style="height: 55px;">
+                                <input id="name" type="text"  class="form-control border-0" placeholder="Tu Nombre" style="height: 55px;">
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input type="email" class="form-control border-0" placeholder="Tu Correo Electrónico" style="height: 55px;">
+                                <input id="email" type="email" class="form-control border-0" placeholder="Tu Correo Electrónico" style="height: 55px;">
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input type="text" class="form-control border-0" placeholder="Tu Teléfono Móvil" style="height: 55px;">
+                                <input id="phone" type="text" class="form-control border-0" placeholder="Tu Teléfono Móvil" style="height: 55px;">
                             </div>
                             <div class="col-12 col-sm-6">
-                                <select class="form-select border-0" style="height: 55px;">
+                                <select id="subject" class="form-select border-0" style="height: 55px;">
                                     <option selected>Selecciona un Servicio</option>
                                     <option value="1">Servicio 1</option>
                                     <option value="2">Servicio 2</option>
@@ -531,7 +531,7 @@
                                 </select>
                             </div>
                             <div class="col-12">
-                                <textarea class="form-control border-0" placeholder="Nota Especial"></textarea>
+                                <textarea id="message" class="form-control border-0" placeholder="Nota Especial"></textarea>
                             </div>
                             <div class="col-12">
                                 <button class="btn btn-primary w-100 py-3" type="submit">Obtener una Cotización Gratuita</button>
@@ -625,6 +625,7 @@
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="lib/isotope/isotope.pkgd.min.js"></script>
     <script src="lib/lightbox/js/lightbox.min.js"></script>
+    <script src="js/scriptFrm.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
