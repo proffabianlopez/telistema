@@ -564,3 +564,13 @@
     letter-spacing: 1px;
     box-shadow: none;
 }
+
+    .centered-container {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        height: 80vh !important; /* Ajusta la altura según sea necesario */
+        padding-left: 35%;
+    }
+
+ 
