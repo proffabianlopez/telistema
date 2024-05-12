@@ -514,16 +514,16 @@
                     <form id="form">
                         <div class="row g-3">
                             <div class="col-12 col-sm-6">
-                                <input id="name" type="text"  class="form-control border-0" placeholder="Tu Nombre" style="height: 55px;">
+                                <input id="name" name="name" type="text" class="form-control border-0" placeholder="Tu Nombre" style="height: 55px;">
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input id="email" type="email" class="form-control border-0" placeholder="Tu Correo Electrónico" style="height: 55px;">
+                                <input id="email" name="email" type="email" class="form-control border-0" placeholder="Tu Correo Electrónico" style="height: 55px;">
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input id="phone" type="text" class="form-control border-0" placeholder="Tu Teléfono Móvil" style="height: 55px;">
+                                <input id="phone" name="phone" type="text" class="form-control border-0" placeholder="Tu Teléfono Móvil" style="height: 55px;">
                             </div>
                             <div class="col-12 col-sm-6">
-                                <select id="subject" class="form-select border-0" style="height: 55px;">
+                                <select id="subject" name="subject" class="form-select border-0" style="height: 55px;">
                                     <option selected>Selecciona un Servicio</option>
                                     <option value="1">Servicio 1</option>
                                     <option value="2">Servicio 2</option>
@@ -531,13 +531,14 @@
                                 </select>
                             </div>
                             <div class="col-12">
-                                <textarea id="message" class="form-control border-0" placeholder="Nota Especial"></textarea>
+                                <textarea id="message" name="message" class="form-control border-0" placeholder="Nota Especial"></textarea>
                             </div>
                             <div class="col-12">
                                 <button class="btn btn-primary w-100 py-3" type="submit">Obtener una Cotización Gratuita</button>
                             </div>
                         </div>
                     </form>
+                    
                 </div>
             </div>
         </div>
@@ -626,7 +627,7 @@
     <script src="lib/isotope/isotope.pkgd.min.js"></script>
     <script src="lib/lightbox/js/lightbox.min.js"></script>
     <script src="js/scriptFrm.js"></script>
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>

@@ -18,7 +18,7 @@ form.addEventListener('submit', function(e){
 function email(){
     const datos = new FormData(form);
 
-    fetch('form.php', {
+    fetch('/php/form.php', {
         method: 'POST',
         body: datos
     })
@@ -26,11 +26,9 @@ function email(){
     .then(res => {
         if(res.status === 'success'){
             Swal.fire({
-                title: 'ÉXITO',
-                text: res.message,
+                title: 'ENVIADO CON ÉXITO',
                 icon: 'success',
-                footer: 'Estaremos comunicándonos',
-                background: '#1c2130',
+                background: '#F5F5F5',
                 backdrop: `
                   rgba(0,0,333,0.3)
                   left top
@@ -46,7 +44,5 @@ function email(){
             });
         }
 
-    }).catch(error => {
-        console.error('Error:', error);
-    });
+    })
 }

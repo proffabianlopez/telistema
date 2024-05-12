@@ -112,29 +112,29 @@
                         <h1 class="display-5 mb-4">Contáctanos</h1>
                     </div>
                     <p class="mb-4">El formulario de contacto está actualmente inactivo. Obtenga un formulario de contacto funcional y operativo con Ajax y PHP en pocos minutos. Simplemente copie y pegue los archivos, agregue un poco de código y listo. <a href="https://htmlcodex.com/contact-form">Descargar Ahora</a>.</p>
-                    <form id="form" >
+                    <form id="form">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Tu Nombre">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Tu Nombre" required>
                                     <label for="name">Tu Nombre</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Tu Correo Electrónico">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Tu Correo Electrónico" required>
                                     <label for="email">Tu Correo Electrónico</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Asunto">
+                                    <input type="text" class="form-control" id="subject" name="subject" placeholder="Asunto" required>
                                     <label for="subject">Asunto</label>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Deja aquí tu mensaje" id="message" name="message" style="height: 100px"></textarea>
+                                    <textarea class="form-control" placeholder="Deja aquí tu mensaje" id="message" name="message" style="height: 100px" required></textarea>
                                     <label for="message">Mensaje</label>
                                 </div>
                             </div>
@@ -143,6 +143,7 @@
                             </div>
                         </div>
                     </form>
+                    
                     
                 </div>
             </div>
@@ -237,8 +238,8 @@
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="lib/isotope/isotope.pkgd.min.js"></script>
     <script src="lib/lightbox/js/lightbox.min.js"></script>
-    <script src="../php/scriptFrm.js"></script>
-
+    <script src="../js/scriptFrm.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
