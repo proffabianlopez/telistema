@@ -1,6 +1,6 @@
 /********** Template CSS **********/
 :root {
-    --primary: #65B530;
+    --primary: #154472;
     --secondary: #9B9B9B;
     --light: #F5F5F5;
     --dark: #161616;
@@ -110,7 +110,7 @@
 }
 
 @media (max-width: 991.98px) {
-    .navbar .navbar-nav .nav-link  {
+    .navbar .navbar-nav .nav-link {
         margin-right: 0;
         padding: 10px 0;
     }
@@ -162,7 +162,7 @@
         position: relative;
         min-height: 500px;
     }
-    
+
     .header-carousel .owl-carousel-item img {
         position: absolute;
         width: 100%;
@@ -258,7 +258,7 @@
     background-size: cover;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
+.breadcrumb-item+.breadcrumb-item::before {
     color: var(--light);
 }
 
@@ -269,19 +269,19 @@
         max-width: 100% !important;
     }
 
-    .about-text  {
+    .about-text {
         padding-right: calc(((100% - 960px) / 2) + .75rem);
     }
 }
 
 @media (min-width: 1200px) {
-    .about-text  {
+    .about-text {
         padding-right: calc(((100% - 1140px) / 2) + .75rem);
     }
 }
 
 @media (min-width: 1400px) {
-    .about-text  {
+    .about-text {
         padding-right: calc(((100% - 1320px) / 2) + .75rem);
     }
 }
@@ -320,19 +320,19 @@
         max-width: 100% !important;
     }
 
-    .feature-text  {
+    .feature-text {
         padding-left: calc(((100% - 960px) / 2) + .75rem);
     }
 }
 
 @media (min-width: 1200px) {
-    .feature-text  {
+    .feature-text {
         padding-left: calc(((100% - 1140px) / 2) + .75rem);
     }
 }
 
 @media (min-width: 1400px) {
-    .feature-text  {
+    .feature-text {
         padding-left: calc(((100% - 1320px) / 2) + .75rem);
     }
 }
@@ -389,19 +389,19 @@
         max-width: 100% !important;
     }
 
-    .quote-text  {
+    .quote-text {
         padding-right: calc(((100% - 960px) / 2) + .75rem);
     }
 }
 
 @media (min-width: 1200px) {
-    .quote-text  {
+    .quote-text {
         padding-right: calc(((100% - 1140px) / 2) + .75rem);
     }
 }
 
 @media (min-width: 1400px) {
-    .quote-text  {
+    .quote-text {
         padding-right: calc(((100% - 1320px) / 2) + .75rem);
     }
 }
@@ -522,19 +522,22 @@
     }
 
     .contact-text {
-        padding-left: calc((100vw - 960px) / 2 + 0.75rem); /* Corregido */
+        padding-left: calc((100vw - 960px) / 2 + 0.75rem);
+        /* Corregido */
     }
 }
 
 @media (min-width: 1200px) {
     .contact-text {
-        padding-left: calc((100vw - 1140px) / 2 + 0.75rem); /* Corregido */
+        padding-left: calc((100vw - 1140px) / 2 + 0.75rem);
+        /* Corregido */
     }
 }
 
 @media (min-width: 1400px) {
     .contact-text {
-        padding-left: calc((100vw - 1320px) / 2 + 0.75rem); /* Corregido */
+        padding-left: calc((100vw - 1320px) / 2 + 0.75rem);
+        /* Corregido */
     }
 }
 
@@ -566,12 +569,11 @@
     box-shadow: none;
 }
 
-    .centered-container {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        height: 80vh !important; /* Ajusta la altura según sea necesario */
-        padding-left: 35%;
-    }
-
- 
+.centered-container {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 80vh !important;
+    /* Ajusta la altura según sea necesario */
+    padding-left: 35%;
+}
