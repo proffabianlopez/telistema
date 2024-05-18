@@ -1,16 +1,16 @@
 <?php
 session_start();
 define('TITLE', 'Submit Request');
-define('PAGE', 'SubmitRequest');
+define('PAGE', 'SubmitTechnic');
 include('includes/header.php'); 
 include('../dbConnection.php');
 
 if($_SESSION['is_login']){
- $rEmail = $_SESSION['rEmail'];
+ $rEmail = $_SESSION['mail'];
 } else {
- echo "<script> location.href='RequesterLogin.php'; </script>";
+ echo "<script> location.href='TechnicLogin.php'; </script>";
 }
-if(isset($_REQUEST['submitrequest'])){
+if(isset($_REQUEST['SubmitTechnic'])){
  // Checking for Empty Fields
  if(($_REQUEST['requestinfo'] == "") || ($_REQUEST['requestdesc'] == "") || ($_REQUEST['requestername'] == "") || ($_REQUEST['requesteradd1'] == "") || ($_REQUEST['requesteradd2'] == "") || ($_REQUEST['requestercity'] == "") || ($_REQUEST['requesterstate'] == "") || ($_REQUEST['requesterzip'] == "") || ($_REQUEST['requesteremail'] == "") || ($_REQUEST['requestermobile'] == "") || ($_REQUEST['requestdate'] == "")){
   // msg displayed if required field missing
@@ -28,15 +28,15 @@ if(isset($_REQUEST['submitrequest'])){
    $remail = $_REQUEST['requesteremail'];
    $rmobile = $_REQUEST['requestermobile'];
    $rdate = $_REQUEST['requestdate'];
-   $sql = "INSERT INTO submitrequest_tb(request_info, request_desc, requester_name, requester_add1, requester_add2, requester_city, requester_state, requester_zip, requester_email, requester_mobile, request_date) VALUES ('$rinfo','$rdesc', '$rname', '$radd1', '$radd2', '$rcity', '$rstate', '$rzip', '$remail', '$rmobile', '$rdate')";
+   $sql = "INSERT INTO SubmitTechnic_tb(request_info, request_desc, requester_name, requester_add1, requester_add2, requester_city, requester_state, requester_zip, requester_email, requester_mobile, request_date) VALUES ('$rinfo','$rdesc', '$rname', '$radd1', '$radd2', '$rcity', '$rstate', '$rzip', '$remail', '$rmobile', '$rdate')";
    if($conn->query($sql) == TRUE){
     // below msg display on form submit success
     $genid = mysqli_insert_id($conn);
     $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Request Submitted Successfully Your' . $genid .' </div>';
     session_start();
     $_SESSION['myid'] = $genid;
-    echo "<script> location.href='submitrequestsuccess.php'; </script>";
-    // include('submitrequestsuccess.php');
+    echo "<script> location.href='SubmitTechnicsuccess.php'; </script>";
+    // include('SubmitTechnicsuccess.php');
    } else {
     // below msg display on form submit failed
     $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Submit Your Request </div>';
@@ -98,7 +98,7 @@ if(isset($_REQUEST['submitrequest'])){
       </div>
     </div>
 
-    <button type="submit" class="btn btn-danger" name="submitrequest">Submit</button>
+    <button type="submit" class="btn btn-danger" name="SubmitTechnic">Submit</button>
     <button type="reset" class="btn btn-secondary">Reset</button>
   </form>
   <!-- below msg display if required fill missing or form submitted success or failed -->

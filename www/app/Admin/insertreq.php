@@ -5,7 +5,7 @@ define('PAGE', 'requesters');
 include('includes/header.php'); 
 include('../dbConnection.php');
 
- if(isset($_SESSION['is_adminlogin'])){
+ if(isset($_SESSION['is_login'])){
   $aEmail = $_SESSION['aEmail'];
  } else {
   echo "<script> location.href='login.php'; </script>";
@@ -20,7 +20,7 @@ if(isset($_REQUEST['reqsubmit'])){
    $rname = $_REQUEST['r_name'];
    $rEmail = $_REQUEST['r_email'];
    $rPassword = $_REQUEST['r_password'];
-   $sql = "INSERT INTO requesterlogin_tb (r_name, r_email, r_password) VALUES ('$rname', '$rEmail', '$rPassword')";
+   $sql = "INSERT INTO TechnicLogin_tb (r_name, r_email, r_password) VALUES ('$rname', '$rEmail', '$rPassword')";
    if($conn->query($sql) == TRUE){
     // below msg display on form submit success
     $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Added Successfully </div>';

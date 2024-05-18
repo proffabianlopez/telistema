@@ -5,7 +5,7 @@ define('PAGE', 'assets');
 include('includes/header.php'); 
 include('../dbConnection.php');
 
- if(isset($_SESSION['is_adminlogin'])){
+ if(isset($_SESSION['is_login'])){
   $aEmail = $_SESSION['aEmail'];
  } else {
   echo "<script> location.href='login.php'; </script>";

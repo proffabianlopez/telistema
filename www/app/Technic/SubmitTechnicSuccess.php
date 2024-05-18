@@ -5,9 +5,9 @@ include('includes/header.php');
 include('../dbConnection.php');
 
 if($_SESSION['is_login']){
- $rEmail = $_SESSION['rEmail'];
+ $rEmail = $_SESSION['mail'];
 } else {
- echo "<script> location.href='RequesterLogin.php'; </script>";
+ echo "<script> location.href='TechnicLogin.php'; </script>";
 }
 $sql = "SELECT * FROM submitrequest_tb WHERE request_id = {$_SESSION['myid']}";
 $result = $conn->query($sql);

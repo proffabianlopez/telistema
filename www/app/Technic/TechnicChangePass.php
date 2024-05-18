@@ -6,9 +6,9 @@ include('includes/header.php');
 include('../dbConnection.php');
 
 if($_SESSION['is_login']){
- $rEmail = $_SESSION['rEmail'];
+ $rEmail = $_SESSION['mail'];
 } else {
- echo "<script> location.href='RequesterLogin.php'; </script>";
+ echo "<script> location.href='../login.php'; </script>";
 }
 
  $rEmail = $_SESSION['rEmail'];
@@ -17,11 +17,11 @@ if($_SESSION['is_login']){
    // msg displayed if required field missing
    $passmsg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Fill All Fileds </div>';
   } else {
-    $sql = "SELECT * FROM requesterlogin_tb WHERE r_email='$rEmail'";
+    $sql = "SELECT * FROM TechnicLogin_tb WHERE r_email='$rEmail'";
     $result = $conn->query($sql);
     if($result->num_rows == 1){
      $rPass = $_REQUEST['rPassword'];
-     $sql = "UPDATE requesterlogin_tb SET r_password = '$rPass' WHERE r_email = '$rEmail'";
+     $sql = "UPDATE TechnicLogin_tb SET r_password = '$rPass' WHERE r_email = '$rEmail'";
       if($conn->query($sql) == TRUE){
        // below msg display on form submit success
        $passmsg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Updated Successfully </div>';

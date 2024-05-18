@@ -6,9 +6,9 @@ include('includes/header.php');
 include('../dbConnection.php');
 
 if($_SESSION['is_login']){
- $rEmail = $_SESSION['rEmail'];
+ $rEmail = $_SESSION['mail'];
 } else {
- echo "<script> location.href='RequesterLogin.php'; </script>";
+ echo "<script> location.href='TechnicLogin.php'; </script>";
 }
 ?>
 <div class="col-sm-6 mt-5  mx-3">

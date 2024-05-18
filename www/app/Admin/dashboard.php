@@ -5,24 +5,29 @@ define('PAGE', 'dashboard');
 include('includes/header.php'); 
 include('../dbConnection.php');
 
- if(isset($_SESSION['is_adminlogin'])){
-  $aEmail = $_SESSION['aEmail'];
- } else {
-  echo "<script> location.href='login.php'; </script>";
- }
- $sql = "SELECT max(request_id) FROM submitrequest_tb";
- $result = $conn->query($sql);
- $row = mysqli_fetch_row($result);
- $submitrequest = $row[0];
+  if(isset($_SESSION['is_login'])){
 
- $sql = "SELECT max(request_id) FROM assignwork_tb";
- $result = $conn->query($sql);
- $row = mysqli_fetch_row($result);
- $assignwork = $row[0];
+    $aEmail = $_SESSION['mail'];
 
- $sql = "SELECT * FROM technician_tb";
- $result = $conn->query($sql);
- $totaltech = $result->num_rows;
+  } else {
+
+    echo "<script> location.href='../login.php'; </script>";
+  
+  }
+
+  $sql = "SELECT max(request_id) FROM submitrequest_tb";
+  $result = $conn->query($sql);
+  $row = mysqli_fetch_row($result);
+  $submitrequest = $row[0];
+
+  $sql = "SELECT max(request_id) FROM assignwork_tb";
+  $result = $conn->query($sql);
+  $row = mysqli_fetch_row($result);
+  $assignwork = $row[0];
+
+  $sql = "SELECT * FROM technician_tb";
+  $result = $conn->query($sql);
+  $totaltech = $result->num_rows;
 
 ?>
 <div class="col-sm-9 col-md-10">
@@ -68,31 +73,32 @@ include('../dbConnection.php');
     $sql = "SELECT * FROM requesterlogin_tb";
     $result = $conn->query($sql);
     if($result->num_rows > 0){
- echo '<table class="table">
-  <thead>
-   <tr>
-    <th scope="col">Requester ID</th>
-    <th scope="col">Name</th>
-    <th scope="col">Email</th>
-   </tr>
-  </thead>
-  <tbody>';
-  while($row = $result->fetch_assoc()){
-   echo '<tr>';
-    echo '<th scope="row">'.$row["r_login_id"].'</th>';
-    echo '<td>'. $row["r_name"].'</td>';
-    echo '<td>'.$row["r_email"].'</td>';
-  }
- echo '</tbody>
- </table>';
-} else {
-  echo "0 Result";
-}
-?>
+    echo '<table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Requester ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+      </tr>
+      </thead>
+      <tbody>';
+      while($row = $result->fetch_assoc()){
+      echo '<tr>';
+        echo '<th scope="row">'.$row["r_login_id"].'</th>';
+        echo '<td>'. $row["r_name"].'</td>';
+        echo '<td>'.$row["r_email"].'</td>';
+      }
+    echo '</tbody>
+    </table>';
+    } else {
+      echo "0 Result";
+    }
+    ?>
   </div>
 </div>
 </div>
 </div>
+
 <?php
-include('includes/footer.php'); 
+  include('includes/footer.php'); 
 ?>
