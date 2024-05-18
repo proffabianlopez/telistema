@@ -5,7 +5,7 @@ define('PAGE', 'requesters');
 include('includes/header.php'); 
 include('../dbConnection.php');
 
- if(isset($_SESSION['is_adminlogin'])){
+ if(isset($_SESSION['is_login'])){
   $aEmail = $_SESSION['aEmail'];
  } else {
   echo "<script> location.href='login.php'; </script>";
@@ -22,7 +22,7 @@ include('../dbConnection.php');
     $rname = $_REQUEST['r_name'];
     $remail = $_REQUEST['r_email'];
 
-  $sql = "UPDATE requesterlogin_tb SET r_login_id = '$rid', r_name = '$rname', r_email = '$remail' WHERE r_login_id = '$rid'";
+  $sql = "UPDATE TechnicLogin_tb SET r_login_id = '$rid', r_name = '$rname', r_email = '$remail' WHERE r_login_id = '$rid'";
     if($conn->query($sql) == TRUE){
      // below msg display on form submit success
      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Updated Successfully </div>';
@@ -37,7 +37,7 @@ include('../dbConnection.php');
   <h3 class="text-center">Update Requester Details</h3>
   <?php
  if(isset($_REQUEST['view'])){
-  $sql = "SELECT * FROM requesterlogin_tb WHERE r_login_id = {$_REQUEST['id']}";
+  $sql = "SELECT * FROM TechnicLogin_tb WHERE r_login_id = {$_REQUEST['id']}";
  $result = $conn->query($sql);
  $row = $result->fetch_assoc();
  }

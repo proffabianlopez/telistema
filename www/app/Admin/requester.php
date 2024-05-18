@@ -5,7 +5,7 @@ define('PAGE', 'requesters');
 include('includes/header.php'); 
 include('../dbConnection.php');
 
- if(isset($_SESSION['is_adminlogin'])){
+ if(isset($_SESSION['is_login'])){
   $aEmail = $_SESSION['aEmail'];
  } else {
   echo "<script> location.href='login.php'; </script>";
@@ -15,7 +15,7 @@ include('../dbConnection.php');
   <!--Table-->
   <p class=" bg-dark text-white p-2">List of Requesters</p>
   <?php
-    $sql = "SELECT * FROM requesterlogin_tb";
+    $sql = "SELECT * FROM TechnicLogin_tb";
     $result = $conn->query($sql);
     if($result->num_rows > 0){
  echo '<table class="table">
@@ -44,7 +44,7 @@ include('../dbConnection.php');
   echo "0 Result";
 }
 if(isset($_REQUEST['delete'])){
-  $sql = "DELETE FROM requesterlogin_tb WHERE r_login_id = {$_REQUEST['id']}";
+  $sql = "DELETE FROM TechnicLogin_tb WHERE r_login_id = {$_REQUEST['id']}";
   if($conn->query($sql) === TRUE){
     // echo "Record Deleted Successfully";
     // below code will refresh the page after deleting the record

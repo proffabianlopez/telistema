@@ -1,17 +1,17 @@
 <?php
 session_start();
-define('TITLE', 'Requester Profile');
-define('PAGE', 'RequesterProfile');
+define('TITLE', 'Technic Profile');
+define('PAGE', 'Technic Profile');
 include('includes/header.php'); 
 include('../dbConnection.php');
 
  if($_SESSION['is_login']){
-  $rEmail = $_SESSION['rEmail'];
+  $rEmail = $_SESSION['mail'];
  } else {
-  echo "<script> location.href='RequesterLogin.php'; </script>";
+  echo "<script> location.href='TechnicLogin.php'; </script>";
  }
 
- $sql = "SELECT * FROM requesterlogin_tb WHERE r_email='$rEmail'";
+ $sql = "SELECT * FROM TechnicLogin_tb WHERE r_email='$rEmail'";
  $result = $conn->query($sql);
  if($result->num_rows == 1){
  $row = $result->fetch_assoc();
@@ -23,7 +23,7 @@ include('../dbConnection.php');
    $passmsg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Fill All Fileds </div>';
   } else {
    $rName = $_REQUEST["rName"];
-   $sql = "UPDATE requesterlogin_tb SET r_name = '$rName' WHERE r_email = '$rEmail'";
+   $sql = "UPDATE TechnicLogin_tb SET r_name = '$rName' WHERE r_email = '$rEmail'";
    if($conn->query($sql) == TRUE){
    // below msg display on form submit success
    $passmsg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Updated Successfully </div>';
