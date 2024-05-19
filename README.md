@@ -1,5 +1,5 @@
 # TELISTEMA
-La metodología de trabajo para el proyecto "Telistema" se estructura en dos etapas de entregas funcionales y efectivas
+La metodología de trabajo para el proyecto "Telistema" se estructura en dos etapas de entregas funcionales y efectivas.
 
 Dentro de cada etapa, se realizarán reuniones y entregas cada 15 días para mostrar los avances y realizar los ajustes necesarios.
 
