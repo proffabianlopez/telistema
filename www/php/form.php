@@ -4,11 +4,29 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
-require '../data/.config.php';
+include ('../app/dbConnection.php');
+include ('../app/Querys/configEmailFrm.php');
 
 $mail = new PHPMailer(true);
 
 $response = array();
+
+$sql = SQL_FRM_EMAIL;
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->get_result();
+if($result->num_rows == 1){
+    $row = $result->fetch_assoc();
+    $smtp_host = $row['mail_host'];
+    $smtp_user = $row['mail_username'];
+    $smtp_pass = $row['mail_password'];
+    $smtp_setfrom = $row['mail_sef_form'];
+    $smtp_addaddress = $row['mail_addadress'];
+    $webpage = $row['webpage'];
+}else{
+    $response['status'] = 'error';
+    $response['message'] = 'no se obtuvieron datos del servidor';
+}
 
 try {
     // Verifica si el método de solicitud es POST
@@ -39,12 +57,6 @@ try {
             $subject = $_POST['subject'];
             $message = $_POST['message'];
             $phone = isset($_POST['phone']) ? $_POST['phone'] : ''; // Verifica si el campo de teléfono está establecido
-            $smtp_host = MAIL_HOST;
-            $smtp_user = MAIL_USERNAME;
-            $smtp_pass = MAIL_PASSWORD;
-            $smtp_setfrom = MAIL_SETFROM_EMAIL;
-            $smtp_addaddress = MAIL_ADDADDRESS_EMAIL;
-            $webpage = MAIL_WEBPAGE;
 
             // Configura el objeto PHPMailer
             $mail->isSMTP();
