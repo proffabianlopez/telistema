@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('dbConnection.php');
-include('Querys/login.php');
+include('Querys/querys.php');
 
 if(!isset($_SESSION['is_login'])){
   if(isset($_REQUEST['mail'])){
