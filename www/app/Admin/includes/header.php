@@ -8,6 +8,10 @@
     <title>
     <?php echo TITLE ?>
     </title>
+
+     <!-- Bootstrap CSS para icons-->
+     <link rel="stylesheet" href="../boostrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
 
@@ -17,6 +21,7 @@
     <!-- Custome CSS -->
     <link rel="stylesheet" href="../css/custom.css">
 
+   
 </head>
 
 <body>
@@ -77,6 +82,12 @@
         <a class="nav-link <?php if(PAGE == 'workreport') { echo 'active'; } ?>" href="workreport.php">
             <i class="fas fa-table"></i>
             Reportes de Ordenes
+        </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link <?php if(PAGE == 'Actualización de Email') { echo 'active'; } ?>" href="configEmailContact.php">
+        <i class="bi bi-envelope-at"></i>
+            Email de Contacto
         </a>
         </li>
         <li class="nav-item">

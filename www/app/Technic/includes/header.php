@@ -8,6 +8,9 @@
     <title>
     <?php echo TITLE ?>
     </title>
+    <!-- Bootstrap CSS para icons-->
+    <link rel="stylesheet" href="../boostrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
 

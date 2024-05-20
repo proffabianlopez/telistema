@@ -11,17 +11,18 @@ $mail = new PHPMailer(true);
 
 $response = array();
 
-$sql = SQL_FRM_EMAIL;
+$sql = SQLSELECT_FRM_EMAIL;
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
 if($result->num_rows == 1){
     $row = $result->fetch_assoc();
     $smtp_host = $row['mail_host'];
+    $smtp_port = $row['mail_port'];
     $smtp_user = $row['mail_username'];
     $smtp_pass = $row['mail_password'];
-    $smtp_setfrom = $row['mail_sef_form'];
-    $smtp_addaddress = $row['mail_addadress'];
+    $smtp_setfrom = $row['mail_setfrom'];
+    $smtp_addaddress = $row['mail_addaddress'];
     $webpage = $row['webpage'];
 }else{
     $response['status'] = 'error';
@@ -65,7 +66,7 @@ try {
             $mail->Username   = $smtp_user;
             $mail->Password   = $smtp_pass;
             $mail->SMTPSecure = 'tls';
-            $mail->Port       = 587;
+            $mail->Port       = $smtp_port;
             $mail->CharSet = 'UTF-8';
 
             $mail->setFrom($smtp_setfrom, $name);
