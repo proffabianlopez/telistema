@@ -25,30 +25,34 @@ if(!isset($_SESSION['is_login'])){
 
     // Verificar si se encontró una fila
     if($result->num_rows == 1){
+       $row = $result->fetch_assoc();
+        if($row['state_user'] == 'inactivo'){
+           $msg = '<div class="alert alert-warning mt-2" role="alert"> Cuenta inactiva </div>';
+        }else if($row['state_user'] == 'activo'){
+          // Usuario autenticado, obtener los datos del usuario
+          $_SESSION['user_name'] = $row['name_user'];
+          $_SESSION['user_role'] = $row['rol'];
+          $_SESSION['state_user'] = $row['state_user'];
+          $_SESSION['mail'] = $Email;
+          $_SESSION['is_login'] = true;
+          
+          // Determinar el rol del usuario
+          $Rol = $_SESSION['user_role'];
+          
+          if($Rol == 'admin'){             
+              // Redireccionar a la página del panel de control del administrador
+              echo "<script> location.href='Admin/dashboard.php'; </script>";
+              exit;
 
-        // Usuario autenticado, obtener los datos del usuario
-        $row = $result->fetch_assoc();
-        $_SESSION['user_role'] = $row['id_rol'];
-        $_SESSION['mail'] = $Email;
-        $_SESSION['is_login'] = true;
-        
-        // Determinar el rol del usuario
-        $Rol = $_SESSION['user_role'];
-
-        if($Rol == 1){
-            // Redireccionar a la página del panel de control del administrador
-            echo "<script> location.href='Admin/dashboard.php'; </script>";
-            exit;
-
-        } elseif ($Rol == 2) {
-            // Redireccionar a la página del perfil del técnico
-            echo "<script> location.href='Technic/TechnicProfile.php'; </script>";
-            exit;
+          } elseif ($Rol == 'technic') {
+              // Redireccionar a la página del perfil del técnico
+              echo "<script> location.href='Technic/TechnicProfile.php'; </script>";
+              exit;
+          }
         }
-    
     } else {
         // Usuario no encontrado, mostrar mensaje de error
-        $msg = '<div class="alert alert-warning mt-2" role="alert"> Enter Valid Email and Password </div>';
+        $msg = '<div class="alert alert-warning mt-2" role="alert"> Ingrese un correo electrónico y una contraseña válidos </div>';
     }
   }
 } else {

@@ -2,7 +2,7 @@
 session_start();
 define('TITLE', 'Work Order');
 define('PAGE', 'work');
-include('includes/header.php'); 
+include('../includes/header.php'); 
 include('../dbConnection.php');
 
  if(isset($_SESSION['is_login'])){
@@ -118,5 +118,5 @@ include('../dbConnection.php');
 </div>
 
 <?php
-include('includes/footer.php'); 
+include('../includes/footer.php'); 
 ?>

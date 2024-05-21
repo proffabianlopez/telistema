@@ -2,7 +2,7 @@
 session_start();
 define('TITLE', 'Clientes');
 define('PAGE', 'Clientes');
-include('includes/header.php'); 
+include('../includes/header.php'); 
 include('../dbConnection.php');
 include('../Querys/querys.php');
 
@@ -84,5 +84,5 @@ if(isset($_SESSION['is_login'])){
 <div><a class="btn btn-danger box" href="insertclient.php"><i class="fas fa-plus fa-2x"></i></a></div>
 </div>
 <?php
-include('includes/footer.php'); 
+include('../includes/footer.php'); 
 ?>

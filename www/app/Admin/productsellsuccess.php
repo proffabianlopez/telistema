@@ -1,7 +1,7 @@
 <?php
 session_start();
 define('TITLE', 'Success');
-include('includes/header.php'); 
+include('../includes/header.php'); 
 include('../dbConnection.php');
 
  if(isset($_SESSION['is_login'])){

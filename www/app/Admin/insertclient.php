@@ -2,7 +2,7 @@
 session_start();
 define('TITLE', 'Agregar Nuevo Cliente');
 define('PAGE', 'Clientes');
-include('includes/header.php'); 
+include('../includes/header.php'); 
 include('../dbConnection.php');
 include('../Querys/querys.php');
 
@@ -89,5 +89,5 @@ if(isset($_REQUEST['reqsubmit'])){
 </div>
 
 <?php
-include('includes/footer.php'); 
+include('../includes/footer.php'); 
 ?>

@@ -1,11 +1,22 @@
 <?php
 // Login
 define('SQL_LOGIN', '
-        SELECT mail, user_password, id_rol 
-        FROM users 
-        WHERE mail= ?
-            AND user_password = ?
-        LIMIT 1');
+        SELECT 
+                u.name_user, 
+                u.mail, 
+                u.user_password, 
+                r.rol, 
+                s.state_user
+        FROM 
+                users u
+        JOIN 
+                roles r ON u.id_rol = r.id_rol
+        JOIN 
+                states_users s ON u.id_state_user = s.id_state_user
+        WHERE 
+                u.mail = ? 
+                AND u.user_password = ?
+        LIMIT 1;');
 
 // Clients
 define('SQL_FROM_CLIENTS','

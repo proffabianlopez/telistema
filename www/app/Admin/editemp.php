@@ -2,7 +2,7 @@
 session_start();
 define('TITLE', 'Update Technician');
 define('PAGE', 'technician');
-include('includes/header.php'); 
+include('../includes/header.php'); 
 include('../dbConnection.php');
 
  if(isset($_SESSION['is_login'])){
@@ -83,5 +83,5 @@ include('../dbConnection.php');
   }
 </script>
 <?php
-include('includes/footer.php'); 
+include('../includes/footer.php'); 
 ?>

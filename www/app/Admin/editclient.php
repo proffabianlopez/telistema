@@ -2,7 +2,7 @@
 session_start();  
 define('TITLE', 'Actualizar Clientes');
 define('PAGE', 'Actualizar Datos');
-include('includes/header.php'); 
+include('../includes/header.php'); 
 include('../dbConnection.php');
 include('../Querys/querys.php');
 
@@ -118,5 +118,5 @@ if(isset($_REQUEST['clientupdate'])){
 </div>
 
 <?php
-include('includes/footer.php'); 
+include('../includes/footer.php'); 
 ?>
