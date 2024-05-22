@@ -1,15 +1,21 @@
 <?php
 session_start();
+////////////////////////////////
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  if($_SESSION['user_role'] != 'technic') {
+      echo "<script> location.href='../includes/404.php'; </script>";
+  }
+  $rEmail = $_SESSION['mail'];
+  $rolUser = $_SESSION['user_role'];
+ } else {
+  echo "<script> location.href='../login.php'; </script>";
+ }
+////////////////////////////////
+
 define('TITLE', 'Success');
 include('../includes/header.php'); 
 include('../dbConnection.php');
 
-if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
- $rEmail = $_SESSION['mail'];
- $rolUser = $_SESSION['user_role'];
-} else {
- echo "<script> location.href='TechnicLogin.php'; </script>";
-}
 $sql = "SELECT * FROM submitrequest_tb WHERE request_id = {$_SESSION['myid']}";
 $result = $conn->query($sql);
 if($result->num_rows == 1){
@@ -53,6 +59,6 @@ if($result->num_rows == 1){
 
 
 <?php
-include('includes/footer.php'); 
+include('../includes/footer.php'); 
 $conn->close();
 ?>

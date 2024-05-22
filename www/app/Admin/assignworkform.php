@@ -1,12 +1,17 @@
 <?php    
-if(session_id() == '') {
-  session_start();
-}
-if(isset($_SESSION['is_login'])){
- $aEmail = $_SESSION['mail'];
-} else {
- echo "<script> location.href='login.php'; </script>";
-}
+session_start();
+////////////////////////////////
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  if($_SESSION['user_role'] != 'admin') {
+      echo "<script> location.href='../includes/404.php'; </script>";
+  }
+  $rEmail = $_SESSION['mail'];
+  $rolUser = $_SESSION['user_role'];
+ } else {
+  echo "<script> location.href='../login.php'; </script>";
+ }
+////////////////////////////////
+
  if(isset($_REQUEST['view'])){
   $sql = "SELECT * FROM submitrequest_tb WHERE request_id = {$_REQUEST['id']}";
  $result = $conn->query($sql);

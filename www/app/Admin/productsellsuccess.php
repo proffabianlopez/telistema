@@ -1,14 +1,21 @@
 <?php
 session_start();
+////////////////////////////////
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  if($_SESSION['user_role'] != 'admin') {
+      echo "<script> location.href='../includes/404.php'; </script>";
+  }
+  $rEmail = $_SESSION['mail'];
+  $rolUser = $_SESSION['user_role'];
+ } else {
+  echo "<script> location.href='../login.php'; </script>";
+ }
+////////////////////////////////
+
 define('TITLE', 'Success');
 include('../includes/header.php'); 
 include('../dbConnection.php');
 
- if(isset($_SESSION['is_login'])){
-  $aEmail = $_SESSION['aEmail'];
- } else {
-  echo "<script> location.href='login.php'; </script>";
- }
 
 $sql = "SELECT * FROM customer_tb WHERE custid = {$_SESSION['myid']}";
 $result = $conn->query($sql);
@@ -64,6 +71,6 @@ if($result->num_rows == 1){
 ?>
 
 <?php
-include('includes/footer.php'); 
+include('../includes/footer.php'); 
 $conn->close();
 ?>

@@ -1,17 +1,23 @@
 <?php
 session_start();
+////////////////////////////////
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+    if($_SESSION['user_role'] != 'admin') {
+        echo "<script> location.href='../includes/404.php'; </script>";
+    }
+    $rEmail = $_SESSION['mail'];
+    $rolUser = $_SESSION['user_role'];
+   } else {
+    echo "<script> location.href='../login.php'; </script>";
+   }
+  ////////////////////////////////
+
 define('TITLE', 'Actualización de Email');
 define('PAGE', 'Actualización de Email');
 include('../includes/header.php'); 
 include('../dbConnection.php');
 include('../Querys/configEmailFrm.php');
 
-if ($_SESSION['is_login']) {
-    $rEmail = $_SESSION['mail'];
-} else {
-    echo "<script> location.href='TechnicLogin.php'; </script>";
-    exit;
-}
 
 $sql = SQLSELECT_FRM_EMAIL;
 $result = $conn->query($sql);
@@ -115,6 +121,6 @@ document.getElementById('togglePassword').addEventListener('click', function (e)
 
 
 
-<?php include('includes/footer.php'); ?>
+<?php include('../includes/footer.php'); ?>
 
 

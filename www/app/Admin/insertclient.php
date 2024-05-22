@@ -1,16 +1,23 @@
 <?php
 session_start();
+////////////////////////////////
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  if($_SESSION['user_role'] != 'admin') {
+      echo "<script> location.href='../includes/404.php'; </script>";
+  }
+  $rEmail = $_SESSION['mail'];
+  $rolUser = $_SESSION['user_role'];
+ } else {
+  echo "<script> location.href='../login.php'; </script>";
+ }
+////////////////////////////////
+
 define('TITLE', 'Agregar Nuevo Cliente');
 define('PAGE', 'Clientes');
 include('../includes/header.php'); 
 include('../dbConnection.php');
 include('../Querys/querys.php');
 
-if(isset($_SESSION['is_login'])){
-$aEmail = $_SESSION['mail'];
-} else {
-echo "<script> location.href='login.php'; </script>";
-}
 if(isset($_REQUEST['reqsubmit'])){
  // Verifica si hay campos vacíos
   if(($_REQUEST['client_name'] == "") || ($_REQUEST['client_lastname'] == "") || ($_REQUEST['phone'] == "") || ($_REQUEST['mail'] == "") || ($_REQUEST['address'] == "") || ($_REQUEST['height'] == "") || ($_REQUEST['floor'] == "") || ($_REQUEST['departament'] == "")){

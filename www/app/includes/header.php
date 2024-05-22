@@ -21,6 +21,31 @@
     <!-- Custome CSS -->
     <link rel="stylesheet" href="../css/custom.css">
 
+    <style>
+    .middle-box {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .error-code {
+            font-size: 120px;
+            font-weight: 700;
+            color: #dc3545;
+        }
+        .error-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #343a40;
+        }
+        .error-desc {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #6c757d;
+        }
+    </style>
    
 </head>
 

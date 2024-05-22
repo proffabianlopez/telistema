@@ -1,16 +1,21 @@
 <?php
 session_start();
+////////////////////////////////
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  if($_SESSION['user_role'] != 'technic') {
+      echo "<script> location.href='../includes/404.php'; </script>";
+  }
+  $rEmail = $_SESSION['mail'];
+  $rolUser = $_SESSION['user_role'];
+ } else {
+  echo "<script> location.href='../login.php'; </script>";
+ }
+////////////////////////////////
+
 define('TITLE', 'Change Password');
 define('PAGE', 'Requesterchangepass');
-include('includes/header.php');
+include('../includes/header.php');
 include('../dbConnection.php');
-
-if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
- $rEmail = $_SESSION['mail'];
- $rolUser = $_SESSION['user_role'];
-} else {
- echo "<script> location.href='../login.php'; </script>";
-}
 
  $rEmail = $_SESSION['rEmail'];
  if(isset($_REQUEST['passupdate'])){
