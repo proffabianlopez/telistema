@@ -2,7 +2,7 @@
 session_start();
 define('TITLE', 'Technician');
 define('PAGE', 'technician');
-include('includes/header.php'); 
+include('../includes/header.php'); 
 include('../dbConnection.php');
 
  if(isset($_SESSION['is_login'])){
@@ -64,5 +64,5 @@ if(isset($_REQUEST['delete'])){
 </div>
 
 <?php
-include('includes/footer.php'); 
+include('../includes/footer.php'); 
 ?>

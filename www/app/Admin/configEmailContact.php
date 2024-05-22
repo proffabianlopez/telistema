@@ -2,7 +2,7 @@
 session_start();
 define('TITLE', 'Actualización de Email');
 define('PAGE', 'Actualización de Email');
-include('includes/header.php'); 
+include('../includes/header.php'); 
 include('../dbConnection.php');
 include('../Querys/configEmailFrm.php');
 

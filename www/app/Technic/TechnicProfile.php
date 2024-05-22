@@ -2,7 +2,7 @@
 session_start();
 define('TITLE', 'Technic Profile');
 define('PAGE', 'Technic Profile');
-include('includes/header.php'); 
+include('../includes/header.php'); 
 include('../dbConnection.php');
 
  if($_SESSION['is_login']){
@@ -51,5 +51,5 @@ include('../dbConnection.php');
 </div>
 </div>
 <?php
-include('includes/footer.php'); 
+include('../includes/footer.php'); 
 ?>

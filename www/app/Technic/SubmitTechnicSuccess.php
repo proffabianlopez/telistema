@@ -1,11 +1,12 @@
 <?php
 session_start();
 define('TITLE', 'Success');
-include('includes/header.php'); 
+include('../includes/header.php'); 
 include('../dbConnection.php');
 
-if($_SESSION['is_login']){
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
  $rEmail = $_SESSION['mail'];
+ $rolUser = $_SESSION['user_role'];
 } else {
  echo "<script> location.href='TechnicLogin.php'; </script>";
 }

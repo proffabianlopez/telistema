@@ -2,12 +2,12 @@
 session_start();
 define('TITLE', 'Dashboard');
 define('PAGE', 'dashboard');
-include('includes/header.php'); 
+include('../includes/header.php'); 
 include('../dbConnection.php');
 
-  if(isset($_SESSION['is_login'])){
-
-    $aEmail = $_SESSION['mail'];
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  $rEmail = $_SESSION['mail'];
+  $rolUser = $_SESSION['user_role'];
 
   } else {
 
@@ -15,19 +15,19 @@ include('../dbConnection.php');
   
   }
 
-  $sql = "SELECT max(request_id) FROM submitrequest_tb";
-  $result = $conn->query($sql);
-  $row = mysqli_fetch_row($result);
-  $submitrequest = $row[0];
+  // $sql = "SELECT max(request_id) FROM submitrequest_tb";
+  // $result = $conn->query($sql);
+  // $row = mysqli_fetch_row($result);
+  // $submitrequest = $row[0];
 
-  $sql = "SELECT max(request_id) FROM assignwork_tb";
-  $result = $conn->query($sql);
-  $row = mysqli_fetch_row($result);
-  $assignwork = $row[0];
+  // $sql = "SELECT max(request_id) FROM assignwork_tb";
+  // $result = $conn->query($sql);
+  // $row = mysqli_fetch_row($result);
+  // $assignwork = $row[0];
 
-  $sql = "SELECT * FROM technician_tb";
-  $result = $conn->query($sql);
-  $totaltech = $result->num_rows;
+  // $sql = "SELECT * FROM technician_tb";
+  // $result = $conn->query($sql);
+  // $totaltech = $result->num_rows;
 
 ?>
 <div class="col-sm-9 col-md-10">
@@ -100,5 +100,5 @@ include('../dbConnection.php');
 </div>
 
 <?php
-  include('includes/footer.php'); 
+  include('../includes/footer.php'); 
 ?>

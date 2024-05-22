@@ -2,11 +2,12 @@
 session_start();
 define('TITLE', 'Status');
 define('PAGE', 'CheckStatus');
-include('includes/header.php'); 
+include('../includes/header.php'); 
 include('../dbConnection.php');
 
-if($_SESSION['is_login']){
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
  $rEmail = $_SESSION['mail'];
+ $rolUser = $_SESSION['user_role'];
 } else {
  echo "<script> location.href='TechnicLogin.php'; </script>";
 }
@@ -136,5 +137,5 @@ if($_SESSION['is_login']){
   }
 </script>
 <?php
-include('includes/footer.php'); 
+include('../includes/footer.php'); 
 ?>
