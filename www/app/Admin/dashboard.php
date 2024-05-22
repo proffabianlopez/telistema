@@ -33,7 +33,7 @@ include('../dbConnection.php');
   // $totaltech = $result->num_rows;
 
 ?>
-<div class="col-sm-9 col-md-10">
+<div class="col-sm-9 col-md-10" id="dashboard-content">
   <div class="row mx-5 text-center">
     <div class="col-sm-4 mt-5">
       <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
