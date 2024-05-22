@@ -1,15 +1,22 @@
 <?php
 session_start();
+////////////////////////////////
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  if($_SESSION['user_role'] != 'admin') {
+      echo "<script> location.href='../includes/404.php'; </script>";
+  }
+  $rEmail = $_SESSION['mail'];
+  $rolUser = $_SESSION['user_role'];
+ } else {
+  echo "<script> location.href='../login.php'; </script>";
+ }
+////////////////////////////////
+
 define('TITLE', 'Add New Technician');
 define('PAGE', 'technician');
 include('../includes/header.php'); 
 include('../dbConnection.php');
 
- if(isset($_SESSION['is_login'])){
-  $aEmail = $_SESSION['aEmail'];
- } else {
-  echo "<script> location.href='login.php'; </script>";
- }
 if(isset($_REQUEST['empsubmit'])){
  // Checking for Empty Fields
  if(($_REQUEST['empName'] == "") || ($_REQUEST['empCity'] == "") || ($_REQUEST['empMobile'] == "") || ($_REQUEST['empEmail'] == "")){

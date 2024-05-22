@@ -1,16 +1,22 @@
 <?php
 session_start();
+////////////////////////////////
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  if($_SESSION['user_role'] != 'technic') {
+      echo "<script> location.href='../includes/404.php'; </script>";
+  }
+  $rEmail = $_SESSION['mail'];
+  $rolUser = $_SESSION['user_role'];
+ } else {
+  echo "<script> location.href='../login.php'; </script>";
+ }
+////////////////////////////////
+
 define('TITLE', 'Submit Request');
 define('PAGE', 'SubmitTechnic');
 include('../includes/header.php'); 
 include('../dbConnection.php');
 
-if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
- $rEmail = $_SESSION['mail'];
- $rolUser = $_SESSION['user_role'];
-} else {
- echo "<script> location.href='TechnicLogin.php'; </script>";
-}
 if(isset($_REQUEST['SubmitTechnic'])){
  // Checking for Empty Fields
  if(($_REQUEST['requestinfo'] == "") || ($_REQUEST['requestdesc'] == "") || ($_REQUEST['requestername'] == "") || ($_REQUEST['requesteradd1'] == "") || ($_REQUEST['requesteradd2'] == "") || ($_REQUEST['requestercity'] == "") || ($_REQUEST['requesterstate'] == "") || ($_REQUEST['requesterzip'] == "") || ($_REQUEST['requesteremail'] == "") || ($_REQUEST['requestermobile'] == "") || ($_REQUEST['requestdate'] == "")){
@@ -117,6 +123,6 @@ if(isset($_REQUEST['SubmitTechnic'])){
   }
 </script>
 <?php
-include('includes/footer.php'); 
+include('../includes/footer.php'); 
 $conn->close();
 ?>

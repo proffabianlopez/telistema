@@ -1,15 +1,22 @@
 <?php
 session_start();
+////////////////////////////////
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  if($_SESSION['user_role'] != 'admin') {
+      echo "<script> location.href='../includes/404.php'; </script>";
+  }
+  $rEmail = $_SESSION['mail'];
+  $rolUser = $_SESSION['user_role'];
+ } else {
+  echo "<script> location.href='../login.php'; </script>";
+ }
+////////////////////////////////
+
 define('TITLE', 'Requests');
 define('PAGE', 'request');
 include('../includes/header.php'); 
 include('../dbConnection.php');
 
- if(isset($_SESSION['is_login'])){
-  $aEmail = $_SESSION['aEmail'];
- } else {
-  echo "<script> location.href='login.php'; </script>";
- }
 ?>
 <div class="col-sm-4 mb-5">
   <!-- Main Content area start Middle -->
@@ -57,6 +64,6 @@ if(isset($_REQUEST['close'])){
 
 <?php 
   include('assignworkform.php');
-  include('includes/footer.php'); 
+  include('../includes/footer.php'); 
   $conn->close();
 ?>

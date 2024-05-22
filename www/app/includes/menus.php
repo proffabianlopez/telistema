@@ -12,9 +12,9 @@ if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 
 // Determina la URL dashboard según el rol
 $dashboard_url = '';
-if ($rol == 'admin') {
+if ($rolUser == 'admin') {
     $dashboard_url = '../Admin/dashboard.php';
-} elseif ($rol == 'technic') {
+} elseif ($rolUser == 'technic') {
     $dashboard_url = '../Technic/TechnicProfile.php';
 }
 

@@ -1,16 +1,23 @@
 <?php
 session_start();
+////////////////////////////////
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  if($_SESSION['user_role'] != 'admin') {
+      echo "<script> location.href='../includes/404.php'; </script>";
+  }
+  $rEmail = $_SESSION['mail'];
+  $rolUser = $_SESSION['user_role'];
+ } else {
+  echo "<script> location.href='../login.php'; </script>";
+ }
+////////////////////////////////
+
 define('TITLE', 'Clientes');
 define('PAGE', 'Clientes');
 include('../includes/header.php'); 
 include('../dbConnection.php');
 include('../Querys/querys.php');
 
-if(isset($_SESSION['is_login'])){
-  $aEmail = $_SESSION['mail'];
-} else {
-  echo "<script> location.href='login.php'; </script>";
-}
 ?>
 <div class="col-sm-9 col-md-10 mt-5 text-center">
   <!--Table-->

@@ -1,16 +1,22 @@
 <?php
 session_start();
+////////////////////////////////
+if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  if($_SESSION['user_role'] != 'technic') {
+      echo "<script> location.href='../includes/404.php'; </script>";
+  }
+  $rEmail = $_SESSION['mail'];
+  $rolUser = $_SESSION['user_role'];
+ } else {
+  echo "<script> location.href='../login.php'; </script>";
+ }
+////////////////////////////////
+
 define('TITLE', 'Status');
 define('PAGE', 'CheckStatus');
 include('../includes/header.php'); 
 include('../dbConnection.php');
 
-if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
- $rEmail = $_SESSION['mail'];
- $rolUser = $_SESSION['user_role'];
-} else {
- echo "<script> location.href='TechnicLogin.php'; </script>";
-}
 ?>
 <div class="col-sm-6 mt-5  mx-3">
   <form action="" class="mt-3 form-inline d-print-none">
