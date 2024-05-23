@@ -20,28 +20,23 @@ if ($rolUser == 'admin') {
 
 ?>
 
-
-<!-- Side Bar -->
- <div class="container-fluid mb-5" style="margin-top:40px;">
-    <div class="row">
-    <nav class="col-sm-3 col-md-2 bg-light sidebar py-5 d-print-none">
-        <div class="sidebar-sticky">
-        <ul class="nav flex-column">
-        <li class="nav-item">
-        <a class="nav-link <?php if(PAGE == 'dashboard') { echo 'active'; } ?> " href="<?php echo $dashboard_url; ?>">
-            <i class="fas fa-tachometer-alt"></i>
-            Inicio
-        </a>
-        </li>
-
-        <!-- ADMIN -->
-        <?php if ($rolUser == 'admin') { ?>
-        <li class="nav-item">
-        <a class="nav-link <?php if(PAGE == 'work') { echo 'active'; } ?>" href="../Admin/work.php">
-            <i class="fab fa-accessible-icon"></i>
-            Ordenes de Trabajo
-        </a>
-        </li>
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebar" class="col-md-3 col-lg-2 bg-light sidebar sidebar-sticky">
+                <div class="sidebar-sticky">
+                <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="dashboard.php">Telistema</a>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link <?php if(PAGE == 'dashboard') { echo 'active'; } ?>" href="<?php echo $dashboard_url; ?>">
+                                <i class="fas fa-tachometer-alt"></i> Inicio
+                            </a>
+                        </li>
+                        <?php if ($rolUser == 'admin') { ?>
+                            <li class="nav-item">
+                                <a class="nav-link <?php if(PAGE == 'work') { echo 'active'; } ?>" href="../Admin/work.php">
+                                    <i class="fab fa-accessible-icon"></i> Ordenes de Trabajo
+                                </a>
+                            </li>
         <li class="nav-item">
         <a class="nav-link <?php if(PAGE == 'request') { echo 'active'; } ?>" href="../Admin/request.php">
             <i class="fas fa-align-center"></i>
@@ -129,4 +124,7 @@ if ($rolUser == 'admin') {
         </li>
         </ul>
         </div>
-    </nav>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main-content">
+                <!-- Contenido principal -->
