@@ -110,7 +110,7 @@ if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="assigntech">Assign to Technician</label>
+        <label for="assigntech">Assign to Tecnicos</label>
         <input type="text" class="form-control" id="assigntech" name="assigntech">
       </div>
       <div class="form-group col-md-6">

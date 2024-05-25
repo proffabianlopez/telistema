@@ -50,7 +50,7 @@ if ($rolUser == 'admin') {
         </a>
         </li>
         <li class="nav-item">
-        <a class="nav-link <?php if(PAGE == 'technician') { echo 'active'; } ?>" href="../Admin/technician.php">
+        <a class="nav-link <?php if(PAGE == 'Tecnicos') { echo 'active'; } ?>" href="../Admin/technician.php">
             <i class="fab fa-teamspeak"></i>
             Technicos
         </a>

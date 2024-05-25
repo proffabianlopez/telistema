@@ -34,18 +34,23 @@ define('SQL_INSERT_CLIENT', '
 define('SQL_UPDATE_CLIENT', '
         UPDATE clients 
         SET client_name = ?,
-            client_lastname = ?,
-            phone = ?, 
-            mail = ?,
-            address = ?,
-            height = ?, 
-            floor = ?, 
-            departament = ?
+        client_lastname = ?,
+        phone = ?, 
+        mail = ?,
+        address = ?,
+        height = ?, 
+        floor = ?, 
+        departament = ?
         WHERE id_client = ?');
 
 
 define('SQL_DELETE_CLIENT','
         DELETE FROM clients WHERE id_client = ?');
+
+
+define('SQL_INSERT_TECHNIC', '
+INSERT INTO users (name_user, phone_user, mail, user_password, id_state_user, id_rol)
+VALUES (?, ?, ?, ?, ?, ?)');
 
 ?>
 

@@ -12,8 +12,8 @@ if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 }
 ////////////////////////////////
 
-define('TITLE', 'Update Technician');
-define('PAGE', 'technician');
+define('TITLE', 'Update Tecnicos');
+define('PAGE', 'Tecnicos');
 include('../includes/header.php'); 
 include('../dbConnection.php');
 
@@ -30,7 +30,7 @@ include('../dbConnection.php');
     $eCity = $_REQUEST['empCity'];
     $eMobile = $_REQUEST['empMobile'];
     $eEmail = $_REQUEST['empEmail'];
-  $sql = "UPDATE technician_tb SET empName = '$eName', empCity = '$eCity', empMobile = '$eMobile', empEmail = '$eEmail' WHERE empid = '$eId'";
+  $sql = "UPDATE Tecnicos_tb SET empName = '$eName', empCity = '$eCity', empMobile = '$eMobile', empEmail = '$eEmail' WHERE empid = '$eId'";
     if($conn->query($sql) == TRUE){
      // below msg display on form submit success
      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Updated Successfully </div>';
@@ -42,10 +42,10 @@ include('../dbConnection.php');
   }
  ?>
 <div class="col-sm-6 mt-5  mx-3 jumbotron">
-  <h3 class="text-center">Update Technician Details</h3>
+  <h3 class="text-center">Update Tecnicos Details</h3>
   <?php
  if(isset($_REQUEST['view'])){
-  $sql = "SELECT * FROM technician_tb WHERE empid = {$_REQUEST['id']}";
+  $sql = "SELECT * FROM Tecnicos_tb WHERE empid = {$_REQUEST['id']}";
  $result = $conn->query($sql);
  $row = $result->fetch_assoc();
  }
@@ -75,7 +75,7 @@ include('../dbConnection.php');
     </div>
     <div class="text-center">
       <button type="submit" class="btn btn-danger" id="empupdate" name="empupdate">Update</button>
-      <a href="technician.php" class="btn btn-secondary">Close</a>
+      <a href="Tecnicos.php" class="btn btn-secondary">Close</a>
     </div>
     <?php if(isset($msg)) {echo $msg; } ?>
   </form>

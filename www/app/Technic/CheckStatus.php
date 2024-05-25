@@ -108,7 +108,7 @@ include('../dbConnection.php');
         </td>
       </tr>
       <tr>
-        <td>Technician Name</td>
+        <td>Tecnicos Name</td>
         <td>Zahir Khan</td>
       </tr>
       <tr>
@@ -116,7 +116,7 @@ include('../dbConnection.php');
         <td></td>
       </tr>
       <tr>
-        <td>Technician Sign</td>
+        <td>Tecnicos Sign</td>
         <td></td>
       </tr>
     </tbody>
