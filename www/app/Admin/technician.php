@@ -16,13 +16,14 @@ define('TITLE', 'Tecnicos');
 define('PAGE', 'Tecnicos');
 include('../includes/header.php'); 
 include('../dbConnection.php');
+include('../Querys/querys.php');
 
 ?>
 <div class="col-sm-9 col-md-10 mt-5 text-center">
   <!--Table-->
   <p class=" bg-dark text-white p-2">Lista de Técnicos</p>
   <?php
-    $sql = "SELECT * FROM users";
+    $sql = SQL_SELEC_TECHNIC;
     $result = $conn->query($sql);
     if($result->num_rows > 0){
  echo '<table class="table">
@@ -54,14 +55,21 @@ include('../dbConnection.php');
   echo "0 Result";
 }
 if(isset($_REQUEST['delete'])){
-  $sql = "DELETE FROM Tecnicos_tb WHERE empid = {$_REQUEST['id']}";
-  if($conn->query($sql) === TRUE){
-    // echo "Record Deleted Successfully";
-    // below code will refresh the page after deleting the record
-    echo '<meta http-equiv="refresh" content= "0;URL=?deleted" />';
-    } else {
-      echo "Unable to Delete Data";
-    }
+
+    $id_technic = $_REQUEST['id_user'];
+
+    $stmt = $conn->prepare(SQL_DELETE_TECHNIC);
+    $stmt->bind_param("i", $id_technic);
+
+    if($stmt->execute()){
+        // echo "Record Deleted Successfully";
+        // below code will refresh the page after deleting the record
+        echo "Eliminado";
+        
+      } else {
+
+        echo "No se pudo eliminar..";
+      }
   }
 ?>
 </div>

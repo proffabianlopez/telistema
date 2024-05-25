@@ -1,5 +1,7 @@
 <?php
+////////////////////////////////////////////////////////////////////////////
 // Login
+////////////////////////////////////////////////////////
 define('SQL_LOGIN', '
         SELECT 
                 u.name_user, 
@@ -18,7 +20,10 @@ define('SQL_LOGIN', '
                 AND u.user_password = ?
         LIMIT 1;');
 
+
+/////////////////////////////////////////////////////////////////////////////////////
 // Clients
+//////////////////////////////////////////////////////////////////
 define('SQL_FROM_CLIENTS','
         SELECT * FROM clients');
 
@@ -45,12 +50,24 @@ define('SQL_UPDATE_CLIENT', '
 
 
 define('SQL_DELETE_CLIENT','
-        DELETE FROM clients WHERE id_client = ?');
+        DELETE FROM clients
+        WHERE id_client = ?');
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+// Technics
+//////////////////////////////////////////////////////////////////
+define('SQL_SELEC_TECHNIC', '
+        SELECT * FROM users');
 
 
 define('SQL_INSERT_TECHNIC', '
 INSERT INTO users (name_user, phone_user, mail, user_password, id_state_user, id_rol)
 VALUES (?, ?, ?, ?, ?, ?)');
+
+define('SQL_DELETE_TECHNIC', '
+        DELETE FROM users
+        WHERE id_user = ?');
 
 ?>
 
