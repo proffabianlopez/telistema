@@ -23,7 +23,7 @@ include('../Querys/querys.php');
   <!--Table-->
   <p class=" bg-dark text-white p-2">Lista de Técnicos</p>
   <?php
-    $sql = SQL_SELEC_TECHNIC;
+    $sql = SQL_SELECT_TECHNIC;
     $result = $conn->query($sql);
     if($result->num_rows > 0){
  echo '<table class="table">

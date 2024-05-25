@@ -57,17 +57,39 @@ define('SQL_DELETE_CLIENT','
 /////////////////////////////////////////////////////////////////////////////////////
 // Technics
 //////////////////////////////////////////////////////////////////
-define('SQL_SELEC_TECHNIC', '
+define('SQL_SELECT_TECHNIC', '
         SELECT * FROM users');
 
+define('SQL_SELECT_STATUS_USERS', '
+        SELECT * FROM states_users');
 
+
+define('SQL_SELECT_TECHNIC_BY_ID', '
+        SELECT * FROM users
+        WHERE id_user = ?');
+
+define('SQL_SELECT_STATE_BY_ID', '
+        SELECT state_user, id_state_user 
+        FROM states_users
+        WHERE id_state_user = ?');
+        
 define('SQL_INSERT_TECHNIC', '
 INSERT INTO users (name_user, phone_user, mail, user_password, id_state_user, id_rol)
 VALUES (?, ?, ?, ?, ?, ?)');
 
+define('SQL_UPDATE_TECHNIC', '
+        UPDATE users
+        SET name_user = ?,
+        phone_user = ?,
+        mail = ?, 
+        id_state_user = ?
+        WHERE id_user = ?');
+        
+
 define('SQL_DELETE_TECHNIC', '
         DELETE FROM users
         WHERE id_user = ?');
+
 
 ?>
 
