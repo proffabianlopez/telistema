@@ -27,7 +27,7 @@ if ($rolUser == 'admin') {
                             </span> <span class="text-muted text-xs block"><?php echo ucfirst($_SESSION['user_role']) ?><b class="caret"></b></span>
                         </span> </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="../logout.php">Cerrar Sección</a></li>
+                        <li><a href="../logout.php">Cerrar Sesión</a></li>
                     </ul>
                 </div>
                 <div class="logo-element">
@@ -56,6 +56,14 @@ if ($rolUser == 'admin') {
                     <a  href="../Admin/request.php">
                     <i class="bi bi-app-indicator"></i><span class="nav-label">
                             Solicitudes</span>
+                    </a>
+                </li>
+                <li class=" <?php if (PAGE == 'assets') {
+                        echo 'active';
+                    } ?>">
+                    <a  href="../Admin/assets.php">
+                    <i class="bi bi-database"></i><span class="nav-label">Proveedores</span>
+
                     </a>
                 </li>
                 <li class=" <?php if (PAGE == 'assets') {
