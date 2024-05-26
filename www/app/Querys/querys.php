@@ -58,7 +58,11 @@ define('SQL_DELETE_CLIENT','
 // Technics
 //////////////////////////////////////////////////////////////////
 define('SQL_SELECT_TECHNIC', '
-        SELECT * FROM users');
+SELECT u.*
+FROM users u
+JOIN roles r ON u.id_rol = r.id_rol
+WHERE r.rol = "technic";
+');
 
 define('SQL_SELECT_STATUS_USERS', '
         SELECT * FROM states_users');
