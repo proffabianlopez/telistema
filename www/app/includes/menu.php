@@ -58,10 +58,10 @@ if ($rolUser == 'admin') {
                             Solicitudes</span>
                     </a>
                 </li>
-                <li class=" <?php if (PAGE == 'assets') {
+                <li class=" <?php if (PAGE == 'Proveedores') {
                         echo 'active';
                     } ?>">
-                    <a  href="../Admin/assets.php">
+                    <a  href="../Admin/suppliers.php">
                     <i class="bi bi-database"></i><span class="nav-label">Proveedores</span>
 
                     </a>
