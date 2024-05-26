@@ -2,67 +2,80 @@
 session_start();
 ////////////////////////////////
 if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  
   if($_SESSION['user_role'] != 'admin') {
       echo "<script> location.href='../includes/404.php'; </script>";
   }
   $rEmail = $_SESSION['mail'];
   $rolUser = $_SESSION['user_role'];
- } else {
-  echo "<script> location.href='../login.php'; </script>";
- }
+} else {
+    echo "<script> location.href='../login.php'; </script>";
+  }
 ////////////////////////////////
 
-define('TITLE', 'Add New Technician');
-define('PAGE', 'technician');
+define('TITLE', 'Agregar Técnicos');
+define('PAGE', 'Técnicos');
 include('../includes/header.php'); 
 include('../dbConnection.php');
+include('../Querys/querys.php');
 
-if(isset($_REQUEST['empsubmit'])){
- // Checking for Empty Fields
- if(($_REQUEST['empName'] == "") || ($_REQUEST['empCity'] == "") || ($_REQUEST['empMobile'] == "") || ($_REQUEST['empEmail'] == "")){
-  // msg displayed if required field missing
-  $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Fill All Fileds </div>';
- } else {
-   // Assigning User Values to Variable
-   $eName = $_REQUEST['empName'];
-   $eCity = $_REQUEST['empCity'];
-   $eMobile = $_REQUEST['empMobile'];
-   $eEmail = $_REQUEST['empEmail'];
-   $sql = "INSERT INTO technician_tb (empName, empCity, empMobile, empEmail) VALUES ('$eName', '$eCity','$eMobile', '$eEmail')";
-   if($conn->query($sql) == TRUE){
-    // below msg display on form submit success
-    $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Added Successfully </div>';
-   } else {
-    // below msg display on form submit failed
-    $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Add </div>';
-   }
- }
- }
+if(isset($_REQUEST['submit'])){
+
+  // Checking for Empty Fields
+  if(($_REQUEST['name_user'] == "") || ($_REQUEST['phone_user'] == "") || ($_REQUEST['mail'] == "")){
+    // msg displayed if required field missing
+    $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Fill All Fileds </div>';
+  } else {
+
+        $name = $_REQUEST['name_user'];
+        $phone = $_REQUEST['phone_user'];
+        $mail = $_REQUEST['mail'];
+        $pass = $_REQUEST['user_password'];
+        $state = 1;
+        $role = 2;
+
+        // Prepara la consulta
+        $stmt = $conn->prepare(SQL_INSERT_TECHNIC);
+        // Asocia parámetros y ejecuta la consulta
+        $stmt->bind_param("ssssii", $name, $phone, $mail, $pass, $state, $role);
+      
+        if($stmt->execute()){
+        // below msg display on form submit success
+        $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Agregado Exitosamente! </div>';
+      } else {
+        // below msg display on form submit failed
+        $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Error al agregar! </div>';
+      }
+    }
+  }
 ?>
 <div class="col-sm-6 mt-5  mx-3 jumbotron">
-  <h3 class="text-center">Add New Technician</h3>
+  <h3 class="text-center">Agregar Nuevo Técnico</h3>
   <form action="" method="POST">
     <div class="form-group">
-      <label for="empName">Name</label>
-      <input type="text" class="form-control" id="empName" name="empName">
+      <label for="name_user">Nombre</label>
+      <input type="text" class="form-control" id="name_user" name="name_user">
     </div>
     <div class="form-group">
-      <label for="empCity">City</label>
-      <input type="text" class="form-control" id="empCity" name="empCity">
+      <label for="phone_user">Teléfono</label>
+      <input type="text" class="form-control" id="phone_user" name="phone_user" onkeypress="isInputNumber(event)">
     </div>
     <div class="form-group">
-      <label for="empMobile">Mobile</label>
-      <input type="text" class="form-control" id="empMobile" name="empMobile" onkeypress="isInputNumber(event)">
+      <label for="mail">Email</label>
+      <input type="email" class="form-control" id="mail" name="mail">
     </div>
     <div class="form-group">
-      <label for="empEmail">Email</label>
-      <input type="email" class="form-control" id="empEmail" name="empEmail">
+      <label for="user_password">Contraseña</label>
+      <input type="password" class="form-control" id="user_password" name="user_password">
+    </div>
+    <br>
+    <div class="text-center">
+      <button type="submit" class="btn btn-danger" id="submit" name="submit">Agregar</button>
+      <a href="technician.php" class="btn btn-secondary">Cerrar</a>
     </div>
     <div class="text-center">
-      <button type="submit" class="btn btn-danger" id="empsubmit" name="empsubmit">Submit</button>
-      <a href="technician.php" class="btn btn-secondary">Close</a>
+      <?php if(isset($msg)) {echo $msg; } ?>
     </div>
-    <?php if(isset($msg)) {echo $msg; } ?>
   </form>
 </div>
 <!-- Only Number for input fields -->

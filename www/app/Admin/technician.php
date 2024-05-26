@@ -12,63 +12,85 @@ if($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
  }
 ////////////////////////////////
 
-define('TITLE', 'Technician');
-define('PAGE', 'technician');
+define('TITLE', 'Tecnicos');
+define('PAGE', 'Tecnicos');
 include('../includes/header.php'); 
 include('../dbConnection.php');
+include('../Querys/querys.php');
 
 ?>
 <div class="col-sm-9 col-md-10 mt-5 text-center">
-  <!--Table-->
-  <p class=" bg-dark text-white p-2">List of Technicians</p>
-  <?php
-    $sql = "SELECT * FROM technician_tb";
+    <!--Table-->
+    <p class=" bg-dark text-white p-2">Lista de Técnicos</p>
+    <?php
+    $sql = SQL_SELECT_TECHNIC;
     $result = $conn->query($sql);
-    if($result->num_rows > 0){
- echo '<table class="table">
-  <thead>
-   <tr>
-    <th scope="col">Emp ID</th>
-    <th scope="col">Name</th>
-    <th scope="col">City</th>
-    <th scope="col">Mobile</th>
-    <th scope="col">Email</th>
-    <th scope="col">Action</th>
-   </tr>
-  </thead>
-  <tbody>';
-  while($row = $result->fetch_assoc()){
-   echo '<tr>';
-    echo '<th scope="row">'.$row["empid"].'</th>';
-    echo '<td>'. $row["empName"].'</td>';
-    echo '<td>'.$row["empCity"].'</td>';
-    echo '<td>'.$row["empMobile"].'</td>';
-    echo '<td>'.$row["empEmail"].'</td>';
-    echo '<td><form action="editemp.php" method="POST" class="d-inline"> <input type="hidden" name="id" value='. $row["empid"] .'><button type="submit" class="btn btn-info mr-3" name="view" value="View"><i class="fas fa-pen"></i></button></form>  <form action="" method="POST" class="d-inline"><input type="hidden" name="id" value='. $row["empid"] .'><button type="submit" class="btn btn-secondary" name="delete" value="Delete"><i class="far fa-trash-alt"></i></button></form></td>
-   </tr>';
-  }
 
- echo '</tbody>
- </table>';
-} else {
-  echo "0 Result";
-}
-if(isset($_REQUEST['delete'])){
-  $sql = "DELETE FROM technician_tb WHERE empid = {$_REQUEST['id']}";
-  if($conn->query($sql) === TRUE){
-    // echo "Record Deleted Successfully";
-    // below code will refresh the page after deleting the record
-    echo '<meta http-equiv="refresh" content= "0;URL=?deleted" />';
+    if ($result->num_rows > 0) {
+        // Imprimir etiquetas de encabezado una vez
+        echo '<table class="table">';
+        echo '<thead>';
+        echo '<tr>';
+        echo '<th scope="col">ID Técnico</th>';
+        echo '<th scope="col">Nombre</th>';
+        echo '<th scope="col">Teléfono</th>';
+        echo '<th scope="col">Email</th>';
+        echo '<th scope="col">Estado</th>';
+        echo '<th scope="col">Action</th>';
+        echo '</tr>';
+        echo '</thead>';
+        echo '<tbody>';
+
+        // Imprimir los datos de cada técnico
+        while ($row = $result->fetch_assoc()) {
+            $state = $row['id_state_user'];
+            $stmt = $conn->prepare(SQL_SELECT_STATE_BY_ID);
+            $stmt->bind_param("i", $state);
+            $stmt->execute();
+            $result_state = $stmt->get_result();
+
+            // Verificar si hay resultados
+            if ($result_state->num_rows > 0) {
+                // Obtener la fila como un array asociativo
+                $row_state = $result_state->fetch_assoc();
+                $name_state = $row_state["state_user"];
+            } else {
+                // Si no hay resultados, asignar un valor por defecto
+                $name_state = "Estado no encontrado"; // O el valor que desees
+            }
+
+            echo '<tr>';
+            echo '<th scope="row">'.$row["id_user"].'</th>';
+            echo '<td>'. $row["name_user"].'</td>';
+            echo '<td>'.$row["phone_user"].'</td>';
+            echo '<td>'.$row["mail"].'</td>';
+            echo '<td>'.$name_state.'</td>';
+            echo '<td>
+                <form action="editemp.php" method="POST" class="d-inline"> 
+                    <input type="hidden" name="id_user" value='. $row["id_user"] .'>
+                    <button type="submit" class="btn btn-info mr-3" name="view" value="View">
+                        <i class="fas fa-pen"></i>
+                    </button>
+                </form>  
+                <form action="" method="POST" class="d-inline">
+                    <input type="hidden" name="id_user" value='. $row["id_user"] .'>
+                    <button type="submit" class="btn btn-secondary" name="delete" value="Eliminar">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </form>
+            </td>';
+            echo '</tr>';
+        }
+
+        echo '</tbody>';
+        echo '</table>';
     } else {
-      echo "Unable to Delete Data";
+        echo "0 Result";
     }
-  }
-?>
+    ?>
 </div>
-</div>
-<div><a class="btn btn-danger box" href="insertemp.php"><i class="fas fa-plus fa-2x"></i></a>
-</div>
-</div>
+
+<div><a class="btn btn-danger box" href="insertemp.php"><i class="fas fa-plus fa-2x"></i></a></div>
 
 <?php
 include('../includes/footer.php'); 

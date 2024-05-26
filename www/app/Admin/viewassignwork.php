@@ -103,7 +103,7 @@ include('../dbConnection.php');
     </td>
    </tr>
    <tr>
-    <td>Technician Name</td>
+    <td>Tecnicos Name</td>
     <td>
      <?php if(isset($row['assign_tech'])) {echo $row['assign_tech']; }?>
     </td>
@@ -113,7 +113,7 @@ include('../dbConnection.php');
     <td></td>
    </tr>
    <tr>
-    <td>Technician Sign</td>
+    <td>Tecnicos Sign</td>
     <td></td>
    </tr>
   </tbody>

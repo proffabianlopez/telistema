@@ -71,6 +71,7 @@ include('../Querys/querys.php');
   }
 
   if(isset($_REQUEST['delete'])){
+    
     $id_client = $_REQUEST['id_client'];
 
     $stmt = $conn->prepare(SQL_DELETE_CLIENT);

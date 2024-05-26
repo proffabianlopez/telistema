@@ -32,7 +32,7 @@ include('../dbConnection.php');
       <th scope="col">Address</th>
       <th scope="col">City</th>
       <th scope="col">Mobile</th>
-      <th scope="col">Technician</th>
+      <th scope="col">Tecnicos</th>
       <th scope="col">Assigned Date</th>
       <th scope="col">Action</th>
     </tr>

@@ -28,7 +28,7 @@ include('../dbConnection.php');
   // $row = mysqli_fetch_row($result);
   // $assignwork = $row[0];
 
-  // $sql = "SELECT * FROM technician_tb";
+  // $sql = "SELECT * FROM Tecnicos_tb";
   // $result = $conn->query($sql);
   // $totaltech = $result->num_rows;
 
@@ -59,12 +59,12 @@ include('../dbConnection.php');
     </div>
     <div class="col-sm-4 mt-5">
       <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-        <div class="card-header">No. of Technician</div>
+        <div class="card-header">No. of Tecnicos</div>
         <div class="card-body">
           <h4 class="card-title">
             <?php echo $totaltech; ?>
           </h4>
-          <a class="btn text-white" href="technician.php">View</a>
+          <a class="btn text-white" href="Tecnicos.php">View</a>
         </div>
       </div>
     </div>
