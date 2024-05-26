@@ -107,6 +107,20 @@ define('SQL_INSERT_SUPPLIER', '
         INSERT INTO suppliers (supplier_name, phone, mail, address, id_state_user)
         VALUES (?, ?, ?, ?, ?)');
 
+define('SQL_UPDATE_SUPPLIER', '
+        UPDATE suppliers
+        SET supplier_name = ?,
+        phone = ?,
+        mail = ?,
+        address = ?, 
+        id_state_user = ?
+        WHERE id_supplier = ?');
+
+
+define('SQL_SELECT_SUPPLIER_BY_ID', '
+        SELECT * FROM suppliers
+        WHERE id_supplier = ?');
+
 
 define('SQL_DELETE_SUPPLIER', '
         DELETE FROM suppliers

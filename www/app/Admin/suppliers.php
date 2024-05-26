@@ -84,18 +84,35 @@ include ('../Querys/querys.php');
                                     <th data-hide="phone">Telefono</th>
                                     <th data-hide="phone">Email</th>
                                     <th data-hide="all">Direccion</th>
+                                    <th data-hide="phone">Estado</th>
                                     <th>Accion</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 ';
                                     while ($row = $result->fetch_assoc()) {
+                                        $state = $row['id_state_user'];
+                                        $stmt = $conn->prepare(SQL_SELECT_STATE_BY_ID);
+                                        $stmt->bind_param("i", $state);
+                                        $stmt->execute();
+                                        $result_state = $stmt->get_result();
+
+                                        // Verificar si hay resultados
+                                        if ($result_state->num_rows > 0) {
+                                            // Obtener la fila como un array asociativo
+                                            $row_state = $result_state->fetch_assoc();
+                                            $name_state = $row_state["state_user"];
+                                        } else {
+                                            // Si no hay resultados, asignar un valor por defecto
+                                            $name_state = "Estado no encontrado"; // O el valor que desees
+                                        }
                                         echo '<tr>';
                                         echo '<td>' . $row["id_supplier"] . '</td>';
                                         echo '<td>' . $row["supplier_name"] . '</td>';
                                         echo '<td>' . $row["phone"] . '</td>';
                                         echo '<td>' . $row["mail"] . '</td>';
                                         echo '<td>' . $row["address"] . '</td>';
+                                        echo '<td>' . $name_state . '</td>';
                                         echo '<td>
                                                 <div class="btn-group" role="group">
                                                     <form action="editsupplier.php" method="POST" style="display:inline;">
