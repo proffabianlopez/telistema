@@ -41,7 +41,6 @@ if (isset($_REQUEST['update'])) {
     $stmt = $conn->prepare(SQL_UPDATE_SUPPLIER);
     $stmt->bind_param("ssssii", $name, $phone, $mail, $address, $id_state, $id);
 
-
     if ($stmt->execute()) {
       // below msg display on form submit success
       $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Updated Successfully </div>';
