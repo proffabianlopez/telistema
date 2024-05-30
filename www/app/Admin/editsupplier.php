@@ -201,7 +201,7 @@ if (isset($_REQUEST['view'])) {
 
 
                   <div class="text-center">
-                    <button type="submit" class="btn btn-danger" id="update" name="update">Actualizar</button>
+                  <button type="submit" class="btn btn-danger" id="update" name="update">Actualizar</button>
                     <a href="suppliers.php" class="btn btn-secondary">Cerrar</a>
                   </div>
                   <?php if (isset($msg)) {
@@ -237,6 +237,7 @@ if (isset($_REQUEST['view'])) {
       }
     }
   </script>
+  <script src="../js/SweetAler2.js"></script>
 
 </body>
 

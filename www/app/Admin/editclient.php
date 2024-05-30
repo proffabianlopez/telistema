@@ -290,8 +290,7 @@ if (isset($_REQUEST['view'])) {
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-danger" id="clientupdate"
-                        name="clientupdate">Actualizar</button>
+                    <button type="submit" class="btn btn-danger" id="clientupdate" name="clientupdate">Actualizar</button>
                       <a href="clients.php" class="btn btn-secondary">Cerrar</a>
                     </div>
                     <?php if (isset($msg)) {
@@ -318,7 +317,7 @@ if (isset($_REQUEST['view'])) {
 
 
   <?php include ('../includes/footer.php'); ?>
-
+  <script src="../js/SweetAler2.js"></script>
 </body>
 
 </html>
