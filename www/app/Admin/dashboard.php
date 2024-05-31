@@ -49,9 +49,9 @@ include ('../dbConnection.php');
         </div>
         <ul class="nav navbar-top-links navbar-right">             
           <li>
-            <a href="login.html">
-              <i class="fa fa-sign-out"></i> Cerrar Sección
-            </a>
+          <a href="login.html" id="logout-link">
+            <i class="fa fa-sign-out"></i> Cerrar Sección
+          </a>
           </li>
         </ul>
 
@@ -142,7 +142,7 @@ include ('../dbConnection.php');
 <?php
 include ('../includes/footer.php');
 ?>
-
+<script src="../js/SweetAler2.js"></script>
 </body>
 
 </html>

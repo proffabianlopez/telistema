@@ -163,7 +163,7 @@ if ($rolUser == 'admin') {
             <?php } ?>
 
             <li>
-                <a class="" href="../logout.php">
+                <a class="" href="../logout.php" id="logout-link">
                 <i class="bi bi-door-closed"></i><span class="nav-label">
                         Cerrar Sesión</span>
                 </a>

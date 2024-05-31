@@ -40,7 +40,7 @@ include ('../Querys/querys.php');
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../logout.php">
+                            <a href="../logout.php" id="logout-link">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
@@ -123,9 +123,9 @@ include ('../Querys/querys.php');
                                                     </form>
                                                     <form action="" method="POST" style="display:inline;">
                                                         <input type="hidden" name="id_supplier" value="' . $row["id_supplier"] . '">
-                                                        <button class="btn btn-danger btn-xs" name="delete" value="Delete">
-                                                            <i class="bi bi-trash"></i>
-                                                        </button>
+                                                        <button class="btn btn-danger btn-xs" name="delete" value="Delete" id="delete-button">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
                                                     </form>
                                                 </div>
                                             </td>';
@@ -208,6 +208,7 @@ include ('../Querys/querys.php');
         });
 
     </script>
+    <script src="../js/SweetAler2.js"></script>
 </body>
 
 </html>
