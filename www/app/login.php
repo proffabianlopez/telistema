@@ -96,17 +96,17 @@ if (!isset($_SESSION['is_login'])) {
             <form class="m-t" role="form" action="" method="POST">
                 
             <div class="form-group">
-                    <input type="email" class="form-control" name="mail" placeholder="Email" required="">
+                    <input type="email" class="form-control" name="mail" placeholder="Correo electrónico" required="">
                 </div>
 
                 <div class="form-group">
                     <input type="password" class="form-control" name="pass" placeholder="Contraseña" required="">
                 </div>
-                <button type="submit" class="btn btn-success block full-width m-b">Login</button>
+                <button type="submit" class="btn btn-success block full-width m-b">Inciar Sessión</button>
                 <?php if(isset($msg)) {echo $msg; } ?>
 
             </form>
-            <a  class="btn btn-danger block full-width m-b" href="../index.html">Volver a la pagina</a>
+            <a  class="btn btn-primary block full-width m-b" href="../index.html">Volver a la página</a>
         </div>
     </div>
 
