@@ -1,87 +1,237 @@
-<?php    
+<?php
 session_start();
-define('TITLE', 'Update Technician');
-define('PAGE', 'technician');
-include('includes/header.php'); 
-include('../dbConnection.php');
+////////////////////////////////
+if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  if ($_SESSION['user_role'] != 'admin') {
 
- if(isset($_SESSION['is_login'])){
-  $aEmail = $_SESSION['mail'];
- } else {
-  echo "<script> location.href='login.php'; </script>";
- }
- // update
- if(isset($_REQUEST['empupdate'])){
+    echo "<script> location.href='../includes/404.php'; </script>";
+
+  }
+  $rEmail = $_SESSION['mail'];
+  $rolUser = $_SESSION['user_role'];
+
+} else {
+
+  echo "<script> location.href='../login.php'; </script>";
+
+}
+////////////////////////////////
+
+define('TITLE', 'Update Tecnicos');
+define('PAGE', 'Tecnicos');
+include ('../dbConnection.php');
+include ('../Querys/querys.php');
+
+// update
+if (isset($_REQUEST['update'])) {
+
   // Checking for Empty Fields
-  if(($_REQUEST['empName'] == "") || ($_REQUEST['empCity'] == "") || ($_REQUEST['empMobile'] == "") || ($_REQUEST['empEmail'] == "")){
-   // msg displayed if required field missing
-   $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Fill All Fileds </div>';
+  if (($_REQUEST['name_user'] == "") || ($_REQUEST['id_state_user'] == "") || ($_REQUEST['phone_user'] == "") || ($_REQUEST['mail'] == "")) {
+    // msg displayed if required field missing
+    $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Fill All Fileds </div>';
+
   } else {
     // Assigning User Values to Variable
-    $eId = $_REQUEST['empId'];
-    $eName = $_REQUEST['empName'];
-    $eCity = $_REQUEST['empCity'];
-    $eMobile = $_REQUEST['empMobile'];
-    $eEmail = $_REQUEST['empEmail'];
-  $sql = "UPDATE technician_tb SET empName = '$eName', empCity = '$eCity', empMobile = '$eMobile', empEmail = '$eEmail' WHERE empid = '$eId'";
-    if($conn->query($sql) == TRUE){
-     // below msg display on form submit success
-     $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Updated Successfully </div>';
+    $id = $_REQUEST['id_user'];
+    $name = $_REQUEST['name_user'];
+    $phone = $_REQUEST['phone_user'];
+    $mail = $_REQUEST['mail'];
+    $state = $_REQUEST['id_state_user'];
+
+    $stmt = $conn->prepare(SQL_UPDATE_TECHNIC);
+    $stmt->bind_param("sssii", $name, $phone, $mail, $state, $id);
+
+
+    if ($stmt->execute()) {
+      // below msg display on form submit success
+      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Updated Successfully </div>';
+
     } else {
-     // below msg display on form submit failed
-     $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update </div>';
+      // below msg display on form submit failed
+      $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update </div>';
     }
   }
-  }
- ?>
-<div class="col-sm-6 mt-5  mx-3 jumbotron">
-  <h3 class="text-center">Update Technician Details</h3>
-  <?php
- if(isset($_REQUEST['view'])){
-  $sql = "SELECT * FROM technician_tb WHERE empid = {$_REQUEST['id']}";
- $result = $conn->query($sql);
- $row = $result->fetch_assoc();
- }
- ?>
-  <form action="" method="POST">
-    <div class="form-group">
-      <label for="empId">Emp ID</label>
-      <input type="text" class="form-control" id="empId" name="empId" value="<?php if(isset($row['empid'])) {echo $row['empid']; }?>"
-        readonly>
-    </div>
-    <div class="form-group">
-      <label for="empName">Name</label>
-      <input type="text" class="form-control" id="empName" name="empName" value="<?php if(isset($row['empName'])) {echo $row['empName']; }?>">
-    </div>
-    <div class="form-group">
-      <label for="empCity">City</label>
-      <input type="text" class="form-control" id="empCity" name="empCity" value="<?php if(isset($row['empCity'])) {echo $row['empCity']; }?>">
-    </div>
-    <div class="form-group">
-      <label for="empMobile">Mobile</label>
-      <input type="text" class="form-control" id="empMobile" name="empMobile" value="<?php if(isset($row['empMobile'])) {echo $row['empMobile']; }?>"
-        onkeypress="isInputNumber(event)">
-    </div>
-    <div class="form-group">
-      <label for="empEmail">Email</label>
-      <input type="email" class="form-control" id="empEmail" name="empEmail" value="<?php if(isset($row['empEmail'])) {echo $row['empEmail']; }?>">
-    </div>
-    <div class="text-center">
-      <button type="submit" class="btn btn-danger" id="empupdate" name="empupdate">Update</button>
-      <a href="technician.php" class="btn btn-secondary">Close</a>
-    </div>
-    <?php if(isset($msg)) {echo $msg; } ?>
-  </form>
-</div>
-<!-- Only Number for input fields -->
-<script>
-  function isInputNumber(evt) {
-    var ch = String.fromCharCode(evt.which);
-    if (!(/[0-9]/.test(ch))) {
-      evt.preventDefault();
-    }
-  }
-</script>
-<?php
-include('includes/footer.php'); 
+}
 ?>
+
+
+<?php
+if (isset($_REQUEST['view'])) {
+
+  $id_user = $_REQUEST['id_user'];
+  $stmt = $conn->prepare(SQL_SELECT_TECHNIC_BY_ID);
+  $stmt->bind_param("i", $id_user);
+  $stmt->execute();
+
+  // Obtener resultados de la consulta
+  $result = $stmt->get_result();
+
+  // Verificar si hay resultados
+  if ($result->num_rows > 0) {
+    // Obtener la fila como un array asociativo
+    $row = $result->fetch_assoc();
+  } else {
+    // Mostrar un mensaje si no se encuentra ningún cliente con el ID proporcionado
+    echo '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">No se encontró ningún cliente con ese ID.</div>';
+  }
+
+}
+?>
+<?php include ('../includes/header.php') ?>
+
+<body>
+
+  <div id="wrapper">
+
+    <nav class="navbar-default navbar-static-side" role="navigation">
+      <div class="sidebar-collapse">
+        <?php include ('../includes/menu.php') ?>
+
+      </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+      <div class="row border-bottom">
+        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+          <div class="navbar-header">
+            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+          </div>
+          <ul class="nav navbar-top-links navbar-right">
+            <li>
+              <a href="login.html">
+                <i class="fa fa-sign-out"></i> Cerrar Sección
+              </a>
+            </li>
+          </ul>
+
+        </nav>
+      </div>
+      <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+
+          <h2>Técnicos</h2>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+      </div>
+      <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+
+          <div class="col-lg-5">
+            <div class="ibox float-e-margins">
+              <div class="ibox-title">
+                <h5>Actualizar Técnico</h5>
+
+              </div>
+              <div class="ibox-content">
+
+                <form action="" method="POST">
+                  <div class="form-group">
+                    <label for="id_user">ID Técnico</label>
+                    <input type="text" class="form-control" id="id_user" name="id_user" value="<?php if (isset($row['id_user'])) {
+                      echo $row['id_user'];
+                    } ?>" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="name_user">Nombre</label>
+                    <input type="text" class="form-control" id="name_user" name="name_user" value="<?php if (isset($row['name_user'])) {
+                      echo $row['name_user'];
+                    } ?>">
+                  </div>
+                  <div class="form-group">
+                    <label for="phone_user">Teléfono</label>
+                    <input type="text" class="form-control" id="phone_user" name="phone_user" value="<?php if (isset($row['phone_user'])) {
+                      echo $row['phone_user'];
+                    } ?>" onkeypress="isInputNumber(event)">
+                  </div>
+                  <div class="form-group">
+                    <label for="mail">Email</label>
+                    <input type="email" class="form-control" id="mail" name="mail" value="<?php if (isset($row['mail'])) {
+                      echo $row['mail'];
+                    } ?>">
+                  </div>
+
+
+
+                  <div class="form-group">
+                    <label for="state_user">Estado</label>
+                    <select name="id_state_user" id="id_state_user" class="form-control">
+                      <?php
+
+                      $state = $row['id_state_user'];
+                      $stmt = $conn->prepare(SQL_SELECT_STATE_BY_ID);
+                      $stmt->bind_param("i", $state);
+                      $stmt->execute();
+                      $result = $stmt->get_result();
+
+                      // Verificar si hay resultados
+                      if ($result->num_rows > 0) {
+                        // Obtener la fila como un array asociativo
+                        $row_state = $result->fetch_assoc();
+                        $name_state = $row_state["state_user"];
+                        $id_state_user = $row_state["id_state_user"];
+                      } else {
+                        // Si no hay resultados, asignar un valor por defecto
+                        $id_state_user = 0; // O el valor que desees
+                      }
+
+                      // Luego, obtén todos los estados de la tabla states_users
+                      $stmt = $conn->prepare(SQL_SELECT_STATUS_USERS);
+                      $stmt->execute();
+                      $rows = $stmt->get_result();
+
+
+                      // Itera sobre los estados para crear las opciones del select
+                      foreach ($rows as $state) {
+                        $stateName = $state["state_user"];
+                        $stateId = $state["id_state_user"];
+                        $selected = ($stateId == $id_state_user) ? "selected" : "";
+                        echo "<option value='$stateId' $selected>$stateName</option>";
+                      }
+                      ?>
+                    </select>
+                  </div>
+
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-danger" id="update" name="update">Actualizar</button>
+                    <a href="technician.php" class="btn btn-secondary">Cerrar</a>
+                  </div>
+                  <?php if (isset($msg)) {
+                    echo $msg;
+                  } ?>
+                </form>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div>
+          <strong>Copyright</strong>  Telistema &copy; 2024
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <?php include ('../includes/footer.php'); ?>
+
+  <!-- Only Number for input fields -->
+  <script>
+    function isInputNumber(evt) {
+      var ch = String.fromCharCode(evt.which);
+      if (!(/[0-9]/.test(ch))) {
+        evt.preventDefault();
+      }
+    }
+  </script>
+
+</body>
+
+</html>
