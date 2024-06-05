@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -22,5 +24,17 @@
      <!-- FooTable -->
      <link href="../css/plugins/footable/footable.core.css" rel="stylesheet">
    
+     <style>
+        .password-container {
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            top: 70%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
 
 </head>

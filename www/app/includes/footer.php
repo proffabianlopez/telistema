@@ -32,3 +32,6 @@
 
 <!-- FooTable -->
 <script src="../js/plugins/footable/footable.all.min.js"></script>
+
+<!-- shw pass -->
+<script src="../js/passShow.js"></script>

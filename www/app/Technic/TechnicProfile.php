@@ -4,11 +4,24 @@ define('TITLE', 'Technic Profile');
 define('PAGE', 'Technic Profile');
 include ('../dbConnection.php');
 
-if ($_SESSION['is_login']) {
-    $rEmail = $_SESSION['mail'];
+////////////////////////////////
+if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+  if ($_SESSION['user_role'] != 'technic') {
+    echo "<script> location.href='../includes/404.php'; </script>";
+  }
+  $rEmail = $_SESSION['mail'];
+  $rolUser = $_SESSION['user_role'];
 } else {
-    echo "<script> location.href='../login.php'; </script>";
+  echo "<script> location.href='../login.php'; </script>";
 }
+////////////////////////////////
+// Genera un token CSRF y lo guarda en la sesión
+if (!isset($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+$token = $_SESSION['token'];
+
+
 
 $sql = "SELECT * FROM TechnicLogin_tb WHERE r_email='$rEmail'";
 $result = $conn->query($sql);
@@ -140,14 +153,21 @@ include ('../includes/header.php'); ?>
 
                 </div>
 
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" onclick="openEditModal()">
+                        Cambiar contraseña
+                    </button>
+                </div>
+
+
 
             </div>
             <div class="footer">
                 <div class="pull-right">
-                   
+
                 </div>
                 <div>
-                    <strong>Copyright</strong>  Telistema &copy; 2024
+                    <strong>Copyright</strong> Telistema &copy; 2024
                 </div>
             </div>
 
@@ -159,7 +179,7 @@ include ('../includes/header.php'); ?>
     <?php
     include ('../includes/footer.php');
     ?>
-
+<div id="edit-form-container" style="display: none;"></div>
     <!-- Sparkline -->
     <script src="js/plugins/sparkline/jquery.sparkline.min.js"></script>
 
@@ -174,9 +194,24 @@ include ('../includes/header.php'); ?>
                 lineColor: '#1ab394',
                 fillColor: "transparent"
             });
-
-
         });
+
+        function openEditModal() {
+                // Realiza una solicitud AJAX para obtener el formulario de edición
+                $.ajax({
+                    url: "modalpass.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
+                    type: "GET",
+                    success: function (response) {
+                        // Muestra el formulario de edición en el contenedor
+                        $("#edit-form-container").html(response).slideDown();
+                        // Abre el modal
+                        $("#myModal6").modal("show");
+                    },
+                    error: function () {
+                        alert("Error al cargar el formulario de edición.");
+                    }
+                });
+            }
     </script>
 
 </body>
