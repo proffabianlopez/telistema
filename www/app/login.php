@@ -1,64 +1,81 @@
 <?php
 session_start();
+    error_log("Inicio de aplicacion");
 include ('dbConnection.php');
 include ('Querys/querys.php');
 
 if (!isset($_SESSION['is_login'])) {
-  if (isset($_REQUEST['mail'])) {
+  if (isset($_REQUEST['mail']) && isset($_REQUEST['pass'])) { // Asegúrate de que tanto mail como pass están configurados
     $Email = trim($_REQUEST['mail']);
     $Password = trim($_REQUEST['pass']);
-
     // Preparar la consulta
-    $sql = SQL_LOGIN;
+    $sql = SQL_LOGIN; // Asegúrate de usar la consulta correcta
 
     // Preparar la sentencia
-    $stmt = $conn->prepare($sql);
+    if ($stmt = $conn->prepare($sql)) {
 
-    // Vincular parámetros
-    $stmt->bind_param("ss", $Email, $Password);
+      // Vincular parámetros
+      $stmt->bind_param("s", $Email);
 
-    // Ejecutar la consulta
-    $stmt->execute();
+      // Ejecutar la consulta
+      $stmt->execute();
 
-    // Obtener el resultado
-    $result = $stmt->get_result();
+      // Obtener el resultado
+      $result = $stmt->get_result();
 
-    // Verificar si se encontró una fila
-    if ($result->num_rows == 1) {
-      $row = $result->fetch_assoc();
-      if ($row['state_user'] == 'inactivo') {
-        $msg = '<div class="alert alert-warning mt-2" role="alert"> Cuenta inactiva </div>';
-      } else if ($row['state_user'] == 'activo') {
-        // Usuario autenticado, obtener los datos del usuario
-        $_SESSION['user_name'] = $row['name_user'];
-        $_SESSION['user_role'] = $row['rol'];
-        $_SESSION['state_user'] = $row['state_user'];
-        $_SESSION['mail'] = $Email;
-        $_SESSION['is_login'] = true;
+      // Verificar si se encontró una fila
+      if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
 
-        // Determinar el rol del usuario
-        $Rol = $_SESSION['user_role'];
+        // Verificar la contraseña
+        if (password_verify( $Password , $row['user_password'])) {
+          if ($row['state_user'] == 'inactivo') {
+            $msg = '<div class="alert alert-warning mt-2" role="alert"> Cuenta inactiva </div>';
+          } else if ($row['state_user'] == 'activo') {
+            // Usuario autenticado, obtener los datos del usuario
+            $_SESSION['user_name'] = $row['name_user'];
+            $_SESSION['user_id'] = $row['id_user'];
+            $_SESSION['user_surname'] = $row['surname_user'];
+            $_SESSION['user_role'] = $row['rol'];
+            $_SESSION['state_user'] = $row['state_user'];
+            $_SESSION['mail'] = $Email;
+            $_SESSION['is_login'] = true;
 
-        if ($Rol == 'admin') {
-          // Redireccionar a la página del panel de control del administrador
-          echo "<script> location.href='Admin/dashboard.php'; </script>";
-          exit;
+            // Determinar el rol del usuario
+            $Rol = $_SESSION['user_role'];
 
-        } elseif ($Rol == 'technic') {
-          // Redireccionar a la página del perfil del técnico
-          echo "<script> location.href='Technic/TechnicProfile.php'; </script>";
-          exit;
+            if ($Rol == 'admin') {
+              // Redireccionar a la página del panel de control del administrador
+              echo "<script> location.href='Admin/dashboard.php'; </script>";
+              exit;
+            } elseif ($Rol == 'technic') {
+              // Redireccionar a la página del perfil del técnico
+              echo "<script> location.href='Technic/dashboard.php'; </script>";
+              exit;
+            }
+          }
+        } else {
+          // Contraseña incorrecta
+          $msg = '<div class="alert alert-warning mt-2" role="alert"> Contraseña incorrecta </div>';
         }
+      } else {
+        // Usuario no encontrado, mostrar mensaje de error
+        $msg = '<div class="alert alert-warning mt-2" role="alert"> Ingrese un correo electrónico y una contraseña válidos </div>';
       }
     } else {
-      // Usuario no encontrado, mostrar mensaje de error
-      $msg = '<div class="alert alert-warning mt-2" role="alert"> Ingrese un correo electrónico y una contraseña válidos </div>';
+      // Error al preparar la consulta
+      $msg = '<div class="alert alert-danger mt-2" role="alert"> Error al preparar la consulta </div>';
     }
+  } else {
+    // Mail o pass no configurados
+    $msg = '<div class="alert alert-warning mt-2" role="alert"> Ingrese su correo electrónico y contraseña </div>';
   }
 } else {
   // Si el usuario ya está autenticado, redirigir al panel de control del administrador
   echo "<script> location.href='Admin/dashboard.php'; </script>";
+  exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -76,7 +93,18 @@ if (!isset($_SESSION['is_login'])) {
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="boostrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
-
+    <style>
+        .password-container {
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -92,15 +120,16 @@ if (!isset($_SESSION['is_login'])) {
             <!-- <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views. -->
                 <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
             </p>
-            <p>Solo Peronal Autorizado</p>
+            <p>Solo Personal Autorizado</p>
             <form class="m-t" role="form" action="" method="POST">
-                
+
             <div class="form-group">
                     <input type="email" class="form-control" name="mail" placeholder="Email" required="">
                 </div>
 
-                <div class="form-group">
-                    <input type="password" class="form-control" name="pass" placeholder="Contraseña" required="">
+                <div class="form-group password-container">
+                    <input type="password" id="user_password" class="form-control" name="pass" placeholder="Contraseña" required="">
+                    <span class="glyphicon glyphicon-eye-open toggle-password"></span>
                 </div>
                 <button type="submit" class="btn btn-success block full-width m-b">Login</button>
                 <?php if(isset($msg)) {echo $msg; } ?>
@@ -113,6 +142,8 @@ if (!isset($_SESSION['is_login'])) {
     <!-- Mainly scripts -->
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/passShow.js"></script>
+
 
 </body>
 
