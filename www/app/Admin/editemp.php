@@ -21,6 +21,8 @@ define('TITLE', 'Update Tecnicos');
 define('PAGE', 'Tecnicos');
 include ('../dbConnection.php');
 include ('../Querys/querys.php');
+include ('generate_config.php');
+
 
 // update
 if (isset($_REQUEST['update'])) {
@@ -33,9 +35,9 @@ if (isset($_REQUEST['update'])) {
   } else {
     // Assigning User Values to Variable
     $id = $_REQUEST['id_user'];
-    $name = $_REQUEST['name_user'];
-    $phone = $_REQUEST['phone_user'];
-    $mail = $_REQUEST['mail'];
+    $name = capitalizeWords(trim($_REQUEST['name_user']));
+    $phone = trim($_REQUEST['phone_user']);
+    $mail = trim($_REQUEST['mail']);
     $state = $_REQUEST['id_state_user'];
 
     $stmt = $conn->prepare(SQL_UPDATE_TECHNIC);

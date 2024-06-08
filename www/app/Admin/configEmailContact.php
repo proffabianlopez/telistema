@@ -37,13 +37,13 @@ if (isset($_REQUEST['emailupdate'])) {
     if (empty($_REQUEST['smtp_host']) || empty($_REQUEST['smtp_port']) || empty($_REQUEST['smtp_user']) || empty($_REQUEST['smtp_pass']) || empty($_REQUEST['smtp_setfrom']) || empty($_REQUEST['smtp_addaddress']) || empty($_REQUEST['pagina_web'])) {
         $passmsg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">Complete todos los campos</div>';
     } else {
-        $smtp_host = $_REQUEST['smtp_host'];
-        $smtp_port = (int) $_REQUEST['smtp_port'];  // Convertir a entero
-        $smtp_user = $_REQUEST['smtp_user'];
-        $smtp_pass = $_REQUEST['smtp_pass'];
-        $smtp_setfrom = $_REQUEST['smtp_setfrom'];
-        $smtp_addaddress = $_REQUEST['smtp_addaddress'];
-        $pagina_web = $_REQUEST['pagina_web'];
+        $smtp_host =trim($_REQUEST['smtp_host']);
+        $smtp_port = trim((int) $_REQUEST['smtp_port']);  // Convertir a entero
+        $smtp_user = trim($_REQUEST['smtp_user']);
+        $smtp_pass = trim($_REQUEST['smtp_pass']);
+        $smtp_setfrom = trim($_REQUEST['smtp_setfrom']);
+        $smtp_addaddress = trim($_REQUEST['smtp_addaddress']);
+        $pagina_web = trim($_REQUEST['pagina_web']);
 
         $stmt = $conn->prepare(SQLUPDATE_FRM_EMAIL);
         if ($stmt === false) {
