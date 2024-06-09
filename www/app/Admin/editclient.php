@@ -16,6 +16,7 @@ define('TITLE', 'Clientes');
 define('PAGE', 'Clientes');
 include ('../dbConnection.php');
 include ('../Querys/querys.php');
+include ('generate_config.php');
 
 // Actualización
 if (isset($_REQUEST['clientupdate'])) {
@@ -25,15 +26,15 @@ if (isset($_REQUEST['clientupdate'])) {
     $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Complete los campos </div>';
   } else {
     // Asignación de valores de usuario a variables
-    $id_client = $_REQUEST['id_client'];
-    $name = $_REQUEST['client_name'];
-    $lastname = $_REQUEST['client_lastname'];
-    $phone = $_REQUEST['phone'];
-    $mail = $_REQUEST['mail'];
-    $address = $_REQUEST['address'];
-    $height = $_REQUEST['height'];
-    $floor = $_REQUEST['floor'];
-    $departament = $_REQUEST['departament'];
+    $id_client =$_REQUEST['id_client'];
+    $name =  capitalizeWords(trim($_REQUEST['client_name']));
+    $lastname =  capitalizeWords(trim($_REQUEST['client_lastname']));
+    $phone = trim($_REQUEST['phone']);
+    $mail = trim($_REQUEST['mail']);
+    $address =  capitalizeWords($_REQUEST['address']);
+    $height = trim($_REQUEST['height']);
+    $floor = trim($_REQUEST['floor']);
+    $departament = trim($_REQUEST['departament']);
 
     $sql = SQL_UPDATE_CLIENT;
 

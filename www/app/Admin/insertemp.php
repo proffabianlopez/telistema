@@ -37,8 +37,8 @@ if (isset($_REQUEST['submit'])) {
     } else {
       $name = capitalizeWords($_REQUEST['name_user']);
       $surname = capitalizeWords($_REQUEST['surname_user']);
-      $phone = $_REQUEST['phone_user'];
-      $mail = $_REQUEST['mail'];
+      $phone = trim($_REQUEST['phone_user']);
+      $mail = trim($_REQUEST['mail']);
       $pass = password_hash($_REQUEST['user_password'], PASSWORD_DEFAULT);
       $state = 1;
       $role = 2;

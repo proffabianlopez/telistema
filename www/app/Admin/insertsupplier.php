@@ -17,6 +17,7 @@ define('PAGE', 'Proveedores');
 
 include ('../dbConnection.php');
 include ('../Querys/querys.php');
+include ('generate_config.php');
 
 if (isset($_REQUEST['submit'])) {
   // Verifica si hay campos vacíos
@@ -25,10 +26,10 @@ if (isset($_REQUEST['submit'])) {
     $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Completa todos los campos </div>';
   } else {
     // Asigna los valores del usuario a variables
-    $name = $_REQUEST['supplier_name'];
-    $phone = $_REQUEST['phone'];
-    $mail = $_REQUEST['mail'];
-    $address = $_REQUEST['address'];
+    $name = capitalizeWords(trim($_REQUEST['supplier_name']));
+    $phone = trim($_REQUEST['phone']);
+    $mail = trim($_REQUEST['mail']);
+    $address = capitalizeWords(trim($_REQUEST['address']));
     $id_state = $_REQUEST['id_state_user'];
     $id_state = 1; // ¿Este valor siempre será 1?
 
@@ -98,19 +99,19 @@ if (isset($_REQUEST['submit'])) {
                 <form action="" method="POST">
                   <div class="form-group">
                     <label for="supplier_name">Nombre</label>
-                    <input type="text" class="form-control" id="supplier_name" name="supplier_name">
+                    <input type="text" class="form-control" id="supplier_name" name="supplier_name" required>
                   </div>
                   <div class="form-group">
                     <label for="phone">Telefono</label>
-                    <input type="text" class="form-control" id="phone" name="phone">
+                    <input type="number" class="form-control" id="phone" name="phone" required>
                   </div>
                   <div class="form-group">
                     <label for="mail">Email</label>
-                    <input type="email" class="form-control" id="mail" name="mail">
+                    <input type="email" class="form-control" id="mail" name="mail" required>
                   </div>
                   <div class="form-group">
                     <label for="address">Dirección</label>
-                    <input type="text" class="form-control" id="address" name="address">
+                    <input type="text" class="form-control" id="address" name="address" required>
                   </div>
                   <div class="text-center">
                     <button type="submit" class="btn btn-danger" id="submit" name="submit">Agregar</button>
