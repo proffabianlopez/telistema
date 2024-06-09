@@ -76,10 +76,6 @@ define('SQL_SELECT_STATUS_USERS', '
         SELECT * FROM states_users');
 
 
-define('SQL_SELECT_TECHNIC_BY_ID', '
-        SELECT * FROM users
-        WHERE id_user = ?');
-
 define('SQL_SELECT_STATE_BY_ID', '
         SELECT state_user, id_state_user 
         FROM states_users
