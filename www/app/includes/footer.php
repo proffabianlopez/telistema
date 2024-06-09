@@ -1,6 +1,3 @@
-
-
-
 <!-- Mainly scripts -->
 <script src="../js/jquery-3.1.1.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
@@ -12,8 +9,8 @@
 <script src="../js/plugins/pace/pace.min.js"></script>
 
 
- <!-- jquery UI -->
- <script src="../js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- jquery UI -->
+<script src="../js/plugins/jquery-ui/jquery-ui.min.js"></script>
 
 <!-- Touch Punch - Touch Event Support for jQuery UI -->
 <script src="../js/plugins/touchpunch/jquery.ui.touch-punch.min.js"></script>
@@ -35,3 +32,11 @@
 
 <!-- shw pass -->
 <script src="../js/passShow.js"></script>
+
+<!-- Sweet alert -->
+<script src="../js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<!-- Ladda -->
+<script src="../js/plugins/ladda/spin.min.js"></script>
+<script src="../js/plugins/ladda/ladda.min.js"></script>
+<script src="../js/plugins/ladda/ladda.jquery.min.js"></script>

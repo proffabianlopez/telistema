@@ -91,6 +91,14 @@ if ($rolUser == 'admin') {
                             Clientes</span>
                     </a>
                 </li>
+                 <li class=" <?php if (PAGE == 'Admin') {
+                        echo 'active';
+                    } ?>" >
+                    <a href="../Admin/admin.php">
+                    <i class="bi bi-people-fill"></i><span class="nav-label">
+                            Administradores</span>
+                    </a>
+                </li>
                 <li class=" <?php if (PAGE == 'sellreport') {
                         echo 'active';
                     } ?>" >
