@@ -108,7 +108,8 @@ define('SQL_UPDATE_TECHNIC_BY_EMAIL', '
         id_rol = ?
         WHERE mail = ?');
 
-define('SQL_UPDATE_TECHNIC_PASS',
+define(
+        'SQL_UPDATE_TECHNIC_PASS',
         '
         UPDATE users
         SET user_password = ? 
@@ -125,7 +126,7 @@ define('SQL_SELECT_TECHNIC_BY_EMAIL_STATE_ROL', '
         FROM users u
         JOIN roles r ON u.id_rol = r.id_rol
         WHERE mail = ?');
-        
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -167,5 +168,67 @@ define(
         'SELECT * FROM password_levels'
 );
 
+/////////////////////////
+// ADMIN
+////////////////////////
 
-?>
+define(
+        'SQL_SELECT_ADMIN',
+        'SELECT u.*
+        FROM users u
+        JOIN roles r ON u.id_rol = r.id_rol
+        WHERE r.rol = "admin" AND u.id_state_user != 2'
+);
+
+
+define(
+        'SQL_SELECT_ADMIN_BY_ID',
+        'SELECT u.*
+        FROM users u
+        JOIN roles r ON u.id_rol = r.id_rol
+        WHERE r.rol = "admin" AND u.id_user = ?;'
+);
+define(
+        'SQL_UPDATE_ADMIN',
+        "UPDATE users
+        SET
+            name_user = ?,
+            surname_user = ?,
+            phone_user = ?,
+            mail = ?,
+            user_password = CASE
+                              WHEN ? IS NOT NULL AND ? != '' THEN ?
+                              ELSE user_password
+                            END
+        WHERE id_user = ?"
+);
+
+define(
+        'SQL_SELECT_ADMIN_BY_EMAIL_STATE_ROL',
+        'SELECT r.rol, u.id_state_user
+        FROM users u
+        JOIN roles r ON u.id_rol = r.id_rol
+        WHERE mail = ?'
+);
+define(
+        'SQL_UPDATE_ADMIN_BY_EMAIL',
+        'UPDATE users
+        SET name_user = ?,
+        surname_user = ?,
+        phone_user = ?,
+        user_password = ?,
+        id_state_user = ?,
+        id_rol = ?
+        WHERE mail = ?'
+);
+define(
+        'SQL_INSERT_ADMIN',
+        'INSERT INTO users (name_user, surname_user, phone_user, mail, user_password, id_state_user, id_rol)
+        VALUES (?, ?, ?, ?, ?, ?, ?)'
+);
+define(
+        'SQL_DELETE_ADMIN',
+        'UPDATE users
+        SET id_state_user = 2
+        WHERE id_user = ?'
+);

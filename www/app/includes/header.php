@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -21,13 +19,20 @@
     <link href="../css/animate.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 
-     <!-- FooTable -->
-     <link href="../css/plugins/footable/footable.core.css" rel="stylesheet">
-   
-     <style>
+    <!-- FooTable -->
+    <link href="../css/plugins/footable/footable.core.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="../css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+
+    <!-- Ladda style -->
+    <link href="../css/plugins/ladda/ladda-themeless.min.css" rel="stylesheet">
+
+
+    <style>
         .password-container {
             position: relative;
         }
+
         .toggle-password {
             position: absolute;
             top: 70%;
