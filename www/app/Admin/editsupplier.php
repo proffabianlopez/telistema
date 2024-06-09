@@ -21,7 +21,7 @@ define('TITLE', 'Actualizar Proveedores');
 define('PAGE', 'Proveedores');
 include ('../dbConnection.php');
 include ('../Querys/querys.php');
-
+include ('generate_config.php');
 // update
 if (isset($_REQUEST['update'])) {
 
@@ -32,10 +32,10 @@ if (isset($_REQUEST['update'])) {
 
   } else {
     $id = $_REQUEST['id_supplier'];
-    $name = $_REQUEST['supplier_name'];
-    $phone = $_REQUEST['phone'];
-    $mail = $_REQUEST['mail'];
-    $address = $_REQUEST['address'];
+    $name = capitalizeWords(trim($_REQUEST['supplier_name']));
+    $phone = trim($_REQUEST['phone']);
+    $mail = trim($_REQUEST['mail']);
+    $address = capitalizeWords($_REQUEST['address']);
     $id_state = $_REQUEST['id_state_user'];
 
     $stmt = $conn->prepare(SQL_UPDATE_SUPPLIER);

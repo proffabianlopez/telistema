@@ -17,6 +17,7 @@ define('PAGE', 'Clientes');
 
 include ('../dbConnection.php');
 include ('../Querys/querys.php');
+include ('generate_config.php');
 
 if (isset($_REQUEST['reqsubmit'])) {
   // Verifica si hay campos vacíos
@@ -25,14 +26,14 @@ if (isset($_REQUEST['reqsubmit'])) {
     $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Completa todos los campos </div>';
   } else {
     // Asigna los valores del usuario a variables
-    $name = $_REQUEST['client_name'];
-    $lastname = $_REQUEST['client_lastname'];
-    $phone = $_REQUEST['phone'];
-    $mail = $_REQUEST['mail'];
-    $address = $_REQUEST['address'];
-    $height = $_REQUEST['height'];
-    $floor = $_REQUEST['floor'];
-    $departament = $_REQUEST['departament'];
+    $name = capitalizeWords(trim($_REQUEST['client_name']));
+    $lastname = capitalizeWords(trim($_REQUEST['client_lastname']));
+    $phone = trim($_REQUEST['phone']);
+    $mail = trim($_REQUEST['mail']);
+    $address = capitalizeWords(trim($_REQUEST['address']));
+    $height = trim($_REQUEST['height']);
+    $floor = trim($_REQUEST['floor']);
+    $departament = trim($_REQUEST['departament']);
     $id_state = $_REQUEST['id_state_user'];
     $id_state = 1; // ¿Este valor siempre será 1?
 
