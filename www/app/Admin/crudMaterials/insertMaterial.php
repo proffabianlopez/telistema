@@ -16,8 +16,7 @@ if (!isset($_SESSION['token'])) {
 $token = $_SESSION['token'];
 include ('../../dbConnection.php');
 include ('../../Querys/querys.php');
-include ('../generate_config.php');
-$passwordGenerate = generatePassword();
+include ('../configSmtp/generate_config.php');
 ?>
 
 </body>
@@ -29,33 +28,23 @@ $passwordGenerate = generatePassword();
                     <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                 </button>
                 <i class="bi bi-person-fill-add modal-icon"></i>
-                <h4 class="modal-title">Registrar Nuevo Administrador</h4>
+                <h4 class="modal-title">Registrar Nuevo Material</h4>
             </div>
             <div class="modal-body">
 
                 <form id="change-admin-form" action="" method="POST">
                     <div class="form-group">
                         <label for="name_user">Nombre</label>
-                        <input type="text" class="form-control" id="name_user" name="name_user">
+                        <input type="text" class="form-control" id="material_name" name="material_name">
                     </div>
                     <div class="form-group">
-                        <label for="name_user">Apellido</label>
-                        <input type="text" class="form-control" id="surname_user" name="surname_user">
+                        <label for="name_user">Descripción</label>
+                        <input type="text" class="form-control" id="description" name="description">
                     </div>
                     <div class="form-group">
-                        <label for="phone_user">Teléfono</label>
-                        <input type="number" class="form-control" id="phone_user" name="phone_user"
+                        <label for="phone_user">Medida</label>
+                        <input type="number" class="form-control" id="id_measure" name="id_measure"
                             onkeypress="isInputNumber(event)">
-                    </div>
-                    <div class="form-group">
-                        <label for="mail">Email</label>
-                        <input type="email" class="form-control" id="mail" name="mail">
-                    </div>
-                    <div style="display: none" class="form-group password-container">
-                        <label for="user_password">Contraseña</label>
-                        <input type="password" class="form-control" id="user_password" name="user_password"
-                            value="<?php echo $passwordGenerate; ?>" readonly>
-                        <span class="glyphicon glyphicon-eye-open toggle-password"></span>
                     </div>
                     <br>
 

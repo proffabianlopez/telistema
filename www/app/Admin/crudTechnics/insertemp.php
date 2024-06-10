@@ -4,21 +4,21 @@ session_start();
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 
   if ($_SESSION['user_role'] != 'admin') {
-    echo "<script> location.href='../includes/404.php'; </script>";
+    echo "<script> location.href='../../includes/404.php'; </script>";
   }
   $rEmail = $_SESSION['mail'];
   $rolUser = $_SESSION['user_role'];
 } else {
-  echo "<script> location.href='../login.php'; </script>";
+  echo "<script> location.href='../../login.php'; </script>";
 }
 ////////////////////////////////
 
 define('TITLE', 'Agregar Técnicos');
 define('PAGE', 'Técnicos');
-include ('../dbConnection.php');
-include ('../Querys/querys.php');
-include ('generate_config.php');
-include ('endEmail.php');
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
+include ('../configSmtp/generate_config.php');
+include ('../configSmtp/endEmail.php');
 
 $passwordGenerate = generatePassword();
 if (isset($_REQUEST['submit'])) {
@@ -94,7 +94,7 @@ if (isset($_REQUEST['submit'])) {
 
 }
 ?>
-<?php include ('../includes/header.php') ?>
+<?php include ('../../includes/header.php') ?>
 
 <body>
 
@@ -102,7 +102,7 @@ if (isset($_REQUEST['submit'])) {
 
     <nav class="navbar-default navbar-static-side" role="navigation">
       <div class="sidebar-collapse">
-        <?php include ('../includes/menu.php') ?>
+        <?php include ('../../includes/menu.php') ?>
 
       </div>
     </nav>
@@ -115,8 +115,8 @@ if (isset($_REQUEST['submit'])) {
           </div>
           <ul class="nav navbar-top-links navbar-right">
             <li>
-              <a href="login.html">
-                <i class="fa fa-sign-out"></i> Cerrar Sección
+              <a href="../../logout.php">
+                <i class="fa fa-sign-out"></i> Cerrar Sesión
               </a>
             </li>
           </ul>
@@ -196,7 +196,7 @@ if (isset($_REQUEST['submit'])) {
   </div>
 
 
-  <?php include ('../includes/footer.php'); ?>
+  <?php include ('../../includes/footer.php'); ?>
   <!-- Only Number for input fields -->
   <script>
     function isInputNumber(evt) {
