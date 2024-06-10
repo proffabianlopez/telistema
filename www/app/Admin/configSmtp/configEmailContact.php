@@ -3,20 +3,20 @@ session_start();
 ////////////////////////////////
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
     if ($_SESSION['user_role'] != 'admin') {
-        echo "<script> location.href='../includes/404.php'; </script>";
+        echo "<script> location.href='../../includes/404.php'; </script>";
     }
     $rEmail = $_SESSION['mail'];
     $rolUser = $_SESSION['user_role'];
 } else {
-    echo "<script> location.href='../login.php'; </script>";
+    echo "<script> location.href='../../login.php'; </script>";
 }
 ////////////////////////////////
 
 define('TITLE', 'Actualización de Email');
 define('PAGE', 'Actualización de Email');
 
-include('../dbConnection.php');
-include('../Querys/configEmailFrm.php');
+include('../../dbConnection.php');
+include('../../Querys/configEmailFrm.php');
 
 
 $sql = SQLSELECT_FRM_EMAIL;
@@ -93,7 +93,7 @@ if (isset($_REQUEST['emailupdate'])) {
     }
 }
 ?>
-<?php include('../includes/header.php') ?>
+<?php include('../../includes/header.php') ?>
 
 <body>
 
@@ -101,7 +101,7 @@ if (isset($_REQUEST['emailupdate'])) {
 
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
-                <?php include('../includes/menu.php') ?>
+                <?php include('../../includes/menu.php') ?>
 
             </div>
         </nav>
@@ -116,8 +116,8 @@ if (isset($_REQUEST['emailupdate'])) {
                     <ul class="nav navbar-top-links navbar-right">
 
                         <li>
-                            <a href="../logout.php">
-                                <i class="fa fa-sign-out"></i> Cerrar Sección
+                            <a href="../../logout.php">
+                                <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
                     </ul>
@@ -216,7 +216,7 @@ if (isset($_REQUEST['emailupdate'])) {
 
 
 
-    <?php include('../includes/footer.php'); ?>
+    <?php include('../../includes/footer.php'); ?>
 
 </body>
 

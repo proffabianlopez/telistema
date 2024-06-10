@@ -13,7 +13,7 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 // Determina la URL dashboard según el rol
 $dashboard_url = '';
 if ($rolUser == 'admin') {
-    $dashboard_url = '../Admin/dashboard.php';
+    $dashboard_url = 'dashboard.php';
 } elseif ($rolUser == 'technic') {
     $dashboard_url = '../Technic/dashboard.php';
 }
@@ -27,7 +27,7 @@ if ($rolUser == 'admin') {
                             </span> <span class="text-muted text-xs block"><?php echo ucfirst($_SESSION['user_role']) ?><b class="caret"></b></span>
                         </span> </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="../logout.php">Cerrar Sesión</a></li>
+                        <li><a href="../../logout.php">Cerrar Sesión</a></li>
                     </ul>
                 </div>
                 <div class="logo-element">
@@ -61,40 +61,40 @@ if ($rolUser == 'admin') {
                 <li class=" <?php if (PAGE == 'Proveedores') {
                         echo 'active';
                     } ?>">
-                    <a  href="../Admin/suppliers.php">
+                    <a  href="../Admin/crudSuppliers/suppliers.php">
                     <i class="bi bi-database"></i><span class="nav-label">Proveedores</span>
 
                     </a>
                 </li>
-                <li class=" <?php if (PAGE == 'assets') {
+                <li class=" <?php if (PAGE == 'Materiales') {
                         echo 'active';
                     } ?>">
-                    <a  href="../Admin/assets.php">
+                    <a  href="../crudMaterials/materials.php">
                     <i class="bi bi-database"></i><span class="nav-label">Materiales</span>
 
                     </a>
                 </li>
-                <li class=" <?php if (PAGE == 'Tecnicos') {
+                <li class=" <?php if (PAGE == 'Técnicos') {
                         echo 'active';
                     } ?>" >
-                    <a href="../Admin/technician.php">
+                    <a href="../crudTechnics/technician.php">
                     <i class="bi bi-headset"></i><span class="nav-label">
-                            Tecnicos</span>
+                            Técnicos</span>
 
                     </a>
                 </li>
                 <li class=" <?php if (PAGE == 'Clientes') {
                         echo 'active';
                     } ?>" >
-                    <a href="../Admin/clients.php">
+                    <a href="../crudClients/clients.php">
                     <i class="bi bi-people-fill"></i><span class="nav-label">
                             Clientes</span>
                     </a>
                 </li>
-                 <li class=" <?php if (PAGE == 'Admin') {
+                <li class=" <?php if (PAGE == 'Admin') {
                         echo 'active';
                     } ?>" >
-                    <a href="../Admin/admin.php">
+                    <a href="../crudAdmins/admin.php">
                     <i class="bi bi-people-fill"></i><span class="nav-label">
                             Administradores</span>
                     </a>
@@ -118,7 +118,7 @@ if ($rolUser == 'admin') {
                 <li class=" <?php if (PAGE == 'Actualización de Email') {
                         echo 'active';
                     } ?>" >
-                    <a href="../Admin/configEmailContact.php">
+                    <a href="../configSmtp/configEmailContact.php">
                         <i class="bi bi-envelope-at"></i><span class="nav-label">
                             Email de Contacto</span>
                     </a>

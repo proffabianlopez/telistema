@@ -3,12 +3,12 @@ session_start();
 ////////////////////////////////
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
     if ($_SESSION['user_role'] != 'admin') {
-        echo "<script> location.href='../includes/404.php'; </script>";
+        echo "<script> location.href='../../includes/404.php'; </script>";
     }
     $rEmail = $_SESSION['mail'];
     $rolUser = $_SESSION['user_role'];
 } else {
-    echo "<script> location.href='../login.php'; </script>";
+    echo "<script> location.href='../../login.php'; </script>";
 }
 ////////////////////////////////
 // Genera un token CSRF y lo guarda en la sesión
@@ -19,11 +19,11 @@ $token = $_SESSION['token'];
 
 
 
-define('TITLE', 'Admin');
-define('PAGE', 'Admin');
-include ('../includes/header.php');
-include ('../dbConnection.php');
-include ('../Querys/querys.php');
+define('TITLE', 'Materiales');
+define('PAGE', 'Materiales');
+include ('../../includes/header.php');
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
 
 ?>
 
@@ -34,7 +34,7 @@ include ('../Querys/querys.php');
 
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
-                <?php include ('../includes/menu.php') ?>
+                <?php include ('../../includes/menu.php') ?>
 
             </div>
         </nav>
@@ -48,8 +48,8 @@ include ('../Querys/querys.php');
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../logout.php">
-                                <i class="fa fa-sign-out"></i> Cerrar Sessión
+                            <a href="../../logout.php">
+                                <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
                     </ul>
@@ -58,7 +58,7 @@ include ('../Querys/querys.php');
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Adminstradores</h2>
+                    <h2>Materiales</h2>
 
                 </div>
                 <div class="col-lg-2">
@@ -71,7 +71,7 @@ include ('../Querys/querys.php');
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>Lista de Administradores</h5>
+                                <h5>Lista de Materiales</h5>
 
                             </div>
                             <div class="ibox-content">
@@ -121,23 +121,20 @@ include ('../Querys/querys.php');
                                         echo '<td>' . $row["mail"] . '</td>';
                                         echo '<td>' . $row["phone_user"] . '</td>';
                                         echo '<td>
-            
-                                        <div class="btn-group" role="group">  
+                                                    <div class="btn-group" role="group">  
                                                         <button onclick="openEditModal(' . $row["id_user"] . ')" class="btn btn-warning btn-xs" >
                                                             <i class="bi bi-pencil-square"></i>
                                                         </button>
-                                                     <button onclick="openDeleteModal(' . $row["id_user"] . ')" class="btn btn-danger btn-xs" >
+                                                        <button onclick="openDeleteModal(' . $row["id_user"] . ')" class="btn btn-danger btn-xs" >
                                                             <i class="bi bi-trash"></i>
                                                         </button>
-                                        
-                                                </div>
-                                    </td> 
-                                                         
-                                                        </tr>';
+                                                    </div>
+                                                </td> 
+                                            </tr>';
                                     }
 
                                     echo '</tbody>
-                                                  </table>';
+                                                </table>';
                                 } else {
                                     echo "0 Result";
                                 }
@@ -182,7 +179,7 @@ include ('../Querys/querys.php');
     </div>
     <div id="edit-form-container" style="display: none;"></div>
     <?php
-    include ('../includes/footer.php');
+    include ('../../includes/footer.php');
     ?>
     <script>
         $(document).ready(function () {

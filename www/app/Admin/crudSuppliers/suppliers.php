@@ -3,20 +3,20 @@ session_start();
 ////////////////////////////////
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
     if ($_SESSION['user_role'] != 'admin') {
-        echo "<script> location.href='../includes/404.php'; </script>";
+        echo "<script> location.href='../../includes/404.php'; </script>";
     }
     $rEmail = $_SESSION['mail'];
     $rolUser = $_SESSION['user_role'];
 } else {
-    echo "<script> location.href='../login.php'; </script>";
+    echo "<script> location.href='../../login.php'; </script>";
 }
 ////////////////////////////////
 
 define('TITLE', 'Proveedores');
 define('PAGE', 'Proveedores');
-include ('../includes/header.php');
-include ('../dbConnection.php');
-include ('../Querys/querys.php');
+include ('../../includes/header.php');
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
 
 ?>
 
@@ -26,7 +26,7 @@ include ('../Querys/querys.php');
 
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
-                <?php include ('../includes/menu.php') ?>
+                <?php include ('../../includes/menu.php') ?>
 
             </div>
         </nav>
@@ -40,7 +40,7 @@ include ('../Querys/querys.php');
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../logout.php">
+                            <a href="../../logout.php">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
@@ -135,7 +135,7 @@ include ('../Querys/querys.php');
                                     }
 
                                     echo '</tbody>
-                                                  </table>';
+                                                </table>';
                                 } else {
                                     echo "0 Result";
                                 }
@@ -194,10 +194,10 @@ include ('../Querys/querys.php');
         </a>
     </div>
 
-   
+
 
     <?php
-    include ('../includes/footer.php');
+    include ('../../includes/footer.php');
     ?>
     <script>
         $(document).ready(function () {

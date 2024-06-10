@@ -4,7 +4,7 @@ session_start();
 // Verifica si la sesión está iniciada y el token es válido
 if (!isset($_SESSION['is_login']) || !isset($_GET['token']) || $_GET['token'] !== $_SESSION['token']) {
     // Si no hay sesión o el token no es válido, redirige al usuario o muestra un mensaje de error
-    header("Location: ../includes/404.php");
+    header("Location: ../../includes/404.php");
     exit();
 }
 
@@ -28,10 +28,10 @@ if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_us
     exit;
 }
 
-include ('../dbConnection.php');
-include ('../Querys/querys.php');
-include ('generate_config.php');
-include ('endEmail.php');
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
+include ('../generate_config.php');
+include ('../endEmail.php');
 
 //editar admin
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

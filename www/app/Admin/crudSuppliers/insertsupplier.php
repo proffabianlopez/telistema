@@ -3,20 +3,20 @@ session_start();
 ////////////////////////////////
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
   if ($_SESSION['user_role'] != 'admin') {
-    echo "<script> location.href='../includes/404.php'; </script>";
+    echo "<script> location.href='../../includes/404.php'; </script>";
   }
   $rEmail = $_SESSION['mail'];
   $rolUser = $_SESSION['user_role'];
 } else {
-  echo "<script> location.href='../login.php'; </script>";
+  echo "<script> location.href='../../login.php'; </script>";
 }
 ////////////////////////////////
 
 define('TITLE', 'Agregar Nuevo Proveedor');
 define('PAGE', 'Proveedores');
 
-include ('../dbConnection.php');
-include ('../Querys/querys.php');
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
 
 if (isset($_REQUEST['submit'])) {
   // Verifica si hay campos vacíos
@@ -48,7 +48,7 @@ if (isset($_REQUEST['submit'])) {
   }
 }
 ?>
-<?php include ('../includes/header.php') ?>
+<?php include ('../../includes/header.php') ?>
 
 <body>
 
@@ -56,7 +56,7 @@ if (isset($_REQUEST['submit'])) {
 
     <nav class="navbar-default navbar-static-side" role="navigation">
       <div class="sidebar-collapse">
-        <?php include ('../includes/menu.php') ?>
+        <?php include ('../../includes/menu.php') ?>
 
       </div>
     </nav>
@@ -139,7 +139,7 @@ if (isset($_REQUEST['submit'])) {
 
 
 
-    <?php include ('../includes/footer.php'); ?>
+    <?php include ('../../includes/footer.php'); ?>
 
 </body>
 

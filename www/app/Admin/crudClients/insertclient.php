@@ -3,20 +3,20 @@ session_start();
 ////////////////////////////////
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
   if ($_SESSION['user_role'] != 'admin') {
-    echo "<script> location.href='../includes/404.php'; </script>";
+    echo "<script> location.href='../../includes/404.php'; </script>";
   }
   $rEmail = $_SESSION['mail'];
   $rolUser = $_SESSION['user_role'];
 } else {
-  echo "<script> location.href='../login.php'; </script>";
+  echo "<script> location.href='../../login.php'; </script>";
 }
 ////////////////////////////////
 
 define('TITLE', 'Agregar Nuevo Cliente');
 define('PAGE', 'Clientes');
 
-include ('../dbConnection.php');
-include ('../Querys/querys.php');
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
 
 if (isset($_REQUEST['reqsubmit'])) {
   // Verifica si hay campos vacíos
@@ -52,7 +52,7 @@ if (isset($_REQUEST['reqsubmit'])) {
   }
 }
 ?>
-<?php include ('../includes/header.php') ?>
+<?php include ('../../includes/header.php') ?>
 
 <body>
 
@@ -74,7 +74,7 @@ if (isset($_REQUEST['reqsubmit'])) {
           <ul class="nav navbar-top-links navbar-right">
             <li>
               <a href="login.html">
-                <i class="fa fa-sign-out"></i> Cerrar Sección
+                <i class="fa fa-sign-out"></i> Cerrar Sesión
               </a>
             </li>
           </ul>
@@ -160,7 +160,7 @@ if (isset($_REQUEST['reqsubmit'])) {
 
 
 
-    <?php include ('../includes/footer.php'); ?>
+    <?php include ('../../includes/footer.php'); ?>
 
 </body>
 

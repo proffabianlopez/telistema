@@ -4,7 +4,7 @@ session_start();
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
   if ($_SESSION['user_role'] != 'admin') {
 
-    echo "<script> location.href='../includes/404.php'; </script>";
+    echo "<script> location.href='../../includes/404.php'; </script>";
 
   }
   $rEmail = $_SESSION['mail'];
@@ -12,15 +12,15 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 
 } else {
 
-  echo "<script> location.href='../login.php'; </script>";
+  echo "<script> location.href='../../login.php'; </script>";
 
 }
 ////////////////////////////////
 
 define('TITLE', 'Update Tecnicos');
 define('PAGE', 'Tecnicos');
-include ('../dbConnection.php');
-include ('../Querys/querys.php');
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
 
 // update
 if (isset($_REQUEST['update'])) {
@@ -77,7 +77,7 @@ if (isset($_REQUEST['view'])) {
 
 }
 ?>
-<?php include ('../includes/header.php') ?>
+<?php include ('../../includes/header.php') ?>
 
 <body>
 
@@ -85,7 +85,7 @@ if (isset($_REQUEST['view'])) {
 
     <nav class="navbar-default navbar-static-side" role="navigation">
       <div class="sidebar-collapse">
-        <?php include ('../includes/menu.php') ?>
+        <?php include ('../../includes/menu.php') ?>
 
       </div>
     </nav>
@@ -99,7 +99,7 @@ if (isset($_REQUEST['view'])) {
           <ul class="nav navbar-top-links navbar-right">
             <li>
               <a href="login.html">
-                <i class="fa fa-sign-out"></i> Cerrar Sección
+                <i class="fa fa-sign-out"></i> Cerrar Sesión
               </a>
             </li>
           </ul>
@@ -220,7 +220,7 @@ if (isset($_REQUEST['view'])) {
 
 
 
-  <?php include ('../includes/footer.php'); ?>
+  <?php include ('../../includes/footer.php'); ?>
 
   <!-- Only Number for input fields -->
   <script>

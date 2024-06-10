@@ -5,7 +5,7 @@ session_start();
 // Verifica si la sesión está iniciada y el token es válido
 if (!isset($_SESSION['is_login']) || !isset($_GET['token']) || $_GET['token'] !== $_SESSION['token']) {
     // Si no hay sesión o el token no es válido, redirige al usuario o muestra un mensaje de error
-    header("Location: ../includes/404.php");
+    header("Location: ../../includes/404.php");
     exit();
 }
 
@@ -14,8 +14,8 @@ if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 $token = $_SESSION['token'];
-include ('../dbConnection.php');
-include ('../Querys/querys.php');
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
 
 if (isset($_REQUEST['update'])) {
 

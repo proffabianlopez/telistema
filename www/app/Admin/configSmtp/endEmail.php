@@ -3,11 +3,11 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require '../../php/vendor/autoload.php';
+require '../../../php/vendor/autoload.php';
 
 function enviarCorreoYRegistrar($name, $email, $pass, $phone = '') {
-    include ('../dbConnection.php');
-    include ('../Querys/configEmailFrm.php');
+    include ('../../dbConnection.php');
+    include ('../../Querys/configEmailFrm.php');
     $mail = new PHPMailer(true);
     $response = array();
 
@@ -88,7 +88,7 @@ function enviarCorreoYRegistrar($name, $email, $pass, $phone = '') {
                 <p><strong>Contraseña:</strong> " . htmlspecialchars($pass) . "</p>
             </div>
             <footer>
-                Inicia Sesión aqui: <a href='" . htmlspecialchars($webpage) . "'>Iniciar Sessión</a>
+                Inicia Sesión aqui: <a href='" . htmlspecialchars($webpage) . "'>Iniciar Sesión</a>
             </footer>
         </body>
         </html>
