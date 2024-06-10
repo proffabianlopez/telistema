@@ -60,7 +60,7 @@ if (isset($_REQUEST['reqsubmit'])) {
 
     <nav class="navbar-default navbar-static-side" role="navigation">
       <div class="sidebar-collapse">
-        <?php include ('../includes/menu.php') ?>
+        <?php include ('../../includes/menu.php') ?>
 
       </div>
     </nav>

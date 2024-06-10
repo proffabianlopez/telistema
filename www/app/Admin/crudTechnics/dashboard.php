@@ -50,7 +50,7 @@ include ('../../dbConnection.php');
         <ul class="nav navbar-top-links navbar-right">             
           <li>
             <a href="login.html">
-              <i class="fa fa-sign-out"></i> Cerrar Sección
+              <i class="fa fa-sign-out"></i> Cerrar Sesión
             </a>
           </li>
         </ul>

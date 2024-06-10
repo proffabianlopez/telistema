@@ -61,7 +61,7 @@ if ($rolUser == 'admin') {
                 <li class=" <?php if (PAGE == 'Proveedores') {
                         echo 'active';
                     } ?>">
-                    <a  href="../Admin/crudSuppliers/suppliers.php">
+                    <a  href="../crudSuppliers/suppliers.php">
                     <i class="bi bi-database"></i><span class="nav-label">Proveedores</span>
 
                     </a>
@@ -171,7 +171,7 @@ if ($rolUser == 'admin') {
             <?php } ?>
 
             <li>
-                <a class="" href="../logout.php">
+                <a class="" href="../../logout.php">
                 <i class="bi bi-door-closed"></i><span class="nav-label">
                         Cerrar Sesión</span>
                 </a>

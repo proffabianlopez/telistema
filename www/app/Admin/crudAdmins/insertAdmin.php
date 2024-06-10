@@ -16,7 +16,7 @@ if (!isset($_SESSION['token'])) {
 $token = $_SESSION['token'];
 include ('../../dbConnection.php');
 include ('../../Querys/querys.php');
-include ('../generate_config.php');
+include ('../configSmtp/generate_config.php');
 $passwordGenerate = generatePassword();
 ?>
 

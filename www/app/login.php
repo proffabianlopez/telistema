@@ -46,7 +46,7 @@ if (!isset($_SESSION['is_login'])) {
 
             if ($Rol == 'admin') {
               // Redireccionar a la página del panel de control del administrador
-              echo "<script> location.href='Admin/dashboard.php'; </script>";
+              echo "<script> location.href='Admin/crudAdmins/dashboard.php'; </script>";
               exit;
             } elseif ($Rol == 'technic') {
               // Redireccionar a la página del perfil del técnico

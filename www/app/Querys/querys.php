@@ -188,14 +188,14 @@ define(
         'SQL_UPDATE_ADMIN',
         "UPDATE users
         SET
-            name_user = ?,
-            surname_user = ?,
-            phone_user = ?,
-            mail = ?,
-            user_password = CASE
-                              WHEN ? IS NOT NULL AND ? != '' THEN ?
-                              ELSE user_password
-                            END
+        name_user = ?,
+        surname_user = ?,
+        phone_user = ?,
+        mail = ?,
+        user_password = CASE
+                        WHEN ? IS NOT NULL AND ? != '' THEN ?
+                        ELSE user_password
+                        END
         WHERE id_user = ?"
 );
 
@@ -228,3 +228,12 @@ define(
         SET id_state_user = 2
         WHERE id_user = ?'
 );
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+// Materials
+//////////////////////////////////////////////////////////////////
+
+
+define('SQL_SELECT_MATERIALS', '
+        SELECT * FROM  materials');

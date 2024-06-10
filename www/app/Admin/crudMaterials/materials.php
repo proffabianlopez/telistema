@@ -78,18 +78,16 @@ include ('../../Querys/querys.php');
 
 
                                 <?php
-                                $sql = SQL_SELECT_ADMIN;
+                                $sql = SQL_SELECT_MATERIALS;
                                 $result = $conn->query($sql);
 
                                 if ($result->num_rows > 0) {
                                     echo ' <table class="footable table table-stripped toggle-arrow-tiny">
                                 <thead>
                                 <tr>
-                                    <th data-hide="all">Número</th>
                                     <th data-toggle="true">Nombre</th>
-                                    <th data-toggle="true">Apellido</th>
-                                    <th data-hide="phone">Email</th>
-                                    <th data-hide="all">Telefono</th>
+                                    <th data-toggle="true">Descripción</th>
+                                    <th data-hide="phone">Medida</th>
                                     <th>Accion</th>
                                     </tr>
                                 </thead>
@@ -115,16 +113,14 @@ include ('../../Querys/querys.php');
                                         }
 
                                         echo '<tr>';
-                                        echo '<td>' . $row["id_user"] . '</td>';
-                                        echo '<td>' . $row["name_user"] . '</td>';
-                                        echo '<td>' . $row["surname_user"] . '</td>';
-                                        echo '<td>' . $row["mail"] . '</td>';
-                                        echo '<td>' . $row["phone_user"] . '</td>';
+                                        echo '<td>' . $row["material_name"] . '</td>';
+                                        echo '<td>' . $row["description"] . '</td>';
+                                        echo '<td>' . $row["id_measure"] . '</td>';
                                         echo '<td>
                                                     <div class="btn-group" role="group">  
-                                                        <button onclick="openEditModal(' . $row["id_user"] . ')" class="btn btn-warning btn-xs" >
+                                                        <button onclick="openEditModal(' . $row["id_user"] . ')" class="btn btn-warning btn-xs" style="margin-right: 5px" >
                                                             <i class="bi bi-pencil-square"></i>
-                                                        </button>
+                                                        </button> 
                                                         <button onclick="openDeleteModal(' . $row["id_user"] . ')" class="btn btn-danger btn-xs" >
                                                             <i class="bi bi-trash"></i>
                                                         </button>

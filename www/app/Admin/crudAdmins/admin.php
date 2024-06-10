@@ -122,7 +122,7 @@ include ('../../Querys/querys.php');
                                         echo '<td>' . $row["phone_user"] . '</td>';
                                         echo '<td>
                                                     <div class="btn-group" role="group">  
-                                                        <button onclick="openEditModal(' . $row["id_user"] . ')" class="btn btn-warning btn-xs" >
+                                                        <button onclick="openEditModal(' . $row["id_user"] . ')" class="btn btn-warning btn-xs" style="margin-right: 5px" >
                                                             <i class="bi bi-pencil-square"></i>
                                                         </button>
                                                         <button onclick="openDeleteModal(' . $row["id_user"] . ')" class="btn btn-danger btn-xs" >
