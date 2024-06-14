@@ -89,7 +89,7 @@ if (isset($_GET['id'])) {
 
                 <form id="change-admin-form" action="" method="POST">
                     <div style="display: none;" class="form-group">
-                        <label for="id_user">ID Técnico</label>
+                        <label for="id_user">ID Admin</label>
                         <input type="text" class="form-control" id="id_user" name="id_user" value="<?php if (isset($row['id_user'])) {
                             echo $row['id_user'];
                         } ?>" readonly>

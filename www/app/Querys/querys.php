@@ -231,9 +231,44 @@ define(
 
 
 /////////////////////////////////////////////////////////////////////////////////////
-// Materials
+// Products
 //////////////////////////////////////////////////////////////////
 
 
 define('SQL_SELECT_MATERIALS', '
         SELECT * FROM  materials');
+
+define(
+        'SQL_SELECT_PRODUCT_BY_ID',
+        'SELECT u.*
+        FROM materials u
+        WHERE u.id_material = ?;'
+);
+
+define('SQL_UPDATE_PRODUCT',
+        'UPDATE materials
+        SET material_name = ?,
+        description = ?,
+        id_measure = ?
+        WHERE id_material = ?');
+
+define('SQL_SELECT_MEASURE_BY_ID', 
+        'SELECT name_measure, id_measure 
+        FROM measures
+        WHERE id_measure = ?');
+
+define('SQL_SELECT_MEASURES', 
+        'SELECT * FROM measures');
+
+define(
+        'SQL_INSERT_PRODUCT',
+        'INSERT INTO materials (material_name, description, id_measure, id_status)
+        VALUES (?, ?, ?, ?)'
+);
+
+define(
+        'SQL_DELETE_PRODUCT',
+        'UPDATE materials
+        SET id_status = 2
+        WHERE id_material = ?'
+);

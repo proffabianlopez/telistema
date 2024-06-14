@@ -58,7 +58,7 @@ include ('../../Querys/querys.php');
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Materiales</h2>
+                    <h2>Productos</h2>
 
                 </div>
                 <div class="col-lg-2">
@@ -71,7 +71,7 @@ include ('../../Querys/querys.php');
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>Lista de Materiales</h5>
+                                <h5>Lista de Productos</h5>
 
                             </div>
                             <div class="ibox-content">
@@ -83,20 +83,20 @@ include ('../../Querys/querys.php');
 
                                 if ($result->num_rows > 0) {
                                     echo ' <table class="footable table table-stripped toggle-arrow-tiny">
-                                <thead>
-                                <tr>
-                                    <th data-toggle="true">Nombre</th>
-                                    <th data-toggle="true">Descripción</th>
-                                    <th data-hide="phone">Medida</th>
-                                    <th>Accion</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                ';
+                                    <thead>
+                                    <tr>
+                                        <th data-toggle="true">Nombre</th>
+                                        <th data-toggle="true">Descripción</th>
+                                        <th data-hide="phone">Medida</th>
+                                        <th>Accion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    ';
 
-                                    // Imprimir los datos de cada técnico
+                                    // Imprimir los datos de cada producto
                                     while ($row = $result->fetch_assoc()) {
-                                        $state = $row['id_state_user'];
+                                        $state = $row['id_status'];
                                         $stmt = $conn->prepare(SQL_SELECT_STATE_BY_ID);
                                         $stmt->bind_param("i", $state);
                                         $stmt->execute();
@@ -112,25 +112,42 @@ include ('../../Querys/querys.php');
                                             $name_state = "Estado no encontrado"; // O el valor que desees
                                         }
 
-                                        echo '<tr>';
-                                        echo '<td>' . $row["material_name"] . '</td>';
-                                        echo '<td>' . $row["description"] . '</td>';
-                                        echo '<td>' . $row["id_measure"] . '</td>';
-                                        echo '<td>
-                                                    <div class="btn-group" role="group">  
-                                                        <button onclick="openEditModal(' . $row["id_user"] . ')" class="btn btn-warning btn-xs" style="margin-right: 5px" >
-                                                            <i class="bi bi-pencil-square"></i>
-                                                        </button> 
-                                                        <button onclick="openDeleteModal(' . $row["id_user"] . ')" class="btn btn-danger btn-xs" >
-                                                            <i class="bi bi-trash"></i>
-                                                        </button>
-                                                    </div>
-                                                </td> 
-                                            </tr>';
-                                    }
+                                        $measure = $row['id_measure'];
+                                        $stmt = $conn->prepare(SQL_SELECT_MEASURE_BY_ID);
+                                        $stmt->bind_param("i", $measure);
+                                        $stmt->execute();
+                                        $result_state = $stmt->get_result();
 
-                                    echo '</tbody>
-                                                </table>';
+                                        // Verificar si hay resultados
+                                        if ($result_state->num_rows > 0) {
+                                            // Obtener la fila como un array asociativo
+                                            $row_state = $result_state->fetch_assoc();
+                                            $name_measure = $row_state["name_measure"];
+                                        } else {
+                                            // Si no hay resultados, asignar un valor por defecto
+                                            $name_measure = "Medida no encontrada"; // O el valor que desees
+                                        }
+
+                                            echo '<tr>';
+                                            echo '<td>' . $row["material_name"] . '</td>';
+                                            echo '<td>' . $row["description"] . '</td>';
+                                            echo '<td>' . $name_measure . '</td>';
+                                            echo '<td>
+                                                        <div class="btn-group" role="group">  
+                                                            <button onclick="openEditModal(' . $row["id_material"] . ')" class="btn btn-warning btn-xs" style="margin-right: 5px" >
+                                                                <i class="bi bi-pencil-square"></i>
+                                                            </button> 
+                                                            <button onclick="openDeleteModal(' . $row["id_material"] . ')" class="btn btn-danger btn-xs" >
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td> 
+                                                </tr>';
+                                        }
+
+                                        echo '</tbody>
+                                                    </table>';
+                                    
                                 } else {
                                     echo "0 Result";
                                 }
@@ -232,7 +249,7 @@ include ('../../Querys/querys.php');
                     type: "POST",
                     url: "materialsController.php?token=<?php echo $token; ?>",
                     data: {
-                        action: "delete_admin",
+                        action: "delete_product",
                         id: id
                     },
                     dataType: 'json',

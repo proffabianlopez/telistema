@@ -17,8 +17,6 @@ if (!isset($_SESSION['token'])) {
 }
 $token = $_SESSION['token'];
 
-
-
 define('TITLE', 'Admin');
 define('PAGE', 'Admin');
 include ('../../includes/header.php');
@@ -26,19 +24,13 @@ include ('../../dbConnection.php');
 include ('../../Querys/querys.php');
 
 ?>
-
-
 <body>
-
     <div id="wrapper">
-
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
                 <?php include ('../../includes/menu.php') ?>
-
             </div>
         </nav>
-
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -83,18 +75,18 @@ include ('../../Querys/querys.php');
 
                                 if ($result->num_rows > 0) {
                                     echo ' <table class="footable table table-stripped toggle-arrow-tiny">
-                                <thead>
-                                <tr>
-                                    <th data-hide="all">Número</th>
-                                    <th data-toggle="true">Nombre</th>
-                                    <th data-toggle="true">Apellido</th>
-                                    <th data-hide="phone">Email</th>
-                                    <th data-hide="all">Telefono</th>
-                                    <th>Accion</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                ';
+                                    <thead>
+                                    <tr>
+                                        <th data-hide="all">Número</th>
+                                        <th data-toggle="true">Nombre</th>
+                                        <th data-toggle="true">Apellido</th>
+                                        <th data-hide="phone">Email</th>
+                                        <th data-hide="all">Telefono</th>
+                                        <th>Accion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    ';
 
                                     // Imprimir los datos de cada técnico
                                     while ($row = $result->fetch_assoc()) {

@@ -16,7 +16,7 @@ if (!isset($_SESSION['token'])) {
 $token = $_SESSION['token'];
 include ('../../dbConnection.php');
 include ('../../Querys/querys.php');
-include ('../configSmtp/generate_config.php');
+include ('../configsmtp/generate_config.php');
 ?>
 
 </body>
@@ -28,24 +28,63 @@ include ('../configSmtp/generate_config.php');
                     <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                 </button>
                 <i class="bi bi-person-fill-add modal-icon"></i>
-                <h4 class="modal-title">Registrar Nuevo Material</h4>
+                <h4 class="modal-title">Registrar Nuevo Producto</h4>
             </div>
             <div class="modal-body">
 
-                <form id="change-admin-form" action="" method="POST">
+                <form id="add-product-form" action="" method="POST">
                     <div class="form-group">
                         <label for="name_user">Nombre</label>
                         <input type="text" class="form-control" id="material_name" name="material_name">
                     </div>
                     <div class="form-group">
-                        <label for="name_user">Descripción</label>
+                        <label for="description">Descripción</label>
                         <input type="text" class="form-control" id="description" name="description">
                     </div>
                     <div class="form-group">
-                        <label for="phone_user">Medida</label>
-                        <input type="number" class="form-control" id="id_measure" name="id_measure"
-                            onkeypress="isInputNumber(event)">
-                    </div>
+                            <label for="id_measure">Unidad de Medida</label>
+                            <select name="id_measure" id="id_measure" class="form-control">
+                            <option value="" selected disabled>Seleccione unidad de medida</option>
+                            <?php
+                            // Verifica si existe el campo 'id_measure' en el array $row y asígnalo a $state
+                            $state = isset($row['id_measure']) ? $row['id_measure'] : null;
+
+                            if ($state !== null) {
+                                $stmt = $conn->prepare(SQL_SELECT_MEASURE_BY_ID);
+                                $stmt->bind_param("i", $state);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+
+                                // Verificar si hay resultados
+                                if ($result->num_rows > 0) {
+                                    // Obtener la fila como un array asociativo
+                                    $row_state = $result->fetch_assoc();
+                                    $name_state = $row_state["name_measure"];
+                                    $id_measure = $row_state["id_measure"];
+                                } else {
+                                    // Si no hay resultados, asignar un valor por defecto
+                                    $id_measure = 0; // O el valor que desees
+                                }
+                            } else {
+                                $id_measure = 0;
+                            }
+
+                            // Luego, obtén todos los estados de la tabla states_users
+                            $stmt = $conn->prepare(SQL_SELECT_MEASURES);
+                            $stmt->execute();
+                            $rows = $stmt->get_result();
+
+                            // Itera sobre los estados para crear las opciones del select
+                            foreach ($rows as $state) {
+                                $stateName = $state["name_measure"];
+                                $stateId = $state["id_measure"];
+                                $selected = ($stateId == $id_measure) ? "selected" : "";
+                                echo "<option value='$stateId' $selected>$stateName</option>";
+                            }
+                            ?>
+                        </select>
+
+                        </div>
                     <br>
 
                     <div class="modal-footer">
@@ -56,8 +95,7 @@ include ('../configSmtp/generate_config.php');
                     <div class="text-center" id="response-message"></div>
                 </form>
                 <div class="p-xxs font-italic bg-muted border-top-bottom text ">
-                    <spn class="font-bold">NOTA:</spn> Al agregar un nuevo Administrador se enviará al email las
-                    credenciales para que pueda iniciar sesión. El sistema genera automaticamente una contraseña
+                    <span class="font-bold">NOTA:</span> Al agregar un nuevo producto, asegúrese de completar todos los campos obligatorios. La información ingresada se reflejará inmediatamente en el sistema.
                 </div>
             </div>
         </div>
@@ -67,14 +105,14 @@ include ('../configSmtp/generate_config.php');
 <script>
 
     $(document).ready(function () {
-        $('#change-admin-form').on('submit', function (e) {
+        $('#add-product-form').on('submit', function (e) {
             e.preventDefault();
             var formData = $(this).serialize();
             laddaButton = Ladda.create(document.querySelector('.ladda-button'));
             laddaButton.start();
             $.ajax({
                 type: 'POST',
-                url: 'adminController.php?token=<?php echo $token; ?>&action=add_admin', // La URL de tu archivo PHP
+                url: 'materialsController.php?token=<?php echo $token; ?>&action=add_product', // La URL de tu archivo PHP
                 data: formData,
                 dataType: 'json',
                 success: function (response) {
