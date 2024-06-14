@@ -61,7 +61,7 @@ if ($rolUser == 'admin') {
                 <li class=" <?php if (PAGE == 'Proveedores') {
                         echo 'active';
                     } ?>">
-                    <a  href="../crudSuppliers/suppliers.php">
+                    <a  href="../crudsuppliers/suppliers.php">
                     <i class="bi bi-database"></i><span class="nav-label">Proveedores</span>
 
                     </a>
@@ -69,7 +69,7 @@ if ($rolUser == 'admin') {
                 <li class=" <?php if (PAGE == 'Materiales') {
                         echo 'active';
                     } ?>">
-                    <a  href="../crudMaterials/materials.php">
+                    <a  href="../crudmaterials/materials.php">
                     <i class="bi bi-database"></i><span class="nav-label">Materiales</span>
 
                     </a>
@@ -77,7 +77,7 @@ if ($rolUser == 'admin') {
                 <li class=" <?php if (PAGE == 'Técnicos') {
                         echo 'active';
                     } ?>" >
-                    <a href="../crudTechnics/technician.php">
+                    <a href="../crudtechnics/technician.php">
                     <i class="bi bi-headset"></i><span class="nav-label">
                             Técnicos</span>
 
@@ -86,7 +86,7 @@ if ($rolUser == 'admin') {
                 <li class=" <?php if (PAGE == 'Clientes') {
                         echo 'active';
                     } ?>" >
-                    <a href="../crudClients/clients.php">
+                    <a href="../crudclients/clients.php">
                     <i class="bi bi-people-fill"></i><span class="nav-label">
                             Clientes</span>
                     </a>
@@ -94,7 +94,7 @@ if ($rolUser == 'admin') {
                 <li class=" <?php if (PAGE == 'Admin') {
                         echo 'active';
                     } ?>" >
-                    <a href="../crudAdmins/admin.php">
+                    <a href="../crudadmins/admin.php">
                     <i class="bi bi-people-fill"></i><span class="nav-label">
                             Administradores</span>
                     </a>
@@ -118,7 +118,7 @@ if ($rolUser == 'admin') {
                 <li class=" <?php if (PAGE == 'Actualización de Email') {
                         echo 'active';
                     } ?>" >
-                    <a href="../configSmtp/configEmailContact.php">
+                    <a href="../Admin/configsmtp/configEmailContact.php">
                         <i class="bi bi-envelope-at"></i><span class="nav-label">
                             Email de Contacto</span>
                     </a>

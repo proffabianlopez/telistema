@@ -192,7 +192,7 @@ include ('../../Querys/querys.php');
         function openEditModal(id) {
             // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({
-                url: "editadmin.php?token=<?php echo $token; ?>&id=" + id, // Ruta al archivo de edición de usuario
+                url: "editAdmin.php?token=<?php echo $token; ?>&id=" + id, // Ruta al archivo de edición de usuario
                 type: "GET",
                 success: function (response) {
                     // Muestra el formulario de edición en el contenedor

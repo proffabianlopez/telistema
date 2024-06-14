@@ -60,7 +60,6 @@ if (isset($_GET['id'])) {
 
     // Obtener resultados de la consulta
     $result = $stmt->get_result();
-
     // Verificar si hay resultados
     if ($result->num_rows > 0) {
         // Obtener la fila como un array asociativo

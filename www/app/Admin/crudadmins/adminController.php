@@ -30,8 +30,8 @@ if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_us
 
 include ('../../dbConnection.php');
 include ('../../Querys/querys.php');
-include ('../generate_config.php');
-include ('../endEmail.php');
+include ('../configsmtp/generate_config.php');
+include ('../configsmtp/endEmail.php');
 
 //editar admin
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
