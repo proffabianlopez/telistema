@@ -16,6 +16,8 @@ if (!isset($_SESSION['token'])) {
 $token = $_SESSION['token'];
 include('../../dbConnection.php');
 include('../../Querys/querys.php');
+include('../configsmtp/generate_config.php');
+include('../configsmtp/endEmail.php');
 
 if (isset($_GET['id'])) {
 
@@ -33,7 +35,7 @@ if (isset($_GET['id'])) {
         $row = $result->fetch_assoc();
     } else {
         // Mostrar un mensaje si no se encuentra ningún cliente con el ID proporcionado
-        echo '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">No se encontró ningún cliente con ese ID.</div>';
+        echo '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">No se encontró ningún producto con ese ID.</div>';
     }
 } else {
     echo '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">No se captó el ID.</div>';

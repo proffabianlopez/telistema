@@ -18,6 +18,15 @@ include ('../../dbConnection.php');
 include ('../../Querys/querys.php');
 include ('../configsmtp/generate_config.php');
 ?>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Producto</title>
+    <!-- Incluye tus estilos y scripts aquí -->
+</head>
 
 </body>
 <div class="modal inmodal fase" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
@@ -34,7 +43,7 @@ include ('../configsmtp/generate_config.php');
 
                 <form id="add-product-form" action="" method="POST">
                     <div class="form-group">
-                        <label for="name_user">Nombre</label>
+                        <label for="material_name">Nombre</label>
                         <input type="text" class="form-control" id="material_name" name="material_name">
                     </div>
                     <div class="form-group">
@@ -50,6 +59,7 @@ include ('../configsmtp/generate_config.php');
                             $state = isset($row['id_measure']) ? $row['id_measure'] : null;
 
                             if ($state !== null) {
+
                                 $stmt = $conn->prepare(SQL_SELECT_MEASURE_BY_ID);
                                 $stmt->bind_param("i", $state);
                                 $stmt->execute();
@@ -61,10 +71,12 @@ include ('../configsmtp/generate_config.php');
                                     $row_state = $result->fetch_assoc();
                                     $name_state = $row_state["name_measure"];
                                     $id_measure = $row_state["id_measure"];
+                            
                                 } else {
                                     // Si no hay resultados, asignar un valor por defecto
                                     $id_measure = 0; // O el valor que desees
                                 }
+
                             } else {
                                 $id_measure = 0;
                             }
@@ -86,7 +98,6 @@ include ('../configsmtp/generate_config.php');
 
                         </div>
                     <br>
-
                     <div class="modal-footer">
                         <button type="submit" class="ladda-button btn btn-primary"
                             data-style="zoom-in">Actualizar</button>
@@ -103,42 +114,39 @@ include ('../configsmtp/generate_config.php');
 </div>
 
 <script>
-
-    $(document).ready(function () {
-        $('#add-product-form').on('submit', function (e) {
-            e.preventDefault();
-            var formData = $(this).serialize();
-            laddaButton = Ladda.create(document.querySelector('.ladda-button'));
-            laddaButton.start();
-            $.ajax({
-                type: 'POST',
-                url: 'materialsController.php?token=<?php echo $token; ?>&action=add_product', // La URL de tu archivo PHP
-                data: formData,
-                dataType: 'json',
-                success: function (response) {
-                    laddaButton.stop();
-                    var messageContainer = $('#response-message');
-                    if (response.status === 'success') {
-                        messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
-                    } else {
-                        messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
-                    }
-                },
-                error: function (xhr, status, error) {
-                    laddaButton.stop();
-                    console.log(xhr.responseText);
-                    $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX: ' + error + '</div>');
+$(document).ready(function () {
+    $('#add-product-form').on('submit', function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        var laddaButton = Ladda.create(document.querySelector('.ladda-button'));
+        laddaButton.start();
+        $.ajax({
+            type: 'POST',
+            url: 'materialsController.php?token=<?php echo $token; ?>&action=add_product',
+            data: formData,
+            dataType: 'json',
+            success: function (response) {
+                laddaButton.stop();
+                var messageContainer = $('#response-message');
+                if (response.status === 'success') {
+                    messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
+                } else {
+                    messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
-            });
+            },
+            error: function (xhr, status, error) {
+                laddaButton.stop();
+                console.log(xhr.responseText);
+                $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX: ' + error + '<br>' + xhr.responseText + '</div>');
+            }
         });
-        $('.reload').click(function () {
-            location.reload();
-        });
-
-
-
     });
+    $('.reload').click(function () {
+        location.reload();
+    });
+});
 </script>
+
 
 </body>
 

@@ -16,6 +16,7 @@ if (!isset($_SESSION['token'])) {
 $token = $_SESSION['token'];
 include ('../../dbConnection.php');
 include ('../../Querys/querys.php');
+include('../configsmtp/generate_config.php');
 
 if (isset($_REQUEST['update'])) {
 

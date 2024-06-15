@@ -269,12 +269,16 @@ define('SQL_SELECT_MEASURES', '
 
 define(
         'SQL_INSERT_PRODUCT',
-        'INSERT INTO materials (material_name, description, id_measure, id_status)
+        'INSERT INTO materials (
+                material_name,
+                description,
+                id_measure,
+                id_status)
         VALUES (?, ?, ?, ?)'
 );
 
 define(
-        'SQL_DELETE_PRODUCT',
+        'SQL_DESACTIVE_PRODUCT',
         'UPDATE materials
         SET id_status = 2
         WHERE id_material = ?'
