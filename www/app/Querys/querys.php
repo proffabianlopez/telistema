@@ -236,29 +236,36 @@ define(
 
 
 define('SQL_SELECT_MATERIALS', '
-        SELECT * FROM  materials');
+        SELECT u. *
+        FROM materials u
+        WHERE u.id_status != 2');
+
+
 
 define(
-        'SQL_SELECT_PRODUCT_BY_ID',
-        'SELECT u.*
+        'SQL_SELECT_PRODUCT_BY_ID','
+        SELECT u.*
         FROM materials u
         WHERE u.id_material = ?;'
 );
 
-define('SQL_UPDATE_PRODUCT',
-        'UPDATE materials
+define('SQL_UPDATE_PRODUCT','
+        UPDATE materials
         SET material_name = ?,
         description = ?,
         id_measure = ?
         WHERE id_material = ?');
 
-define('SQL_SELECT_MEASURE_BY_ID', 
-        'SELECT name_measure, id_measure 
-        FROM measures
+
+define('SQL_SELECT_MEASURE_BY_ID', '
+        SELECT name_measure
+        FROM measures 
         WHERE id_measure = ?');
 
-define('SQL_SELECT_MEASURES', 
-        'SELECT * FROM measures');
+
+define('SQL_SELECT_MEASURES', '
+        SELECT * FROM  measures');
+
 
 define(
         'SQL_INSERT_PRODUCT',
@@ -272,3 +279,9 @@ define(
         SET id_status = 2
         WHERE id_material = ?'
 );
+
+define('SQL_SELECT_STATE', '
+        SELECT state_user
+        FROM states_users
+        WHERE id_state_user = ?');
+

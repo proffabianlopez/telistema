@@ -42,12 +42,14 @@ if (isset($_GET['id'])) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Producto</title>
     <!-- Incluye tus estilos y scripts aquí -->
 </head>
+
 <body>
     <div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-sm">
@@ -64,16 +66,20 @@ if (isset($_GET['id'])) {
                         <div style="display: none" class="form-group">
                             <label for="id_material">ID Producto</label>
                             <input type="text" class="form-control" id="id_material" name="id_material" value="<?php if (isset($row['id_material'])) {
-                            echo $row['id_material'];
-                            } ?>" readonly>
+                                                                                                                    echo $row['id_material'];
+                                                                                                                } ?>" readonly>
                         </div>
                         <div class="form-group">
                             <label for="material_name">Nombre</label>
-                            <input type="text" class="form-control" id="material_name" name="material_name" value="<?php if (isset($row['material_name'])) { echo $row['material_name']; } ?>">
+                            <input type="text" class="form-control" id="material_name" name="material_name" value="<?php if (isset($row['material_name'])) {
+                                                                                                                        echo $row['material_name'];
+                                                                                                                    } ?>">
                         </div>
                         <div class="form-group">
                             <label for="description">Descripción</label>
-                            <input type="text" class="form-control" id="description" name="description" value="<?php if (isset($row['description'])) { echo $row['description']; } ?>">
+                            <input type="text" class="form-control" id="description" name="description" value="<?php if (isset($row['description'])) {
+                                                                                                                    echo $row['description'];
+                                                                                                                } ?>">
                         </div>
                         <div class="form-group">
                             <label for="id_measure">Unidad de Medida</label>
@@ -87,25 +93,22 @@ if (isset($_GET['id'])) {
 
                                 // Verificar si hay resultados
                                 if ($result->num_rows > 0) {
-                                    // Obtener la fila como un array asociativo
                                     $row_state = $result->fetch_assoc();
                                     $name_state = $row_state["name_measure"];
-                                    $id_measuere = $row_state["id_measure"];
+                                    $id_measure = $row_state["id_measure"];
                                 } else {
-                                    // Si no hay resultados, asignar un valor por defecto
-                                    $id_measuere = 0; // O el valor que desees
+                                    $id_measure = 0; // O el valor que desees
                                 }
 
-                                // Luego, obtén todos los estados de la tabla states_users
+                                // Obtener todos los estados de la tabla measures
                                 $stmt = $conn->prepare(SQL_SELECT_MEASURES);
                                 $stmt->execute();
                                 $rows = $stmt->get_result();
 
-                                // Itera sobre los estados para crear las opciones del select
                                 foreach ($rows as $state) {
                                     $stateName = $state["name_measure"];
                                     $stateId = $state["id_measure"];
-                                    $selected = ($stateId == $id_measuere) ? "selected" : "";
+                                    $selected = ($stateId == $id_measure) ? "selected" : "";
                                     echo "<option value='$stateId' $selected>$stateName</option>";
                                 }
                                 ?>
@@ -117,6 +120,8 @@ if (isset($_GET['id'])) {
                         </div>
                         <div class="text-center" id="response-message"></div>
                     </form>
+
+
                     <div class="p-xxs font-italic bg-muted border-top-bottom text">
                         <span class="font-bold">NOTA:</span> Al editar un producto, asegúrese de revisar y actualizar correctamente todos los campos. Los cambios realizados se reflejarán inmediatamente en el sistema.
                     </div>
@@ -138,7 +143,7 @@ if (isset($_GET['id'])) {
 
                 $.ajax({
                     type: 'POST',
-                    url: 'materialsController.php?token=<?php echo $token; ?>&action=edit_product', // La URL de tu archivo PHP
+                    url: 'materialsController.php?token=<?php echo $_SESSION["token"]; ?>&action=edit_product', // La URL de tu archivo PHP
                     data: formData,
                     dataType: 'json',
                     success: function(response) {
@@ -162,5 +167,7 @@ if (isset($_GET['id'])) {
             });
         });
     </script>
+
 </body>
+
 </html>
