@@ -50,12 +50,12 @@ if ($rolUser == 'admin') {
                     <i class="bi bi-opencollective"></i><span class="nav-label">Ordenes de Trabajo</span>
                     </a>
                 </li>
-                <li class=" <?php if (PAGE == 'request') {
+                <li class=" <?php if (PAGE == 'Compras') {
                         echo 'active';
                     } ?>">
-                    <a  href="../Admin/request.php">
-                    <i class="bi bi-app-indicator"></i><span class="nav-label">
-                            Solicitudes</span>
+                    <a  href="../crudbuys/buys.php">
+                    <i class="fa fa-shopping-cart"></i><span class="nav-label">
+                            Compras</span>
                     </a>
                 </li>
                 <li class=" <?php if (PAGE == 'Proveedores') {
