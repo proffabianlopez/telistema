@@ -118,6 +118,14 @@ include ('../Querys/querys.php');
                                                             <i class="bi bi-trash"></i>
                                                         </button>
                                                     </form>
+                                                    <form action="order.php" method="POST" style="display:inline;">
+                                                        <input type="hidden" name="id_client" value="' . $row["id_client"] . '">
+                                                        <button class="btn btn-primary btn-xs" name="order" value="Order">
+                                                        <i class="bi bi-receipt"></i>
+                                                        </button>
+                                                        </form>
+
+                                                    
                                                 </div>
                                             </td>';
                                         echo '</tr>';
