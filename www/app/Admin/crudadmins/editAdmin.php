@@ -14,8 +14,8 @@ if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 $token = $_SESSION['token'];
-include ('../../dbConnection.php');
-include ('../../Querys/querys.php');
+include('../../dbConnection.php');
+include('../../Querys/querys.php');
 
 if (isset($_REQUEST['update'])) {
 
@@ -23,7 +23,6 @@ if (isset($_REQUEST['update'])) {
     if (($_REQUEST['name_user'] == "") || ($_REQUEST['id_state_user'] == "") || ($_REQUEST['phone_user'] == "") || ($_REQUEST['mail'] == "")) {
         // msg displayed if required field missing
         $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Fill All Fileds </div>';
-
     } else {
         // Assigning User Values to Variable
         $id = $_REQUEST['id_user'];
@@ -40,7 +39,6 @@ if (isset($_REQUEST['update'])) {
         if ($stmt->execute()) {
             // below msg display on form submit success
             $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Updated Successfully </div>';
-
         } else {
             // below msg display on form submit failed
             $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update </div>';
@@ -68,7 +66,6 @@ if (isset($_GET['id'])) {
         // Mostrar un mensaje si no se encuentra ningún cliente con el ID proporcionado
         echo '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">No se encontró ningún cliente con ese ID.</div>';
     }
-
 } else {
     echo '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">No se capto el ID.</div>';
 }
@@ -91,32 +88,32 @@ if (isset($_GET['id'])) {
                     <div style="display: none;" class="form-group">
                         <label for="id_user">ID Técnico</label>
                         <input type="text" class="form-control" id="id_user" name="id_user" value="<?php if (isset($row['id_user'])) {
-                            echo $row['id_user'];
-                        } ?>" readonly>
+                                                                                                        echo $row['id_user'];
+                                                                                                    } ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label for="name_user">Nombre</label>
                         <input type="text" class="form-control" id="name_user" name="name_user" value="<?php if (isset($row['name_user'])) {
-                            echo $row['name_user'];
-                        } ?>">
+                                                                                                            echo $row['name_user'];
+                                                                                                        } ?>">
                     </div>
                     <div class="form-group">
                         <label for="name_user">Apellido</label>
                         <input type="text" class="form-control" id="surname_user" name="surname_user" value="<?php if (isset($row['name_user'])) {
-                            echo $row['surname_user'];
-                        } ?>">
+                                                                                                                    echo $row['surname_user'];
+                                                                                                                } ?>">
                     </div>
                     <div class="form-group">
                         <label for="phone_user">Teléfono</label>
                         <input type="number" class="form-control" id="phone_user" name="phone_user" value="<?php if (isset($row['phone_user'])) {
-                            echo $row['phone_user'];
-                        } ?>" onkeypress="isInputNumber(event)">
+                                                                                                                echo $row['phone_user'];
+                                                                                                            } ?>" onkeypress="isInputNumber(event)">
                     </div>
                     <div class="form-group">
                         <label for="mail">Email</label>
                         <input type="email" class="form-control" id="mail" name="mail" value="<?php if (isset($row['mail'])) {
-                            echo $row['mail'];
-                        } ?>">
+                                                                                                    echo $row['mail'];
+                                                                                                } ?>">
                     </div>
                     <div class="form-group">
 
@@ -125,8 +122,7 @@ if (isset($_GET['id'])) {
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="ladda-button btn btn-primary"
-                            data-style="zoom-in">Actualizar</button>
+                        <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Actualizar</button>
                         <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
                     </div>
                     <div class="text-center" id="response-message"></div>
@@ -140,11 +136,10 @@ if (isset($_GET['id'])) {
 </div>
 
 <script>
-
-    $(document).ready(function () {
+    $(document).ready(function() {
         var laddaButton;
 
-        $('#change-admin-form').on('submit', function (e) {
+        $('#change-admin-form').on('submit', function(e) {
             e.preventDefault();
             var formData = $(this).serialize();
 
@@ -156,7 +151,7 @@ if (isset($_GET['id'])) {
                 url: 'adminController.php?token=<?php echo $token; ?>&action=edit_admin', // La URL de tu archivo PHP
                 data: formData,
                 dataType: 'json',
-                success: function (response) {
+                success: function(response) {
                     laddaButton.stop();
                     var messageContainer = $('#response-message');
                     if (response.status === 'success') {
@@ -165,18 +160,17 @@ if (isset($_GET['id'])) {
                         messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
                 },
-                error: function () {
+                error: function() {
                     laddaButton.stop();
                     $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX</div>');
                 }
             });
         });
 
-        $('.reload').click(function () {
+        $('.reload').click(function() {
             location.reload();
         });
     });
-
 </script>
 
 </body>

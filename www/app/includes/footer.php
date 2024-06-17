@@ -35,7 +35,7 @@
 
 <!-- Sweet alert -->
 <script src="../../js/plugins/sweetalert/sweetalert.min.js"></script>
-
+<script src="../../js/sweetalert2.js"></script>
 <!-- Ladda -->
 <script src="../../js/plugins/ladda/spin.min.js"></script>
 <script src="../../js/plugins/ladda/ladda.min.js"></script>

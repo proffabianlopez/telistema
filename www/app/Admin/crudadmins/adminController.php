@@ -21,17 +21,16 @@ if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_us
         echo json_encode($response);
         exit;
     }
-
 } else {
     $response['message'] = 'Por favor, inicie sesión para continuar.';
     echo json_encode($response);
     exit;
 }
 
-include ('../../dbConnection.php');
-include ('../../Querys/querys.php');
-include ('../configsmtp/generate_config.php');
-include ('../configsmtp/endEmail.php');
+include('../../dbConnection.php');
+include('../../Querys/querys.php');
+include('../configsmtp/generate_config.php');
+include('../configsmtp/endEmail.php');
 
 //editar admin
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -59,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $new_pass = generatePassword();
                 $pass_hash = password_hash($new_pass, PASSWORD_DEFAULT);
             }
-            error_log("var: ". $new_pass);
+            error_log("var: " . $new_pass);
             $stmt = $conn->prepare(SQL_UPDATE_ADMIN);
             $stmt->bind_param("sssssssi", $name, $surname, $phone, $mail, $pass_hash, $pass_hash, $pass_hash, $id);
 
@@ -82,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $response['message'] = 'Actualizado con exito';
                 echo json_encode($response);
                 exit;
-
             } else {
                 // below msg display on form submit failed
                 $response['message'] = 'No se pudo actuazar: ';
@@ -202,4 +200,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode($response);
     exit;
 }
-?>
