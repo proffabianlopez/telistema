@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\Exception;
 
 require '../../../php/vendor/autoload.php';
 
-function enviarCorreoYRegistrar($name, $email, $pass, $phone = '') {
+function enviarCorreoYRegistrar($name, $email, $pass) {
     include ('../../dbConnection.php');
     include ('../../Querys/configEmailFrm.php');
     $mail = new PHPMailer(true);
