@@ -14,8 +14,8 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 
 define('TITLE', 'Dashboard');
 define('PAGE', 'dashboard');
-include ('../../includes/header.php');
-include ('../../dbConnection.php');
+include('../../includes/header.php');
+include('../../dbConnection.php');
 
 
 // $sql = "SELECT max(request_id) FROM submitrequest_tb";
@@ -37,7 +37,7 @@ include ('../../dbConnection.php');
 
   <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
-      <?php include ('../../includes/menu.php'); ?>
+      <?php include('../../includes/menu.php'); ?>
     </div>
   </nav>
 
@@ -47,9 +47,9 @@ include ('../../dbConnection.php');
         <div class="navbar-header">
           <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
         </div>
-        <ul class="nav navbar-top-links navbar-right">             
+        <ul class="nav navbar-top-links navbar-right">
           <li>
-            <a href="login.html">
+            <a href="../../logout.php" id="logout">
               <i class="fa fa-sign-out"></i> Cerrar Sesión
             </a>
           </li>
@@ -131,7 +131,7 @@ include ('../../dbConnection.php');
       <div class="pull-right">
       </div>
       <div>
-        <strong>Copyright</strong>  Telistema &copy; 2024
+        <strong>Copyright</strong> Telistema &copy; 2024
       </div>
     </div>
 
@@ -139,7 +139,7 @@ include ('../../dbConnection.php');
 </div>
 
 <?php
-include ('../../includes/footer.php');
+include('../../includes/footer.php');
 ?>
 
 </body>

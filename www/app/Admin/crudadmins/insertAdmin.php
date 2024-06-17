@@ -14,9 +14,9 @@ if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 $token = $_SESSION['token'];
-include ('../../dbConnection.php');
-include ('../../Querys/querys.php');
-include ('../configsmtp/generate_config.php');
+include('../../dbConnection.php');
+include('../../Querys/querys.php');
+include('../configsmtp/generate_config.php');
 $passwordGenerate = generatePassword();
 ?>
 
@@ -44,8 +44,7 @@ $passwordGenerate = generatePassword();
                     </div>
                     <div class="form-group">
                         <label for="phone_user">Teléfono</label>
-                        <input type="number" class="form-control" id="phone_user" name="phone_user"
-                            onkeypress="isInputNumber(event)">
+                        <input type="number" class="form-control" id="phone_user" name="phone_user" onkeypress="isInputNumber(event)">
                     </div>
                     <div class="form-group">
                         <label for="mail">Email</label>
@@ -53,15 +52,13 @@ $passwordGenerate = generatePassword();
                     </div>
                     <div style="display: none" class="form-group password-container">
                         <label for="user_password">Contraseña</label>
-                        <input type="password" class="form-control" id="user_password" name="user_password"
-                            value="<?php echo $passwordGenerate; ?>" readonly>
+                        <input type="password" class="form-control" id="user_password" name="user_password" value="<?php echo $passwordGenerate; ?>" readonly>
                         <span class="glyphicon glyphicon-eye-open toggle-password"></span>
                     </div>
                     <br>
 
                     <div class="modal-footer">
-                        <button type="submit" class="ladda-button btn btn-primary"
-                            data-style="zoom-in">Actualizar</button>
+                        <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Actualizar</button>
                         <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
                     </div>
                     <div class="text-center" id="response-message"></div>
@@ -76,9 +73,8 @@ $passwordGenerate = generatePassword();
 </div>
 
 <script>
-
-    $(document).ready(function () {
-        $('#change-admin-form').on('submit', function (e) {
+    $(document).ready(function() {
+        $('#change-admin-form').on('submit', function(e) {
             e.preventDefault();
             var formData = $(this).serialize();
             laddaButton = Ladda.create(document.querySelector('.ladda-button'));
@@ -88,7 +84,7 @@ $passwordGenerate = generatePassword();
                 url: 'adminController.php?token=<?php echo $token; ?>&action=add_admin', // La URL de tu archivo PHP
                 data: formData,
                 dataType: 'json',
-                success: function (response) {
+                success: function(response) {
                     laddaButton.stop();
                     var messageContainer = $('#response-message');
                     if (response.status === 'success') {
@@ -97,14 +93,14 @@ $passwordGenerate = generatePassword();
                         messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
                     }
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     laddaButton.stop();
                     console.log(xhr.responseText);
                     $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX: ' + error + '</div>');
                 }
             });
         });
-        $('.reload').click(function () {
+        $('.reload').click(function() {
             location.reload();
         });
 

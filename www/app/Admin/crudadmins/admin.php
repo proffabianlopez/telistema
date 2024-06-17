@@ -19,9 +19,9 @@ $token = $_SESSION['token'];
 
 define('TITLE', 'Admin');
 define('PAGE', 'Admin');
-include ('../../includes/header.php');
-include ('../../dbConnection.php');
-include ('../../Querys/querys.php');
+include('../../includes/header.php');
+include('../../dbConnection.php');
+include('../../Querys/querys.php');
 
 ?>
 <body>
@@ -35,12 +35,11 @@ include ('../../Querys/querys.php');
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i
-                                class="fa fa-bars"></i> </a>
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../../logout.php">
+                            <a href="../../logout.php" id="logout">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
@@ -113,15 +112,15 @@ include ('../../Querys/querys.php');
                                         echo '<td>' . $row["mail"] . '</td>';
                                         echo '<td>' . $row["phone_user"] . '</td>';
                                         echo '<td>
-                                                    <div class="btn-group" role="group">  
+                                                    <div class="btn-group" role="group">
                                                         <button onclick="openEditModal(' . $row["id_user"] . ')" class="btn btn-warning btn-xs" style="margin-right: 5px" >
                                                             <i class="bi bi-pencil-square"></i>
                                                         </button>
-                                                        <button onclick="openDeleteModal(' . $row["id_user"] . ')" class="btn btn-danger btn-xs" >
+                                                        <button id="delete-' . $row["id_user"] . '-' . $token . '" data-crud="admin" class="btn btn-danger btn-xs delete-btn" >
                                                             <i class="bi bi-trash"></i>
                                                         </button>
                                                     </div>
-                                                </td> 
+                                                </td>
                                             </tr>';
                                     }
 
@@ -171,10 +170,10 @@ include ('../../Querys/querys.php');
     </div>
     <div id="edit-form-container" style="display: none;"></div>
     <?php
-    include ('../../includes/footer.php');
+    include('../../includes/footer.php');
     ?>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             $('.footable').footable();
             $('.footable2').footable();
@@ -186,85 +185,34 @@ include ('../../Querys/querys.php');
             $.ajax({
                 url: "editAdmin.php?token=<?php echo $token; ?>&id=" + id, // Ruta al archivo de edición de usuario
                 type: "GET",
-                success: function (response) {
+                success: function(response) {
                     // Muestra el formulario de edición en el contenedor
                     $("#edit-form-container").html(response).slideDown();
                     // Abre el modal
                     $("#myModal6").modal("show");
                 },
-                error: function () {
+                error: function() {
                     alert("Error al cargar el formulario de edición.");
                 }
             });
         }
+
         function openNewAdminModal() {
             // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({
                 url: "insertAdmin.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
                 type: "GET",
-                success: function (response) {
+                success: function(response) {
                     // Muestra el formulario de edición en el contenedor
                     $("#edit-form-container").html(response).slideDown();
                     // Abre el modal
                     $("#myModal6").modal("show");
                 },
-                error: function () {
+                error: function() {
                     alert("Error al cargar el formulario de edición.");
                 }
             });
         }
-        function openDeleteModal(id) {
-            swal({
-                title: "¿Estás seguro?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#1ab394",
-                confirmButtonText: "¡Sí, elimínalo!",
-                cancelButtonText: "Cancelar",
-                closeOnConfirm: false
-            }, function () {
-                // Realiza una solicitud AJAX para eliminar el admin
-                $.ajax({
-                    type: "POST",
-                    url: "adminController.php?token=<?php echo $token; ?>",
-                    data: {
-                        action: "delete_admin",
-                        id: id
-                    },
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response.status === 'success') {
-                            swal({
-                                title: "¡Eliminado!",
-                                type: "success"
-                            }, function () {
-                                location.reload(); // Recarga la página
-                            });
-                        } else {
-                            swal({
-                                title: "Error",
-                                text: "Hubo un problema al eliminar.",
-                                type: "error"
-                            }, function () {
-                                location.reload(); // Recarga la página en caso de error también si es necesario
-                            });
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                        swal({
-                            title: "Error",
-                            text: "Hubo un problema al eliminar.",
-                            type: "error"
-                        }, function () {
-                            location.reload(); // Recarga la página en caso de error también
-                        });
-                    }
-                });
-            });
-        }
-
-
     </script>
 
 </body>

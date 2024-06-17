@@ -40,7 +40,7 @@ include ('../../Querys/querys.php');
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../../logout.php">
+                            <a href="../../logout.php" id="logout">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
@@ -165,10 +165,10 @@ include ('../../Querys/querys.php');
 
     <div id="edit-form-container" style="display: none;"></div>
     <?php
-    include ('../../includes/footer.php');
+    include('../../includes/footer.php');
     ?>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.footable').footable();
             $('.footable2').footable();
         });
@@ -178,13 +178,13 @@ include ('../../Querys/querys.php');
             $.ajax({
                 url: "editMaterial.php?token=<?php echo $token; ?>&id=" + id, // Ruta al archivo de edición de usuario
                 type: "GET",
-                success: function (response) {
+                success: function(response) {
                     // Muestra el formulario de edición en el contenedor
                     $("#edit-form-container").html(response).slideDown();
                     // Abre el modal
                     $("#myModal6").modal("show");
                 },
-                error: function () {
+                error: function() {
                     alert("Error al cargar el formulario de edición.");
                 }
             });
@@ -195,68 +195,18 @@ include ('../../Querys/querys.php');
             $.ajax({
                 url: "insertMaterial.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
                 type: "GET",
-                success: function (response) {
+                success: function(response) {
                     // Muestra el formulario de edición en el contenedor
                     $("#edit-form-container").html(response).slideDown();
                     // Abre el modal
                     $("#myModal6").modal("show");
                 },
-                error: function () {
+                error: function() {
                     alert("Error al cargar el formulario de edición.");
                 }
             });
         }
 
-        function openDeleteModal(id) {
-            swal({
-                title: "¿Estás seguro?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#1ab394",
-                confirmButtonText: "¡Sí, elimínalo!",
-                cancelButtonText: "Cancelar",
-                closeOnConfirm: false
-            }, function () {
-                // Realiza una solicitud AJAX para eliminar el admin
-                $.ajax({
-                    type: "POST",
-                    url: "materialsController.php?token=<?php echo $token; ?>",
-                    data: {
-                        action: "delete_product",
-                        id: id
-                    },
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response.status === 'success') {
-                            swal({
-                                title: "¡Eliminado!",
-                                type: "success"
-                            }, function () {
-                                location.reload(); // Recarga la página
-                            });
-                        } else {
-                            swal({
-                                title: "Error",
-                                text: "Hubo un problema al eliminar.",
-                                type: "error"
-                            }, function () {
-                                location.reload(); // Recarga la página en caso de error también si es necesario
-                            });
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                        swal({
-                            title: "Error",
-                            text: "Hubo un problema al eliminar.",
-                            type: "error"
-                        }, function () {
-                            location.reload(); // Recarga la página en caso de error también
-                        });
-                    }
-                });
-            });
-        }
     </script>
 </body>
 </html>
