@@ -75,7 +75,7 @@ function Delete(id, crudClass, token) {
       break;
     case "materiales":
       url = "materialsController.php?token=" + token;
-      action = "delete_material";
+      action = "delete_materials";
       break;
     case "clients":
       url = "clientsController.php?token=" + token;
