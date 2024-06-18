@@ -116,15 +116,15 @@ include('../../Querys/querys.php');
                                         echo '<td>' . $row["description"] . '</td>';
                                         echo '<td>' . $row["id_measure"] . '</td>';
                                         echo '<td>
-                                                    <div class="btn-group" role="group">  
+                                                    <div class="btn-group" role="group"
                                                         <button onclick="openEditModal(' . $row["id_user"] . ')" class="btn btn-warning btn-xs" style="margin-right: 5px" >
                                                             <i class="bi bi-pencil-square"></i>
-                                                        </button> 
-                                                        <button onclick="openDeleteModal(' . $row["id_user"] . ')" class="btn btn-danger btn-xs" >
-                                                            <i class="bi bi-trash"></i>
                                                         </button>
                                                     </div>
-                                                </td> 
+                                                <button id="delete-' . $row["id_user"] . '-' . $token . '" data-crud="materials" class="btn btn-danger btn-xs delete-btn" >
+                                                        <i class="bi bi-trash"></i>
+                                                </button>
+                                                </td>
                                             </tr>';
                                     }
 
