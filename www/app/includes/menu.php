@@ -47,20 +47,23 @@ if ($rolUser == 'admin') {
                         echo 'active';
                     } ?>">
 
+
                     <a  href="../crudorders/order.php">
                     <i class="bi bi-opencollective"></i><span class="nav-label">Ordenes de Trabajo</span>
                     </a>
                 </li>
                 <li class=" <?php if (PAGE == 'request') {
 
+
                         echo 'active';
                     } ?>">
-            <a href="../Admin/request.php">
-                <i class="bi bi-app-indicator"></i><span class="nav-label">
-                    Solicitudes</span>
-            </a>
-        </li>
-        <li class=" <?php if (PAGE == 'Proveedores') {
+                    <a  href="../crudbuys/buys.php">
+                    <i class="fa fa-shopping-cart"></i><span class="nav-label">
+                            Compras</span>
+                    </a>
+                </li>
+                <li class=" <?php if (PAGE == 'Proveedores') {
+
                         echo 'active';
                     } ?>">
             <a href="../crudsuppliers/suppliers.php">
