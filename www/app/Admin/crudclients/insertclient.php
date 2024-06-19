@@ -15,8 +15,8 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 define('TITLE', 'Agregar Nuevo Cliente');
 define('PAGE', 'Clientes');
 
-include ('../../dbConnection.php');
-include ('../../Querys/querys.php');
+include('../../dbConnection.php');
+include('../../Querys/querys.php');
 
 if (isset($_REQUEST['reqsubmit'])) {
   // Verifica si hay campos vacíos
@@ -52,7 +52,7 @@ if (isset($_REQUEST['reqsubmit'])) {
   }
 }
 ?>
-<?php include ('../../includes/header.php') ?>
+<?php include('../../includes/header.php') ?>
 
 <body>
 
@@ -60,7 +60,7 @@ if (isset($_REQUEST['reqsubmit'])) {
 
     <nav class="navbar-default navbar-static-side" role="navigation">
       <div class="sidebar-collapse">
-        <?php include ('../../includes/menu.php') ?>
+        <?php include('../../includes/menu.php') ?>
 
       </div>
     </nav>
@@ -73,7 +73,7 @@ if (isset($_REQUEST['reqsubmit'])) {
           </div>
           <ul class="nav navbar-top-links navbar-right">
             <li>
-              <a href="login.html">
+              <a href="../../logout.php" id="logout">
                 <i class="fa fa-sign-out"></i> Cerrar Sesión
               </a>
             </li>
@@ -138,29 +138,29 @@ if (isset($_REQUEST['reqsubmit'])) {
                     <a href="clients.php" class="btn btn-secondary">Cerrar</a>
                   </div>
 
-              <?php if (isset($msg)) {
-                  echo $msg;
-                } ?>
+                  <?php if (isset($msg)) {
+                    echo $msg;
+                  } ?>
                 </form>
-              
+
               </div>
             </div>
           </div>
-          </div>
         </div>
-        <div class="footer">
-
-          <div>
-            <strong>Copyright</strong>  Telistema &copy; 2024
-          </div>
-        </div>
-
       </div>
+      <div class="footer">
+
+        <div>
+          <strong>Copyright</strong> Telistema &copy; 2024
+        </div>
+      </div>
+
     </div>
+  </div>
 
 
 
-    <?php include ('../../includes/footer.php'); ?>
+  <?php include('../../includes/footer.php'); ?>
 
 </body>
 

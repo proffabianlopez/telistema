@@ -11,12 +11,16 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
     echo "<script> location.href='../../login.php'; </script>";
 }
 ////////////////////////////////
+if (!isset($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+$token = $_SESSION['token'];
 
 define('TITLE', 'Tecnicos');
 define('PAGE', 'Tecnicos');
-include ('../../includes/header.php');
-include ('../../dbConnection.php');
-include ('../../Querys/querys.php');
+include('../../includes/header.php');
+include('../../dbConnection.php');
+include('../../Querys/querys.php');
 
 ?>
 
@@ -27,7 +31,7 @@ include ('../../Querys/querys.php');
 
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
-                <?php include ('../../includes/menu.php') ?>
+                <?php include('../../includes/menu.php') ?>
 
             </div>
         </nav>
@@ -36,12 +40,11 @@ include ('../../Querys/querys.php');
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i
-                                class="fa fa-bars"></i> </a>
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../../logout.php">
+                            <a href="../../logout.php" id="logout">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
@@ -114,7 +117,6 @@ include ('../../Querys/querys.php');
                                         echo '<td>' . $row["phone_user"] . '</td>';
                                         echo '<td>' . $name_state . '</td>';
                                         echo '<td>
-            
                                         <div class="btn-group" role="group">
                                                     <form action="editemp.php" method="POST" style="display:inline;">
                                                         <input type="hidden" name="id_user" value="' . $row["id_user"] . '">
@@ -122,15 +124,11 @@ include ('../../Querys/querys.php');
                                                             <i class="bi bi-pencil-square"></i>
                                                         </button>
                                                     </form>
-                                                    <form action="" method="POST" style="display:inline;">
-                                                        <input type="hidden" name="id_user" value="' . $row["id_user"] . '">
-                                                        <button class="btn btn-danger btn-xs" name="delete" value="Delete">
-                                                            <i class="bi bi-trash"></i>
-                                                        </button>
-                                                    </form>
                                                 </div>
-                                    </td> 
-                                                    
+                                                <button id="delete-' . $row["id_user"] . '-' . $token . '" data-crud="technicians" class="btn btn-danger btn-xs delete-btn" >
+                                                            <i class="bi bi-trash"></i>
+                                                </button>
+                                    </td>
                                                         </tr>';
                                     }
 
@@ -176,18 +174,18 @@ include ('../../Querys/querys.php');
             </div>
             <div class="footer">
                 <div class="pull-right">
-                
+
                 </div>
                 <div>
-                    <strong>Copyright</strong>  Telistema &copy; 2024
+                    <strong>Copyright</strong> Telistema &copy; 2024
                 </div>
             </div>
-            
+
         </div>
     </div>
-    
-    
-    
+
+
+
     <div id="small-chat">
         <a class="open-small-chat" href="insertemp.php">
             <i class="bi bi-plus-lg"></i>
@@ -197,17 +195,17 @@ include ('../../Querys/querys.php');
     </div>
 
     <?php
-    include ('../../includes/footer.php');
+    include('../../includes/footer.php');
     ?>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             $('.footable').footable();
             $('.footable2').footable();
 
         });
-
     </script>
 
 </body>
+
 </html>
