@@ -73,7 +73,7 @@ if (isset($_REQUEST['reqsubmit'])) {
           </div>
           <ul class="nav navbar-top-links navbar-right">
             <li>
-              <a href="login.html">
+              <a href="../../logout.php" id="logout">
                 <i class="fa fa-sign-out"></i> Cerrar Sesión
               </a>
             </li>
