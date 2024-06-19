@@ -115,10 +115,19 @@ include('../../Querys/querys.php');
                                                             <i class="bi bi-pencil-square"></i>
                                                         </button>
                                                     </form>
-                                                </div>
-                                                <button id="delete-' . $row["id_client"] . '-' . $token . '" data-crud="clients" class="btn btn-danger btn-xs delete-btn" >
+                                                   <button id="delete-' . $row["id_client"] . '-' . $token . '" data-crud="clients" class="btn btn-danger btn-xs delete-btn" >
                                                             <i class="bi bi-trash"></i>
-                                                </button>
+                                                  </button>
+                                                    
+                                                    <form action="../crudorders/order.php" method="POST" style="display:inline;">
+                                                    <input type="hidden" name="id_client" value="' . $row["id_client"] . '">
+                                                    <button class="btn btn-primary btn-xs" name="order" value="Order">
+                                                    <i class="bi bi-receipt"></i>
+                                                    </button>
+                                                    </form>
+
+                                                </div>
+                                                
                                             </td>';
                                         echo '</tr>';
                                     }
