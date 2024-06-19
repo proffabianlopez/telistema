@@ -15,7 +15,7 @@ $dashboard_url = '';
 if ($rolUser == 'admin') {
     $dashboard_url = 'dashboard.php';
 } elseif ($rolUser == 'technic') {
-    $dashboard_url = '../Technic/dashboard.php';
+    $dashboard_url = 'dashboard.php';
 }
 
 ?>
@@ -46,7 +46,7 @@ if ($rolUser == 'admin') {
                 <li class=" <?php if (PAGE == 'work') {
                         echo 'active';
                     } ?>">
-                    <a  href="../Admin/work.php">
+                    <a  href="../crudorders/order.php">
                     <i class="bi bi-opencollective"></i><span class="nav-label">Ordenes de Trabajo</span>
                     </a>
                 </li>
