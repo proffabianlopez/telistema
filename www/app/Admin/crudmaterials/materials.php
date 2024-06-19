@@ -17,25 +17,18 @@ if (!isset($_SESSION['token'])) {
 }
 $token = $_SESSION['token'];
 
-
-
 define('TITLE', 'Materiales');
 define('PAGE', 'Materiales');
-include('../../includes/header.php');
-include('../../dbConnection.php');
-include('../../Querys/querys.php');
-
+include ('../../includes/header.php');
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
 ?>
 
-
 <body>
-
     <div id="wrapper">
-
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
-                <?php include('../../includes/menu.php') ?>
-
+                <?php include ('../../includes/menu.php') ?>
             </div>
         </nav>
 
@@ -47,55 +40,47 @@ include('../../Querys/querys.php');
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../../logout.php" id="logout">
+                            <a href="../../logout.php">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
                     </ul>
-
                 </nav>
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Materiales</h2>
-
+                    <h2>Productos</h2>
                 </div>
-                <div class="col-lg-2">
-
-                </div>
+                <div class="col-lg-2"></div>
             </div>
             <div class="wrapper wrapper-content animated fadeInRight">
-
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>Lista de Materiales</h5>
-
+                                <h5>Lista de Productos</h5>
                             </div>
                             <div class="ibox-content">
-
-
                                 <?php
+                                // Usar la consulta para seleccionar solo materiales activos
                                 $sql = SQL_SELECT_MATERIALS;
                                 $result = $conn->query($sql);
 
                                 if ($result->num_rows > 0) {
-                                    echo ' <table class="footable table table-stripped toggle-arrow-tiny">
-                                <thead>
-                                <tr>
-                                    <th data-toggle="true">Nombre</th>
-                                    <th data-toggle="true">Descripción</th>
-                                    <th data-hide="phone">Medida</th>
-                                    <th>Accion</th>
+                                    echo '<table class="footable table table-stripped toggle-arrow-tiny">
+                                    <thead>
+                                    <tr>
+                                        <th data-toggle="true">Nombre</th>
+                                        <th data-toggle="true">Descripción</th>
+                                        <th data-hide="phone">Medida</th>
+                                        <th>Accion</th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                ';
+                                    </thead>
+                                    <tbody>';
 
-                                    // Imprimir los datos de cada técnico
+                                    // Imprimir los datos de cada producto activo
                                     while ($row = $result->fetch_assoc()) {
-                                        $state = $row['id_state_user'];
+                                        $state = $row['id_status'];
                                         $stmt = $conn->prepare(SQL_SELECT_STATE_BY_ID);
                                         $stmt->bind_param("i", $state);
                                         $stmt->execute();
@@ -111,32 +96,44 @@ include('../../Querys/querys.php');
                                             $name_state = "Estado no encontrado"; // O el valor que desees
                                         }
 
+                                        $state = $row['id_measure'];
+                                        $stmt = $conn->prepare(SQL_SELECT_MEASURE_BY_ID);
+                                        $stmt->bind_param("i", $state);
+                                        $stmt->execute();
+                                        $result_state = $stmt->get_result();
+
+                                        // Verificar si hay resultados
+                                        if ($result_state->num_rows > 0) {
+                                            // Obtener la fila como un array asociativo
+                                            $row_state = $result_state->fetch_assoc();
+                                            $name_measure = $row_state["name_measure"];
+                                        } else {
+                                            // Si no hay resultados, asignar un valor por defecto
+                                            $name_measure = "Estado no encontrado"; // O el valor que desees
+                                        }
+                                        
                                         echo '<tr>';
                                         echo '<td>' . $row["material_name"] . '</td>';
                                         echo '<td>' . $row["description"] . '</td>';
-                                        echo '<td>' . $row["id_measure"] . '</td>';
+                                        echo '<td>' . $name_measure . '</td>';
                                         echo '<td>
-                                                    <div class="btn-group" role="group"
-                                                        <button onclick="openEditModal(' . $row["id_user"] . ')" class="btn btn-warning btn-xs" style="margin-right: 5px" >
-                                                            <i class="bi bi-pencil-square"></i>
-                                                        </button>
-                                                    </div>
-                                                <button id="delete-' . $row["id_user"] . '-' . $token . '" data-crud="materials" class="btn btn-danger btn-xs delete-btn" >
+                                                <div class="btn-group" role="group">
+                                                    <button onclick="openEditModal(' . $row["id_material"] . ')" class="btn btn-warning btn-xs" style="margin-right: 5px" >
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </button>
+                                                    <button onclick="openDeleteModal(' . $row["id_material"] . ')" class="btn btn-danger btn-xs" >
                                                         <i class="bi bi-trash"></i>
-                                                </button>
-                                                </td>
-                                            </tr>';
+                                                    </button>
+                                                </div>
+                                            </td>';
+                                    echo '</tr>';
                                     }
 
-                                    echo '</tbody>
-                                                </table>';
+                                    echo '</tbody></table>';
                                 } else {
-                                    echo "0 Result";
+                                    echo "No hay materiales activos.";
                                 }
                                 ?>
-
-
-
                                 <tfoot>
                                     <tr>
                                         <td colspan="5">
@@ -144,26 +141,21 @@ include('../../Querys/querys.php');
                                         </td>
                                     </tr>
                                 </tfoot>
-
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="footer">
                 <div class="pull-right">
-
+                    <!-- Contenido adicional si es necesario -->
                 </div>
                 <div>
                     <strong>Copyright</strong> Telistema &copy; 2024
                 </div>
             </div>
-
         </div>
     </div>
-
 
     <div id="small-chat">
         <a class="open-small-chat" onclick="openNewAdminModal()">
@@ -171,17 +163,14 @@ include('../../Querys/querys.php');
         </a>
     </div>
 
-    </div>
     <div id="edit-form-container" style="display: none;"></div>
     <?php
-    include('../../includes/footer.php');
+    include ('../../includes/footer.php');
     ?>
     <script>
-        $(document).ready(function() {
-
+        $(document).ready(function () {
             $('.footable').footable();
             $('.footable2').footable();
-
         });
 
         function openEditModal(id) {
@@ -189,13 +178,13 @@ include('../../Querys/querys.php');
             $.ajax({
                 url: "editMaterial.php?token=<?php echo $token; ?>&id=" + id, // Ruta al archivo de edición de usuario
                 type: "GET",
-                success: function(response) {
+                success: function (response) {
                     // Muestra el formulario de edición en el contenedor
                     $("#edit-form-container").html(response).slideDown();
                     // Abre el modal
                     $("#myModal6").modal("show");
                 },
-                error: function() {
+                error: function () {
                     alert("Error al cargar el formulario de edición.");
                 }
             });
@@ -206,19 +195,68 @@ include('../../Querys/querys.php');
             $.ajax({
                 url: "insertMaterial.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
                 type: "GET",
-                success: function(response) {
+                success: function (response) {
                     // Muestra el formulario de edición en el contenedor
                     $("#edit-form-container").html(response).slideDown();
                     // Abre el modal
                     $("#myModal6").modal("show");
                 },
-                error: function() {
+                error: function () {
                     alert("Error al cargar el formulario de edición.");
                 }
             });
         }
+
+        function openDeleteModal(id) {
+            swal({
+                title: "¿Estás seguro?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#1ab394",
+                confirmButtonText: "¡Sí, elimínalo!",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            }, function () {
+                // Realiza una solicitud AJAX para eliminar el admin
+                $.ajax({
+                    type: "POST",
+                    url: "materialsController.php?token=<?php echo $token; ?>",
+                    data: {
+                        action: "delete_product",
+                        id: id
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            swal({
+                                title: "¡Eliminado!",
+                                type: "success"
+                            }, function () {
+                                location.reload(); // Recarga la página
+                            });
+                        } else {
+                            swal({
+                                title: "Error",
+                                text: "Hubo un problema al eliminar.",
+                                type: "error"
+                            }, function () {
+                                location.reload(); // Recarga la página en caso de error también si es necesario
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        swal({
+                            title: "Error",
+                            text: "Hubo un problema al eliminar.",
+                            type: "error"
+                        }, function () {
+                            location.reload(); // Recarga la página en caso de error también
+                        });
+                    }
+                });
+            });
+        }
     </script>
-
 </body>
-
 </html>

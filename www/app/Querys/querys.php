@@ -446,4 +446,3 @@ define('SQL_SELECT_STATE', '
         SELECT state_user
         FROM states_users
         WHERE id_state_user = ?');
-

@@ -75,7 +75,7 @@ if ($rolUser == 'admin') {
                         echo 'active';
                     } ?>">
             <a href="../crudmaterials/materials.php">
-                <i class="bi bi-database"></i><span class="nav-label">Materiales</span>
+                <i class="bi bi-database"></i><span class="nav-label">Productos</span>
 
             </a>
         </li>
