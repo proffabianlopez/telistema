@@ -84,6 +84,12 @@ if (isset($_GET['id'])) {
                                                                                                                 } ?>">
                         </div>
                         <div class="form-group">
+                            <label for="stock">Cantidad</label>
+                            <input type="text" class="form-control" id="stock" name="stock" value="<?php if (isset($row['stock'])) {
+                                                                                                                    echo $row['stock'];
+                                                                                                                } ?>">
+                        </div>
+                        <div class="form-group">
                             <label for="id_measure">Unidad de Medida</label>
                             <select name="id_measure" id="id_measure" class="form-control">
                                 <?php
@@ -115,6 +121,12 @@ if (isset($_GET['id'])) {
                                 }
                                 ?>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="stock_alert">Alerta de Stock</label>
+                            <input type="text" class="form-control" id="stock_alert" name="stock_alert" value="<?php if (isset($row['stock_alert'])) {
+                                                                                                                    echo $row['stock_alert'];
+                                                                                                                } ?>">
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Actualizar</button>
