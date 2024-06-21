@@ -52,9 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id_measure = $_REQUEST['id_measure'];
             $name = capitalizeWords(trim($_REQUEST['material_name']));
             $description = capitalizeWords(trim($_REQUEST['description']));
+            $stock = $_REQUEST['stock'];
+            $stockAlert = $_REQUEST['stock_alert'];
             
             $stmt = $conn->prepare(SQL_UPDATE_PRODUCT);
-            $stmt->bind_param("ssii", $name, $description, $id_measure, $id);
+            $stmt->bind_param("ssiiii", $name, $description, $stock, $stockAlert, $id_measure, $id);
 
             if ($stmt->execute()) {
                 $response['status'] = 'success';
@@ -80,9 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id_measure = $_REQUEST['id_measure'];
             $name = capitalizeWords(trim($_REQUEST['material_name']));
             $description = capitalizeWords(trim($_REQUEST['description']));
+            $stock = $_REQUEST['stock'];
+            $stockAlert = $_REQUEST['stock_alert'];
 
             $stmt = $conn->prepare(SQL_INSERT_PRODUCT);
-            $stmt->bind_param("ssii", $name, $description, $id_measure, $id_status);
+            $stmt->bind_param("ssiiii", $name, $description, $stock, $stockAlert, $id_measure, $id_status);
 
             if ($stmt->execute()) {
                 $response['status'] = 'success';

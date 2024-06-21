@@ -253,6 +253,8 @@ define('SQL_UPDATE_PRODUCT','
         UPDATE materials
         SET material_name = ?,
         description = ?,
+        stock = ?,
+        stock_alert = ?,
         id_measure = ?
         WHERE id_material = ?');
 
@@ -272,9 +274,11 @@ define(
         'INSERT INTO materials (
                 material_name,
                 description,
+                stock,
+                stock_alert,
                 id_measure,
                 id_status)
-        VALUES (?, ?, ?, ?)'
+        VALUES (?, ?, ?, ?, ?, ?)'
 );
 
 define(

@@ -51,6 +51,10 @@ include ('../configsmtp/generate_config.php');
                         <input type="text" class="form-control" id="description" name="description">
                     </div>
                     <div class="form-group">
+                        <label for="stock">Cantidad</label>
+                        <input type="number" class="form-control" id="stock" name="stock">
+                    </div>
+                    <div class="form-group">
                             <label for="id_measure">Unidad de Medida</label>
                             <select name="id_measure" id="id_measure" class="form-control">
                             <option value="" selected disabled>Seleccione unidad de medida</option>
@@ -97,6 +101,10 @@ include ('../configsmtp/generate_config.php');
                         </select>
 
                         </div>
+                        <div class="form-group">
+                            <label for="stock_alert">Alerta de Stock</label>
+                        <input type="number" class="form-control" id="stock_alert" name="stock_alert">
+                    </div>
                     <br>
                     <div class="modal-footer">
                         <button type="submit" class="ladda-button btn btn-primary"
