@@ -205,7 +205,7 @@ include('../../Querys/querys.php');
         function openEditModal(id) {
             // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({
-                url: "editMaterial.php?token=<?php echo $token; ?>&id=" + id, // Ruta al archivo de edición de usuario
+                url: "editBuys.php?token=<?php echo $token; ?>&id=" + id, // Ruta al archivo de edición de usuario
                 type: "GET",
                 success: function(response) {
                     // Muestra el formulario de edición en el contenedor
@@ -222,7 +222,7 @@ include('../../Querys/querys.php');
         function openNewAdminModal() {
             // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({
-                url: "insertMaterial.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
+                url: "insertBuys.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
                 type: "GET",
                 success: function(response) {
                     // Muestra el formulario de edición en el contenedor
@@ -249,7 +249,7 @@ include('../../Querys/querys.php');
                 // Realiza una solicitud AJAX para eliminar el admin
                 $.ajax({
                     type: "POST",
-                    url: "materialsController.php?token=<?php echo $token; ?>",
+                    url: "buysController.php?token=<?php echo $token; ?>",
                     data: {
                         action: "delete_product",
                         id: id

@@ -38,7 +38,7 @@ include ('../configsmtp/generate_config.php');
 //editar product
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if ($_GET['action'] === 'edit_product') {
+    if ($_GET['action'] === 'edit_buy') {
         // Checking for Empty Fields
         if (empty($_REQUEST["material_name"])) {
             $response['message'] = 'El campo Nombre es obligatorio.';
@@ -67,22 +67,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
         }
-    } elseif ($_GET['action'] === 'add_product') {
+    } elseif ($_GET['action'] === 'add_buy') {
         // Checking for Empty Fields
-        if (empty($_REQUEST["material_name"])) {
+        if (empty($_REQUEST["id_material"])) {
             $response['message'] = 'El campo Nombre es obligatorio.';
-        } elseif (empty($_REQUEST["description"])) {
-            $response['message'] = 'El campo Descripcion es obligatorio.';
         } elseif (empty($_REQUEST["id_measure"])) {
             $response['message'] = 'El campo Medida es obligatorio.';
+        } elseif (empty($_REQUEST["id_supplier"])) {
+            $response['message'] = 'El campo Proveedor es obligatorio.';
+        } elseif (empty($_REQUEST["cost"])) {
+            $response['message'] = 'El campo Costo es obligatorio.';
+        } elseif (empty($_REQUEST["ammount"])) {
+            $response['message'] = 'El campo Cantidad es obligatorio.';
         } else {
-            $id_status = 1; // Asigna el estado predeterminado
+            
+            $date_buy = new DateTime();
+            $formatted_date_buy = $date_buy->format('Y-m-d H:i:s');
+            $ammount = $_REQUEST['ammount'];
+            $cost = $_REQUEST['cost'];
+            $id_supplier = $_REQUEST['id_supplier'];
+            $id_material = $_REQUEST['id_material'];
             $id_measure = $_REQUEST['id_measure'];
-            $name = capitalizeWords(trim($_REQUEST['material_name']));
-            $description = capitalizeWords(trim($_REQUEST['description']));
-
-            $stmt = $conn->prepare(SQL_INSERT_PRODUCT);
-            $stmt->bind_param("ssii", $name, $description, $id_measure, $id_status);
+            $id_user = $_SESSION['user_id'];
+            $id_state_order = 3; // Asigna el estado predeterminado
+            
+            $stmt = $conn->prepare(SQL_INSERT_BUY);
+            $stmt->bind_param("sidiiiii", $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_state_order);
 
             if ($stmt->execute()) {
                 $response['status'] = 'success';
@@ -94,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         exit;
 
-    } elseif ($_POST['action'] === 'delete_product') {
+    } elseif ($_POST['action'] === 'delete_buy') {
         $id_product = $_POST['id'];
 
         $stmt = $conn->prepare(SQL_DESACTIVE_PRODUCT);
