@@ -188,7 +188,7 @@ include('../../Querys/querys.php');
 
                                     echo '</tbody></table>';
                                 } else {
-                                    echo "No hay materiales activos.";
+                                    echo "No hay compras activas.";
                                 }
                                 ?>
                                 <tfoot>
