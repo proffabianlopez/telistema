@@ -27,9 +27,9 @@ if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_us
     exit();
 }
 
-include ('../../dbConnection.php');
-include ('../../Querys/querys.php');
-include ('../configsmtp/generate_config.php');
+include('../../dbConnection.php');
+include('../../Querys/querys.php');
+include('../configsmtp/generate_config.php');
 
 // Editar producto
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -69,41 +69,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
     } elseif (isset($_GET['action']) && $_GET['action'] === 'add_buy') {
-          // Checking for Empty Fields
-    if (empty($_POST["id_material"])) {
-        $response['message'] = 'El campo Nombre es obligatorio.';
-    } elseif (empty($_POST["id_measure"])) {
-        $response['message'] = 'El campo Medida es obligatorio.';
-    } elseif (empty($_POST["id_supplier"])) {
-        $response['message'] = 'El campo Proveedor es obligatorio.';
-    } elseif (empty($_POST["cost"])) {
-        $response['message'] = 'El campo Costo es obligatorio.';
-    } elseif (empty($_POST["ammount"])) {
-        $response['message'] = 'El campo Cantidad es obligatorio.';
-    } else {
-        $date_buy = new DateTime();
-        $formatted_date_buy = $date_buy->format('Y-m-d H:i:s');
-        $ammount = $_POST['ammount'];
-        $cost = $_POST['cost'];
-        $id_supplier = $_POST['id_supplier'];
-        $id_material = $_POST['id_material'];
-        $id_measure = $_POST['id_measure'];
-        $id_user = $_SESSION['user_id'];
-        $id_state_order = 3; // Asigna el estado predeterminado
-
-        $stmt = $conn->prepare(SQL_INSERT_BUY);
-        $stmt->bind_param("sdiiisii", $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_state_order);
-
-        if ($stmt->execute()) {
-            $response['status'] = 'success';
-            $response['message'] = 'Agregado con éxito';
+        // Checking for Empty Fields
+        if (empty($_POST["id_material"])) {
+            $response['message'] = 'El campo Nombre es obligatorio.';
+        } elseif (empty($_POST["id_measure"])) {
+            $response['message'] = 'El campo Medida es obligatorio.';
+        } elseif (empty($_POST["id_supplier"])) {
+            $response['message'] = 'El campo Proveedor es obligatorio.';
+        } elseif (empty($_POST["cost"])) {
+            $response['message'] = 'El campo Costo es obligatorio.';
+        } elseif (empty($_POST["ammount"])) {
+            $response['message'] = 'El campo Cantidad es obligatorio.';
         } else {
-            $response['message'] = 'No se pudo agregar: ' . $stmt->error;
-        }
-    }
-    echo json_encode($response);
-    exit();
+            $date_buy = new DateTime();
+            $formatted_date_buy = $date_buy->format('Y-m-d H:i:s');
+            $ammount = $_POST['ammount'];
+            $cost = $_POST['cost'];
+            $id_supplier = $_POST['id_supplier'];
+            $id_material = $_POST['id_material'];
+            $id_measure = $_POST['id_measure'];
+            $id_user = $_SESSION['user_id'];
+            $id_state_order = 3; // Asigna el estado predeterminado
 
+            $stmt = $conn->prepare(SQL_INSERT_BUY);
+            $stmt->bind_param("sdiiisii", $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_state_order);
+
+            if ($stmt->execute()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Agregado con éxito';
+            } else {
+                $response['message'] = 'No se pudo agregar: ' . $stmt->error;
+            }
+        }
+        echo json_encode($response);
+        exit();
     } elseif (isset($_POST['action']) && $_POST['action'] === 'complete_buy') {
         $id_buy = $_POST['id'];
 
@@ -142,4 +141,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode($response);
     exit();
 }
-?>
