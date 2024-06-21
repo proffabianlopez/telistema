@@ -446,3 +446,58 @@ define('SQL_SELECT_STATE', '
         SELECT state_user
         FROM states_users
         WHERE id_state_user = ?');
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+// Buys
+//////////////////////////////////////////////////////////////////
+
+define(
+        'SQL_INSERT_BUY',
+        'INSERT INTO buys (
+                date_buy,
+                ammount,
+                cost,
+                id_supplier,
+                id_material,
+                id_measure,
+                id_user,
+                id_state_order)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+);
+
+define('SQL_SELECT_BUYS', '
+        SELECT * FROM buys');
+
+define('SQL_SELECT_BUY_BY_ID','
+        SELECT u.*
+        FROM buys u
+        WHERE u.id_buy = ?;'
+);
+
+define('SQL_MODIFY_STATUS_BUY', '
+        UPDATE buys
+        SET id_state_order = 4
+        WHERE id_buy = ?'
+);
+
+
+define('SQL_UPDATE_BUY',
+        'UPDATE buys
+        SET 
+                date_buy = ?,
+                ammount = ?,
+                cost = ?,
+                id_supplier = ?,
+                id_material = ?,
+                id_measure = ?,
+                id_user = ?
+        WHERE id_buy = ?'
+);
+
+define('SQL_MODIFY_CANCEL_BUY', '
+        UPDATE buys
+        SET id_state_order = 2
+        WHERE id_buy = ?'
+);
