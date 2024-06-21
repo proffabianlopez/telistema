@@ -466,3 +466,13 @@ define(
                 id_state_order)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
 );
+
+define('SQL_SELECT_BUYS', '
+        SELECT * FROM buys');
+
+define(
+        'SQL_SELECT_BUY_BY_ID','
+        SELECT u.*
+        FROM buys u
+        WHERE u.id_buy = ?;'
+);

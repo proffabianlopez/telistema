@@ -22,7 +22,7 @@ include('../configsmtp/endEmail.php');
 if (isset($_GET['id'])) {
 
     $id_user = $_GET['id'];
-    $stmt = $conn->prepare(SQL_SELECT_PRODUCT_BY_ID);
+    $stmt = $conn->prepare(SQL_SELECT_BUY_BY_ID);
     $stmt->bind_param("i", $id_user);
     $stmt->execute();
 
@@ -48,7 +48,7 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Producto</title>
+    <title>Editar Compra</title>
     <!-- Incluye tus estilos y scripts aquí -->
 </head>
 
@@ -61,27 +61,93 @@ if (isset($_GET['id'])) {
                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                     </button>
                     <i class="bi bi-person-gear modal-icon"></i>
-                    <h4 class="modal-title">Editar Producto</h4>
+                    <h4 class="modal-title">Editar Compra</h4>
                 </div>
                 <div class="modal-body">
                     <form id="change-product-form" action="" method="POST">
                         <div style="display: none" class="form-group">
-                            <label for="id_material">ID Producto</label>
-                            <input type="text" class="form-control" id="id_material" name="id_material" value="<?php if (isset($row['id_material'])) {
-                                                                                                                    echo $row['id_material'];
+                            <label for="id_buy">ID Compra</label>
+                            <input type="text" class="form-control" id="id_buy" name="id_buy" value="<?php if (isset($row['id_buy'])) {
+                                                                                                                    echo $row['id_buy'];
                                                                                                                 } ?>" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="material_name">Nombre</label>
-                            <input type="text" class="form-control" id="material_name" name="material_name" value="<?php if (isset($row['material_name'])) {
-                                                                                                                        echo $row['material_name'];
-                                                                                                                    } ?>">
+                        <label for="id_material">Producto</label>
+                            <select name="id_material" id="id_material" class="form-control">
+                                <?php
+                                $state = $row['id_material'];
+                                $stmt = $conn->prepare(SQL_SELECT_PRODUCT_BY_ID);
+                                $stmt->bind_param("i", $state);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+
+                                // Verificar si hay resultados
+                                if ($result->num_rows > 0) {
+                                    $row_state = $result->fetch_assoc();
+                                    $name_state = $row_state["material_name"];
+                                    $id_material = $row_state["id_material"];
+                                } else {
+                                    $id_material = 0; // O el valor que desees
+                                }
+
+                                // Obtener todos los estados de la tabla measures
+                                $stmt = $conn->prepare(SQL_SELECT_MATERIALS);
+                                $stmt->execute();
+                                $rows = $stmt->get_result();
+
+                                foreach ($rows as $state) {
+                                    $stateName = $state["material_name"];
+                                    $stateId = $state["id_material"];
+                                    $selected = ($stateId == $id_measure) ? "selected" : "";
+                                    echo "<option value='$stateId' $selected>$stateName</option>";
+                                }
+                                ?>
+                            </select>                                                                                  
                         </div>
                         <div class="form-group">
-                            <label for="description">Descripción</label>
-                            <input type="text" class="form-control" id="description" name="description" value="<?php if (isset($row['description'])) {
-                                                                                                                    echo $row['description'];
-                                                                                                                } ?>">
+                        <label for="id_supplier">Proveedor</label>
+                            <select name="id_supplier" id="id_supplier" class="form-control">
+                                <?php
+                                $state = $row['id_supplier'];
+                                $stmt = $conn->prepare(SQL_SELECT_SUPPLIER_BY_ID);
+                                $stmt->bind_param("i", $state);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+
+                                // Verificar si hay resultados
+                                if ($result->num_rows > 0) {
+                                    $row_state = $result->fetch_assoc();
+                                    $name_state = $row_state["supplier_name"];
+                                    $id_supplier = $row_state["id_supplier"];
+                                } else {
+                                    $id_supplier = 0; // O el valor que desees
+                                }
+
+                                // Obtener todos los estados de la tabla measures
+                                $stmt = $conn->prepare(SQL_FROM_SUPPLIERS);
+                                $stmt->execute();
+                                $rows = $stmt->get_result();
+
+                                foreach ($rows as $state) {
+                                    $stateName = $state["supplier_name"];
+                                    $stateId = $state["id_supplier"];
+                                    $selected = ($stateId == $id_measure) ? "selected" : "";
+                                    echo "<option value='$stateId' $selected>$stateName</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ammount">Cantidad</label>
+                            <input type="number" class="form-control" id="ammount" name="ammount" value="<?php if (isset($row['ammount'])) {
+                                                                                                                    echo $row['ammount'];
+                                                                                                                } ?>"
+                        </div>
+                        <div class="form-group">
+                            <label for="cost">Costo</label>
+                            <input type="number" class="form-control" id="cost" name="cost" value="<?php if (isset($row['cost'])) {
+                                                                                                                    echo $row['cost'];
+                                                                                                                } ?>"
                         </div>
                         <div class="form-group">
                             <label for="id_measure">Unidad de Medida</label>
