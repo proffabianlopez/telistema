@@ -38,13 +38,6 @@ include('../../Querys/querys.php');
                     <div class="navbar-header">
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
                     </div>
-                    <ul class="nav navbar-top-links navbar-right">
-                        <li>
-                            <a href="../../logout.php">
-                                <i class="fa fa-sign-out"></i> Cerrar Sesión
-                            </a>
-                        </li>
-                    </ul>
                 </nav>
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
@@ -55,174 +48,92 @@ include('../../Querys/querys.php');
             </div>
 
             <div class="wrapper wrapper-content animated fadeInRight ecommerce">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Lista de Compras</h5>
+                            </div>
+                            <div class="ibox-content">
+                            <?php
+                                // Usar la consulta para seleccionar solo materiales activos
+                                $sql = SQL_SELECT_BUYS;
+                                $result = $conn->query($sql);
 
+                                if ($result->num_rows > 0) {
+                                    echo '<table class="footable table table-stripped toggle-arrow-tiny">
+                                    <thead>
+                                    <tr>
+                                        <th data-toggle="true">Producto</th>
+                                        <th data-toggle="true">Proveedor</th>
+                                        <th data-hide="phone">Cantidad</th>
+                                        <th data-hide="phone">Medida</th>
+                                        <th data-hide="all">Costo</th>
+                                        <th data-hide="phone">Estado</th>
+                                        <th class="text-right footable-visible footable-sortable footable-last-column footable-sorted">Acción<span class="footable-sort-indicator"></span></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>';
+                                
+                                    // Imprimir los datos de cada producto activo
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo '<tr>';
+                                        echo '<td>' . $row["material_name"] . '</td>';
+                                        echo '<td>' . $row["supplier_name"] . '</td>';
+                                        echo '<td>' . $row["ammount"] . '</td>';
+                                        echo '<td>' . $row["name_measure"] . '</td>';
+                                        echo '<td>$ ' . $row["cost"] . '</td>';
+                                
+                                        if($row["name_state"] == "Pendiente") {
+                                            echo '<td class="footable-visible" style="display: table-cell;">
+                                                    <span class="label label-success">' . $row["name_state"] . '</span>
+                                                  </td>';
+                                        } elseif($row["name_state"] == "Completado") {
+                                            echo '<td class="footable-visible" style="display: table-cell;">
+                                                    <span class="label label-primary">' . $row["name_state"] . '</span></td>';
+                                        } elseif($row["name_state"] == "Cancelado") {
+                                            echo '<td class="footable-visible" style="display: table-cell;">
+                                                    <span class="label label-warning">' . $row["name_state"] . '</span></td>';
+                                        }
+                                
+                                        // Mostrar los botones de acción según el estado
+                                        echo '<td class="text-right footable-visible footable-last-column">';
+                                        echo '<div class="btn-group">';
+                                        if ($row["name_state"] != "Completado" && $row["name_state"] != "Cancelado") {
+                                            echo '<button onclick="openEditModal(' . $row["id_buy"] . ')" class="btn-white btn btn-xs" style="margin-right: 5px;">Editar</button>';
+                                        }
+                                        // Mostrar el botón "Completar" solo si el estado no es "completado"
+                                        if ($row["name_state"] != "Completado" && $row["name_state"] != "Cancelado") {
+                                            echo '<button onclick="openCompleteModal(' . $row["id_buy"] . ')" class="label label-primary" style="margin-right: 5px;">Completar</button>';
+                                        }
+                                        if ($row["name_state"] != "Completado" && $row["name_state"] != "Cancelado") {
+                                            echo '<button onclick="openDeleteModal(' . $row["id_buy"] . ')" class="btn btn-danger btn-xs" style="margin-right: 5px;">Cancelar</button>';
+                                        }
+                                        echo '</div>';
+                                        echo '</td>';
+                                        echo '</tr>';
+                                    }
 
-<div class="ibox-content m-b-sm border-bottom">
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label class="control-label" for="order_id">Order ID</label>
-                <input type="text" id="order_id" name="order_id" value="" placeholder="Order ID" class="form-control">
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label class="control-label" for="status">Order status</label>
-                <input type="text" id="status" name="status" value="" placeholder="Status" class="form-control">
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label class="control-label" for="customer">Customer</label>
-                <input type="text" id="customer" name="customer" value="" placeholder="Customer" class="form-control">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label class="control-label" for="date_added">Date added</label>
-                <div class="input-group date">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="date_added" type="text" class="form-control" value="03/04/2014">
+                                    echo '</tbody></table>';
+                                } else {
+                                    echo "No hay compras activas.";
+                                }
+                                ?>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="5">
+                                            <ul class="pagination pull-right"></ul>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label class="control-label" for="date_modified">Date modified</label>
-                <div class="input-group date">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="date_modified" type="text" class="form-control" value="03/06/2014">
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label class="control-label" for="amount">Amount</label>
-                <input type="text" id="amount" name="amount" value="" placeholder="Amount" class="form-control">
-            </div>
-        </div>
-    </div>
 
-</div>
-
-<div class="row">
-    <div class="col-lg-12">
-        <div class="ibox">
-            <div class="ibox-content">
-
-                <table class="footable table table-stripped toggle-arrow-tiny footable-loaded default" data-page-size="15">
-                    <thead>
-                        <tr>
-
-                            <th class="footable-visible footable-sortable footable-first-column">Order ID<span class="footable-sort-indicator"></span></th>
-                            <th data-hide="phone" class="footable-sortable footable-visible" style="display: table-cell;">Customer<span class="footable-sort-indicator"></span></th>
-                            <th data-hide="phone" class="footable-sortable footable-visible" style="display: table-cell;">Amount<span class="footable-sort-indicator"></span></th>
-                            <th data-hide="phone" class="footable-sortable footable-visible" style="display: table-cell;">Date added<span class="footable-sort-indicator"></span></th>
-                            <th data-hide="phone,tablet" class="footable-sortable footable-visible" style="display: table-cell;">Date modified<span class="footable-sort-indicator"></span></th>
-                            <th data-hide="phone" class="footable-sortable footable-visible" style="display: table-cell;">Status<span class="footable-sort-indicator"></span></th>
-                            <th class="text-right footable-visible footable-sortable footable-last-column">Action<span class="footable-sort-indicator"></span></th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="footable-even" style="display: table-row;">
-                            <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>
-                                3214
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                Customer example
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                $500.00
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                03/04/2015
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                03/05/2015
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                <span class="label label-primary">Pending</span>
-                            </td>
-                            <td class="text-right footable-visible footable-last-column">
-                                <div class="btn-group">
-                                    <button class="btn-white btn btn-xs">View</button>
-                                    <button class="btn-white btn btn-xs">Edit</button>
-                                    <button class="btn-white btn btn-xs">Delete</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="footable-even" style="display: table-row;">
-                            <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>
-                                642
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                Customer example
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                $6843.00
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                10/04/2015
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                13/07/2015
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                <span class="label label-success">Shipped</span>
-                            </td>
-                            <td class="text-right footable-visible footable-last-column">
-                                <div class="btn-group">
-                                    <button class="btn-white btn btn-xs">View</button>
-                                    <button class="btn-white btn btn-xs">Edit</button>
-                                    <button class="btn-white btn btn-xs">Delete</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="footable-even" style="display: table-row;">
-                            <td class="footable-visible footable-first-column"><span class="footable-toggle"></span>
-                                324
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                Customer example
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                $320.00
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                12/04/2015
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                21/07/2015
-                            </td>
-                            <td class="footable-visible" style="display: table-cell;">
-                                <span class="label label-warning">Expired</span>
-                            </td>
-                            <td class="text-right footable-visible footable-last-column">
-                                <div class="btn-group">
-                                    <button class="btn-white btn btn-xs">View</button>
-                                    <button class="btn-white btn btn-xs">Edit</button>
-                                    <button class="btn-white btn btn-xs">Delete</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="7" class="footable-visible">
-                                <ul class="pagination pull-right"><li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li><li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li><li class="footable-page active"><a data-page="0" href="#">1</a></li><li class="footable-page"><a data-page="1" href="#">2</a></li><li class="footable-page"><a data-page="2" href="#">3</a></li><li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li><li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li></ul>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
 
             </div>
-        </div>
-    </div>
-</div>
-
-
-</div>
 
 
             <div class="footer">
@@ -255,7 +166,7 @@ include('../../Querys/querys.php');
         function openEditModal(id) {
             // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({
-                url: "editMaterial.php?token=<?php echo $token; ?>&id=" + id, // Ruta al archivo de edición de usuario
+                url: "editBuys.php?token=<?php echo $token; ?>&id=" + id, // Ruta al archivo de edición de usuario
                 type: "GET",
                 success: function(response) {
                     // Muestra el formulario de edición en el contenedor
@@ -272,7 +183,7 @@ include('../../Querys/querys.php');
         function openNewAdminModal() {
             // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({
-                url: "insertMaterial.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
+                url: "insertBuys.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
                 type: "GET",
                 success: function(response) {
                     // Muestra el formulario de edición en el contenedor
@@ -286,29 +197,30 @@ include('../../Querys/querys.php');
             });
         }
 
-        function openDeleteModal(id) {
+
+        function openCompleteModal(id) {
             swal({
                 title: "¿Estás seguro?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#1ab394",
-                confirmButtonText: "¡Sí, elimínalo!",
+                confirmButtonText: "¡Sí, Agregar a Stock!",
                 cancelButtonText: "Cancelar",
                 closeOnConfirm: false
             }, function() {
                 // Realiza una solicitud AJAX para eliminar el admin
                 $.ajax({
                     type: "POST",
-                    url: "materialsController.php?token=<?php echo $token; ?>",
+                    url: "buysController.php?token=<?php echo $token; ?>",
                     data: {
-                        action: "delete_product",
+                        action: "complete_buy",
                         id: id
                     },
                     dataType: 'json',
                     success: function(response) {
                         if (response.status === 'success') {
                             swal({
-                                title: "¡Eliminado!",
+                                title: "¡Compra Completada!",
                                 type: "success"
                             }, function() {
                                 location.reload(); // Recarga la página
@@ -316,7 +228,7 @@ include('../../Querys/querys.php');
                         } else {
                             swal({
                                 title: "Error",
-                                text: "Hubo un problema al eliminar.",
+                                text: "Hubo un problema al Completar.",
                                 type: "error"
                             }, function() {
                                 location.reload(); // Recarga la página en caso de error también si es necesario
@@ -327,9 +239,60 @@ include('../../Querys/querys.php');
                         console.error(xhr.responseText);
                         swal({
                             title: "Error",
-                            text: "Hubo un problema al eliminar.",
+                            text: "Hubo un problema al Completar.",
                             type: "error"
                         }, function() {
+                            location.reload(); // Recarga la página en caso de error también
+                        });
+                    }
+                });
+            });
+        }
+
+        function openDeleteModal(id) {
+            swal({
+                title: "¿Estás seguro?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#1ab394",
+                confirmButtonText: "¡Sí, cancelar!",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            }, function () {
+                // Realiza una solicitud AJAX para eliminar el admin
+                $.ajax({
+                    type: "POST",
+                    url: "buysController.php?token=<?php echo $token; ?>",
+                    data: {
+                        action: "delete_buy",
+                        id: id
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            swal({
+                                title: "¡Eliminado!",
+                                type: "success"
+                            }, function () {
+                                location.reload(); // Recarga la página
+                            });
+                        } else {
+                            swal({
+                                title: "Error",
+                                text: "Hubo un problema al eliminar.",
+                                type: "error"
+                            }, function () {
+                                location.reload(); // Recarga la página en caso de error también si es necesario
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        swal({
+                            title: "Error",
+                            text: "Hubo un problema al eliminar.",
+                            type: "error"
+                        }, function () {
                             location.reload(); // Recarga la página en caso de error también
                         });
                     }

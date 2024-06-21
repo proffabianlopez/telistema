@@ -49,7 +49,7 @@ include ('../../Querys/querys.php');
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Productos</h2>
+                    <h2>Stock</h2>
                 </div>
                 <div class="col-lg-2"></div>
             </div>
@@ -71,9 +71,11 @@ include ('../../Querys/querys.php');
                                     <thead>
                                     <tr>
                                         <th data-toggle="true">Nombre</th>
-                                        <th data-toggle="true">Descripción</th>
+                                        <th data-hide="phone">Cantidad</th>
+                                        <th data-hide="all">Descripción</th>
                                         <th data-hide="phone">Medida</th>
-                                        <th>Accion</th>
+                                        <th data-hide="phone">Estado</th>
+                                        <th class="text-right footable-visible footable-last-column">Accion</th>
                                     </tr>
                                     </thead>
                                     <tbody>';
@@ -114,10 +116,28 @@ include ('../../Querys/querys.php');
                                         
                                         echo '<tr>';
                                         echo '<td>' . $row["material_name"] . '</td>';
+                                        echo '<td>' . $row["stock"] . '</td>';
                                         echo '<td>' . $row["description"] . '</td>';
                                         echo '<td>' . $name_measure . '</td>';
-                                        echo '<td>
-                                                <div class="btn-group" role="group">
+
+                                        if($row["stock"] > $row["stock_alert"]) {
+                                            echo '<td class="footable-visible" style="display: table-cell;">
+                                                    <span class="label label-primary">Disponible</span>
+                                                    </td>';
+                                        } elseif($row["stock"] > 0 && $row["stock"] <= $row["stock_alert"]) {
+                                            echo '<td class="footable-visible" style="display: table-cell;">
+                                                    <span class="label label-warning">Poco stock</span>
+                                                    </td>';
+                                        } elseif($row["stock"] == 0) {
+                                            echo '<td class="footable-visible" style="display: table-cell;">
+                                                    <span class="label label-danger">Sin stock</span>
+                                                    </td>';
+                                        }
+                                        
+                                        
+                                        
+                                        echo '<td class="text-right footable-visible footable-last-column">
+                                               <div class="btn-group" role="group">
                                                     <button id="edit-'.$row["id_material"].'-'.$token.'" data-crud="materials" class="btn btn-warning btn-xs modaledit-btn" style="margin-right: 5px" >
                                                         <i class="bi bi-pencil-square"></i>
                                                     </button>

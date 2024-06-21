@@ -74,6 +74,7 @@ if ($rolUser == 'admin') {
         <li class=" <?php if (PAGE == 'Materiales') {
                         echo 'active';
                     } ?>">
+
             <a href="../crudmaterials/materials.php">
                 <i class="bi bi-database"></i><span class="nav-label">Productos</span>
 
