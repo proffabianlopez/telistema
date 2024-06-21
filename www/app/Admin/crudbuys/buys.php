@@ -54,57 +54,7 @@ include('../../Querys/querys.php');
                 <div class="col-lg-2"></div>
             </div>
 
-            <div class="wrapper wrapper-content animated fadeInRight ecommerce">
-
-
-<div class="ibox-content m-b-sm border-bottom">
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label class="control-label" for="order_id">Order ID</label>
-                <input type="text" id="order_id" name="order_id" value="" placeholder="Order ID" class="form-control">
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label class="control-label" for="status">Order status</label>
-                <input type="text" id="status" name="status" value="" placeholder="Status" class="form-control">
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label class="control-label" for="customer">Customer</label>
-                <input type="text" id="customer" name="customer" value="" placeholder="Customer" class="form-control">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label class="control-label" for="date_added">Date added</label>
-                <div class="input-group date">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="date_added" type="text" class="form-control" value="03/04/2014">
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label class="control-label" for="date_modified">Date modified</label>
-                <div class="input-group date">
-                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="date_modified" type="text" class="form-control" value="03/06/2014">
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <label class="control-label" for="amount">Amount</label>
-                <input type="text" id="amount" name="amount" value="" placeholder="Amount" class="form-control">
-            </div>
-        </div>
-    </div>
-
-</div>
-
+<div class="wrapper wrapper-content animated fadeInRight ecommerce">
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox">
