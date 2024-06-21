@@ -470,9 +470,34 @@ define(
 define('SQL_SELECT_BUYS', '
         SELECT * FROM buys');
 
-define(
-        'SQL_SELECT_BUY_BY_ID','
+define('SQL_SELECT_BUY_BY_ID','
         SELECT u.*
         FROM buys u
         WHERE u.id_buy = ?;'
+);
+
+define('SQL_MODIFY_STATUS_BUY', '
+        UPDATE buys
+        SET id_state_order = 4
+        WHERE id_buy = ?'
+);
+
+
+define('SQL_UPDATE_BUY',
+        'UPDATE buys
+        SET 
+                date_buy = ?,
+                ammount = ?,
+                cost = ?,
+                id_supplier = ?,
+                id_material = ?,
+                id_measure = ?,
+                id_user = ?
+        WHERE id_buy = ?'
+);
+
+define('SQL_MODIFY_CANCEL_BUY', '
+        UPDATE buys
+        SET id_state_order = 2
+        WHERE id_buy = ?'
 );

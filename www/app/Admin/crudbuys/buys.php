@@ -70,7 +70,7 @@ include('../../Querys/querys.php');
                                         <th data-hide="phone">Medida</th>
                                         <th data-hide="all">Costo</th>
                                         <th data-hide="phone">Estado</th>
-                                        <th>Accion</th>
+                                        <th class="text-right footable-visible footable-sortable footable-last-column footable-sorted">Action<span class="footable-sort-indicator"></span></th>
                                     </tr>
                                     </thead>
                                     <tbody>';
@@ -148,20 +148,42 @@ include('../../Querys/querys.php');
                                         echo '<td>' . $row["ammount"] . '</td>';
                                         echo '<td>' . $name_measure . '</td>';
                                         echo '<td>$ ' . $row["cost"] . '</td>';
-                                        echo '<td class="footable-visible" style="display: table-cell;"> 
-                                            <span class="label label-success">' . $name_state . '</span></td>';
-                                    
-                                        echo '<td>
-                                                <div class="btn-group" role="group">
-                                                    <button onclick="openEditModal(' . $row["id_material"] . ')" class="btn-white btn btn-xs"" style="margin-right: 5px" >
-                                                        Editar
-                                                    </button>
-                                                    <button onclick="openDeleteModal(' . $row["id_material"] . ')" class="btn btn-danger btn-xs" >
-                                                        Completar
-                                                    </button>
-                                                </div>
-                                            </td>';
-                                    echo '</tr>';
+
+                                        if($name_state == "pendiente") {
+
+                                            echo '<td class="footable-visible" style="display: table-cell;">
+                                                    <span class="label label-success">' . $name_state . '</span>
+                                                </td>';
+
+                                        } elseif($name_state == "completado") {
+
+                                            echo '<td class="footable-visible" style="display: table-cell;">
+                                                    <span class="label label-primary">' . $name_state . '</span></td>';
+
+                                        } elseif($name_state == "cancelado") {
+
+                                            echo '<td class="footable-visible" style="display: table-cell;">
+                                            <span class="label label-warning">' . $name_state . '</span></td>';
+                                        }
+                                
+                                        // Mostrar los botones de acción según el estado
+                                        echo '<td class="text-right footable-visible footable-last-column">';
+                                        echo '<div class="btn-group">';
+                                        if ($name_state != "completado" && $name_state != "cancelado") {
+                                            echo '<button onclick="openEditModal(' . $row["id_buy"] . ')" class="btn-white btn btn-xs" style="margin-right: 5px;">Editar</button>';
+                                        }
+                                        // Mostrar el botón "Completar" solo si el estado no es "completado"
+                                        if ($name_state != "completado" && $name_state != "cancelado") {
+                                            echo '<button onclick="openCompleteModal(' . $row["id_buy"] . ')" class="label label-primary" style="margin-right: 5px;">Completar</button>';
+                                        }
+
+                                        if ($name_state != "completado" && $name_state != "cancelado") {
+                                            echo '<button onclick="openDeleteModal(' . $row["id_buy"] . ')" class="btn btn-danger btn-xs" style="margin-right: 5px;">Cancelar</button>';
+                                        }
+                                        
+                                        echo '</div>';
+                                        echo '</td>';
+                                        echo '</tr>';
                                     }
 
                                     echo '</tbody></table>';
@@ -176,98 +198,6 @@ include('../../Querys/querys.php');
                                         </td>
                                     </tr>
                                 </tfoot>
-
-                                    <!--
-                                    <tbody>
-                                        <tr class="footable-even" style="display: table-row;">
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                Customer example
-                                            </td>
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                $500.00
-                                            </td>
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                03/04/2015
-                                            </td>
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                03/05/2015
-                                            </td>
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                <span class="label label-primary">Pending</span>
-                                            </td>
-                                            <td class="text-right footable-visible footable-last-column">
-                                                <div class="btn-group">
-                                                    <button class="btn-white btn btn-xs">View</button>
-                                                    <button class="btn-white btn btn-xs">Edit</button>
-                                                    <button class="btn-white btn btn-xs">Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="footable-even" style="display: table-row;">
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                Customer example
-                                            </td>
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                $6843.00
-                                            </td>
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                10/04/2015
-                                            </td>
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                13/07/2015
-                                            </td>
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                <span class="label label-success">Shipped</span>
-                                            </td>
-                                            <td class="text-right footable-visible footable-last-column">
-                                                <div class="btn-group">
-                                                    <button class="btn-white btn btn-xs">View</button>
-                                                    <button class="btn-white btn btn-xs">Edit</button>
-                                                    <button class="btn-white btn btn-xs">Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="footable-even" style="display: table-row;">
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                Customer example
-                                            </td>
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                $320.00
-                                            </td>
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                12/04/2015
-                                            </td>
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                21/07/2015
-                                            </td>
-                                            <td class="footable-visible" style="display: table-cell;">
-                                                <span class="label label-warning">Expired</span>
-                                            </td>
-                                            <td class="text-right footable-visible footable-last-column">
-                                                <div class="btn-group">
-                                                    <button class="btn-white btn btn-xs">View</button>
-                                                    <button class="btn-white btn btn-xs">Edit</button>
-                                                    <button class="btn-white btn btn-xs">Delete</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="7" class="footable-visible">
-                                                <ul class="pagination pull-right">
-                                                    <li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li>
-                                                    <li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li>
-                                                    <li class="footable-page active"><a data-page="0" href="#">1</a></li>
-                                                    <li class="footable-page"><a data-page="1" href="#">2</a></li>
-                                                    <li class="footable-page"><a data-page="2" href="#">3</a></li>
-                                                    <li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li>
-                                                    <li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                                </table> -->
 
                             </div>
                         </div>
@@ -339,13 +269,13 @@ include('../../Querys/querys.php');
             });
         }
 
-        function openDeleteModal(id) {
+        function openCompleteModal(id) {
             swal({
                 title: "¿Estás seguro?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#1ab394",
-                confirmButtonText: "¡Sí, elimínalo!",
+                confirmButtonText: "¡Sí, Agregar a Stock!",
                 cancelButtonText: "Cancelar",
                 closeOnConfirm: false
             }, function() {
@@ -354,14 +284,14 @@ include('../../Querys/querys.php');
                     type: "POST",
                     url: "buysController.php?token=<?php echo $token; ?>",
                     data: {
-                        action: "delete_product",
+                        action: "complete_buy",
                         id: id
                     },
                     dataType: 'json',
                     success: function(response) {
                         if (response.status === 'success') {
                             swal({
-                                title: "¡Eliminado!",
+                                title: "¡Compra Completada!",
                                 type: "success"
                             }, function() {
                                 location.reload(); // Recarga la página
@@ -369,7 +299,7 @@ include('../../Querys/querys.php');
                         } else {
                             swal({
                                 title: "Error",
-                                text: "Hubo un problema al eliminar.",
+                                text: "Hubo un problema al Completar.",
                                 type: "error"
                             }, function() {
                                 location.reload(); // Recarga la página en caso de error también si es necesario
@@ -380,9 +310,60 @@ include('../../Querys/querys.php');
                         console.error(xhr.responseText);
                         swal({
                             title: "Error",
-                            text: "Hubo un problema al eliminar.",
+                            text: "Hubo un problema al Completar.",
                             type: "error"
                         }, function() {
+                            location.reload(); // Recarga la página en caso de error también
+                        });
+                    }
+                });
+            });
+        }
+
+        function openDeleteModal(id) {
+            swal({
+                title: "¿Estás seguro?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#1ab394",
+                confirmButtonText: "¡Sí, cancelar!",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            }, function () {
+                // Realiza una solicitud AJAX para eliminar el admin
+                $.ajax({
+                    type: "POST",
+                    url: "buysController.php?token=<?php echo $token; ?>",
+                    data: {
+                        action: "delete_buy",
+                        id: id
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            swal({
+                                title: "¡Eliminado!",
+                                type: "success"
+                            }, function () {
+                                location.reload(); // Recarga la página
+                            });
+                        } else {
+                            swal({
+                                title: "Error",
+                                text: "Hubo un problema al eliminar.",
+                                type: "error"
+                            }, function () {
+                                location.reload(); // Recarga la página en caso de error también si es necesario
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        swal({
+                            title: "Error",
+                            text: "Hubo un problema al eliminar.",
+                            type: "error"
+                        }, function () {
                             location.reload(); // Recarga la página en caso de error también
                         });
                     }

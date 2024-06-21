@@ -40,21 +40,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($_GET['action'] === 'edit_buy') {
         // Checking for Empty Fields
-        if (empty($_REQUEST["material_name"])) {
+        if (empty($_REQUEST["id_material"])) {
             $response['message'] = 'El campo Nombre es obligatorio.';
-        } elseif (empty($_REQUEST["description"])) {
-            $response['message'] = 'El campo Descripcion es obligatorio.';
         } elseif (empty($_REQUEST["id_measure"])) {
             $response['message'] = 'El campo Medida es obligatorio.';
+        } elseif (empty($_REQUEST["id_supplier"])) {
+            $response['message'] = 'El campo Proveedor es obligatorio.';
+        } elseif (empty($_REQUEST["cost"])) {
+            $response['message'] = 'El campo Costo es obligatorio.';
+        } elseif (empty($_REQUEST["ammount"])) {
+            $response['message'] = 'El campo Cantidad es obligatorio.';
         } else {
-            // Assigning User Values to Variable
-            $id = $_REQUEST['id_material'];
+            $id_buy = $_REQUEST['id_buy'];
+            $date_buy = new DateTime();
+            $formatted_date_buy = $date_buy->format('Y-m-d H:i:s');
+            $ammount = $_REQUEST['ammount'];
+            $cost = $_REQUEST['cost'];
+            $id_supplier = $_REQUEST['id_supplier'];
+            $id_material = $_REQUEST['id_material'];
             $id_measure = $_REQUEST['id_measure'];
-            $name = capitalizeWords(trim($_REQUEST['material_name']));
-            $description = capitalizeWords(trim($_REQUEST['description']));
+            $id_user = $_SESSION['user_id'];
             
-            $stmt = $conn->prepare(SQL_UPDATE_PRODUCT);
-            $stmt->bind_param("ssii", $name, $description, $id_measure, $id);
+            $stmt = $conn->prepare(SQL_UPDATE_BUY);
+            $stmt->bind_param("sidiiii", $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_buy);
+
 
             if ($stmt->execute()) {
                 $response['status'] = 'success';
@@ -104,11 +113,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         exit;
 
-    } elseif ($_POST['action'] === 'delete_buy') {
-        $id_product = $_POST['id'];
+    } elseif ($_POST['action'] === 'complete_buy') {
+        $id_buy = $_POST['id'];
 
-        $stmt = $conn->prepare(SQL_DESACTIVE_PRODUCT);
-        $stmt->bind_param("i", $id_product);
+        $stmt = $conn->prepare(SQL_MODIFY_STATUS_BUY);
+        $stmt->bind_param("i", $id_buy);
+
+        if ($stmt->execute()) {
+            $response['status'] = 'success';
+            $response['message'] = 'Eliminado';
+        } else {
+            $response['message'] = 'Error al eliminar: ' . $stmt->error;
+        }
+        echo json_encode($response);
+        exit;
+    
+    } elseif ($_POST['action'] === 'delete_buy') {
+        $id_buy = $_POST['id'];
+
+        $stmt = $conn->prepare(SQL_MODIFY_CANCEL_BUY);
+        $stmt->bind_param("i", $id_buy);
 
         if ($stmt->execute()) {
             $response['status'] = 'success';
