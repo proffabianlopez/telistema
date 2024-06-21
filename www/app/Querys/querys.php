@@ -229,6 +229,164 @@ define(
         WHERE id_user = ?'
 );
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//Orders
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+define('SQL_ORDER_BY_ID', '
+    SELECT 
+        o.id_order, 
+        o.order_date, 
+        o.order_hour, 
+        o.order_description, 
+        o.order_server,
+        o.address, 
+        o.height,
+        o.floor, 
+        o.departament,
+        o.id_client, 
+        p.priority,
+        so.state_order,
+        m.material_name,
+        u.name_user,
+        u.surname_user,
+        cl.client_name,
+        cl.client_lastname
+    FROM 
+        orders o
+    JOIN 
+        prioritys p ON o.id_priority = p.id_priority
+    LEFT JOIN 
+        states_orders so ON o.id_state_order = so.id_state_order
+    LEFT JOIN 
+        materials m ON o.id_material = m.id_material
+    LEFT JOIN 
+        users u ON o.technic_id = u.id_user
+    LEFT JOIN
+        clients cl ON o.id_client = cl.id_client
+    WHERE 
+        o.id_client = ?');
+
+define('SQL_INSERT_ORDER', '
+        INSERT INTO orders 
+                (order_date, 
+                order_hour, 
+                order_description, 
+                order_server, 
+                address, 
+                height, 
+                floor, 
+                departament, 
+                id_client,
+                id_priority, 
+                id_material, 
+                id_state_order, 
+                admin_id, 
+                technic_id) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+
+define('SQL_SELECT_ORDER_BY_ID', '
+        SELECT 
+        o.id_order, 
+        o.order_date, 
+        o.order_hour, 
+        o.order_description, 
+        o.order_server,
+        o.address, 
+        o.height,
+        o.floor, 
+        o.departament,
+        o.id_client,
+        p.priority,
+        so.state_order,
+        m.material_name,
+        u.name_user,
+        u.surname_user,
+        cl.client_name,
+        cl.client_lastname
+    FROM 
+        orders o
+    JOIN 
+        prioritys p ON o.id_priority = p.id_priority
+    LEFT JOIN 
+        states_orders so ON o.id_state_order = so.id_state_order
+    LEFT JOIN 
+        materials m ON o.id_material = m.id_material
+    LEFT JOIN 
+        users u ON o.technic_id = u.id_user
+    LEFT JOIN
+        clients cl ON o.id_client = cl.id_client
+    WHERE 
+        o.id_order =?');
+
+define('SQL_SELECT_STATE_ORDER_BY_ID', '
+            SELECT id_state_order, state_order 
+            FROM states_orders
+            WHERE id_state_order = ?');
+
+define('SQL_SELECT_STATUS_ORDERS', '
+            SELECT * FROM states_orders');
+
+define('SQL_UPDATE_ORDER', '
+        UPDATE 
+                orders
+        SET 
+                order_date = ?,
+                order_hour = ?,
+                order_description = ?,
+                order_server = ?,
+                address = ?, 
+                height = ?,
+                floor = ?,
+                departament = ?,
+                id_client = ?,
+                id_priority = ?,
+                id_material = ?,
+                id_state_order = ?,
+                technic_id = ?
+        WHERE   
+                id_order = ?');
+
+
+
+define('SQL_SELECT_PRIORITYS_ORDER_BY_ID', '
+        SELECT id_priority, priority 
+        FROM prioritys
+        WHERE id_priority = ?');
+
+define('SQL_SELECT_PRIORITYS_ORDERS', '
+        SELECT * FROM prioritys');
+
+define('SQL_SELECT_MATERIALS_ORDER_BY_ID', '
+        SELECT id_material, material_name
+        FROM materials
+        WHERE id_material = ?');
+
+define('SQL_SELECT_MATERIALS_ORDERS', '
+        SELECT * FROM materials');
+
+define('SQL_SELECT_TECNS_ORDER_BY_ID', '
+    SELECT id_user, name_user, surname_user, id_rol 
+    FROM users
+    WHERE id_user = ?');
+
+define('SQL_SELECT_TECNS_ORDERS', '
+    SELECT id_user, name_user, surname_user, id_rol 
+    FROM users
+    WHERE id_rol = 2');
+
+define('SQL_SELECT_ADMINS_ORDER_BY_ID', '
+    SELECT id_user, name_user, surname_user, id_rol
+    FROM users
+    WHERE id_rol = ?');
+
+define('SQL_SELECT_CLIENT_BY_ID', '
+        SELECT id_client, client_name, client_lastname
+        FROM clients 
+        WHERE id_client = ?');
+
+define('SQL_DELETE_ORDER', '
+        DELETE FROM orders
+        WHERE id_client = ? AND id_order = ?');
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Products
@@ -292,4 +450,3 @@ define('SQL_SELECT_STATE', '
         SELECT state_user
         FROM states_users
         WHERE id_state_user = ?');
-

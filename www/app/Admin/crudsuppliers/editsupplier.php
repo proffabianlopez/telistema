@@ -5,22 +5,19 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
   if ($_SESSION['user_role'] != 'admin') {
 
     echo "<script> location.href='../../includes/404.php'; </script>";
-
   }
   $rEmail = $_SESSION['mail'];
   $rolUser = $_SESSION['user_role'];
-
 } else {
 
   echo "<script> location.href='../../login.php'; </script>";
-
 }
 ////////////////////////////////
 
 define('TITLE', 'Actualizar Proveedores');
 define('PAGE', 'Proveedores');
-include ('../../dbConnection.php');
-include ('../../Querys/querys.php');
+include('../../dbConnection.php');
+include('../../Querys/querys.php');
 
 // update
 if (isset($_REQUEST['update'])) {
@@ -29,7 +26,6 @@ if (isset($_REQUEST['update'])) {
   if (($_REQUEST['supplier_name'] == "") || ($_REQUEST['phone'] == "") || ($_REQUEST['mail'] == "") || ($_REQUEST['address'] == "")) {
     // msg displayed if required field missing
     $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Fill All Fileds </div>';
-
   } else {
     $id = $_REQUEST['id_supplier'];
     $name = $_REQUEST['supplier_name'];
@@ -44,7 +40,6 @@ if (isset($_REQUEST['update'])) {
     if ($stmt->execute()) {
       // below msg display on form submit success
       $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Updated Successfully </div>';
-
     } else {
       // below msg display on form submit failed
       $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update </div>';
@@ -73,10 +68,9 @@ if (isset($_REQUEST['view'])) {
     // Mostrar un mensaje si no se encuentra ningún cliente con el ID proporcionado
     echo '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">No se encontró ningún cliente con ese ID.</div>';
   }
-
 }
 ?>
-<?php include ('../../includes/header.php') ?>
+<?php include('../../includes/header.php') ?>
 
 <body>
 
@@ -84,7 +78,7 @@ if (isset($_REQUEST['view'])) {
 
     <nav class="navbar-default navbar-static-side" role="navigation">
       <div class="sidebar-collapse">
-        <?php include ('../../includes/menu.php') ?>
+        <?php include('../../includes/menu.php') ?>
 
       </div>
     </nav>
@@ -97,7 +91,7 @@ if (isset($_REQUEST['view'])) {
           </div>
           <ul class="nav navbar-top-links navbar-right">
             <li>
-              <a href="login.html">
+              <a href="../../logout.php" id="logout">
                 <i class="fa fa-sign-out"></i> Cerrar Sesión
               </a>
             </li>
@@ -129,33 +123,33 @@ if (isset($_REQUEST['view'])) {
                   <div class="form-group">
                     <label for="id_supplier">ID Proveedor</label>
                     <input type="text" class="form-control" id="id_supplier" name="id_supplier" value="<?php if (isset($row['id_supplier'])) {
-                      echo $row['id_supplier'];
-                    } ?>" readonly>
+                                                                                                          echo $row['id_supplier'];
+                                                                                                        } ?>" readonly>
                   </div>
                   <div class="form-group">
                     <label for="supplier_name">Nombre</label>
                     <input type="text" class="form-control" id="supplier_name" name="supplier_name" value="<?php if (isset($row['supplier_name'])) {
-                      echo $row['supplier_name'];
-                    } ?>">
+                                                                                                              echo $row['supplier_name'];
+                                                                                                            } ?>">
                   </div>
                   <div class="form-group">
                     <label for="phone">Teléfono</label>
                     <input type="text" class="form-control" id="phone" name="phone" value="<?php if (isset($row['phone'])) {
-                      echo $row['phone'];
-                    } ?>" onkeypress="isInputNumber(event)">
+                                                                                              echo $row['phone'];
+                                                                                            } ?>" onkeypress="isInputNumber(event)">
                   </div>
                   <div class="form-group">
                     <label for="mail">Email</label>
                     <input type="email" class="form-control" id="mail" name="mail" value="<?php if (isset($row['mail'])) {
-                      echo $row['mail'];
-                    } ?>">
+                                                                                            echo $row['mail'];
+                                                                                          } ?>">
                   </div>
 
                   <div class="form-group">
                     <label for="address">Dirección</label>
                     <input type="text" class="form-control" id="address" name="address" value="<?php if (isset($row['address'])) {
-                      echo $row['address'];
-                    } ?>">
+                                                                                                  echo $row['address'];
+                                                                                                } ?>">
                   </div>
 
 
@@ -217,7 +211,7 @@ if (isset($_REQUEST['view'])) {
       </div>
       <div class="footer">
         <div>
-          <strong>Copyright</strong>  Telistema &copy; 2024
+          <strong>Copyright</strong> Telistema &copy; 2024
         </div>
       </div>
 
@@ -226,7 +220,7 @@ if (isset($_REQUEST['view'])) {
 
 
 
-  <?php include ('../../includes/footer.php'); ?>
+  <?php include('../../includes/footer.php'); ?>
 
   <!-- Only Number for input fields -->
   <script>

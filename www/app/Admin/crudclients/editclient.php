@@ -14,8 +14,8 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 
 define('TITLE', 'Clientes');
 define('PAGE', 'Clientes');
-include ('../../dbConnection.php');
-include ('../../Querys/querys.php');
+include('../../dbConnection.php');
+include('../../Querys/querys.php');
 
 // Actualización
 if (isset($_REQUEST['clientupdate'])) {
@@ -72,10 +72,9 @@ if (isset($_REQUEST['view'])) {
     // Mostrar un mensaje si no se encuentra ningún cliente con el ID proporcionado
     echo '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">No se encontró ningún cliente con ese ID.</div>';
   }
-
 }
 ?>
-<?php include ('../../includes/header.php') ?>
+<?php include('../../includes/header.php') ?>
 
 <body>
 
@@ -83,7 +82,7 @@ if (isset($_REQUEST['view'])) {
 
     <nav class="navbar-default navbar-static-side" role="navigation">
       <div class="sidebar-collapse">
-        <?php include ('../../includes/menu.php') ?>
+        <?php include('../../includes/menu.php') ?>
 
       </div>
     </nav>
@@ -95,8 +94,7 @@ if (isset($_REQUEST['view'])) {
             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
             <form role="search" class="navbar-form-custom" action="search_results.html">
               <div class="form-group">
-                <input type="text" placeholder="Search for something..." class="form-control" name="top-search"
-                  id="top-search">
+                <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
               </div>
             </form>
           </div>
@@ -204,7 +202,7 @@ if (isset($_REQUEST['view'])) {
 
 
             <li>
-              <a href="login.html">
+              <a href="../../logout.php" id="logout">
                 <i class="fa fa-sign-out"></i> Cerrar Sesión
               </a>
             </li>
@@ -237,61 +235,60 @@ if (isset($_REQUEST['view'])) {
                     <div class="form-group">
                       <label for="client_name">Id Cliente</label>
                       <input type="text" class="form-control" id="id_client" name="id_client" value="<?php if (isset($row['id_client'])) {
-                        echo $row['id_client'];
-                      } ?>" readonly>
+                                                                                                        echo $row['id_client'];
+                                                                                                      } ?>" readonly>
                     </div>
                     <div class="form-group">
                       <label for="client_name">Nombre</label>
                       <input type="text" class="form-control" id="client_name" name="client_name" value="<?php if (isset($row['client_name'])) {
-                        echo $row['client_name'];
-                      } ?>">
+                                                                                                            echo $row['client_name'];
+                                                                                                          } ?>">
                     </div>
                     <div class="form-group">
                       <label for="client_lastname">Apellido</label>
                       <input type="text" class="form-control" id="client_lastname" name="client_lastname" value="<?php if (isset($row['client_lastname'])) {
-                        echo $row['client_lastname'];
-                      } ?>">
+                                                                                                                    echo $row['client_lastname'];
+                                                                                                                  } ?>">
                     </div>
                     <div class="form-group">
                       <label for="phone">Telefono</label>
                       <input type="text" class="form-control" id="phone" name="phone" value="<?php if (isset($row['phone'])) {
-                        echo $row['phone'];
-                      } ?>">
+                                                                                                echo $row['phone'];
+                                                                                              } ?>">
                     </div>
                     <div class="form-group">
                       <label for="mail">Email</label>
                       <input type="email" class="form-control" id="mail" name="mail" value="<?php if (isset($row['mail'])) {
-                        echo $row['mail'];
-                      } ?>">
+                                                                                              echo $row['mail'];
+                                                                                            } ?>">
                     </div>
                     <div class="form-group">
                       <label for="address">Dirección</label>
                       <input type="text" class="form-control" id="address" name="address" value="<?php if (isset($row['address'])) {
-                        echo $row['address'];
-                      } ?>">
+                                                                                                    echo $row['address'];
+                                                                                                  } ?>">
                     </div>
                     <div class="form-group">
                       <label for="height">Altura</label>
                       <input type="text" class="form-control" id="height" name="height" value="<?php if (isset($row['height'])) {
-                        echo $row['height'];
-                      } ?>">
+                                                                                                  echo $row['height'];
+                                                                                                } ?>">
                     </div>
                     <div class="form-group">
                       <label for="floor">Piso</label>
                       <input type="text" class="form-control" id="floor" name="floor" value="<?php if (isset($row['floor'])) {
-                        echo $row['floor'];
-                      } ?>">
+                                                                                                echo $row['floor'];
+                                                                                              } ?>">
                     </div>
                     <div class="form-group">
                       <label for="departament">Departamento</label>
                       <input type="text" class="form-control" id="departament" name="departament" value="<?php if (isset($row['departament'])) {
-                        echo $row['departament'];
-                      } ?>">
+                                                                                                            echo $row['departament'];
+                                                                                                          } ?>">
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-danger" id="clientupdate"
-                        name="clientupdate">Actualizar</button>
+                      <button type="submit" class="btn btn-danger" id="clientupdate" name="clientupdate">Actualizar</button>
                       <a href="clients.php" class="btn btn-secondary">Cerrar</a>
                     </div>
                     <?php if (isset($msg)) {
@@ -308,7 +305,7 @@ if (isset($_REQUEST['view'])) {
       <div class="footer">
 
         <div>
-          <strong>Copyright</strong>  Telistema &copy; 2024
+          <strong>Copyright</strong> Telistema &copy; 2024
         </div>
       </div>
 
@@ -317,7 +314,7 @@ if (isset($_REQUEST['view'])) {
 
 
 
-  <?php include ('../../includes/footer.php'); ?>
+  <?php include('../../includes/footer.php'); ?>
 
 </body>
 

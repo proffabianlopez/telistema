@@ -11,12 +11,16 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
     echo "<script> location.href='../../login.php'; </script>";
 }
 ////////////////////////////////
+if (!isset($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+$token = $_SESSION['token'];
 
 define('TITLE', 'Clientes');
 define('PAGE', 'Clientes');
-include ('../../includes/header.php');
-include ('../../dbConnection.php');
-include ('../../Querys/querys.php');
+include('../../includes/header.php');
+include('../../dbConnection.php');
+include('../../Querys/querys.php');
 
 ?>
 
@@ -26,7 +30,7 @@ include ('../../Querys/querys.php');
 
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
-                <?php include ('../../includes/menu.php') ?>
+                <?php include('../../includes/menu.php') ?>
 
             </div>
         </nav>
@@ -35,12 +39,11 @@ include ('../../Querys/querys.php');
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i
-                                class="fa fa-bars"></i> </a>
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../../logout.php">
+                            <a href="../../logout.php" id="logout">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
@@ -112,17 +115,21 @@ include ('../../Querys/querys.php');
                                                             <i class="bi bi-pencil-square"></i>
                                                         </button>
                                                     </form>
-                                                    <form action="" method="POST" style="display:inline;">
-                                                        <input type="hidden" name="id_client" value="' . $row["id_client"] . '">
-                                                        <button class="btn btn-danger btn-xs" name="delete" value="Delete">
+                                                   <button id="delete-' . $row["id_client"] . '-' . $token . '" data-crud="clients" class="btn btn-danger btn-xs delete-btn" >
                                                             <i class="bi bi-trash"></i>
-                                                        </button>
+                                                  </button>
+                                                    
+                                                    <form action="../crudorders/order.php" method="POST" style="display:inline;">
+                                                    <input type="hidden" name="id_client" value="' . $row["id_client"] . '">
+                                                    <button class="btn btn-primary btn-xs" name="order" value="Order">
+                                                    <i class="bi bi-receipt"></i>
+                                                    </button>
                                                     </form>
+
                                                 </div>
+                                                
                                             </td>';
                                         echo '</tr>';
-                                        
-                                        
                                     }
 
                                     echo '</tbody>
@@ -167,10 +174,10 @@ include ('../../Querys/querys.php');
             </div>
             <div class="footer">
                 <div class="pull-right">
-                
+
                 </div>
                 <div>
-                    <strong>Copyright</strong>  Telistema &copy; 2024
+                    <strong>Copyright</strong> Telistema &copy; 2024
                 </div>
             </div>
 
@@ -188,16 +195,15 @@ include ('../../Querys/querys.php');
 
 
     <?php
-    include ('../../includes/footer.php');
+    include('../../includes/footer.php');
     ?>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             $('.footable').footable();
             $('.footable2').footable();
 
         });
-
     </script>
 </body>
 
