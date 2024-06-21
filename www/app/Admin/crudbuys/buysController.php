@@ -19,26 +19,21 @@ if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_us
     if ($_SESSION['user_role'] != 'admin') {
         $response['message'] = 'Acceso denegado.';
         echo json_encode($response);
-        exit;
+        exit();
     }
-
 } else {
     $response['message'] = 'Por favor, inicie sesión para continuar.';
     echo json_encode($response);
-    exit;
+    exit();
 }
 
 include ('../../dbConnection.php');
 include ('../../Querys/querys.php');
 include ('../configsmtp/generate_config.php');
 
-
-
-
-//editar product
+// Editar producto
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    if ($_GET['action'] === 'edit_buy') {
+    if (isset($_GET['action']) && $_GET['action'] === 'edit_buy') {
         // Checking for Empty Fields
         if (empty($_REQUEST["id_material"])) {
             $response['message'] = 'El campo Nombre es obligatorio.';
@@ -60,60 +55,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id_material = $_REQUEST['id_material'];
             $id_measure = $_REQUEST['id_measure'];
             $id_user = $_SESSION['user_id'];
-            
+
             $stmt = $conn->prepare(SQL_UPDATE_BUY);
-            $stmt->bind_param("sidiiii", $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_buy);
-
+            $stmt->bind_param("sidiiiii", $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_buy);
 
             if ($stmt->execute()) {
                 $response['status'] = 'success';
-                $response['message'] = 'Actualizado con exito';
-                echo json_encode($response);
-                exit;
+                $response['message'] = 'Actualizado con éxito';
             } else {
-                $response['message'] = 'No se pudo actualizar';
-                echo json_encode($response);
-                exit;
+                $response['message'] = 'No se pudo actualizar: ' . $stmt->error;
             }
+            echo json_encode($response);
+            exit();
         }
-    } elseif ($_GET['action'] === 'add_buy') {
-        // Checking for Empty Fields
-        if (empty($_REQUEST["id_material"])) {
-            $response['message'] = 'El campo Nombre es obligatorio.';
-        } elseif (empty($_REQUEST["id_measure"])) {
-            $response['message'] = 'El campo Medida es obligatorio.';
-        } elseif (empty($_REQUEST["id_supplier"])) {
-            $response['message'] = 'El campo Proveedor es obligatorio.';
-        } elseif (empty($_REQUEST["cost"])) {
-            $response['message'] = 'El campo Costo es obligatorio.';
-        } elseif (empty($_REQUEST["ammount"])) {
-            $response['message'] = 'El campo Cantidad es obligatorio.';
+    } elseif (isset($_GET['action']) && $_GET['action'] === 'add_buy') {
+          // Checking for Empty Fields
+    if (empty($_POST["id_material"])) {
+        $response['message'] = 'El campo Nombre es obligatorio.';
+    } elseif (empty($_POST["id_measure"])) {
+        $response['message'] = 'El campo Medida es obligatorio.';
+    } elseif (empty($_POST["id_supplier"])) {
+        $response['message'] = 'El campo Proveedor es obligatorio.';
+    } elseif (empty($_POST["cost"])) {
+        $response['message'] = 'El campo Costo es obligatorio.';
+    } elseif (empty($_POST["ammount"])) {
+        $response['message'] = 'El campo Cantidad es obligatorio.';
+    } else {
+        $date_buy = new DateTime();
+        $formatted_date_buy = $date_buy->format('Y-m-d H:i:s');
+        $ammount = $_POST['ammount'];
+        $cost = $_POST['cost'];
+        $id_supplier = $_POST['id_supplier'];
+        $id_material = $_POST['id_material'];
+        $id_measure = $_POST['id_measure'];
+        $id_user = $_SESSION['user_id'];
+        $id_state_order = 3; // Asigna el estado predeterminado
+
+        $stmt = $conn->prepare(SQL_INSERT_BUY);
+        $stmt->bind_param("sdiiisii", $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_state_order);
+
+        if ($stmt->execute()) {
+            $response['status'] = 'success';
+            $response['message'] = 'Agregado con éxito';
         } else {
-            
-            $date_buy = new DateTime();
-            $formatted_date_buy = $date_buy->format('Y-m-d H:i:s');
-            $ammount = $_REQUEST['ammount'];
-            $cost = $_REQUEST['cost'];
-            $id_supplier = $_REQUEST['id_supplier'];
-            $id_material = $_REQUEST['id_material'];
-            $id_measure = $_REQUEST['id_measure'];
-            $id_user = $_SESSION['user_id'];
-            $id_state_order = 3; // Asigna el estado predeterminado
-            
-            $stmt = $conn->prepare(SQL_INSERT_BUY);
-            $stmt->bind_param("sidiiiii", $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_state_order);
-
-            if ($stmt->execute()) {
-                $response['status'] = 'success';
-                $response['message'] = 'Agregado con éxito';
-            } else {
-                $response['message'] = 'No se pudo agregar: ' . $stmt->error;
-            }
+            $response['message'] = 'No se pudo agregar: ' . $stmt->error;
         }
-        echo json_encode($response);
-        exit;
+    }
+    echo json_encode($response);
+    exit();
 
-    } elseif ($_POST['action'] === 'complete_buy') {
+    } elseif (isset($_POST['action']) && $_POST['action'] === 'complete_buy') {
         $id_buy = $_POST['id'];
 
         $stmt = $conn->prepare(SQL_MODIFY_STATUS_BUY);
@@ -121,14 +112,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->execute()) {
             $response['status'] = 'success';
-            $response['message'] = 'Eliminado';
+            $response['message'] = 'Completado';
         } else {
-            $response['message'] = 'Error al eliminar: ' . $stmt->error;
+            $response['message'] = 'Error al completar: ' . $stmt->error;
         }
         echo json_encode($response);
-        exit;
-    
-    } elseif ($_POST['action'] === 'delete_buy') {
+        exit();
+    } elseif (isset($_POST['action']) && $_POST['action'] === 'delete_buy') {
         $id_buy = $_POST['id'];
 
         $stmt = $conn->prepare(SQL_MODIFY_CANCEL_BUY);
@@ -141,15 +131,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'Error al eliminar: ' . $stmt->error;
         }
         echo json_encode($response);
-        exit;
+        exit();
     } else {
         $response['message'] = 'Acción no válida';
         echo json_encode($response);
-        exit;
+        exit();
     }
 } else {
     $response['message'] = 'Fallo la operación';
     echo json_encode($response);
-    exit;
+    exit();
 }
 ?>
