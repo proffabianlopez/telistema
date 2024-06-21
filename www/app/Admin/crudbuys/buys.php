@@ -269,6 +269,7 @@ include('../../Querys/querys.php');
             });
         }
 
+
         function openCompleteModal(id) {
             swal({
                 title: "¿Estás seguro?",
