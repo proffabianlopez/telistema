@@ -82,7 +82,7 @@ if ($rolUser == 'admin') {
         <li class=" <?php if (PAGE == 'Técnicos') {
                         echo 'active';
                     } ?>">
-            <a href="../crudtechnics/technician.php">
+            <a href="../crudtechnics/technicians.php">
                 <i class="bi bi-headset"></i><span class="nav-label">
                     Técnicos</span>
 
@@ -104,7 +104,7 @@ if ($rolUser == 'admin') {
                     Administradores</span>
             </a>
         </li>
-        <li class=" <?php if (PAGE == 'sellreport') {
+        <!-- <li class=" <?php if (PAGE == 'sellreport') {
                         echo 'active';
                     } ?>">
             <a href="../Admin/soldproductreport.php">
@@ -119,15 +119,15 @@ if ($rolUser == 'admin') {
                 <i class="bi bi-bootstrap-reboot"></i><span class="nav-label">
                     Reportes de Ordenes</span>
             </a>
-        </li>
+        </li> -->
         <li class=" <?php if (PAGE == 'Actualización de Email') {
                         echo 'active';
                     } ?>">
-            <a href="../Admin/configsmtp/configEmailContact.php">
+            <a href="../configsmtp/configEmailContact.php">
                 <i class="bi bi-envelope-at"></i><span class="nav-label">
                     Email de Contacto</span>
             </a>
-        </li>
+        <!-- </li>
         <li class=" <?php if (PAGE == 'changepass') {
                         echo 'active';
                     } ?>">
@@ -135,7 +135,7 @@ if ($rolUser == 'admin') {
                 <i class="bi bi-key"></i><span class="nav-label">
                     Cambiar Clave</span>
             </a>
-        </li>
+        </li> -->
     <?php } ?>
 
     <!-- TECNICO -->
@@ -164,14 +164,14 @@ if ($rolUser == 'admin') {
                     Estado Servicio</span>
             </a>
         </li>
-        <li class=" <?php if (PAGE == 'Requesterchangepass') {
+        <!-- <li class=" <?php if (PAGE == 'Requesterchangepass') {
                         echo 'active';
                     } ?>">
             <a href="../Technic/TechnicChangePass.php">
                 <i class="bi bi-key"></i><span class="nav-label">
                     Cambiar Clave</span>
             </a>
-        </li>
+        </li> -->
 
     <?php } ?>
 

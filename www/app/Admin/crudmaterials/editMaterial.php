@@ -19,9 +19,9 @@ include('../../Querys/querys.php');
 include('../configsmtp/generate_config.php');
 include('../configsmtp/endEmail.php');
 
-if (isset($_GET['id'])) {
+if (isset($_POST['id'])) {
 
-    $id_user = $_GET['id'];
+    $id_user = $_POST['id'];
     $stmt = $conn->prepare(SQL_SELECT_PRODUCT_BY_ID);
     $stmt->bind_param("i", $id_user);
     $stmt->execute();

@@ -85,15 +85,19 @@ define('SQL_INSERT_TECHNIC', '
 INSERT INTO users (name_user, surname_user, phone_user, mail, user_password, id_state_user, id_rol)
 VALUES (?, ?, ?, ?, ?, ?, ?)');
 
-define('SQL_UPDATE_TECHNIC', '
-        UPDATE users
-        SET name_user = ?,
+define('SQL_UPDATE_TECHNIC', 
+         "UPDATE users
+        SET
+        name_user = ?,
         surname_user = ?,
         phone_user = ?,
-        mail = ?, 
-        id_state_user = ?
-        WHERE id_user = ?');
-
+        mail = ?,
+        user_password = CASE
+                        WHEN ? IS NOT NULL AND ? != '' THEN ?
+                        ELSE user_password
+                        END
+        WHERE id_user = ?"
+);
 define('SQL_UPDATE_TECHNIC_BY_EMAIL', '
         UPDATE users
         SET name_user = ?,
@@ -401,13 +405,14 @@ define('SQL_SELECT_MATERIALS', '
 
 
 define(
-        'SQL_SELECT_PRODUCT_BY_ID','
+        'SQL_SELECT_PRODUCT_BY_ID',
+        '
         SELECT u.*
         FROM materials u
         WHERE u.id_material = ?;'
 );
 
-define('SQL_UPDATE_PRODUCT','
+define('SQL_UPDATE_PRODUCT', '
         UPDATE materials
         SET material_name = ?,
         description = ?,
@@ -446,3 +451,4 @@ define('SQL_SELECT_STATE', '
         SELECT state_user
         FROM states_users
         WHERE id_state_user = ?');
+

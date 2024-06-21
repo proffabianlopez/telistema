@@ -11,6 +11,7 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
     echo "<script> location.href='../../login.php'; </script>";
 }
 ////////////////////////////////
+// Genera un token CSRF y lo guarda en la sesión
 if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
@@ -43,7 +44,7 @@ include('../../Querys/querys.php');
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../../logout.php" id="logout">
+                            <a id="logout">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
@@ -109,12 +110,9 @@ include('../../Querys/querys.php');
                                         echo '<td>' . $row["departament"] . '</td>';
                                         echo '<td>
                                                 <div class="btn-group" role="group">
-                                                    <form action="editclient.php" method="POST" style="display:inline;">
-                                                        <input type="hidden" name="id_client" value="' . $row["id_client"] . '">
-                                                        <button type="submit" class="btn btn-warning btn-xs" name="view" value="View">
+                                                    <button id="edit-' . $row["id_client"] . '-' . $token . '" data-crud="clients" class="btn btn-warning btn-xs modaledit-btn" >
                                                             <i class="bi bi-pencil-square"></i>
-                                                        </button>
-                                                    </form>
+                                                     </button>
                                                    <button id="delete-' . $row["id_client"] . '-' . $token . '" data-crud="clients" class="btn btn-danger btn-xs delete-btn" >
                                                             <i class="bi bi-trash"></i>
                                                   </button>
@@ -135,22 +133,7 @@ include('../../Querys/querys.php');
                                     echo '</tbody>
                                     </table>';
                                 } else {
-                                    echo "0 Result";
-                                }
-                                if (isset($_REQUEST['delete'])) {
-                                    $id_client = $_REQUEST['id_client'];
-
-                                    $stmt = $conn->prepare(SQL_DELETE_CLIENT);
-
-                                    // Asocia parámetros y ejecuta la consulta
-                                    $stmt->bind_param("i", $id_client);
-
-                                    if ($stmt->execute()) {
-
-                                        echo '<meta http-equiv="refresh" content= "0;URL=?deleted" />';
-                                    } else {
-                                        echo "Unable to Delete Data";
-                                    }
+                                    echo "0 Resultado";
                                 }
 
                                 ?>
@@ -187,12 +170,12 @@ include('../../Querys/querys.php');
 
 
     <div id="small-chat">
-        <a class="open-small-chat" href="insertclient.php">
+        <a class="open-small-chat" onclick="openNewClientsModal()">
             <i class="bi bi-plus-lg"></i>
         </a>
     </div>
 
-
+    <div id="edit-form-container" style="display: none;"></div>
 
     <?php
     include('../../includes/footer.php');
@@ -203,7 +186,26 @@ include('../../Querys/querys.php');
             $('.footable').footable();
             $('.footable2').footable();
 
+        
+
         });
+
+        function openNewClientsModal() {
+            // Realiza una solicitud AJAX para obtener el formulario de edición
+            $.ajax({
+                url: "insertclient.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
+                type: "GET",
+                success: function (response) {
+                    // Muestra el formulario de edición en el contenedor
+                    $("#edit-form-container").html(response).slideDown();
+                    // Abre el modal
+                    $("#myModal6").modal("show");
+                },
+                error: function () {
+                    alert("Error al cargar el formulario de edición.");
+                }
+            });
+        }
     </script>
 </body>
 
