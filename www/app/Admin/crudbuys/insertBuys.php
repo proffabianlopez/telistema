@@ -14,9 +14,9 @@ if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 $token = $_SESSION['token'];
-include ('../../dbConnection.php');
-include ('../../Querys/querys.php');
-include ('../configsmtp/generate_config.php');
+include('../../dbConnection.php');
+include('../../Querys/querys.php');
+include('../configsmtp/generate_config.php');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -48,35 +48,13 @@ include ('../configsmtp/generate_config.php');
                             <select name="id_material" id="id_material" class="form-control">
                                 <option value="" selected disabled>Producto</option>
                                 <?php
-                                // Verifica si existe el campo 'id_material' en el array $row y asígnalo a $state
-                                $state = isset($row['id_material']) ? $row['id_material'] : null;
-
-                                if ($state !== null) {
-                                    $stmt = $conn->prepare(SQL_SELECT_PRODUCT_BY_ID);
-                                    $stmt->bind_param("i", $state);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-
-                                    if ($result->num_rows > 0) {
-                                        $row_state = $result->fetch_assoc();
-                                        $name_state = $row_state["material_name"];
-                                        $id_material = $row_state["id_material"];
-                                    } else {
-                                        $id_material = 0;
-                                    }
-                                } else {
-                                    $id_material = 0;
-                                }
-
                                 $stmt = $conn->prepare(SQL_SELECT_MATERIALS);
                                 $stmt->execute();
                                 $rows = $stmt->get_result();
-
                                 foreach ($rows as $name) {
                                     $materialName = $name["material_name"];
                                     $nameId = $name["id_material"];
-                                    $selected = ($nameId == $id_material) ? "selected" : "";
-                                    echo "<option value='$nameId' $selected>$materialName</option>";
+                                    echo "<option value='$nameId'>$materialName</option>";
                                 }
                                 ?>
                             </select>
@@ -86,71 +64,29 @@ include ('../configsmtp/generate_config.php');
                             <select name="id_measure" id="id_measure" class="form-control">
                                 <option value="" selected disabled>Unidad de medida</option>
                                 <?php
-                                $state = isset($row['id_measure']) ? $row['id_measure'] : null;
-
-                                if ($state !== null) {
-                                    $stmt = $conn->prepare(SQL_SELECT_MEASURE_BY_ID);
-                                    $stmt->bind_param("i", $state);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-
-                                    if ($result->num_rows > 0) {
-                                        $row_state = $result->fetch_assoc();
-                                        $name_state = $row_state["name_measure"];
-                                        $id_measure = $row_state["id_measure"];
-                                    } else {
-                                        $id_measure = 0;
-                                    }
-                                } else {
-                                    $id_measure = 0;
-                                }
-
                                 $stmt = $conn->prepare(SQL_SELECT_MEASURES);
                                 $stmt->execute();
                                 $rows = $stmt->get_result();
-
                                 foreach ($rows as $state) {
                                     $stateName = $state["name_measure"];
                                     $stateId = $state["id_measure"];
-                                    $selected = ($stateId == $id_measure) ? "selected" : "";
-                                    echo "<option value='$stateId' $selected>$stateName</option>";
+                                    echo "<option value='$stateId'>$stateName</option>";
                                 }
                                 ?>
                             </select>
                         </div>
                         <div class="col-sm-4">
                             <label for="id_supplier">Proveedor</label>
-                            <select name="id_supplier" id="id_measure" class="form-control">
+                            <select name="id_supplier" id="id_supplier" class="form-control">
                                 <option value="" selected disabled>Proveedor</option>
                                 <?php
-                                $state = isset($row['id_supplier']) ? $row['id_supplier'] : null;
-
-                                if ($state !== null) {
-                                    $stmt = $conn->prepare(SQL_SELECT_SUPPLIER_BY_ID);
-                                    $stmt->bind_param("i", $state);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-
-                                    if ($result->num_rows > 0) {
-                                        $row_state = $result->fetch_assoc();
-                                        $name_state = $row_state["supplier_name"];
-                                        $id_supplier = $row_state["id_supplier"];
-                                    } else {
-                                        $id_supplier = 0;
-                                    }
-                                } else {
-                                    $id_supplier = 0;
-                                }
-
                                 $stmt = $conn->prepare(SQL_FROM_SUPPLIERS);
                                 $stmt->execute();
                                 $rows = $stmt->get_result();
-
                                 foreach ($rows as $state) {
                                     $stateName = $state["supplier_name"];
                                     $stateId = $state["id_supplier"];
-                                    $selected = ($stateId == $id_supplier) ? "selected" : "";
-                                    echo "<option value='$stateId' $selected>$stateName</option>";
+                                    echo "<option value='$stateId'>$stateName</option>";
                                 }
                                 ?>
                             </select>
@@ -167,10 +103,11 @@ include ('../configsmtp/generate_config.php');
                             <input type="number" name="ammount" id="ammount" class="form-control" placeholder="Cantidad">
                         </div>
                     </div>
+                    <br>
                     <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-cart-plus"></i> Comprar</button>
-                            <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
-                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-cart-plus"></i> Comprar</button>
+                        <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
+                    </div>
                     <div class="text-center" id="response-message"></div>
                 </form>
                 <div class="p-xxs font-italic bg-muted border-top-bottom text ">
@@ -183,37 +120,33 @@ include ('../configsmtp/generate_config.php');
 
 
 <script>
-$(document).ready(function () {
-    $('#add-buy-form').on('submit', function (e) {
-        e.preventDefault();
-        var formData = $(this).serialize();
-        var laddaButton = Ladda.create(document.querySelector('.ladda-button'));
-        laddaButton.start();
-        $.ajax({
-            type: 'POST',
-            url: 'buysController.php?token=<?php echo $token; ?>&action=add_buy',
-            data: formData,
-            dataType: 'json',
-            success: function (response) {
-                laddaButton.stop();
-                var messageContainer = $('#response-message');
-                if (response.status === 'success') {
-                    messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
-                } else {
-                    messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
+    $(document).ready(function() {
+        $('#add-buy-form').on('submit', function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            $.ajax({
+                type: 'POST',
+                url: 'buysController.php?token=<?php echo $_SESSION['token']; ?>&action=add_buy',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    var messageContainer = $('#response-message');
+                    if (response.status === 'success') {
+                        messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
+                    } else {
+                        messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                    $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX: ' + error + '<br>' + xhr.responseText + '</div>');
                 }
-            },
-            error: function (xhr, status, error) {
-                laddaButton.stop();
-                console.log(xhr.responseText);
-                $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX: ' + error + '<br>' + xhr.responseText + '</div>');
-            }
+            });
+        });
+        $('.reload').click(function() {
+            location.reload();
         });
     });
-    $('.reload').click(function () {
-        location.reload();
-    });
-});
 </script>
 
 
