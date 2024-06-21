@@ -472,7 +472,24 @@ define(
 );
 
 define('SQL_SELECT_BUYS', '
-        SELECT * FROM buys');
+       SELECT 
+            b.id_buy,
+            b.ammount,
+            b.cost,
+            so.state_order AS name_state,
+            m.name_measure,
+            p.material_name,
+            s.supplier_name
+        FROM 
+            buys b
+        JOIN 
+            states_orders so ON b.id_state_order = so.id_state_order
+        JOIN 
+            measures m ON b.id_measure = m.id_measure
+        JOIN 
+            materials p ON b.id_material = p.id_material
+        JOIN 
+            suppliers s ON b.id_supplier = s.id_supplier');
 
 define('SQL_SELECT_BUY_BY_ID','
         SELECT u.*
