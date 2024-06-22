@@ -11,96 +11,68 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
   echo "<script> location.href='../../login.php'; </script>";
 }
 ////////////////////////////////
+// Genera un token CSRF y lo guarda en la sesión
+if (!isset($_SESSION['token'])) {
+  $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+$token = $_SESSION['token'];
 
 define('TITLE', 'Agregar Nuevo Cliente');
 define('PAGE', 'Clientes');
 
 include('../../dbConnection.php');
 include('../../Querys/querys.php');
+include ('../configsmtp/generate_config.php');
+// if (isset($_REQUEST['reqsubmit'])) {
+//   // Verifica si hay campos vacíos
+//   if (($_REQUEST['client_name'] == "") || ($_REQUEST['client_lastname'] == "") || ($_REQUEST['phone'] == "") || ($_REQUEST['mail'] == "") || ($_REQUEST['address'] == "") || ($_REQUEST['height'] == "") || ($_REQUEST['floor'] == "") || ($_REQUEST['departament'] == "")) {
+//     // Muestra un mensaje si hay campos vacíos
+//     $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Completa todos los campos </div>';
+//   } else {
+//     // Asigna los valores del usuario a variables
+//     $name = $_REQUEST['client_name'];
+//     $lastname = $_REQUEST['client_lastname'];
+//     $phone = $_REQUEST['phone'];
+//     $mail = $_REQUEST['mail'];
+//     $address = $_REQUEST['address'];
+//     $height = $_REQUEST['height'];
+//     $floor = $_REQUEST['floor'];
+//     $departament = $_REQUEST['departament'];
+//     $id_state = $_REQUEST['id_state_user'];
+//     $id_state = 1; // ¿Este valor siempre será 1?
 
-if (isset($_REQUEST['reqsubmit'])) {
-  // Verifica si hay campos vacíos
-  if (($_REQUEST['client_name'] == "") || ($_REQUEST['client_lastname'] == "") || ($_REQUEST['phone'] == "") || ($_REQUEST['mail'] == "") || ($_REQUEST['address'] == "") || ($_REQUEST['height'] == "") || ($_REQUEST['floor'] == "") || ($_REQUEST['departament'] == "")) {
-    // Muestra un mensaje si hay campos vacíos
-    $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Completa todos los campos </div>';
-  } else {
-    // Asigna los valores del usuario a variables
-    $name = $_REQUEST['client_name'];
-    $lastname = $_REQUEST['client_lastname'];
-    $phone = $_REQUEST['phone'];
-    $mail = $_REQUEST['mail'];
-    $address = $_REQUEST['address'];
-    $height = $_REQUEST['height'];
-    $floor = $_REQUEST['floor'];
-    $departament = $_REQUEST['departament'];
-    $id_state = $_REQUEST['id_state_user'];
-    $id_state = 1; // ¿Este valor siempre será 1?
+//     // Prepara la consulta
+//     $stmt = $conn->prepare(SQL_INSERT_CLIENT);
 
-    // Prepara la consulta
-    $stmt = $conn->prepare(SQL_INSERT_CLIENT);
+//     // Asocia parámetros y ejecuta la consulta
+//     $stmt->bind_param("ssssssssi", $name, $lastname, $phone, $mail, $address, $height, $floor, $departament, $id_state);
 
-    // Asocia parámetros y ejecuta la consulta
-    $stmt->bind_param("ssssssssi", $name, $lastname, $phone, $mail, $address, $height, $floor, $departament, $id_state);
-
-    if ($stmt->execute()) {
-      // Muestra un mensaje si la inserción fue exitosa
-      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Agregado exitosamente </div>';
-    } else {
-      // Muestra un mensaje si la inserción falló
-      $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> No se pudo agregar </div>';
-    }
-  }
-}
+//     if ($stmt->execute()) {
+//       // Muestra un mensaje si la inserción fue exitosa
+//       $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Agregado exitosamente </div>';
+//     } else {
+//       // Muestra un mensaje si la inserción falló
+//       $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> No se pudo agregar </div>';
+//     }
+//   }
+// }
 ?>
-<?php include('../../includes/header.php') ?>
 
 <body>
 
-  <div id="wrapper">
+<div class="modal inmodal fase" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close reload" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <i class="bi bi-person-fill-add modal-icon"></i>
+                <h4 class="modal-title">Registrar Nuevo Cliente</h4>
+            </div>
+            <div class="modal-body">
 
-    <nav class="navbar-default navbar-static-side" role="navigation">
-      <div class="sidebar-collapse">
-        <?php include('../../includes/menu.php') ?>
-
-      </div>
-    </nav>
-
-    <div id="page-wrapper" class="gray-bg">
-      <div class="row border-bottom">
-        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-          <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-          </div>
-          <ul class="nav navbar-top-links navbar-right">
-            <li>
-              <a href="../../logout.php" id="logout">
-                <i class="fa fa-sign-out"></i> Cerrar Sesión
-              </a>
-            </li>
-          </ul>
-
-        </nav>
-      </div>
-      <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-10">
-
-          <h2>Clientes</h2>
-        </div>
-        <div class="col-lg-2">
-
-        </div>
-      </div>
-      <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-
-          <div class="col-lg-5">
-            <div class="ibox float-e-margins">
-              <div class="ibox-title">
-                <h5>Ingresar Nuevo clientes</h5>
-
-              </div>
-              <div class="ibox-content">
-                <form action="" method="POST">
+                <form id="add-product-form" action="" method="POST">
                   <div class="form-group">
                     <label for="client_name">Nombre</label>
                     <input type="text" class="form-control" id="client_name" name="client_name">
@@ -133,34 +105,55 @@ if (isset($_REQUEST['reqsubmit'])) {
                     <label for="departament">Departamento</label>
                     <input type="text" class="form-control" id="departament" name="departament">
                   </div>
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-danger" id="reqsubmit" name="reqsubmit">Agregar</button>
-                    <a href="clients.php" class="btn btn-secondary">Cerrar</a>
-                  </div>
-
-                  <?php if (isset($msg)) {
-                    echo $msg;
-                  } ?>
+                  <div class="modal-footer">
+                        <button type="submit" class="ladda-button btn btn-primary"
+                            data-style="zoom-in">Agregar</button>
+                        <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
+                    </div>
+                    <div class="text-center" id="response-message"></div>
                 </form>
-
-              </div>
+                <div class="p-xxs font-italic bg-muted border-top-bottom text ">
+                    <span class="font-bold">NOTA:</span> Al agregar un nuevo Cliente, asegúrese de completar todos los campos obligatorios. La información ingresada se reflejará inmediatamente en el sistema.
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="footer">
-
-        <div>
-          <strong>Copyright</strong> Telistema &copy; 2024
-        </div>
-      </div>
-
     </div>
-  </div>
+</div>
 
+<script>
+$(document).ready(function () {
+    $('#add-product-form').on('submit', function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        var laddaButton = Ladda.create(document.querySelector('.ladda-button'));
+        laddaButton.start();
+        $.ajax({
+            type: 'POST',
+            url: 'clientsController.php?token=<?php echo $token; ?>&action=add_client',
+            data: formData,
+            dataType: 'json',
+            success: function (response) {
+                laddaButton.stop();
+                var messageContainer = $('#response-message');
+                if (response.status === 'success') {
+                    messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
+                } else {
+                    messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
+                }
+            },
+            error: function (xhr, status, error) {
+                laddaButton.stop();
+                console.log(xhr.responseText);
+                $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX: ' + error + '<br>' + xhr.responseText + '</div>');
+            }
+        });
+    });
+    $('.reload').click(function () {
+        location.reload();
+    });
+});
+</script>
 
-
-  <?php include('../../includes/footer.php'); ?>
 
 </body>
 

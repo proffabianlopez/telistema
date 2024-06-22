@@ -40,7 +40,7 @@ include ('../../Querys/querys.php');
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../../logout.php">
+                        <a id="logout">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
@@ -119,6 +119,7 @@ include ('../../Querys/querys.php');
                                         echo '<td>' . $row["stock"] . '</td>';
                                         echo '<td>' . $row["description"] . '</td>';
                                         echo '<td>' . $name_measure . '</td>';
+
                                         if($row["stock"] > $row["stock_alert"]) {
                                             echo '<td class="footable-visible" style="display: table-cell;">
                                                     <span class="label label-primary">Disponible</span>
@@ -136,12 +137,12 @@ include ('../../Querys/querys.php');
                                         
                                         
                                         echo '<td class="text-right footable-visible footable-last-column">
-                                                <div class="btn-group">
-                                                    <button onclick="openEditModal(' . $row["id_material"] . ')" class="btn-white btn btn-xs" style="margin-right: 5px" >
-                                                        Editar
+                                               <div class="btn-group" role="group">
+                                                    <button id="edit-'.$row["id_material"].'-'.$token.'" data-crud="materials" class="btn btn-warning btn-xs modaledit-btn" style="margin-right: 5px" >
+                                                        <i class="bi bi-pencil-square"></i>
                                                     </button>
-                                                    <button onclick="openDeleteModal(' . $row["id_material"] . ')" class="bbtn-white btn btn-xs" >
-                                                        Eliminar
+                                                    <button id="delete-'.$row["id_material"].'-'.$token.'" data-crud="materials" class="btn btn-danger btn-xs delete-btn" >
+                                                        <i class="bi bi-trash"></i>
                                                     </button>
                                                 </div>
                                             </td>';
@@ -150,7 +151,7 @@ include ('../../Querys/querys.php');
 
                                     echo '</tbody></table>';
                                 } else {
-                                    echo "No hay materiales activos.";
+                                    echo "0 Resultado.";
                                 }
                                 ?>
                                 <tfoot>
@@ -191,24 +192,6 @@ include ('../../Querys/querys.php');
             $('.footable').footable();
             $('.footable2').footable();
         });
-
-        function openEditModal(id) {
-            // Realiza una solicitud AJAX para obtener el formulario de edición
-            $.ajax({
-                url: "editMaterial.php?token=<?php echo $token; ?>&id=" + id, // Ruta al archivo de edición de usuario
-                type: "GET",
-                success: function (response) {
-                    // Muestra el formulario de edición en el contenedor
-                    $("#edit-form-container").html(response).slideDown();
-                    // Abre el modal
-                    $("#myModal6").modal("show");
-                },
-                error: function () {
-                    alert("Error al cargar el formulario de edición.");
-                }
-            });
-        }
-
         function openNewAdminModal() {
             // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({
@@ -223,57 +206,6 @@ include ('../../Querys/querys.php');
                 error: function () {
                     alert("Error al cargar el formulario de edición.");
                 }
-            });
-        }
-
-        function openDeleteModal(id) {
-            swal({
-                title: "¿Estás seguro?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#1ab394",
-                confirmButtonText: "¡Sí, elimínalo!",
-                cancelButtonText: "Cancelar",
-                closeOnConfirm: false
-            }, function () {
-                // Realiza una solicitud AJAX para eliminar el admin
-                $.ajax({
-                    type: "POST",
-                    url: "materialsController.php?token=<?php echo $token; ?>",
-                    data: {
-                        action: "delete_product",
-                        id: id
-                    },
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response.status === 'success') {
-                            swal({
-                                title: "¡Eliminado!",
-                                type: "success"
-                            }, function () {
-                                location.reload(); // Recarga la página
-                            });
-                        } else {
-                            swal({
-                                title: "Error",
-                                text: "Hubo un problema al eliminar.",
-                                type: "error"
-                            }, function () {
-                                location.reload(); // Recarga la página en caso de error también si es necesario
-                            });
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                        swal({
-                            title: "Error",
-                            text: "Hubo un problema al eliminar.",
-                            type: "error"
-                        }, function () {
-                            location.reload(); // Recarga la página en caso de error también
-                        });
-                    }
-                });
             });
         }
     </script>

@@ -70,117 +70,45 @@ include('../../Querys/querys.php');
                                         <th data-hide="phone">Medida</th>
                                         <th data-hide="all">Costo</th>
                                         <th data-hide="phone">Estado</th>
-                                        <th class="text-right footable-visible footable-sortable footable-last-column footable-sorted">Action<span class="footable-sort-indicator"></span></th>
+                                        <th class="text-right footable-visible footable-sortable footable-last-column footable-sorted">Acción<span class="footable-sort-indicator"></span></th>
                                     </tr>
                                     </thead>
                                     <tbody>';
-
+                                
                                     // Imprimir los datos de cada producto activo
                                     while ($row = $result->fetch_assoc()) {
-
-                                        $state = $row['id_state_order'];
-                                        $stmt = $conn->prepare(SQL_SELECT_STATE_ORDER_BY_ID);
-                                        $stmt->bind_param("i", $state);
-                                        $stmt->execute();
-                                        $result_state = $stmt->get_result();
-
-                                        // Verificar si hay resultados
-                                        if ($result_state->num_rows > 0) {
-                                            // Obtener la fila como un array asociativo
-                                            $row_state = $result_state->fetch_assoc();
-                                            $name_state = $row_state["state_order"];
-                                        } else {
-                                            // Si no hay resultados, asignar un valor por defecto
-                                            $name_state = "Estado no encontrado"; // O el valor que desees
-                                        }
-
-                                        $state = $row['id_measure'];
-                                        $stmt = $conn->prepare(SQL_SELECT_MEASURE_BY_ID);
-                                        $stmt->bind_param("i", $state);
-                                        $stmt->execute();
-                                        $result_state = $stmt->get_result();
-
-                                        // Verificar si hay resultados
-                                        if ($result_state->num_rows > 0) {
-                                            // Obtener la fila como un array asociativo
-                                            $row_state = $result_state->fetch_assoc();
-                                            $name_measure = $row_state["name_measure"];
-                                        } else {
-                                            // Si no hay resultados, asignar un valor por defecto
-                                            $name_measure = "Estado no encontrado"; // O el valor que desees
-                                        }
-
-                                        $state = $row['id_material'];
-                                        $stmt = $conn->prepare(SQL_SELECT_PRODUCT_BY_ID);
-                                        $stmt->bind_param("i", $state);
-                                        $stmt->execute();
-                                        $result_state = $stmt->get_result();
-
-                                        // Verificar si hay resultados
-                                        if ($result_state->num_rows > 0) {
-                                            // Obtener la fila como un array asociativo
-                                            $row_state = $result_state->fetch_assoc();
-                                            $name_material = $row_state["material_name"];
-                                        } else {
-                                            // Si no hay resultados, asignar un valor por defecto
-                                            $name_material = "Estado no encontrado"; // O el valor que desees
-                                        }
-
-                                        $state = $row['id_supplier'];
-                                        $stmt = $conn->prepare(SQL_SELECT_SUPPLIER_BY_ID);
-                                        $stmt->bind_param("i", $state);
-                                        $stmt->execute();
-                                        $result_state = $stmt->get_result();
-
-                                        // Verificar si hay resultados
-                                        if ($result_state->num_rows > 0) {
-                                            // Obtener la fila como un array asociativo
-                                            $row_state = $result_state->fetch_assoc();
-                                            $supplier_name = $row_state["supplier_name"];
-                                        } else {
-                                            // Si no hay resultados, asignar un valor por defecto
-                                            $supplier_name = "Estado no encontrado"; // O el valor que desees
-                                        }
-                                        
                                         echo '<tr>';
-                                        echo '<td>' . $name_material . '</td>';
-                                        echo '<td>' . $supplier_name . '</td>';
+                                        echo '<td>' . $row["material_name"] . '</td>';
+                                        echo '<td>' . $row["supplier_name"] . '</td>';
                                         echo '<td>' . $row["ammount"] . '</td>';
-                                        echo '<td>' . $name_measure . '</td>';
+                                        echo '<td>' . $row["name_measure"] . '</td>';
                                         echo '<td>$ ' . $row["cost"] . '</td>';
-
-                                        if($name_state == "pendiente") {
-
+                                
+                                        if($row["name_state"] == "Pendiente") {
                                             echo '<td class="footable-visible" style="display: table-cell;">
-                                                    <span class="label label-success">' . $name_state . '</span>
-                                                </td>';
-
-                                        } elseif($name_state == "completado") {
-
+                                                    <span class="label label-success">' . $row["name_state"] . '</span>
+                                                  </td>';
+                                        } elseif($row["name_state"] == "Completado") {
                                             echo '<td class="footable-visible" style="display: table-cell;">
-                                                    <span class="label label-primary">' . $name_state . '</span></td>';
-
-                                        } elseif($name_state == "cancelado") {
-
+                                                    <span class="label label-primary">' . $row["name_state"] . '</span></td>';
+                                        } elseif($row["name_state"] == "Cancelado") {
                                             echo '<td class="footable-visible" style="display: table-cell;">
-                                            <span class="label label-warning">' . $name_state . '</span></td>';
+                                                    <span class="label label-warning">' . $row["name_state"] . '</span></td>';
                                         }
                                 
                                         // Mostrar los botones de acción según el estado
                                         echo '<td class="text-right footable-visible footable-last-column">';
                                         echo '<div class="btn-group">';
-                                        if ($name_state != "completado" && $name_state != "cancelado") {
+                                        if ($row["name_state"] != "Completado" && $row["name_state"] != "Cancelado") {
                                             echo '<button onclick="openEditModal(' . $row["id_buy"] . ')" class="btn-white btn btn-xs" style="margin-right: 5px;">Editar</button>';
                                         }
                                         // Mostrar el botón "Completar" solo si el estado no es "completado"
-                                        if ($name_state != "completado" && $name_state != "cancelado") {
+                                        if ($row["name_state"] != "Completado" && $row["name_state"] != "Cancelado") {
                                             echo '<button onclick="openCompleteModal(' . $row["id_buy"] . ')" class="label label-primary" style="margin-right: 5px;">Completar</button>';
                                         }
-
-                                        if ($name_state != "completado" && $name_state != "cancelado") {
+                                        if ($row["name_state"] != "Completado" && $row["name_state"] != "Cancelado") {
                                             echo '<button onclick="openDeleteModal(' . $row["id_buy"] . ')" class="btn btn-danger btn-xs" style="margin-right: 5px;">Cancelar</button>';
                                         }
-                                        
                                         echo '</div>';
                                         echo '</td>';
                                         echo '</tr>';
