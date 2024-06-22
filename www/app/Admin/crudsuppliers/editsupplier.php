@@ -14,45 +14,22 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 }
 ////////////////////////////////
 
+// Genera un token CSRF y lo guarda en la sesión
+if (!isset($_SESSION['token'])) {
+  $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+$token = $_SESSION['token'];
+
+
 define('TITLE', 'Actualizar Proveedores');
 define('PAGE', 'Proveedores');
-include('../../dbConnection.php');
-include('../../Querys/querys.php');
-
-// update
-if (isset($_REQUEST['update'])) {
-
-  // Checking for Empty Fields
-  if (($_REQUEST['supplier_name'] == "") || ($_REQUEST['phone'] == "") || ($_REQUEST['mail'] == "") || ($_REQUEST['address'] == "")) {
-    // msg displayed if required field missing
-    $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Fill All Fileds </div>';
-  } else {
-    $id = $_REQUEST['id_supplier'];
-    $name = $_REQUEST['supplier_name'];
-    $phone = $_REQUEST['phone'];
-    $mail = $_REQUEST['mail'];
-    $address = $_REQUEST['address'];
-    $id_state = $_REQUEST['id_state_user'];
-
-    $stmt = $conn->prepare(SQL_UPDATE_SUPPLIER);
-    $stmt->bind_param("ssssii", $name, $phone, $mail, $address, $id_state, $id);
-
-    if ($stmt->execute()) {
-      // below msg display on form submit success
-      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Updated Successfully </div>';
-    } else {
-      // below msg display on form submit failed
-      $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update </div>';
-    }
-  }
-}
-?>
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
 
 
-<?php
-if (isset($_REQUEST['view'])) {
+if (isset($_POST['id'])) {
 
-  $id_supplier = $_REQUEST['id_supplier'];
+  $id_supplier = $_REQUEST['id'];
   $stmt = $conn->prepare(SQL_SELECT_SUPPLIER_BY_ID);
   $stmt->bind_param("i", $id_supplier);
   $stmt->execute();
@@ -70,159 +47,110 @@ if (isset($_REQUEST['view'])) {
   }
 }
 ?>
-<?php include('../../includes/header.php') ?>
 
 <body>
 
-  <div id="wrapper">
-
-    <nav class="navbar-default navbar-static-side" role="navigation">
-      <div class="sidebar-collapse">
-        <?php include('../../includes/menu.php') ?>
-
-      </div>
-    </nav>
-
-    <div id="page-wrapper" class="gray-bg">
-      <div class="row border-bottom">
-        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-          <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-          </div>
-          <ul class="nav navbar-top-links navbar-right">
-            <li>
-              <a href="../../logout.php" id="logout">
-                <i class="fa fa-sign-out"></i> Cerrar Sesión
-              </a>
-            </li>
-          </ul>
-
-        </nav>
-      </div>
-      <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-10">
-
-          <h2>Proveedores</h2>
+  <div class="modal inmodal fase" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content animated bounceInRight">
+        <div class="modal-header">
+          <button type="button" class="close reload" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+          </button>
+          <i class="bi bi-person-gear modal-icon"></i>
+          <h4 class="modal-title">Editar Proveedor</h4>
         </div>
-        <div class="col-lg-2">
+        <div class="modal-body">
 
-        </div>
-      </div>
-      <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-
-          <div class="col-lg-5">
-            <div class="ibox float-e-margins">
-              <div class="ibox-title">
-                <h5>Actualizar Proveedor</h5>
-
-              </div>
-              <div class="ibox-content">
-
-                <form action="" method="POST">
-                  <div class="form-group">
-                    <label for="id_supplier">ID Proveedor</label>
-                    <input type="text" class="form-control" id="id_supplier" name="id_supplier" value="<?php if (isset($row['id_supplier'])) {
-                                                                                                          echo $row['id_supplier'];
-                                                                                                        } ?>" readonly>
-                  </div>
-                  <div class="form-group">
-                    <label for="supplier_name">Nombre</label>
-                    <input type="text" class="form-control" id="supplier_name" name="supplier_name" value="<?php if (isset($row['supplier_name'])) {
-                                                                                                              echo $row['supplier_name'];
-                                                                                                            } ?>">
-                  </div>
-                  <div class="form-group">
-                    <label for="phone">Teléfono</label>
-                    <input type="text" class="form-control" id="phone" name="phone" value="<?php if (isset($row['phone'])) {
-                                                                                              echo $row['phone'];
-                                                                                            } ?>" onkeypress="isInputNumber(event)">
-                  </div>
-                  <div class="form-group">
-                    <label for="mail">Email</label>
-                    <input type="email" class="form-control" id="mail" name="mail" value="<?php if (isset($row['mail'])) {
-                                                                                            echo $row['mail'];
-                                                                                          } ?>">
-                  </div>
-
-                  <div class="form-group">
-                    <label for="address">Dirección</label>
-                    <input type="text" class="form-control" id="address" name="address" value="<?php if (isset($row['address'])) {
-                                                                                                  echo $row['address'];
-                                                                                                } ?>">
-                  </div>
-
-
-
-                  <div class="form-group">
-                    <label for="state_user">Estado</label>
-                    <select name="id_state_user" id="id_state_user" class="form-control">
-                      <?php
-
-                      $state = $row['id_state_user'];
-                      $stmt = $conn->prepare(SQL_SELECT_STATE_BY_ID);
-                      $stmt->bind_param("i", $state);
-                      $stmt->execute();
-                      $result = $stmt->get_result();
-
-                      // Verificar si hay resultados
-                      if ($result->num_rows > 0) {
-                        // Obtener la fila como un array asociativo
-                        $row_state = $result->fetch_assoc();
-                        $name_state = $row_state["state_user"];
-                        $id_state_user = $row_state["id_state_user"];
-                      } else {
-                        // Si no hay resultados, asignar un valor por defecto
-                        $id_state_user = 0; // O el valor que desees
-                      }
-
-                      // Luego, obtén todos los estados de la tabla states_users
-                      $stmt = $conn->prepare(SQL_SELECT_STATUS_USERS);
-                      $stmt->execute();
-                      $rows = $stmt->get_result();
-
-
-                      // Itera sobre los estados para crear las opciones del select
-                      foreach ($rows as $state) {
-                        $stateName = $state["state_user"];
-                        $stateId = $state["id_state_user"];
-                        $selected = ($stateId == $id_state_user) ? "selected" : "";
-                        echo "<option value='$stateId' $selected>$stateName</option>";
-                      }
-                      ?>
-                    </select>
-                  </div>
-
-
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-danger" id="update" name="update">Actualizar</button>
-                    <a href="suppliers.php" class="btn btn-secondary">Cerrar</a>
-                  </div>
-                  <?php if (isset($msg)) {
-                    echo $msg;
-                  } ?>
-                </form>
-              </div>
-
+          <form id="change-admin-form" action="" method="POST">
+            <div style="display: none;" class="form-group">
+              <label for="id_supplier">ID Proveedor</label>
+              <input type="text" class="form-control" id="id_supplier" name="id_supplier" value="<?php if (isset($row['id_supplier'])) {
+                echo $row['id_supplier'];
+              } ?>" readonly>
             </div>
-          </div>
+            <div class="form-group">
+              <label for="supplier_name">Nombre</label>
+              <input type="text" class="form-control" id="supplier_name" name="supplier_name" value="<?php if (isset($row['supplier_name'])) {
+                echo $row['supplier_name'];
+              } ?>">
+            </div>
+            <div class="form-group">
+              <label for="phone">Teléfono</label>
+              <input type="text" class="form-control" id="phone" name="phone" value="<?php if (isset($row['phone'])) {
+                echo $row['phone'];
+              } ?>"
+                onkeypress="isInputNumber(event)">
+            </div>
+            <div class="form-group">
+              <label for="mail">Email</label>
+              <input type="email" class="form-control" id="mail" name="mail" value="<?php if (isset($row['mail'])) {
+                echo $row['mail'];
+              } ?>">
+            </div>
 
-        </div>
-      </div>
-      <div class="footer">
-        <div>
-          <strong>Copyright</strong> Telistema &copy; 2024
-        </div>
-      </div>
+            <div class="form-group">
+              <label for="address">Dirección</label>
+              <input type="text" class="form-control" id="address" name="address" value="<?php if (isset($row['address'])) {
+                echo $row['address'];
+              } ?>">
+            </div>
 
+
+
+            <div class="form-group">
+              <label for="state_user">Estado</label>
+              <select name="id_state_user" id="id_state_user" class="form-control">
+                <?php
+
+                $state = $row['id_state_user'];
+                $stmt = $conn->prepare(SQL_SELECT_STATE_BY_ID);
+                $stmt->bind_param("i", $state);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                // Verificar si hay resultados
+                if ($result->num_rows > 0) {
+                  // Obtener la fila como un array asociativo
+                  $row_state = $result->fetch_assoc();
+                  $name_state = $row_state["state_user"];
+                  $id_state_user = $row_state["id_state_user"];
+                } else {
+                  // Si no hay resultados, asignar un valor por defecto
+                  $id_state_user = 0; // O el valor que desees
+                }
+
+                // Luego, obtén todos los estados de la tabla states_users
+                $stmt = $conn->prepare(SQL_SELECT_STATUS_USERS);
+                $stmt->execute();
+                $rows = $stmt->get_result();
+
+
+                // Itera sobre los estados para crear las opciones del select
+                foreach ($rows as $state) {
+                  $stateName = $state["state_user"];
+                  $stateId = $state["id_state_user"];
+                  $selected = ($stateId == $id_state_user) ? "selected" : "";
+                  echo "<option value='$stateId' $selected>$stateName</option>";
+                }
+                ?>
+              </select>
+            </div>
+
+
+            <div class="modal-footer">
+              <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Actualizar</button>
+              <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
+            </div>
+            <div class="text-center" id="response-message"></div>
+          </form>
+          <div class="p-xxs font-italic bg-muted border-top-bottom text">
+                        <span class="font-bold">NOTA:</span> Al editar un Proveedor, asegúrese de revisar y actualizar correctamente todos los campos. Los cambios realizados se reflejarán inmediatamente en el sistema.
+                    </div>
+      </div>
     </div>
   </div>
 
-
-
-  <?php include('../../includes/footer.php'); ?>
-
-  <!-- Only Number for input fields -->
   <script>
     function isInputNumber(evt) {
       var ch = String.fromCharCode(evt.which);
@@ -230,6 +158,42 @@ if (isset($_REQUEST['view'])) {
         evt.preventDefault();
       }
     }
+
+    $(document).ready(function () {
+      var laddaButton;
+
+      $('#change-admin-form').on('submit', function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+
+        laddaButton = Ladda.create(document.querySelector('.ladda-button'));
+        laddaButton.start();
+
+        $.ajax({
+          type: 'POST',
+          url: 'suppliersController.php?token=<?php echo $token; ?>&action=edit_supplier', // La URL de tu archivo PHP
+          data: formData,
+          dataType: 'json',
+          success: function (response) {
+            laddaButton.stop();
+            var messageContainer = $('#response-message');
+            if (response.status === 'success') {
+              messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
+            } else {
+              messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
+            }
+          },
+          error: function () {
+            laddaButton.stop();
+            $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX</div>');
+          }
+        });
+      });
+
+      $('.reload').click(function () {
+        location.reload();
+      });
+    });
   </script>
 
 </body>
