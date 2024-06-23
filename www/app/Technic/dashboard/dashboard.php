@@ -120,18 +120,15 @@ include('../../dbConnection.php');
         </div>
       </div>
     </div>
-  </div>
-</div>
-<div class="footer">
-  <div class="pull-right">
+    <div class="footer">
+      <div class="pull-right">
 
+      </div>
+      <div>
+        <strong>Copyright</strong> Telistema &copy; 2024
+      </div>
+    </div>
   </div>
-  <div>
-    <strong>Copyright</strong> Telistema &copy; 2024
-  </div>
-</div>
-
-</div>
 </div>
 
 <?php
@@ -141,4 +138,3 @@ include('../../includes/footer.php');
 </body>
 
 </html>
-
