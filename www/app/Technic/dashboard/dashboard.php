@@ -60,6 +60,7 @@ include('../../dbConnection.php');
     <div class="row wrapper border-bottom white-bg page-heading">
       <div class="col-lg-9">
         <h2>Inicio</h2>
+
       </div>
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -71,20 +72,21 @@ include('../../dbConnection.php');
                 <i class="fa fa-bell fa-5x"></i>
               </div>
               <div class="col-xs-8 text-right">
-                <span> Notificaciones </span>
+
                 <h2 class="font-bold">4</h2>
               </div>
             </div>
           </div>
         </div>
         <div class="col-lg-3">
-          <div class="widget style1 navy-bg">
+
+          <div class="widget style1 custom-bg-2">
             <div class="row">
               <div class="col-xs-4">
-                <i class="fa fa-check-square fa-5x"></i>
+                <i class="fa fa-check fa-5x"></i>
               </div>
               <div class="col-xs-8 text-right">
-                <span> Ordenes Completadas </span>
+                <span> Ordenes Finalizadas </span>
                 <h2 class="font-bold">26</h2>
               </div>
             </div>
@@ -118,18 +120,21 @@ include('../../dbConnection.php');
         </div>
       </div>
     </div>
-
     <div class="footer">
       <div class="pull-right">
+
       </div>
       <div>
         <strong>Copyright</strong> Telistema &copy; 2024
       </div>
     </div>
-    <?php
-    include('../../includes/footer.php');
-    ?>
+  </div>
+</div>
 
-    </body>
+<?php
+include('../../includes/footer.php');
+?>
 
-    </html>
+</body>
+
+</html>

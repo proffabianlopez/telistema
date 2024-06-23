@@ -8649,32 +8649,20 @@ body.md-skin {
   }
 }
 
-.navy-bg {
-  background-color: #1ab394;
-}
-
-.lazur-bg {
-  background-color: #23c6c8;
-}
-
-.yellow-bg {
-  background-color: #f8ac59;
-}
-
-/* Nuevos estilos */
 .custom-bg-1 {
-  background-color: #4890f9; /* Color de fondo personalizado 1 */
+  background-color: #1358b9;
+  color: white;
 }
-
 .custom-bg-2 {
-  background-color: #33ff57; /* Color de fondo personalizado 2 */
+  background-color: #006621;
+  color: white;
 }
-
 .custom-bg-3 {
-  background-color: #f7b007; /* Color de fondo personalizado 3 */
+  background-color: #dba811;
+  color: white;
 }
-
 .custom-bg-4 {
-  background-color: #ec130c; /* Color de fondo personalizado 4 */
+  background-color: #ca4440;
+
   color: white;
 }
