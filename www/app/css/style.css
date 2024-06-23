@@ -8648,6 +8648,7 @@ body.md-skin {
     margin: 0;
   }
 }
+
 .custom-bg-1 {
   background-color: #1358b9;
   color: white;
@@ -8662,5 +8663,6 @@ body.md-skin {
 }
 .custom-bg-4 {
   background-color: #ca4440;
+
   color: white;
 }

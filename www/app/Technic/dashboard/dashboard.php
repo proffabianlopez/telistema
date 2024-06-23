@@ -72,13 +72,14 @@ include('../../dbConnection.php');
                 <i class="fa fa-bell fa-5x"></i>
               </div>
               <div class="col-xs-8 text-right">
-                <span> Notificaciones</span>
+
                 <h2 class="font-bold">4</h2>
               </div>
             </div>
           </div>
         </div>
         <div class="col-lg-3">
+
           <div class="widget style1 custom-bg-2">
             <div class="row">
               <div class="col-xs-4">
@@ -140,3 +141,4 @@ include('../../includes/footer.php');
 </body>
 
 </html>
+

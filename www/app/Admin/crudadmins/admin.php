@@ -39,7 +39,7 @@ include('../../Querys/querys.php');
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../../logout.php" id="logout">
+                        <a id="logout">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
@@ -113,7 +113,7 @@ include('../../Querys/querys.php');
                                         echo '<td>' . $row["phone_user"] . '</td>';
                                         echo '<td>
                                                     <div class="btn-group" role="group">
-                                                        <button onclick="openEditModal(' . $row["id_user"] . ')" class="btn btn-warning btn-xs" style="margin-right: 5px" >
+                                                        <button id="edit-' . $row["id_user"] . '-' . $token . '" data-crud="admin" class="btn btn-warning btn-xs  modaledit-btn " style="margin-right: 5px" >
                                                             <i class="bi bi-pencil-square"></i>
                                                         </button>
                                                         <button id="delete-' . $row["id_user"] . '-' . $token . '" data-crud="admin" class="btn btn-danger btn-xs delete-btn" >
@@ -127,7 +127,7 @@ include('../../Querys/querys.php');
                                     echo '</tbody>
                                                 </table>';
                                 } else {
-                                    echo "0 Result";
+                                    echo "0 Resultado";
                                 }
                                 ?>
 
@@ -179,23 +179,6 @@ include('../../Querys/querys.php');
             $('.footable2').footable();
 
         });
-
-        function openEditModal(id) {
-            // Realiza una solicitud AJAX para obtener el formulario de edición
-            $.ajax({
-                url: "editAdmin.php?token=<?php echo $token; ?>&id=" + id, // Ruta al archivo de edición de usuario
-                type: "GET",
-                success: function(response) {
-                    // Muestra el formulario de edición en el contenedor
-                    $("#edit-form-container").html(response).slideDown();
-                    // Abre el modal
-                    $("#myModal6").modal("show");
-                },
-                error: function() {
-                    alert("Error al cargar el formulario de edición.");
-                }
-            });
-        }
 
         function openNewAdminModal() {
             // Realiza una solicitud AJAX para obtener el formulario de edición

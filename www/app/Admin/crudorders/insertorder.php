@@ -10,6 +10,12 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 } else {
     echo "<script> location.href='../login.php'; </script>";
 }
+////////////////////////////////
+
+if (!isset($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+$token = $_SESSION['token'];
 
 define('TITLE', 'Ordenes');
 define('PAGE', 'Ordenes');
@@ -18,84 +24,64 @@ include('../../Querys/querys.php');
 include('../../includes/header.php');
 include('../configsmtp/generate_config.php');
 
-if (isset($_SESSION['id_client'])) {
-    $id_client = $_SESSION['id_client'];
-    if (isset($_POST['reqsubmit'])) {
-        if (
-            empty(trim($_POST['order_date'])) || empty(trim($_POST['order_hour'])) || empty(trim($_POST['order_description'])) || empty(trim($_POST['order_server'])) || empty(trim($_POST['address'])) || empty(trim($_POST['height'])) || empty(trim($_POST['floor'])) || empty(trim($_POST['departament'])) || empty(trim($_POST['id_priority'])) || empty(trim($_POST['id_material'])) || empty(trim($_POST['admin_id'])) || empty(trim($_POST['technic_id']))
-        ) {
-            $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Completa todos los campos </div>';
-        } else {
 
-            $order_date = $_POST['order_date'];
-            $order_hour = $_POST['order_hour'];
-            $order_description = $_POST['order_description'];
-            $order_server = $_POST['order_server'];
-            $address = capitalizeWords($_POST['address']);
-            $height = $_POST['height'];
-            $floor = trim($_POST['floor']);
-            $departament = trim($_POST['departament']);
-            $id_priority = $_POST['id_priority'];
-            $id_material = $_POST['id_material'];
-            $id_state_order = 3;
-            $admin_id = $_POST['admin_id'];
-            $technic_id = $_POST['technic_id'];
 
-            $stmt = $conn->prepare(SQL_INSERT_ORDER);
-            if ($stmt === false) {
-                die('Error en la preparación de la consulta: ' . $conn->error);
-            }
-            $stmt->bind_param("sssisissiiiiii", $order_date, $order_hour, $order_description, $order_server, $address, $height, $floor, $departament, $id_client, $id_priority, $id_material, $id_state_order, $admin_id, $technic_id);
-            if ($stmt->execute()) {
-                $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Agregado exitosamente </div>';
-            } else {
-                $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> No se pudo agregar </div>';
-            }
-        }
-    }
-} else {
-    $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> ID de cliente no especificado </div>';
+if (isset($_GET['id_client'])) {
+    $id_client = $_GET['id_client'];
 }
+//     $id_client = $_SESSION['id_client'];
+//     if (isset($_POST['reqsubmit'])) {
+//         if (
+//             empty(trim($_POST['order_date'])) || empty(trim($_POST['order_hour'])) || empty(trim($_POST['order_description'])) || empty(trim($_POST['order_server'])) || empty(trim($_POST['address'])) || empty(trim($_POST['height'])) || empty(trim($_POST['floor'])) || empty(trim($_POST['departament'])) || empty(trim($_POST['id_priority'])) || empty(trim($_POST['id_material'])) || empty(trim($_POST['admin_id'])) || empty(trim($_POST['technic_id']))
+//         ) {
+//             $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Completa todos los campos </div>';
+//         } else {
+
+//             $order_date = $_POST['order_date'];
+//             $order_hour = $_POST['order_hour'];
+//             $order_description = $_POST['order_description'];
+//             $order_server = $_POST['order_server'];
+//             $address = capitalizeWords($_POST['address']);
+//             $height = $_POST['height'];
+//             $floor = trim($_POST['floor']);
+//             $departament = trim($_POST['departament']);
+//             $id_priority = $_POST['id_priority'];
+//             $id_material = $_POST['id_material'];
+//             $id_state_order = 3;
+//             $admin_id = $_POST['admin_id'];
+//             $technic_id = $_POST['technic_id'];
+
+//             $stmt = $conn->prepare(SQL_INSERT_ORDER);
+//             if ($stmt === false) {
+//                 die('Error en la preparación de la consulta: ' . $conn->error);
+//             }
+//             $stmt->bind_param("sssisissiiiiii", $order_date, $order_hour, $order_description, $order_server, $address, $height, $floor, $departament, $id_client, $id_priority, $id_material, $id_state_order, $admin_id, $technic_id);
+//             if ($stmt->execute()) {
+//                 $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Agregado exitosamente </div>';
+//             } else {
+//                 $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> No se pudo agregar </div>';
+//             }
+//         }
+//     }
+// } else {
+//     $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> ID de cliente no especificado </div>';
+// }
 ?>
 
 <body>
-    <div id="wrapper">
-        <nav class="navbar-default navbar-static-side" role="navigation">
-            <div class="sidebar-collapse">
-                <?php include('../../includes/menu.php') ?>
+<div class="modal inmodal fase" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close reload" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <i class="bi bi-person-fill-add modal-icon"></i>
+                <h4 class="modal-title">Registrar Nueva Orden</h4>
             </div>
-        </nav>
-        <div id="page-wrapper" class="gray-bg">
-            <div class="row border-bottom">
-                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-                    <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-                    </div>
-                    <ul class="nav navbar-top-links navbar-right">
-                        <li>
-                            <a href="login.html">
-                                <i class="fa fa-sign-out"></i> Cerrar Sesión
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Ordenes</h2>
-                </div>
-                <div class="col-lg-2">
-                </div>
-            </div>
-            <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="row">
-                    <div class="col-lg-5">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
-                                <h5>Ingresar una Nueva Orden</h5>
-                            </div>
-                            <div class="ibox-content">
-                                <form action="" method="POST">
+            <div class="modal-body">
+
+                <form id="add-product-form" action="" method="POST">
                                     <div class="form-group">
                                         <label for="admin_id">Administrador</label>
                                         <?php
@@ -259,27 +245,56 @@ if (isset($_SESSION['id_client'])) {
                                             ?>
                                         </select>
                                     </div>
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-danger" id="reqsubmit" name="reqsubmit">Agregar</button>
-                                        <a href="order.php" class="btn btn-secondary">Cerrar</a>
-                                    </div>
-                                    <?php if (isset($msg)) {
-                                        echo $msg;
-                                    } ?>
-                                </form>
-                            </div>
-                        </div>
+                                    <div class="modal-footer">
+                        <button type="submit" class="ladda-button btn btn-primary"
+                            data-style="zoom-in">Agregar</button>
+                        <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
                     </div>
-                </div>
-            </div>
-            <div class="footer">
-                <div>
-                    <strong>Copyright</strong> Telistema &copy; 2024
+                    <div class="text-center" id="response-message"></div>
+                </form>
+                <div class="p-xxs font-italic bg-muted border-top-bottom text ">
+                    <span class="font-bold">NOTA:</span> Al agregar una nueva Orden, asegúrese de completar todos los campos obligatorios. La información ingresada se reflejará inmediatamente en el sistema.
                 </div>
             </div>
         </div>
     </div>
-    <?php include('../../includes/footer.php'); ?>
+</div>
+
+<script>
+$(document).ready(function () {
+    $('#add-product-form').on('submit', function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        var laddaButton = Ladda.create(document.querySelector('.ladda-button'));
+        laddaButton.start();
+        $.ajax({
+            type: 'POST',
+            url: 'ordersController.php?token=<?php echo $token; ?>&action=add_order',
+            data: formData,
+            dataType: 'json',
+            success: function (response) {
+                laddaButton.stop();
+                var messageContainer = $('#response-message');
+                if (response.status === 'success') {
+                    messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
+                } else {
+                    messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
+                }
+            },
+            error: function (xhr, status, error) {
+                laddaButton.stop();
+                console.log(xhr.responseText);
+                $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX: ' + error + '<br>' + xhr.responseText + '</div>');
+            }
+        });
+    });
+    $('.reload').click(function () {
+        location.reload();
+    });
+});
+</script>
+
+
 </body>
 
-</html> |
+</html>

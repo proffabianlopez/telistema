@@ -18,41 +18,13 @@ include ('../../dbConnection.php');
 include ('../../Querys/querys.php');
 include('../configsmtp/generate_config.php');
 
-if (isset($_REQUEST['update'])) {
-
-    // Checking for Empty Fields
-    if (($_REQUEST['name_user'] == "") || ($_REQUEST['id_state_user'] == "") || ($_REQUEST['phone_user'] == "") || ($_REQUEST['mail'] == "")) {
-        // msg displayed if required field missing
-        $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Fill All Fileds </div>';
-    } else {
-        // Assigning User Values to Variable
-        $id = $_REQUEST['id_user'];
-        $name = capitalizeWords(trim($_REQUEST['name_user']));
-        $name = capitalizeWords(trim($_REQUEST['surname_user']));
-        $phone = trim($_REQUEST['phone_user']);
-        $mail = trim($_REQUEST['mail']);
-        $state = $_REQUEST['id_state_user'];
-
-        $stmt = $conn->prepare(SQL_UPDATE_ADMIN);
-        $stmt->bind_param("sssii", $name, $phone, $mail, $state, $id);
-
-
-        if ($stmt->execute()) {
-            // below msg display on form submit success
-            $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Updated Successfully </div>';
-        } else {
-            // below msg display on form submit failed
-            $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> Unable to Update </div>';
-        }
-    }
-}
 ?>
 
 
 <?php
-if (isset($_GET['id'])) {
+if (isset($_POST['id'])) {
 
-    $id_user = $_GET['id'];
+    $id_user = $_POST['id'];
     $stmt = $conn->prepare(SQL_SELECT_ADMIN_BY_ID);
     $stmt->bind_param("i", $id_user);
     $stmt->execute();

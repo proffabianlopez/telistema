@@ -11,6 +11,12 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
     echo "<script> location.href='../login.php'; </script>";
 }
 ////////////////////////////////
+// Genera un token CSRF y lo guarda en la sesión
+if (!isset($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+$token = $_SESSION['token'];
+
 define('TITLE', 'Ordenes');
 define('PAGE', 'Ordenes');
 include('../../includes/header.php');
@@ -33,7 +39,7 @@ include('../../Querys/querys.php');
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../../logout.php">
+                        <a id="logout">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
@@ -105,20 +111,13 @@ include('../../Querys/querys.php');
                                             echo '<td>' . $row["name_user"] . ' ' . $row["surname_user"] . '</td>';
                                             echo '<td>
                                                     <div class="btn-group" role="group">
-                                                        <form action="editorder.php" method="POST" style="display:inline;">
-                                                            <input type="hidden" name="id_order" value="' . $row["id_order"] . '">
-                                                            <input type="hidden" name="id_client" value="' . $row["id_client"] . '">
-                                                            <button type="submit" class="btn btn-warning btn-xs" name="view" value="View">
-                                                                <i class="bi bi-pencil-square"></i>
-                                                            </button>
-                                                        </form>
-                                                        <form action="" method="POST" style="display:inline;">
-                                                            <input type="hidden" name="id_order" value="' . $row["id_order"] . '">
-                                                            <input type="hidden" name="id_client" value="' . $row["id_client"] . '">
-                                                            <button class="btn btn-danger btn-xs" name="delete" value="Delete">
-                                                                <i class="bi bi-trash"></i>
-                                                            </button>
-                                                        </form>
+                                                         <button id="edit-' . $row["id_order"] .'*'.$row["id_client"]. '-' . $token . '" data-crud="orders" class="btn btn-warning btn-xs modaledit-btn" >
+                                                       <i class="bi bi-pencil-square"></i>
+                                                    </button>
+                                                     
+                                                         <button id="delete-' . $row["id_order"] .'*'.$row["id_client"]. '-' . $token . '" data-crud="orders" class="btn btn-danger btn-xs delete-btn" >
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
                                                     </div>
                                                 </td>';
                                             echo '</tr>';
@@ -127,20 +126,7 @@ include('../../Querys/querys.php');
                                         </table>';
                                     }
                                 } else {
-                                    echo "Eliminado con exito.";
-                                }
-                                if (isset($_REQUEST['delete'])) {
-
-                                    $id_order = $_REQUEST['id_order'];
-                                    $id_client = $_REQUEST['id_client'];
-                                    $stmt = $conn->prepare(SQL_DELETE_ORDER);
-                                    $stmt->bind_param("ii", $id_client, $id_order);
-
-                                    if ($stmt->execute()) {
-                                        echo '<meta http-equiv="refresh" content= "0;URL=?deleted" />';
-                                    } else {
-                                        echo "No se pudo eliminar la orden.";
-                                    }
+                                    echo "0 Resultado";
                                 }
                                 ?>
                                 <tfoot>
@@ -165,18 +151,36 @@ include('../../Querys/querys.php');
         </div>
     </div>
     <div id="small-chat">
-        <a class="open-small-chat" href="insertorder.php">
+        <a class="open-small-chat" onclick="openNewOrderModal()">
             <i class="bi bi-plus-lg"></i>
         </a>
     </div>
+
+    <div id="edit-form-container" style="display: none;"></div>
     <?php
     include('../../includes/footer.php');
     ?>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.footable').footable();
             $('.footable2').footable();
         });
+        function openNewOrderModal() {
+            // Realiza una solicitud AJAX para obtener el formulario de edición
+            $.ajax({
+                url: "insertorder.php?token=<?php echo $token; ?>&&id_client=<?php echo $id_client; ?>", // Ruta al archivo de edición de usuario
+                type: "GET",
+                success: function (response) {
+                    // Muestra el formulario de edición en el contenedor
+                    $("#edit-form-container").html(response).slideDown();
+                    // Abre el modal
+                    $("#myModal6").modal("show");
+                },
+                error: function () {
+                    alert("Error al cargar el formulario de edición.");
+                }
+            });
+        }
     </script>
 </body>
 
