@@ -1,8 +1,8 @@
 <?php
 session_start();
-    error_log("Inicio de aplicacion");
-include ('dbConnection.php');
-include ('Querys/querys.php');
+error_log("Inicio de aplicacion");
+include('dbConnection.php');
+include('Querys/querys.php');
 
 if (!isset($_SESSION['is_login'])) {
   if (isset($_REQUEST['mail']) && isset($_REQUEST['pass'])) { // Asegúrate de que tanto mail como pass están configurados
@@ -28,7 +28,7 @@ if (!isset($_SESSION['is_login'])) {
         $row = $result->fetch_assoc();
 
         // Verificar la contraseña
-        if (password_verify( $Password , $row['user_password'])) {
+        if (password_verify($Password, $row['user_password'])) {
           if ($row['state_user'] == 'inactivo') {
             $msg = '<div class="alert alert-warning mt-2" role="alert"> Cuenta inactiva </div>';
           } else if ($row['state_user'] == 'activo') {
@@ -50,7 +50,7 @@ if (!isset($_SESSION['is_login'])) {
               exit;
             } elseif ($Rol == 'technic') {
               // Redireccionar a la página del perfil del técnico
-              echo "<script> location.href='Technic/dashboard.php'; </script>";
+              echo "<script> location.href='Technic/dashboard/dashboard.php'; </script>";
               exit;
             }
           }
@@ -82,67 +82,70 @@ if (!isset($_SESSION['is_login'])) {
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TELISTEMA | Login</title>
+  <title>TELISTEMA | Login</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="boostrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
-    <style>
-        .password-container {
-            position: relative;
-        }
-        .toggle-password {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-    </style>
+  <link href="css/animate.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="boostrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+  <style>
+    .password-container {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body class="gray-bg">
 
-    <div class="middle-box text-center loginscreen animated fadeInDown">
-        <div>
-            <div>
+  <div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+      <div>
 
-                <h1 class="logo-name">TL+</h1>
+        <h1 class="logo-name">TL+</h1>
 
-            </div>
-            <h3><i class="bi bi-incognito"></i> Acceso Interno</h3>
-            <!-- <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views. -->
-                <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
-            </p>
-            <p>Solo Personal Autorizado</p>
-            <form class="m-t" role="form" action="" method="POST">
+      </div>
+      <h3><i class="bi bi-incognito"></i> Acceso Interno</h3>
+      <!-- <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views. -->
+      <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
+      </p>
+      <p>Solo Personal Autorizado</p>
+      <form class="m-t" role="form" action="" method="POST">
 
-            <div class="form-group">
-                    <input type="email" class="form-control" name="mail" placeholder="Email" required="">
-                </div>
-
-                <div class="form-group password-container">
-                    <input type="password" id="user_password" class="form-control" name="pass" placeholder="Contraseña" required="">
-                    <span class="glyphicon glyphicon-eye-open toggle-password"></span>
-                </div>
-                <button type="submit" class="btn btn-success block full-width m-b">Login</button>
-                <?php if(isset($msg)) {echo $msg; } ?>
-
-            </form>
-            <a  class="btn btn-danger block full-width m-b" href="../index.html">Volver a la pagina</a>
+        <div class="form-group">
+          <input type="email" class="form-control" name="mail" placeholder="Email" required="">
         </div>
-    </div>
 
-    <!-- Mainly scripts -->
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/passShow.js"></script>
+        <div class="form-group password-container">
+          <input type="password" id="user_password" class="form-control" name="pass" placeholder="Contraseña" required="">
+          <span class="glyphicon glyphicon-eye-open toggle-password"></span>
+        </div>
+        <button type="submit" class="btn btn-success block full-width m-b">Login</button>
+        <?php if (isset($msg)) {
+          echo $msg;
+        } ?>
+
+      </form>
+      <a class="btn btn-danger block full-width m-b" href="../index.html">Volver a la pagina</a>
+    </div>
+  </div>
+
+  <!-- Mainly scripts -->
+  <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/passShow.js"></script>
 
 
 </body>
