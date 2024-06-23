@@ -1,6 +1,6 @@
 <?php
 session_start();
-////////////////////////////////
+
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
   if ($_SESSION['user_role'] != 'admin') {
     echo "<script> location.href='../../includes/404.php'; </script>";
@@ -10,27 +10,12 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 } else {
   echo "<script> location.href='../../login.php'; </script>";
 }
-////////////////////////////////
 
 define('TITLE', 'Dashboard');
 define('PAGE', 'dashboard');
 include('../../includes/header.php');
 include('../../dbConnection.php');
 
-
-// $sql = "SELECT max(request_id) FROM submitrequest_tb";
-// $result = $conn->query($sql);
-// $row = mysqli_fetch_row($result);
-// $submitrequest = $row[0];
-
-// $sql = "SELECT max(request_id) FROM assignwork_tb";
-// $result = $conn->query($sql);
-// $row = mysqli_fetch_row($result);
-// $assignwork = $row[0];
-
-// $sql = "SELECT * FROM technician_tb";
-// $result = $conn->query($sql);
-// $totaltech = $result->num_rows;
 
 ?>
 <div id="wrapper">

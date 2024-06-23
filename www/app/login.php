@@ -93,18 +93,6 @@ if (!isset($_SESSION['is_login'])) {
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="boostrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
-    <style>
-        .password-container {
-            position: relative;
-        }
-        .toggle-password {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body class="gray-bg">
@@ -138,12 +126,11 @@ if (!isset($_SESSION['is_login'])) {
             <a  class="btn btn-primary block full-width m-b" href="../index.html">Volver a la pagina</a>
         </div>
     </div>
-
     <!-- Mainly scripts -->
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/passShow.js"></script>
-
+    
 
 </body>
 

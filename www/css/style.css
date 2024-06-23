@@ -6,6 +6,28 @@
     --dark: #161616;
 }
 
+
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+.dark-mode .navbar {
+    background-color: #1f1f1f !important;
+    color: #ffffff !important;
+}
+.dark-mode .navbar a,
+.dark-mode .navbar-brand {
+    color: #ffffff !important;
+}
+.dark-mode-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+
+
 .fw-medium {
     font-weight: 500 !important;
 }
@@ -577,3 +599,4 @@
     /* Ajusta la altura según sea necesario */
     padding-left: 35%;
 }
+
