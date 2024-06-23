@@ -63,78 +63,72 @@ include('../../dbConnection.php');
 
       </div>
     </div>
+
     <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="widget style1 custom-bg-1">
+            <div class="row">
+              <div class="col-xs-4 text-center">
+                <i class="fa fa-bell fa-5x"></i>
+              </div>
+              <div class="col-xs-8 text-right">
 
-      <div class="row m-t-lg">
-        <div class="col-lg-6">
-          <div class="ibox float-e-margins">
-
+                <h2 class="font-bold">4</h2>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-lg-6">
-          <div>
-            <table class="table">
-              <tbody>
-                <tr>
-                  <td>
-                    <button type="button" class="btn btn-danger m-r-sm">12</button>
-                    Total messages
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-primary m-r-sm">28</button>
-                    Posts
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-info m-r-sm">15</button>
-                    Comments
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button type="button" class="btn btn-info m-r-sm">20</button>
-                    News
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-success m-r-sm">40</button>
-                    Likes
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-danger m-r-sm">30</button>
-                    Notifications
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button type="button" class="btn btn-warning m-r-sm">20</button>
-                    Albums
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-default m-r-sm">40</button>
-                    Groups
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-warning m-r-sm">30</button>
-                    Permissions
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <div class="col-lg-3">
 
+          <div class="widget style1 custom-bg-2">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-check fa-5x"></i>
+              </div>
+              <div class="col-xs-8 text-right">
+                <span> Ordenes Finalizadas </span>
+                <h2 class="font-bold">26</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="widget style1 custom-bg-3">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-exclamation fa-5x"></i>
+              </div>
+              <div class="col-xs-8 text-right">
+                <span> Ordenes Pendientes </span>
+                <h2 class="font-bold">260</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="widget style1 custom-bg-4">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-exclamation-triangle fa-5x"></i>
+              </div>
+              <div class="col-xs-8 text-right">
+                <span> Ordenes Prioritarias </span>
+                <h2 class="font-bold">12</h2>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-
-
     </div>
     <div class="footer">
       <div class="pull-right">
+
       </div>
       <div>
         <strong>Copyright</strong> Telistema &copy; 2024
       </div>
     </div>
-
   </div>
 </div>
 
