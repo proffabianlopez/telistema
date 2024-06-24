@@ -33,9 +33,9 @@ if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_us
     exit;
 }
 
-include ('../dbConnection.php');
-include ('../Querys/querys.php');
-include ('../Admin/generate_config.php');
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
+include ('../../Admin/generate_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($_POST["current_pass"])) {

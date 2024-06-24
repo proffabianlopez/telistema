@@ -72,7 +72,7 @@ if (!isset($_SESSION['is_login'])) {
   }
 } else {
   // Si el usuario ya está autenticado, redirigir al panel de control del administrador
-  echo "<script> location.href='Admin/dashboard.php'; </script>";
+  echo "<script> location.href='Admin/dashboard/dashboard.php'; </script>";
   exit;
 }
 

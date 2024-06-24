@@ -11,7 +11,7 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 }
 
 define('TITLE', 'Ordenes');
-define('PAGE', 'Ordenes');
+define('PAGE', 'Ordenes technic');
 
 include('../../dbConnection.php');
 include('../../Querys/querys.php');
