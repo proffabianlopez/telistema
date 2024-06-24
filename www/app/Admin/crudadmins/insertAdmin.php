@@ -58,7 +58,7 @@ $passwordGenerate = generatePassword();
                     <br>
 
                     <div class="modal-footer">
-                        <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Actualizar</button>
+                        <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Agregar</button>
                         <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
                     </div>
                     <div class="text-center" id="response-message"></div>

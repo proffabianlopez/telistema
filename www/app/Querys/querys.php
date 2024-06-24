@@ -85,15 +85,19 @@ define('SQL_INSERT_TECHNIC', '
 INSERT INTO users (name_user, surname_user, phone_user, mail, user_password, id_state_user, id_rol)
 VALUES (?, ?, ?, ?, ?, ?, ?)');
 
-define('SQL_UPDATE_TECHNIC', '
-        UPDATE users
-        SET name_user = ?,
+define('SQL_UPDATE_TECHNIC', 
+         "UPDATE users
+        SET
+        name_user = ?,
         surname_user = ?,
         phone_user = ?,
-        mail = ?, 
-        id_state_user = ?
-        WHERE id_user = ?');
-
+        mail = ?,
+        user_password = CASE
+                        WHEN ? IS NOT NULL AND ? != '' THEN ?
+                        ELSE user_password
+                        END
+        WHERE id_user = ?"
+);
 define('SQL_UPDATE_TECHNIC_BY_EMAIL', '
         UPDATE users
         SET name_user = ?,
@@ -401,13 +405,14 @@ define('SQL_SELECT_MATERIALS', '
 
 
 define(
-        'SQL_SELECT_PRODUCT_BY_ID','
+        'SQL_SELECT_PRODUCT_BY_ID',
+        '
         SELECT u.*
         FROM materials u
         WHERE u.id_material = ?;'
 );
 
-define('SQL_UPDATE_PRODUCT','
+define('SQL_UPDATE_PRODUCT', '
         UPDATE materials
         SET material_name = ?,
         description = ?,
@@ -472,7 +477,24 @@ define(
 );
 
 define('SQL_SELECT_BUYS', '
-        SELECT * FROM buys');
+       SELECT 
+            b.id_buy,
+            b.ammount,
+            b.cost,
+            so.state_order AS name_state,
+            m.name_measure,
+            p.material_name,
+            s.supplier_name
+        FROM 
+            buys b
+        JOIN 
+            states_orders so ON b.id_state_order = so.id_state_order
+        JOIN 
+            measures m ON b.id_measure = m.id_measure
+        JOIN 
+            materials p ON b.id_material = p.id_material
+        JOIN 
+            suppliers s ON b.id_supplier = s.id_supplier');
 
 define('SQL_SELECT_BUY_BY_ID','
         SELECT u.*
@@ -505,3 +527,4 @@ define('SQL_MODIFY_CANCEL_BUY', '
         SET id_state_order = 2
         WHERE id_buy = ?'
 );
+

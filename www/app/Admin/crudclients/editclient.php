@@ -11,51 +11,22 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
   echo "<script> location.href='../../login.php'; </script>";
 }
 ////////////////////////////////
+// Genera un token CSRF y lo guarda en la sesión
+if (!isset($_SESSION['token'])) {
+  $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+$token = $_SESSION['token'];
 
 define('TITLE', 'Clientes');
 define('PAGE', 'Clientes');
 include('../../dbConnection.php');
 include('../../Querys/querys.php');
 
-// Actualización
-if (isset($_REQUEST['clientupdate'])) {
-  // Verificación de campos vacíos
-  if (($_REQUEST['client_name'] == "") || ($_REQUEST['mail'] == "")) {
-    // Mensaje mostrado si falta campo requerido
-    $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Complete los campos </div>';
-  } else {
-    // Asignación de valores de usuario a variables
-    $id_client = $_REQUEST['id_client'];
-    $name = $_REQUEST['client_name'];
-    $lastname = $_REQUEST['client_lastname'];
-    $phone = $_REQUEST['phone'];
-    $mail = $_REQUEST['mail'];
-    $address = $_REQUEST['address'];
-    $height = $_REQUEST['height'];
-    $floor = $_REQUEST['floor'];
-    $departament = $_REQUEST['departament'];
-
-    $sql = SQL_UPDATE_CLIENT;
-
-    // Preparar la consulta
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssssi", $name, $lastname, $phone, $mail, $address, $height, $floor, $departament, $id_client);
-
-    if ($stmt->execute()) {
-      // Mensaje mostrado en caso de éxito en la actualización
-      $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Actualizado con éxito </div>';
-    } else {
-      // Mensaje mostrado en caso de fallo en la actualización
-      $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> No se pudo actualizar </div>';
-    }
-  }
-}
-
 ?>
 <?php
-if (isset($_REQUEST['view'])) {
+if (isset($_POST['id'])) {
 
-  $id_client = $_REQUEST['id_client'];
+  $id_client = $_REQUEST['id'];
   $sql = SQL_CLIENT_BY_ID;
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("i", $id_client);
@@ -78,162 +49,21 @@ if (isset($_REQUEST['view'])) {
 
 <body>
 
-  <div id="wrapper">
+<div class="modal inmodal fase" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close reload" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <i class="bi bi-person-gear modal-icon"></i>
+                <h4 class="modal-title">Editar Cliente</h4>
+            </div>
+            <div class="modal-body">
 
-    <nav class="navbar-default navbar-static-side" role="navigation">
-      <div class="sidebar-collapse">
-        <?php include('../../includes/menu.php') ?>
-
-      </div>
-    </nav>
-
-    <div id="page-wrapper" class="gray-bg">
-      <div class="row border-bottom">
-        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-          <div class="navbar-header">
-            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            <form role="search" class="navbar-form-custom" action="search_results.html">
-              <div class="form-group">
-                <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
-              </div>
-            </form>
-          </div>
-          <ul class="nav navbar-top-links navbar-right">
-            <li>
-              <span class="m-r-sm text-muted welcome-message">Welcome to INSPINIA+ Admin Theme.</span>
-            </li>
-            <li class="dropdown">
-              <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
-              </a>
-              <ul class="dropdown-menu dropdown-messages">
-                <li>
-                  <div class="dropdown-messages-box">
-                    <a href="profile.html" class="pull-left">
-                      <img alt="image" class="img-circle" src="img/a7.jpg">
-                    </a>
-                    <div class="media-body">
-                      <small class="pull-right">46h ago</small>
-                      <strong>Mike Loreipsum</strong> started following <strong>Monica
-                        Smith</strong>. <br>
-                      <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
-                    </div>
-                  </div>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <div class="dropdown-messages-box">
-                    <a href="profile.html" class="pull-left">
-                      <img alt="image" class="img-circle" src="img/a4.jpg">
-                    </a>
-                    <div class="media-body ">
-                      <small class="pull-right text-navy">5h ago</small>
-                      <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica
-                        Smith</strong>. <br>
-                      <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
-                    </div>
-                  </div>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <div class="dropdown-messages-box">
-                    <a href="profile.html" class="pull-left">
-                      <img alt="image" class="img-circle" src="img/profile.jpg">
-                    </a>
-                    <div class="media-body ">
-                      <small class="pull-right">23h ago</small>
-                      <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
-                      <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
-                    </div>
-                  </div>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <div class="text-center link-block">
-                    <a href="mailbox.html">
-                      <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
-                    </a>
-                  </div>
-                </li>
-              </ul>
-            </li>
-            <li class="dropdown">
-              <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
-              </a>
-              <ul class="dropdown-menu dropdown-alerts">
-                <li>
-                  <a href="mailbox.html">
-                    <div>
-                      <i class="fa fa-envelope fa-fw"></i> You have 16 messages
-                      <span class="pull-right text-muted small">4 minutes ago</span>
-                    </div>
-                  </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <a href="profile.html">
-                    <div>
-                      <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                      <span class="pull-right text-muted small">12 minutes ago</span>
-                    </div>
-                  </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <a href="grid_options.html">
-                    <div>
-                      <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                      <span class="pull-right text-muted small">4 minutes ago</span>
-                    </div>
-                  </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <div class="text-center link-block">
-                    <a href="notifications.html">
-                      <strong>See All Alerts</strong>
-                      <i class="fa fa-angle-right"></i>
-                    </a>
-                  </div>
-                </li>
-              </ul>
-            </li>
-
-
-            <li>
-              <a href="../../logout.php" id="logout">
-                <i class="fa fa-sign-out"></i> Cerrar Sesión
-              </a>
-            </li>
-          </ul>
-
-        </nav>
-      </div>
-      <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-10">
-
-          <h2>Clientes</h2>
-        </div>
-        <div class="col-lg-2">
-
-        </div>
-      </div>
-      <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-
-          <div class="col-lg-5">
-            <div class="ibox float-e-margins">
-              <div class="ibox-title">
-                <h5>Actualizar Cliente</h5>
-
-              </div>
-              <div class="ibox-content">
-
-                <form class="mx-5" method="POST">
-                  <form action="" method="POST">
-                    <div class="form-group">
-                      <label for="client_name">Id Cliente</label>
+                <form id="change-admin-form" action="" method="POST">
+                <div style="display: none" class="form-group">
+                      <label  for="client_name">Id Cliente</label>
                       <input type="text" class="form-control" id="id_client" name="id_client" value="<?php if (isset($row['id_client'])) {
                                                                                                         echo $row['id_client'];
                                                                                                       } ?>" readonly>
@@ -286,35 +116,56 @@ if (isset($_REQUEST['view'])) {
                                                                                                             echo $row['departament'];
                                                                                                           } ?>">
                     </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-danger" id="clientupdate" name="clientupdate">Actualizar</button>
-                      <a href="clients.php" class="btn btn-secondary">Cerrar</a>
+                    <div class="modal-footer">
+                        <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Actualizar</button>
+                        <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
                     </div>
-                    <?php if (isset($msg)) {
-                      echo $msg;
-                    } ?>
-                  </form>
-              </div>
-
-            </div>
-          </div>
-
+                    <div class="text-center" id="response-message"></div>
+                </form>
+                <div class="p-xxs font-italic bg-muted border-top-bottom text">
+                        <span class="font-bold">NOTA:</span> Al editar una Cliente, asegúrese de revisar y actualizar correctamente todos los campos. Los cambios realizados se reflejarán inmediatamente en el sistema.
+                    </div>
         </div>
-      </div>
-      <div class="footer">
-
-        <div>
-          <strong>Copyright</strong> Telistema &copy; 2024
-        </div>
-      </div>
-
     </div>
-  </div>
+</div>
 
+<script>
+    $(document).ready(function() {
+        var laddaButton;
 
+        $('#change-admin-form').on('submit', function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
 
-  <?php include('../../includes/footer.php'); ?>
+            laddaButton = Ladda.create(document.querySelector('.ladda-button'));
+            laddaButton.start();
+
+            $.ajax({
+                type: 'POST',
+                url: 'clientsController.php?token=<?php echo $token; ?>&action=edit_clients', // La URL de tu archivo PHP
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    laddaButton.stop();
+                    var messageContainer = $('#response-message');
+                    if (response.status === 'success') {
+                        messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
+                    } else {
+                        messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
+                    }
+                },
+                error: function() {
+                    laddaButton.stop();
+                    $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX</div>');
+                }
+            });
+        });
+
+        $('.reload').click(function() {
+            location.reload();
+        });
+    });
+</script>
 
 </body>
 

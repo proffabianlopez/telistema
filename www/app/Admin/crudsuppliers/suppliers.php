@@ -43,7 +43,7 @@ include('../../Querys/querys.php');
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../../logout.php" id="logout">
+                        <a id="logout">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
@@ -118,12 +118,9 @@ include('../../Querys/querys.php');
                                         echo '<td>' . $name_state . '</td>';
                                         echo '<td>
                                                 <div class="btn-group" role="group">
-                                                    <form action="editsupplier.php" method="POST" style="display:inline;">
-                                                        <input type="hidden" name="id_supplier" value="' . $row["id_supplier"] . '">
-                                                        <button type="submit" class="btn btn-warning btn-xs" name="view" value="View">
-                                                            <i class="bi bi-pencil-square"></i>
-                                                        </button>
-                                                    </form>
+                                                       <button id="delete-' . $row["id_supplier"] . '-' . $token . '" data-crud="suppliers" class="btn btn-warning btn-xs modaledit-btn" >
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </button>
                                                     </div>
                                                     <button id="delete-' . $row["id_supplier"] . '-' . $token . '" data-crud="suppliers" class="btn btn-danger btn-xs delete-btn" >
                                                         <i class="bi bi-trash"></i>
@@ -135,22 +132,7 @@ include('../../Querys/querys.php');
                                     echo '</tbody>
                                                 </table>';
                                 } else {
-                                    echo "0 Result";
-                                }
-                                if (isset($_REQUEST['delete'])) {
-                                    $id_supplier = $_REQUEST['id_supplier'];
-
-                                    $stmt = $conn->prepare(SQL_DELETE_SUPPLIER);
-
-                                    // Asocia parámetros y ejecuta la consulta
-                                    $stmt->bind_param("i", $id_supplier);
-
-                                    if ($stmt->execute()) {
-
-                                        echo '<meta http-equiv="refresh" content= "0;URL=?deleted" />';
-                                    } else {
-                                        echo "Unable to Delete Data";
-                                    }
+                                    echo "0 Resultado";
                                 }
 
                                 ?>
@@ -187,23 +169,36 @@ include('../../Querys/querys.php');
 
 
     <div id="small-chat">
-        <a class="open-small-chat" href="insertsupplier.php">
+        <a class="open-small-chat" onclick="openNewSupplierModal()">
             <i class="bi bi-plus-lg"></i>
         </a>
     </div>
 
-
-
+    <div id="edit-form-container" style="display: none;"></div>
     <?php
     include('../../includes/footer.php');
     ?>
     <script>
-        $(document).ready(function() {
-
+        $(document).ready(function () {
             $('.footable').footable();
             $('.footable2').footable();
-
         });
+        function openNewSupplierModal() {
+            // Realiza una solicitud AJAX para obtener el formulario de edición
+            $.ajax({
+                url: "insertsupplier.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
+                type: "GET",
+                success: function (response) {
+                    // Muestra el formulario de edición en el contenedor
+                    $("#edit-form-container").html(response).slideDown();
+                    // Abre el modal
+                    $("#myModal6").modal("show");
+                },
+                error: function () {
+                    alert("Error al cargar el formulario de edición.");
+                }
+            });
+        }
     </script>
 </body>
 

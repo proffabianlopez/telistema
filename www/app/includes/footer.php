@@ -40,3 +40,6 @@
 <script src="../../js/plugins/ladda/spin.min.js"></script>
 <script src="../../js/plugins/ladda/ladda.min.js"></script>
 <script src="../../js/plugins/ladda/ladda.jquery.min.js"></script>
+
+<!-- Modals control -->
+<script src="../../js/modals.js"></script>

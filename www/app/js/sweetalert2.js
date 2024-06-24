@@ -71,7 +71,7 @@ function Delete(id, crudClass, token) {
       break;
     case "suppliers":
       url = "suppliersController.php?token=" + token;
-      action = "delete_suppliers";
+      action = "delete_supplier";
       break;
     case "materiales":
       url = "materialsController.php?token=" + token;
@@ -82,12 +82,16 @@ function Delete(id, crudClass, token) {
       action = "delete_clients";
       break;
     case "technicians":
-      url = "technicianController.php?token=" + token;
-      action = "delete_technician";
+      url = "techniciansController.php?token=" + token;
+      action = "delete_technic";
       break;
     case "orders":
       url = "ordersController.php?token=" + token;
-      action = "delete_orders";
+      action = "delete_order";
+      break;   
+    case "materials":
+      url = "materialsController.php?token=" + token;
+      action = "delete_product";
       break;
     // Agrega más casos según tus necesidades
     default:

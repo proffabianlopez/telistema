@@ -50,7 +50,7 @@ if (!isset($_SESSION['is_login'])) {
               exit;
             } elseif ($Rol == 'technic') {
               // Redireccionar a la página del perfil del técnico
-              echo "<script> location.href='Technic/dashboard.php'; </script>";
+              echo "<script> location.href='Technic/dashboard/dashboard.php'; </script>";
               exit;
             }
           }
@@ -110,22 +110,35 @@ if (!isset($_SESSION['is_login'])) {
 
 <body class="gray-bg">
 
-  <div class="middle-box text-center loginscreen animated fadeInDown">
-    <div>
-      <div>
 
-        <h1 class="logo-name">TL+</h1>
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div>
 
-      </div>
-      <h3><i class="bi bi-incognito"></i> Acceso Interno</h3>
-      <!-- <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views. -->
-      <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
-      </p>
-      <p>Solo Personal Autorizado</p>
-      <form class="m-t" role="form" action="" method="POST">
+                <h1 class="logo-name">TL+</h1>
 
-        <div class="form-group">
-          <input type="email" class="form-control" name="mail" placeholder="Email" required="">
+            </div>
+            <h3><i class="bi bi-incognito"></i> Acceso Interno</h3>
+            <!-- <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views. -->
+                <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
+            </p>
+            <p>Solo Personal Autorizado</p>
+            <form class="m-t" role="form" action="" method="POST">
+
+            <div class="form-group">
+                    <input type="email" class="form-control" name="mail" placeholder="Email" required="">
+                </div>
+
+                <div class="form-group password-container">
+                    <input type="password" id="user_password" class="form-control" name="pass" placeholder="Contraseña" required="">
+                    <span class="glyphicon glyphicon-eye-open toggle-password"></span>
+                </div>
+                <button type="submit" class="btn btn-success block full-width m-b">Iniciar Sesión</button>
+                <?php if(isset($msg)) {echo $msg; } ?>
+
+            </form>
+            <a  class="btn btn-primary block full-width m-b" href="../index.html">Volver a la pagina</a>
+
         </div>
 
         <div class="form-group password-container">
