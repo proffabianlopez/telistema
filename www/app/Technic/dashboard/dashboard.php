@@ -3,19 +3,19 @@ session_start();
 ////////////////////////////////
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
   if ($_SESSION['user_role'] != 'technic') {
-    echo "<script> location.href='../includes/404.php'; </script>";
+    echo "<script> location.href='../../includes/404.php'; </script>";
   }
   $rEmail = $_SESSION['mail'];
   $rolUser = $_SESSION['user_role'];
 } else {
-  echo "<script> location.href='../login.php'; </script>";
+  echo "<script> location.href='../../login.php'; </script>";
 }
 ////////////////////////////////
 
 define('TITLE', 'Dashboard');
 define('PAGE', 'dashboard');
-include('../includes/header.php');
-include('../dbConnection.php');
+include('../../includes/header.php');
+include('../../dbConnection.php');
 
 
 // $sql = "SELECT max(request_id) FROM submitrequest_tb";
@@ -37,7 +37,7 @@ include('../dbConnection.php');
 
   <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
-      <?php include('../includes/menu.php'); ?>
+      <?php include('../../includes/menu.php'); ?>
     </div>
   </nav>
 
@@ -140,7 +140,7 @@ include('../dbConnection.php');
 </div>
 
 <?php
-include('../includes/footer.php');
+include('../../includes/footer.php');
 ?>
 
 </body>

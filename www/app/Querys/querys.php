@@ -505,3 +505,40 @@ define('SQL_MODIFY_CANCEL_BUY', '
         SET id_state_order = 2
         WHERE id_buy = ?'
 );
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//Orders Tecnic
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+define('SQL_ORDER_BY_ID_TEC', '
+    SELECT 
+        o.id_order, 
+        o.order_date, 
+        o.order_hour, 
+        o.order_description, 
+        o.order_server,
+        o.address, 
+        o.height,
+        o.floor, 
+        o.departament,
+        o.id_client, 
+        p.priority,
+        so.state_order,
+        m.material_name,
+        u.name_user,
+        u.surname_user,
+        cl.client_name,
+        cl.client_lastname
+    FROM 
+        orders o
+    JOIN 
+        prioritys p ON o.id_priority = p.id_priority
+    LEFT JOIN 
+        states_orders so ON o.id_state_order = so.id_state_order
+    LEFT JOIN 
+        materials m ON o.id_material = m.id_material
+    LEFT JOIN 
+        users u ON o.technic_id = u.id_user
+    LEFT JOIN
+        clients cl ON o.id_client = cl.id_client
+    WHERE 
+        o.technic_id = ?');

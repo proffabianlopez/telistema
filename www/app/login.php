@@ -50,7 +50,7 @@ if (!isset($_SESSION['is_login'])) {
               exit;
             } elseif ($Rol == 'technic') {
               // Redireccionar a la página del perfil del técnico
-              echo "<script> location.href='Technic/dashboard.php'; </script>";
+              echo "<script> location.href='Technic/dashboard/dashboard.php'; </script>";
               exit;
             }
           }
