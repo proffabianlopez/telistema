@@ -27,7 +27,7 @@ if ($rolUser == 'admin') {
                     </span> <span class="text-muted text-xs block"><?php echo ucfirst($_SESSION['user_role']) ?><b class="caret"></b></span>
                 </span> </a>
             <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                <li><a href="../../logout.php">Cerrar Sesión</a></li>
+                <li><a href="../logout.php">Cerrar Sesión</a></li>
             </ul>
         </div>
         <div class="logo-element">
@@ -155,6 +155,14 @@ if ($rolUser == 'admin') {
             <a href="../Technic/SubmitTechnic.php">
                 <i class="bi bi-person-wheelchair"></i><span class="nav-label">
                     Enviar Pedido</span>
+            </a>
+        </li>
+        <li class=" <?php if (PAGE == 'Ordenes') {
+                        echo 'active';
+                    } ?>">
+            <a href="../../Technic/orders/ordersTechnic.php">
+                <i class="bi bi-receipt"></i><span class="nav-label">
+                    Ordenes de Trabajo</span>
             </a>
         </li>
         <li class=" <?php if (PAGE == 'CheckStatus') {
