@@ -1,8 +1,8 @@
 <?php
 session_start();
-    error_log("Inicio de aplicacion");
-include ('dbConnection.php');
-include ('Querys/querys.php');
+error_log("Inicio de aplicacion");
+include('dbConnection.php');
+include('Querys/querys.php');
 
 if (!isset($_SESSION['is_login'])) {
   if (isset($_REQUEST['mail']) && isset($_REQUEST['pass'])) { // Asegúrate de que tanto mail como pass están configurados
@@ -28,7 +28,7 @@ if (!isset($_SESSION['is_login'])) {
         $row = $result->fetch_assoc();
 
         // Verificar la contraseña
-        if (password_verify( $Password , $row['user_password'])) {
+        if (password_verify($Password, $row['user_password'])) {
           if ($row['state_user'] == 'inactivo') {
             $msg = '<div class="alert alert-warning mt-2" role="alert"> Cuenta inactiva </div>';
           } else if ($row['state_user'] == 'activo') {
@@ -46,7 +46,7 @@ if (!isset($_SESSION['is_login'])) {
 
             if ($Rol == 'admin') {
               // Redireccionar a la página del panel de control del administrador
-              echo "<script> location.href='Admin/crudadmins/dashboard.php'; </script>";
+              echo "<script> location.href='Admin/dashboard/dashboard.php'; </script>";
               exit;
             } elseif ($Rol == 'technic') {
               // Redireccionar a la página del perfil del técnico
@@ -82,20 +82,23 @@ if (!isset($_SESSION['is_login'])) {
 
 <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TELISTEMA | Login</title>
+  <title>TELISTEMA | Login</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
 
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="boostrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+
 </head>
 
 <body class="gray-bg">
+
 
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
@@ -124,13 +127,27 @@ if (!isset($_SESSION['is_login'])) {
 
             </form>
             <a  class="btn btn-primary block full-width m-b" href="../index.html">Volver a la pagina</a>
+
         </div>
+
+        <div class="form-group password-container">
+          <input type="password" id="user_password" class="form-control" name="pass" placeholder="Contraseña" required="">
+          <span class="glyphicon glyphicon-eye-open toggle-password"></span>
+        </div>
+        <button type="submit" class="btn btn-success block full-width m-b">Login</button>
+        <?php if (isset($msg)) {
+          echo $msg;
+        } ?>
+
+      </form>
+      <a class="btn btn-danger block full-width m-b" href="../index.html">Volver a la pagina</a>
     </div>
     <!-- Mainly scripts -->
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/passShow.js"></script>
     
+
 
 </body>
 
