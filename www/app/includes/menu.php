@@ -13,9 +13,9 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 // Determina la URL dashboard según el rol
 $dashboard_url = '';
 if ($rolUser == 'admin') {
-    $dashboard_url = 'dashboard.php';
+    $dashboard_url = '../dashboard/dashboard.php';
 } elseif ($rolUser == 'technic') {
-    $dashboard_url = 'dashboard.php';
+    $dashboard_url = '../dashboard/dashboard.php';
 }
 
 ?>
@@ -106,8 +106,8 @@ if ($rolUser == 'admin') {
             </a>
         </li>
         <!-- <li class=" <?php if (PAGE == 'sellreport') {
-                        echo 'active';
-                    } ?>">
+                                echo 'active';
+                            } ?>">
             <a href="../Admin/soldproductreport.php">
                 <i class="bi bi-bootstrap-reboot"></i><span class="nav-label">
                     Reportes de Materiales</span>
@@ -128,7 +128,7 @@ if ($rolUser == 'admin') {
                 <i class="bi bi-envelope-at"></i><span class="nav-label">
                     Email de Contacto</span>
             </a>
-        <!-- </li>
+            <!-- </li>
         <li class=" <?php if (PAGE == 'changepass') {
                         echo 'active';
                     } ?>">
@@ -137,10 +137,10 @@ if ($rolUser == 'admin') {
                     Cambiar Clave</span>
             </a>
         </li> -->
-    <?php } ?>
+        <?php } ?>
 
-    <!-- TECNICO -->
-    <?php if ($rolUser == 'technic') { ?>
+        <!-- TECNICO -->
+        <?php if ($rolUser == 'technic') { ?>
         <li class=" <?php if (PAGE == 'Technic Profile') {
                         echo 'active';
                     } ?>">
@@ -174,8 +174,8 @@ if ($rolUser == 'admin') {
             </a>
         </li>
         <!-- <li class=" <?php if (PAGE == 'Requesterchangepass') {
-                        echo 'active';
-                    } ?>">
+                                echo 'active';
+                            } ?>">
             <a href="../Technic/TechnicChangePass.php">
                 <i class="bi bi-key"></i><span class="nav-label">
                     Cambiar Clave</span>
