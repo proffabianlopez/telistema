@@ -2,17 +2,17 @@
 session_start();
 define('TITLE', 'Technic Profile');
 define('PAGE', 'Technic Profile');
-include ('../dbConnection.php');
+include ('../../dbConnection.php');
 
 ////////////////////////////////
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
   if ($_SESSION['user_role'] != 'technic') {
-    echo "<script> location.href='../includes/404.php'; </script>";
+    echo "<script> location.href='../../includes/404.php'; </script>";
   }
   $rEmail = $_SESSION['mail'];
   $rolUser = $_SESSION['user_role'];
 } else {
-  echo "<script> location.href='../login.php'; </script>";
+  echo "<script> location.href='../../login.php'; </script>";
 }
 ////////////////////////////////
 // Genera un token CSRF y lo guarda en la sesión
@@ -48,7 +48,7 @@ if (isset($_REQUEST['nameupdate'])) {
 }
 ?>
 <?php
-include ('../includes/header.php'); ?>
+include ('../../includes/header.php'); ?>
 
 <body>
 
@@ -57,7 +57,7 @@ include ('../includes/header.php'); ?>
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
                 <?php
-                include ('../includes/menu.php'); ?>
+                include ('../../includes/menu.php'); ?>
 
             </div>
         </nav>
@@ -177,7 +177,7 @@ include ('../includes/header.php'); ?>
 
 
     <?php
-    include ('../includes/footer.php');
+    include ('../../includes/footer.php');
     ?>
 <div id="edit-form-container" style="display: none;"></div>
     <!-- Sparkline -->

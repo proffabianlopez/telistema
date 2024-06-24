@@ -12,8 +12,8 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 }
 ////////////////////////////////
 
-define('TITLE', 'Dashboard');
-define('PAGE', 'dashboard');
+define('TITLE', 'Dashboard Admin');
+define('PAGE', 'dashboard admin');
 include('../../includes/header.php');
 include('../../dbConnection.php');
 

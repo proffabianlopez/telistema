@@ -72,7 +72,7 @@ if (!isset($_SESSION['is_login'])) {
   }
 } else {
   // Si el usuario ya está autenticado, redirigir al panel de control del administrador
-  echo "<script> location.href='Admin/dashboard.php'; </script>";
+  echo "<script> location.href='Admin/dashboard/dashboard.php'; </script>";
   exit;
 }
 
@@ -91,63 +91,52 @@ if (!isset($_SESSION['is_login'])) {
   <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
 
 
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="boostrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+  <link href="css/animate.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="boostrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
 
 </head>
 
 <body class="gray-bg">
 
 
-    <div class="middle-box text-center loginscreen animated fadeInDown">
-        <div>
-            <div>
+  <div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+      <div>
 
-                <h1 class="logo-name">TL+</h1>
+        <h1 class="logo-name">TL+</h1>
 
-            </div>
-            <h3><i class="bi bi-incognito"></i> Acceso Interno</h3>
-            <!-- <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views. -->
-                <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
-            </p>
-            <p>Solo Personal Autorizado</p>
-            <form class="m-t" role="form" action="" method="POST">
+      </div>
+      <h3><i class="bi bi-incognito"></i> Acceso Interno</h3>
+      <!-- <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views. -->
+      <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
+      </p>
+      <p>Solo Personal Autorizado</p>
+      <form class="m-t" role="form" action="" method="POST">
 
-            <div class="form-group">
-                    <input type="email" class="form-control" name="mail" placeholder="Email" required="">
-                </div>
-
-                <div class="form-group password-container">
-                    <input type="password" id="user_password" class="form-control" name="pass" placeholder="Contraseña" required="">
-                    <span class="glyphicon glyphicon-eye-open toggle-password"></span>
-                </div>
-                <button type="submit" class="btn btn-success block full-width m-b">Iniciar Sesión</button>
-                <?php if(isset($msg)) {echo $msg; } ?>
-
-            </form>
-            <a  class="btn btn-primary block full-width m-b" href="../index.html">Volver a la pagina</a>
-
+        <div class="form-group">
+          <input type="email" class="form-control" name="mail" placeholder="Email" required="">
         </div>
 
         <div class="form-group password-container">
           <input type="password" id="user_password" class="form-control" name="pass" placeholder="Contraseña" required="">
           <span class="glyphicon glyphicon-eye-open toggle-password"></span>
         </div>
-        <button type="submit" class="btn btn-success block full-width m-b">Login</button>
+        <button type="submit" class="btn btn-success block full-width m-b">Iniciar Sesión</button>
         <?php if (isset($msg)) {
           echo $msg;
         } ?>
 
       </form>
-      <a class="btn btn-danger block full-width m-b" href="../index.html">Volver a la pagina</a>
-    </div>
-    <!-- Mainly scripts -->
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/passShow.js"></script>
-    
+      <a class="btn btn-primary block full-width m-b" href="../index.html">Volver a la pagina</a>
 
+    </div>
+    </form>
+  </div>
+  <!-- Mainly scripts -->
+  <script src="js/jquery-3.1.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/passShow.js"></script>
 
 </body>
 
