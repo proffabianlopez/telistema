@@ -48,21 +48,21 @@ if ($rolUser == 'admin') {
                     } ?>">
 
 
-                    <a  href="../crudorders/order.php">
-                    <i class="bi bi-opencollective"></i><span class="nav-label">Ordenes de Trabajo</span>
-                    </a>
-                </li>
-                <li class=" <?php if (PAGE == 'request') {
+            <a href="../crudorders/order.php">
+                <i class="bi bi-opencollective"></i><span class="nav-label">Ordenes de Trabajo</span>
+            </a>
+        </li>
+        <li class=" <?php if (PAGE == 'request') {
 
 
                         echo 'active';
                     } ?>">
-                    <a  href="../crudbuys/buys.php">
-                    <i class="fa fa-shopping-cart"></i><span class="nav-label">
-                            Compras</span>
-                    </a>
-                </li>
-                <li class=" <?php if (PAGE == 'Proveedores') {
+            <a href="../crudbuys/buys.php">
+                <i class="fa fa-shopping-cart"></i><span class="nav-label">
+                    Compras</span>
+            </a>
+        </li>
+        <li class=" <?php if (PAGE == 'Proveedores') {
 
                         echo 'active';
                     } ?>">
