@@ -85,6 +85,16 @@
 
         portfolioIsotope.isotope({filter: $(this).data('filter')});
     });
+
+    $(document).ready(function() {
+    // Función para alternar el modo oscuro
+    $('#darkModeToggle').on('click', function(event) {
+        event.preventDefault();
+        $('body').toggleClass('dark-mode');
+        $(this).find('i').toggleClass('bi-sun bi-moon');
+    });
+});
+
     
 })(jQuery);
 

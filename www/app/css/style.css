@@ -38,6 +38,18 @@ h5 {
   margin-top: 5px;
   font-weight: 600;
 }
+
+
+.password-container {
+  position: relative;
+}
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
 .nav > li > a {
   color: #a7b1c2;
   font-weight: 600;
