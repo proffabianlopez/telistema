@@ -16,6 +16,8 @@ define('PAGE', 'Ordenes technic');
 include('../../dbConnection.php');
 include('../../Querys/querys.php');
 include('../../includes/header.php');
+
+
 ?>
 <body>
   <div id="wrapper">
@@ -59,8 +61,9 @@ include('../../includes/header.php');
 
             if ($result->num_rows > 0) {
               while ($row = $result->fetch_assoc()) {
-                $order_datetime = DateTime::createFromFormat('Y-m-d', $row['order_date']);
-                $order_datetime_formatted = $order_datetime->format('d/m/Y');
+                date_default_timezone_set('America/Argentina/Buenos_Aires');
+                $order_datetime = date('d-m-Y', strtotime($row['order_date']));
+                
           ?>
           <div class="col-md-3">
             <div class="ibox">
@@ -72,7 +75,7 @@ include('../../includes/header.php');
                   <span class="product-price">
                     Prioridad: <?php echo $row["priority"]; ?>
                   </span>
-                  <small class="text-muted">Fecha : <?php echo $order_datetime_formatted; ?></small>
+                  <small class="text-muted">Fecha : <?php echo $order_datetime; ?></small>
                   <div class="small m-t-xs">
                     Dirección: <?php echo $row["address"] . " " . $row["height"]; ?><br>
                     Servidor: <?php echo $row["order_server"]; ?><br>

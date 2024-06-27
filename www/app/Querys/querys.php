@@ -291,8 +291,7 @@ define('SQL_INSERT_ORDER', '
 define('SQL_SELECT_ORDER_BY_ID', '
         SELECT 
         o.id_order, 
-        o.order_date, 
-        o.order_hour, 
+        o.order_date,
         o.order_description, 
         o.order_server,
         o.address, 
@@ -302,7 +301,6 @@ define('SQL_SELECT_ORDER_BY_ID', '
         o.id_client,
         p.priority,
         so.state_order,
-        m.material_name,
         u.name_user,
         u.surname_user,
         cl.client_name,
@@ -313,8 +311,6 @@ define('SQL_SELECT_ORDER_BY_ID', '
         prioritys p ON o.id_priority = p.id_priority
     LEFT JOIN 
         states_orders so ON o.id_state_order = so.id_state_order
-    LEFT JOIN 
-        materials m ON o.id_material = m.id_material
     LEFT JOIN 
         users u ON o.technic_id = u.id_user
     LEFT JOIN
@@ -534,8 +530,7 @@ define('SQL_MODIFY_CANCEL_BUY', '
 define('SQL_ORDER_BY_ID_TEC', '
     SELECT 
         o.id_order, 
-        o.order_date, 
-        o.order_hour, 
+        o.order_date,
         o.order_description, 
         o.order_server,
         o.address, 
@@ -545,7 +540,6 @@ define('SQL_ORDER_BY_ID_TEC', '
         o.id_client, 
         p.priority,
         so.state_order,
-        m.material_name,
         u.name_user,
         u.surname_user,
         cl.client_name,
@@ -556,8 +550,6 @@ define('SQL_ORDER_BY_ID_TEC', '
         prioritys p ON o.id_priority = p.id_priority
     LEFT JOIN 
         states_orders so ON o.id_state_order = so.id_state_order
-    LEFT JOIN 
-        materials m ON o.id_material = m.id_material
     LEFT JOIN 
         users u ON o.technic_id = u.id_user
     LEFT JOIN
