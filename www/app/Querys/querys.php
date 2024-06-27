@@ -240,7 +240,6 @@ define('SQL_ORDER_BY_ID', '
     SELECT 
         o.id_order, 
         o.order_date, 
-        o.order_hour, 
         o.order_description, 
         o.order_server,
         o.address, 
@@ -250,7 +249,6 @@ define('SQL_ORDER_BY_ID', '
         o.id_client, 
         p.priority,
         so.state_order,
-        m.material_name,
         u.name_user,
         u.surname_user,
         cl.client_name,
@@ -261,8 +259,6 @@ define('SQL_ORDER_BY_ID', '
         prioritys p ON o.id_priority = p.id_priority
     LEFT JOIN 
         states_orders so ON o.id_state_order = so.id_state_order
-    LEFT JOIN 
-        materials m ON o.id_material = m.id_material
     LEFT JOIN 
         users u ON o.technic_id = u.id_user
     LEFT JOIN
@@ -272,8 +268,7 @@ define('SQL_ORDER_BY_ID', '
 
 define('SQL_INSERT_ORDER', '
         INSERT INTO orders 
-                (order_date, 
-                order_hour, 
+                (order_date,
                 order_description, 
                 order_server, 
                 address, 
@@ -281,18 +276,16 @@ define('SQL_INSERT_ORDER', '
                 floor, 
                 departament, 
                 id_client,
-                id_priority, 
-                id_material, 
+                id_priority,
                 id_state_order, 
                 admin_id, 
                 technic_id) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 
 define('SQL_SELECT_ORDER_BY_ID', '
         SELECT 
         o.id_order, 
-        o.order_date, 
-        o.order_hour, 
+        o.order_date,
         o.order_description, 
         o.order_server,
         o.address, 
@@ -302,7 +295,6 @@ define('SQL_SELECT_ORDER_BY_ID', '
         o.id_client,
         p.priority,
         so.state_order,
-        m.material_name,
         u.name_user,
         u.surname_user,
         cl.client_name,
@@ -313,8 +305,6 @@ define('SQL_SELECT_ORDER_BY_ID', '
         prioritys p ON o.id_priority = p.id_priority
     LEFT JOIN 
         states_orders so ON o.id_state_order = so.id_state_order
-    LEFT JOIN 
-        materials m ON o.id_material = m.id_material
     LEFT JOIN 
         users u ON o.technic_id = u.id_user
     LEFT JOIN
@@ -334,8 +324,6 @@ define('SQL_UPDATE_ORDER', '
         UPDATE 
                 orders
         SET 
-                order_date = ?,
-                order_hour = ?,
                 order_description = ?,
                 order_server = ?,
                 address = ?, 
@@ -344,7 +332,6 @@ define('SQL_UPDATE_ORDER', '
                 departament = ?,
                 id_client = ?,
                 id_priority = ?,
-                id_material = ?,
                 id_state_order = ?,
                 technic_id = ?
         WHERE   
@@ -360,14 +347,6 @@ define('SQL_SELECT_PRIORITYS_ORDER_BY_ID', '
 define('SQL_SELECT_PRIORITYS_ORDERS', '
         SELECT * FROM prioritys');
 
-define('SQL_SELECT_MATERIALS_ORDER_BY_ID', '
-        SELECT id_material, material_name
-        FROM materials
-        WHERE id_material = ?');
-
-define('SQL_SELECT_MATERIALS_ORDERS', '
-        SELECT * FROM materials');
-
 define('SQL_SELECT_TECNS_ORDER_BY_ID', '
     SELECT id_user, name_user, surname_user, id_rol 
     FROM users
@@ -377,11 +356,6 @@ define('SQL_SELECT_TECNS_ORDERS', '
     SELECT id_user, name_user, surname_user, id_rol 
     FROM users
     WHERE id_rol = 2');
-
-define('SQL_SELECT_ADMINS_ORDER_BY_ID', '
-    SELECT id_user, name_user, surname_user, id_rol
-    FROM users
-    WHERE id_rol = ?');
 
 define('SQL_SELECT_CLIENT_BY_ID', '
         SELECT id_client, client_name, client_lastname

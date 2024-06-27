@@ -81,11 +81,12 @@ include('../../Querys/querys.php');
                                             <th data-hide="all">Cliente</th>
                                             <th data-toggle="true">Fecha y Hora</th>
                                             <th data-toggle="true">Descripción</th>
-                                            <th data-toggle="true">Servidor</th>
+                                            
                                             <th data-toggle="true">Prioridad</th>
                                             <th data-hide="all">Dirección</th>
                                             <th data-hide="all">Piso</th>
                                             <th data-hide="all">Dpto</th>
+                                            <th data-hide="all">Servidor</th>
                                             <th data-hide="all">Estado</th>
                                             <th data-hide="all">Tecnico Asignado</th>
                                             <th>Acción</th>
@@ -95,18 +96,18 @@ include('../../Querys/querys.php');
                                         ';
                                         while ($row = $result->fetch_assoc()) {
 
-                                            $order_datetime = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date'] . ' ' . $row['order_hour']);
+                                            $order_datetime = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date']);
                                             $order_datetime_formatted = $order_datetime->format('d/m/Y H:i');
                                             echo '<tr>';
                                             echo '<td>' . $row["id_order"] . '</td>';
                                             echo '<td>' . $row["client_name"] . ' ' . $row['client_lastname'] . '</td>';
                                             echo '<td>' . $order_datetime_formatted . '</td>';
                                             echo '<td>' . $row["order_description"] . '</td>';
-                                            echo '<td>' . $row["order_server"] . '</td>';
                                             echo '<td>' . $row["priority"] . '</td>';
                                             echo '<td>' . $row["address"] . ' ' . $row["height"] . '</td>';
                                             echo '<td>' . $row["floor"] . '</td>';
                                             echo '<td>' . $row["departament"] . '</td>';
+                                            echo '<td>' . $row["order_server"] . '</td>';
                                             echo '<td>' . $row["state_order"] . '</td>';
                                             echo '<td>' . $row["name_user"] . ' ' . $row["surname_user"] . '</td>';
                                             echo '<td>
