@@ -16,6 +16,7 @@ if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 $token = $_SESSION['token'];
+$admin_id = $_SESSION['user_id'];
 
 define('TITLE', 'Ordenes');
 define('PAGE', 'Ordenes');
@@ -32,7 +33,7 @@ if (isset($_GET['id_client'])) {
 //     $id_client = $_SESSION['id_client'];
 //     if (isset($_POST['reqsubmit'])) {
 //         if (
-//             empty(trim($_POST['order_date'])) || empty(trim($_POST['order_hour'])) || empty(trim($_POST['order_description'])) || empty(trim($_POST['order_server'])) || empty(trim($_POST['address'])) || empty(trim($_POST['height'])) || empty(trim($_POST['floor'])) || empty(trim($_POST['departament'])) || empty(trim($_POST['id_priority'])) || empty(trim($_POST['id_material'])) || empty(trim($_POST['admin_id'])) || empty(trim($_POST['technic_id']))
+//             empty(trim($_POST['order_date'])) || empty(trim($_POST['order_description'])) || empty(trim($_POST['order_server'])) || empty(trim($_POST['address'])) || empty(trim($_POST['height'])) || empty(trim($_POST['floor'])) || empty(trim($_POST['departament'])) || empty(trim($_POST['id_priority'])) || empty(trim($_POST['id_material'])) || empty(trim($_POST['admin_id'])) || empty(trim($_POST['technic_id']))
 //         ) {
 //             $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Completa todos los campos </div>';
 //         } else {
@@ -46,7 +47,6 @@ if (isset($_GET['id_client'])) {
 //             $floor = trim($_POST['floor']);
 //             $departament = trim($_POST['departament']);
 //             $id_priority = $_POST['id_priority'];
-//             $id_material = $_POST['id_material'];
 //             $id_state_order = 3;
 //             $admin_id = $_POST['admin_id'];
 //             $technic_id = $_POST['technic_id'];
@@ -55,7 +55,7 @@ if (isset($_GET['id_client'])) {
 //             if ($stmt === false) {
 //                 die('Error en la preparación de la consulta: ' . $conn->error);
 //             }
-//             $stmt->bind_param("sssisissiiiiii", $order_date, $order_hour, $order_description, $order_server, $address, $height, $floor, $departament, $id_client, $id_priority, $id_material, $id_state_order, $admin_id, $technic_id);
+//             $stmt->bind_param("ssisissiiiii", $order_date, $order_hour, $order_description, $order_server, $address, $height, $floor, $departament, $id_client, $id_priority, $id_state_order, $admin_id, $technic_id);
 //             if ($stmt->execute()) {
 //                 $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Agregado exitosamente </div>';
 //             } else {
@@ -83,26 +83,6 @@ if (isset($_GET['id_client'])) {
 
                 <form id="add-product-form" action="" method="POST">
                                     <div class="form-group">
-                                        <label for="admin_id">Administrador</label>
-                                        <?php
-                                        if ($rolUser != 'admin') {
-                                            $id_rol = 2;
-                                        } else {
-                                            $id_rol = 1;
-                                        }
-                                        $stmt = $conn->prepare(SQL_SELECT_ADMINS_ORDER_BY_ID);
-                                        $stmt->bind_param("i", $id_rol);
-                                        $stmt->execute();
-                                        $result = $stmt->get_result();
-
-                                        if ($result->num_rows > 0) {
-                                            $row_admin = $result->fetch_assoc();
-                                            $admin_id = $row_admin["id_user"];
-                                            $admin_name = $row_admin["name_user"];
-                                            $admin_lastname = $row_admin["surname_user"];
-                                        }
-                                        ?>
-                                        <input type="text" class="form-control" id="admin_id_display" value="<?php echo htmlspecialchars($admin_name . ' ' . $admin_lastname); ?>" readonly>
                                         <input type="hidden" id="admin_id" name="admin_id" value="<?php echo htmlspecialchars($admin_id); ?>">
                                     </div>
                                     <div class="form-group">
@@ -121,19 +101,6 @@ if (isset($_GET['id_client'])) {
                                         }
                                         ?>
                                         <input type="text" class="form-control" id="id_client" name="id_client" value="<?php echo htmlspecialchars($client_name . ' ' . $client_lastname); ?>" readonly>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="order_date">Fecha</label>
-                                        <?php
-                                        date_default_timezone_set('America/Argentina/Buenos_Aires');
-                                        $today = date('Y-m-d');
-                                        $maxDate = date('Y-m-d', strtotime('+1 years'));
-                                        ?>
-                                        <input type="date" class="form-control" id="order_date" name="order_date" min="<?php echo $today; ?>" max="<?php echo $maxDate; ?>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="order_hour">Hora</label>
-                                        <input type="time" class="form-control" id="order_hour" name="order_hour">
                                     </div>
                                     <div class="form-group">
                                         <label for="order_description">Descripcion</label>
@@ -214,33 +181,6 @@ if (isset($_GET['id_client'])) {
                                                     $selected = ($technicId == $technic_id) ? "selected" : "";
                                                     echo "<option value='$technicId' $selected>$technicName</option>";
                                                 }
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="id_material">Material</label>
-                                        <select name="id_material" id="id_material" class="form-control">
-                                            <?php
-                                            $material = $row['id_material'];
-                                            $stmt = $conn->prepare(SQL_SELECT_MATERIALS_ORDER_BY_ID);
-                                            $stmt->bind_param("i", $material);
-                                            $stmt->execute();
-                                            $result = $stmt->get_result();
-
-                                            if ($result->num_rows > 0) {
-                                                $row_material = $result->fetch_assoc();
-                                                $id_material = $row_material["id_material"];
-                                                $name_material = $row_material["material_name"];
-                                            }
-                                            $stmt = $conn->prepare(SQL_SELECT_MATERIALS_ORDERS);
-                                            $stmt->execute();
-                                            $rows = $stmt->get_result();
-                                            foreach ($rows as $material) {
-                                                $materialName = $material["material_name"];
-                                                $materialId = $material["id_material"];
-                                                $selected = ($materialId == $id_material) ? "selected" : "";
-                                                echo "<option value='$materialId' $selected>$materialName</option>";
                                             }
                                             ?>
                                         </select>

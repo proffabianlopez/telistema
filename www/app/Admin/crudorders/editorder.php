@@ -117,20 +117,6 @@ if (isset($_POST['id'])) {
                                     <input type="hidden" name="id_client" value="<?php if (isset($row['id_client'])) {
                                                                                         echo $row['id_client'];
                                                                                     } ?>">
-
-                                    <div class="form-group">
-                                        <label for="order_date">Fecha</label>
-                                        <input type="date" class="form-control" id="order_date" name="order_date" value="<?php if (isset($row['order_date'])) {
-                                                                                                                                echo $row['order_date'];
-                                                                                                                            } ?>">
-
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="order_hour">Hora</label>
-                                        <input type="time" class="form-control" id="order_hour" name="order_hour" value="<?php if (isset($row['order_hour'])) {
-                                                                                                                                echo $row['order_hour'];
-                                                                                                                            } ?>">
-                                    </div>
                                     <div class="form-group">
                                         <label for="order_description">Descripcion</label>
                                         <input type="text" class="form-control" id="order_description" name="order_description" value="<?php if (isset($row['order_description'])) {
@@ -192,36 +178,6 @@ if (isset($_POST['id'])) {
                                                 $priorityId = $priority["id_priority"];
                                                 $selected = ($priorityId == $id_priority) ? "selected" : "";
                                                 echo "<option value='$priorityId' $selected>$priorityName</option>";
-                                            }
-
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="id_material">Material</label>
-                                        <select name="id_material" id="id_material" class="form-control">
-                                            <?php
-
-                                            $material = $row['id_material'];
-                                            $stmt = $conn->prepare(SQL_SELECT_MATERIALS_ORDER_BY_ID);
-                                            $stmt->bind_param("i", $material);
-                                            $stmt->execute();
-                                            $result = $stmt->get_result();
-
-                                            if ($result->num_rows > 0) {
-                                                $row_material = $result->fetch_assoc();
-                                                $name_material = $row_material["material_name"];
-                                                $id_material = $row_material["id_material"];
-                                            }
-                                            $stmt = $conn->prepare(SQL_SELECT_MATERIALS_ORDERS);
-                                            $stmt->execute();
-                                            $rows = $stmt->get_result();
-
-                                            foreach ($rows as $material) {
-                                                $materialName = $material["material_name"];
-                                                $materialId = $material["id_material"];
-                                                $selected = ($materialId == $id_material) ? "selected" : "";
-                                                echo "<option value='$materialId' $selected>$materialName</option>";
                                             }
 
                                             ?>
