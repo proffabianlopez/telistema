@@ -65,9 +65,9 @@ function Delete(id, crudClass, token) {
 
   // Determina la URL y la acción basándose en la clase del CRUD
   switch (crudClass) {
-    case "admin":
-      url = "adminController.php?token=" + token;
-      action = "delete_admin";
+    case "users":
+      url = "usersController.php?token=" + token;
+      action = "delete_user";
       break;
     case "suppliers":
       url = "suppliersController.php?token=" + token;
@@ -133,8 +133,8 @@ function Delete(id, crudClass, token) {
           } else {
             swal(
               {
-                title: "Error",
-                text: "Hubo un problema al eliminar.",
+                title: response.message,
+                text:  response.message1,
                 type: "error",
               },
               function () {

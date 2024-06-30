@@ -17,13 +17,14 @@ if (!isset($_SESSION['token'])) {
 }
 $token = $_SESSION['token'];
 
-define('TITLE', 'Admin');
-define('PAGE', 'Admin');
-include('../../includes/header.php');
-include('../../dbConnection.php');
-include('../../Querys/querys.php');
+define('TITLE', 'Usuarios');
+define('PAGE', 'usuarios');
+include ('../../includes/header.php');
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
 
 ?>
+
 <body>
     <div id="wrapper">
         <nav class="navbar-default navbar-static-side" role="navigation">
@@ -35,11 +36,12 @@ include('../../Querys/querys.php');
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i
+                                class="fa fa-bars"></i> </a>
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                        <a id="logout">
+                            <a id="logout">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
@@ -49,7 +51,7 @@ include('../../Querys/querys.php');
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Adminstradores</h2>
+                    <h2>Usuarios</h2>
 
                 </div>
                 <div class="col-lg-2">
@@ -62,14 +64,14 @@ include('../../Querys/querys.php');
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>Lista de Administradores</h5>
+                                <h5>Lista de Usuarios</h5>
 
                             </div>
                             <div class="ibox-content">
 
 
                                 <?php
-                                $sql = SQL_SELECT_ADMIN;
+                                $sql = SQL_SELECT_USERS;
                                 $result = $conn->query($sql);
 
                                 if ($result->num_rows > 0) {
@@ -79,8 +81,9 @@ include('../../Querys/querys.php');
                                         <th data-hide="all">Número</th>
                                         <th data-toggle="true">Nombre</th>
                                         <th data-toggle="true">Apellido</th>
-                                        <th data-hide="phone">Email</th>
+                                        <th data-hide="all">Email</th>
                                         <th data-hide="all">Telefono</th>
+                                        <th data-hide="phone">Cargo</th>
                                         <th>Accion</th>
                                         </tr>
                                     </thead>
@@ -89,39 +92,28 @@ include('../../Querys/querys.php');
 
                                     // Imprimir los datos de cada técnico
                                     while ($row = $result->fetch_assoc()) {
-                                        $state = $row['id_state_user'];
-                                        $stmt = $conn->prepare(SQL_SELECT_STATE_BY_ID);
-                                        $stmt->bind_param("i", $state);
-                                        $stmt->execute();
-                                        $result_state = $stmt->get_result();
+                                        if ($row['id_user'] != $_SESSION['user_id']) {
 
-                                        // Verificar si hay resultados
-                                        if ($result_state->num_rows > 0) {
-                                            // Obtener la fila como un array asociativo
-                                            $row_state = $result_state->fetch_assoc();
-                                            $name_state = $row_state["state_user"];
-                                        } else {
-                                            // Si no hay resultados, asignar un valor por defecto
-                                            $name_state = "Estado no encontrado"; // O el valor que desees
-                                        }
-
-                                        echo '<tr>';
-                                        echo '<td>' . $row["id_user"] . '</td>';
-                                        echo '<td>' . $row["name_user"] . '</td>';
-                                        echo '<td>' . $row["surname_user"] . '</td>';
-                                        echo '<td>' . $row["mail"] . '</td>';
-                                        echo '<td>' . $row["phone_user"] . '</td>';
-                                        echo '<td>
+                                            echo '<tr>';
+                                            echo '<td>' . $row["id_user"] . '</td>';
+                                            echo '<td>' . $row["name_user"] . '</td>';
+                                            echo '<td>' . $row["surname_user"] . '</td>';
+                                            echo '<td>' . $row["mail"] . '</td>';
+                                            echo '<td>' . $row["phone_user"] . '</td>';
+                                            echo '<td>' . $row["rol"] . '</td>';
+                                            echo '<td>
                                                     <div class="btn-group" role="group">
-                                                        <button id="edit-' . $row["id_user"] . '-' . $token . '" data-crud="admin" class="btn btn-warning btn-xs  modaledit-btn " style="margin-right: 5px" >
+                                                        <button id="edit-' . $row["id_user"] . '-' . $token . '" data-crud="users" class="btn btn-warning btn-xs  modaledit-btn " style="margin-right: 5px" >
                                                             <i class="bi bi-pencil-square"></i>
                                                         </button>
-                                                        <button id="delete-' . $row["id_user"] . '-' . $token . '" data-crud="admin" class="btn btn-danger btn-xs delete-btn" >
+                                                        <button id="delete-' . $row["id_user"] . '-' . $token . '" data-crud="users" class="btn btn-danger btn-xs delete-btn" >
                                                             <i class="bi bi-trash"></i>
                                                         </button>
                                                     </div>
                                                 </td>
                                             </tr>';
+
+                                        }
                                     }
 
                                     echo '</tbody>
@@ -162,7 +154,7 @@ include('../../Querys/querys.php');
 
 
     <div id="small-chat">
-        <a class="open-small-chat" onclick="openNewAdminModal()">
+        <a class="open-small-chat" onclick="openNewUserModal()">
             <i class="bi bi-plus-lg"></i>
         </a>
     </div>
@@ -170,28 +162,27 @@ include('../../Querys/querys.php');
     </div>
     <div id="edit-form-container" style="display: none;"></div>
     <?php
-    include('../../includes/footer.php');
+    include ('../../includes/footer.php');
     ?>
     <script>
-        $(document).ready(function() {
-
+        $(document).ready(function () {
             $('.footable').footable();
             $('.footable2').footable();
 
         });
 
-        function openNewAdminModal() {
+        function openNewUserModal() {
             // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({
-                url: "insertAdmin.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
+                url: "insertUsers.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
                 type: "GET",
-                success: function(response) {
+                success: function (response) {
                     // Muestra el formulario de edición en el contenedor
                     $("#edit-form-container").html(response).slideDown();
                     // Abre el modal
                     $("#myModal6").modal("show");
                 },
-                error: function() {
+                error: function () {
                     alert("Error al cargar el formulario de edición.");
                 }
             });

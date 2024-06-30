@@ -12,8 +12,8 @@ document.querySelectorAll(".modaledit-btn").forEach((button) => {
     let url= "";
 
     switch (crudClass) {
-        case "admin":
-            url = "editAdmin.php?token="+ token;
+        case "users":
+            url = "editUsers.php?token="+ token;
             break;
         case "materials":
             url = "editMaterial.php?token="+ token;

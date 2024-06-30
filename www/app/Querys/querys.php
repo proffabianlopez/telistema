@@ -72,10 +72,6 @@ JOIN roles r ON u.id_rol = r.id_rol
 WHERE r.rol = "technic" AND u.id_user = ?;
 ');
 
-define('SQL_SELECT_STATUS_USERS', '
-        SELECT * FROM states_users');
-
-
 define('SQL_SELECT_STATE_BY_ID', '
         SELECT state_user, id_state_user 
         FROM states_users
@@ -85,8 +81,9 @@ define('SQL_INSERT_TECHNIC', '
 INSERT INTO users (name_user, surname_user, phone_user, mail, user_password, id_state_user, id_rol)
 VALUES (?, ?, ?, ?, ?, ?, ?)');
 
-define('SQL_UPDATE_TECHNIC', 
-         "UPDATE users
+define(
+        'SQL_UPDATE_TECHNIC',
+        "UPDATE users
         SET
         name_user = ?,
         surname_user = ?,
@@ -169,33 +166,33 @@ define(
 );
 
 /////////////////////////
-// ADMIN
+// Users
 ////////////////////////
 
 define(
-        'SQL_SELECT_ADMIN',
-        'SELECT u.*
+        'SQL_SELECT_USERS',
+        'SELECT u.*, r.*
         FROM users u
         JOIN roles r ON u.id_rol = r.id_rol
-        WHERE r.rol = "admin" AND u.id_state_user != 2'
+        WHERE u.id_state_user != 2'
 );
 
 
 define(
-        'SQL_SELECT_ADMIN_BY_ID',
+        'SQL_SELECT_USER_BY_ID',
         'SELECT u.*
         FROM users u
         JOIN roles r ON u.id_rol = r.id_rol
-        WHERE r.rol = "admin" AND u.id_user = ?;'
+        WHERE u.id_user = ?;'
 );
 define(
-        'SQL_UPDATE_ADMIN',
+        'SQL_UPDATE_USER',
         "UPDATE users
         SET
         name_user = ?,
         surname_user = ?,
         phone_user = ?,
-        mail = ?,
+        id_rol = ?,
         user_password = CASE
                         WHEN ? IS NOT NULL AND ? != '' THEN ?
                         ELSE user_password
@@ -204,14 +201,14 @@ define(
 );
 
 define(
-        'SQL_SELECT_ADMIN_BY_EMAIL_STATE_ROL',
+        'SQL_SELECT_USER_BY_EMAIL_STATE_ROL',
         'SELECT r.rol, u.id_state_user
         FROM users u
         JOIN roles r ON u.id_rol = r.id_rol
         WHERE mail = ?'
 );
 define(
-        'SQL_UPDATE_ADMIN_BY_EMAIL',
+        'SQL_UPDATE_USER_BY_EMAIL',
         'UPDATE users
         SET name_user = ?,
         surname_user = ?,
@@ -222,15 +219,22 @@ define(
         WHERE mail = ?'
 );
 define(
-        'SQL_INSERT_ADMIN',
+        'SQL_INSERT_USER',
         'INSERT INTO users (name_user, surname_user, phone_user, mail, user_password, id_state_user, id_rol)
         VALUES (?, ?, ?, ?, ?, ?, ?)'
 );
 define(
-        'SQL_DELETE_ADMIN',
+        'SQL_DELETE_USER',
         'UPDATE users
         SET id_state_user = 2
         WHERE id_user = ?'
+);
+
+define(
+        'SQL_VERIFIC_ORDER_USER',
+        ' SELECT *
+        FROM orders 
+        WHERE technic_id = ? AND id_state_order = 3'
 );
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -470,20 +474,24 @@ define('SQL_SELECT_BUYS', '
         JOIN 
             suppliers s ON b.id_supplier = s.id_supplier');
 
-define('SQL_SELECT_BUY_BY_ID','
+define(
+        'SQL_SELECT_BUY_BY_ID', '
         SELECT u.*
         FROM buys u
         WHERE u.id_buy = ?;'
 );
 
-define('SQL_MODIFY_STATUS_BUY', '
+define(
+        'SQL_MODIFY_STATUS_BUY',
+        '
         UPDATE buys
         SET id_state_order = 4
         WHERE id_buy = ?'
 );
 
 
-define('SQL_UPDATE_BUY',
+define(
+        'SQL_UPDATE_BUY',
         'UPDATE buys
         SET 
                 date_buy = ?,
@@ -496,7 +504,9 @@ define('SQL_UPDATE_BUY',
         WHERE id_buy = ?'
 );
 
-define('SQL_MODIFY_CANCEL_BUY', '
+define(
+        'SQL_MODIFY_CANCEL_BUY',
+        '
         UPDATE buys
         SET id_state_order = 2
         WHERE id_buy = ?'
