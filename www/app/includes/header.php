@@ -13,6 +13,7 @@
 
     <!-- Bootstrap CSS para icons-->
     <link rel="stylesheet" href="../../boostrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="../../css/plugins/iCheck/custom.css" rel="stylesheet">
@@ -27,6 +28,11 @@
     <!-- Ladda style -->
     <link href="../../css/plugins/ladda/ladda-themeless.min.css" rel="stylesheet">
 
+    <!-- Toastr style -->
+    <link href="../../css/plugins/toastr/toastr.min.css" rel="stylesheet">
+
+      <!-- Gritter -->
+      <link href="../../js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
 
     <style>
         .password-container {

@@ -26,6 +26,8 @@
 <script src="../../js/plugins/flot/jquery.flot.js"></script>
 <script src="../../js/plugins/flot/jquery.flot.tooltip.min.js"></script>
 <script src="../../js/plugins/flot/jquery.flot.resize.js"></script>
+<script src="../../js/plugins/flot/jquery.flot.spline.js"></script>
+<script src="../../js/plugins/flot/jquery.flot.pie.js"></script>
 
 <!-- FooTable -->
 <script src="../../js/plugins/footable/footable.all.min.js"></script>
@@ -47,3 +49,31 @@
 
 <!-- Modals control -->
 <script src="../../js/modals.js"></script>
+
+<!-- Switchery -->
+<script src="../../js/plugins/switchery/switchery.js"></script>
+
+<!-- Toastr -->
+<script src="../../js/plugins/toastr/toastr.min.js"></script>
+
+<!-- Peity -->
+<script src="../../js/plugins/peity/jquery.peity.min.js"></script>
+<script src="../../js/demo/peity-demo.js"></script>
+
+<!-- GITTER -->
+<script src="../../js/plugins/gritter/jquery.gritter.min.js"></script>
+
+<!-- Sparkline -->
+<script src="../../js/plugins/sparkline/jquery.sparkline.min.js"></script>
+
+<!-- Sparkline demo data  -->
+<script src="../../js/demo/sparkline-demo.js"></script>
+
+<!-- ChartJS-->
+<script src="../../js/plugins/chartJs/Chart.min.js"></script>
+
+<!-- Jquery Validate -->
+<script src="../../js/plugins/validate/jquery.validate.min.js"></script>
+
+<!-- MAIN -->
+<script src="../../js/main.js"></script>

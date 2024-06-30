@@ -81,15 +81,7 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 
             </a>
         </li>
-        <li class=" <?php if (PAGE == 'Técnicos') {
-            echo 'active';
-        } ?>">
-            <a href="../crudtechnics/technicians.php">
-                <i class="bi bi-headset"></i><span class="nav-label">
-                    Técnicos</span>
-
-            </a>
-        </li>
+     
         <li class=" <?php if (PAGE == 'Clientes') {
             echo 'active';
         } ?>">
@@ -98,12 +90,12 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
                     Clientes</span>
             </a>
         </li>
-        <li class=" <?php if (PAGE == 'Admin') {
+        <li class=" <?php if (PAGE == 'usuarios') {
             echo 'active';
         } ?>">
-            <a href="../crudadmins/admin.php">
+            <a href="../crudusers/users.php">
                 <i class="bi bi-people-fill"></i><span class="nav-label">
-                    Administradores</span>
+                    Usuarios</span>
             </a>
         </li>
         <!-- <li class=" <?php if (PAGE == 'sellreport') {

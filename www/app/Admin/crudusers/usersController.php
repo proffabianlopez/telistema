@@ -27,14 +27,14 @@ if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_us
     exit;
 }
 
-include('../../dbConnection.php');
-include('../../Querys/querys.php');
-include('../configsmtp/generate_config.php');
-include('../configsmtp/endEmail.php');
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
+include ('../configsmtp/generate_config.php');
+include ('../configsmtp/endEmail.php');
 
 //editar admin
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($_GET['action'] === 'edit_technic') {
+    if ($_GET['action'] === 'edit_user') {
         // Checking for Empty Fields
         if (empty($_POST["name_user"])) {
             $response['message'] = 'El campo Nombre es obligatorio.';
@@ -42,8 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'El campo Apellido es obligatorio.';
         } elseif (empty($_POST["phone_user"])) {
             $response['message'] = 'El campo Teléfono es obligatorio.';
-        } elseif (empty($_POST["mail"])) {
-            $response['message'] = 'El campo Email es obligatorio.';
         } else {
 
             // Assigning User Values to Variable
@@ -51,7 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = capitalizeWords(trim($_REQUEST['name_user']));
             $surname = capitalizeWords(trim($_REQUEST['surname_user']));
             $phone = trim($_REQUEST['phone_user']);
-            $mail = trim($_REQUEST['mail']);
+            $mail = trim($_GET['email']);
+            $role = trim($_REQUEST['rol']);
             $pass_hash = null;
             $new_pass = null;
             if (isset($_POST["new_pass"])) {
@@ -59,8 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $pass_hash = password_hash($new_pass, PASSWORD_DEFAULT);
             }
             error_log("var: " . $new_pass);
-            $stmt = $conn->prepare(SQL_UPDATE_TECHNIC);
-            $stmt->bind_param("sssssssi", $name, $surname, $phone, $mail, $pass_hash, $pass_hash, $pass_hash, $id);
+            $stmt = $conn->prepare(SQL_UPDATE_USER);
+            $stmt->bind_param("sssisssi", $name, $surname, $phone, $role, $pass_hash, $pass_hash, $pass_hash, $id);
 
             if ($stmt->execute()) {
                 if ($pass_hash != null) {
@@ -90,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         echo json_encode($response);
         exit;
-    } elseif ($_GET['action'] === 'add_technic') {
+    } elseif ($_GET['action'] === 'add_user') {
         if (empty($_POST["name_user"])) {
             $response['message'] = 'El campo Nombre es obligatorio ';
         } elseif (empty($_POST["surname_user"])) {
@@ -106,11 +105,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $phone = $_REQUEST['phone_user'];
             $mail = $_REQUEST['mail'];
             $pass = password_hash($_REQUEST['user_password'], PASSWORD_DEFAULT);
+            $role = trim($_REQUEST['rol']);
             $state = 1;
-            $role = 2;
 
             // Verifica si el correo ya existe en la base de datos
-            $stmt = $conn->prepare(SQL_SELECT_TECHNIC_BY_EMAIL_STATE_ROL);
+            $stmt = $conn->prepare(SQL_SELECT_USER_BY_EMAIL_STATE_ROL);
             $stmt->bind_param("s", $mail);
             $stmt->execute();
             $stmt->store_result();
@@ -121,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if ($existing_state == 2) {
                     // Actualizar usuario si está marcado como eliminado
-                    $update_stmt = $conn->prepare(SQL_UPDATE_TECHNIC_BY_EMAIL);
+                    $update_stmt = $conn->prepare(SQL_UPDATE_USER_BY_EMAIL);
                     $update_stmt->bind_param("ssssiis", $name, $surname, $phone, $pass, $state, $role, $mail);
 
                     if ($update_stmt->execute()) {
@@ -148,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             } else {
                 // Prepara la consulta para insertar el nuevo usuario
-                $stmt = $conn->prepare(SQL_INSERT_TECHNIC);
+                $stmt = $conn->prepare(SQL_INSERT_USER);
                 $stmt->bind_param("sssssii", $name, $surname, $phone, $mail, $pass, $state, $role);
 
                 if ($stmt->execute()) {
@@ -172,23 +171,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         echo json_encode($response);
         exit;
-    } elseif ($_POST['action'] === 'delete_technic') {
+    } elseif ($_POST['action'] === 'delete_user') {
 
-        $id_client = $_POST['id'];
+        $id_user = $_POST['id'];
+        if ($id_user != $_SESSION['user_id']) {
 
-        $stmt = $conn->prepare(SQL_DELETE_TECHNIC);
+            $stmt1 = $conn->prepare(SQL_VERIFIC_ORDER_USER);
+            $stmt1->bind_param("i", $id_user);
+            $stmt1->execute();
 
-        // Asocia parámetros y ejecuta la consulta
-        $stmt->bind_param("i", $id_client);
+            $stmt1->store_result();
 
-        if ($stmt->execute()) {
+            if ($stmt1->num_rows == 0) {
 
-            $response['status'] = 'success';
-            $response['message'] = 'Eliminado';
-            echo json_encode($response);
-            exit;
+                $stmt = $conn->prepare(SQL_DELETE_USER);
+
+                // Asocia parámetros y ejecuta la consulta
+                $stmt->bind_param("i", $id_user);
+
+                if ($stmt->execute()) {
+
+                    $response['status'] = 'success';
+                    $response['message'] = 'Eliminado';
+                    echo json_encode($response);
+                    exit;
+                } else {
+                    $response['message'] = "Error al eliminar";
+                    echo json_encode($response);
+                    exit;
+                }
+
+            } else {
+                $response['message'] = "No podes elimanar ";
+                $response['message1'] = "El Usuario tiene Ordenes Pendientes asignadas";
+                echo json_encode($response);
+                exit;
+            }
+
+
         } else {
-            $response['message'] = "Error al eliminar";
+            $response['message'] = "No pones eliminar a si mismo";
             echo json_encode($response);
             exit;
         }
