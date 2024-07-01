@@ -370,6 +370,34 @@ define('SQL_DELETE_ORDER', '
         DELETE FROM orders
         WHERE id_client = ? AND id_order = ?');
 
+define('SQL_FROM_ORDERS', '
+        SELECT 
+        o.id_order, 
+        o.order_date,
+        o.order_description, 
+        o.order_server,
+        o.address, 
+        o.height,
+        o.floor, 
+        o.departament,
+        o.id_client,
+        p.priority,
+        so.state_order,
+        u.name_user,
+        u.surname_user,
+        cl.client_name,
+        cl.client_lastname
+    FROM 
+        orders o
+    JOIN 
+        prioritys p ON o.id_priority = p.id_priority
+    LEFT JOIN 
+        states_orders so ON o.id_state_order = so.id_state_order
+    LEFT JOIN 
+        users u ON o.technic_id = u.id_user
+    LEFT JOIN
+        clients cl ON o.id_client = cl.id_client');
+
 /////////////////////////////////////////////////////////////////////////////////////
 // Products
 //////////////////////////////////////////////////////////////////
