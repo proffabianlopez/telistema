@@ -50,7 +50,7 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
             echo 'active';
         } ?>">
 
-            <a href="../crudorders/order.php">
+            <a href="../crudorders/allOrder.php">
                 <i class="bi bi-opencollective"></i><span class="nav-label">Ordenes de Trabajo</span>
             </a>
         </li>
