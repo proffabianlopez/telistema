@@ -33,15 +33,15 @@ $passwordGenerate = generatePassword(); ?>
                             <!-- Primera columna -->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name_user">Nombre</label>
+                                    <label for="name_user">Nombre <span class="text-danger" >*</span></label>
                                     <input type="text" class="form-control" id="name_user" name="name_user">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name_user">Apellido</label>
+                                    <label for="name_user">Apellido <span class="text-danger" >*</span></label>
                                     <input type="text" class="form-control" id="surname_user" name="surname_user">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name_user">Cargo</label>
+                                    <label for="name_user">Cargo <span class="text-danger" >*</span></label>
 
                                     <select class="form-control" name="rol" id="rol">
                                         <option value="1">Administrador</option>
@@ -52,12 +52,12 @@ $passwordGenerate = generatePassword(); ?>
                             <!-- Segunda columna -->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="phone_user">Teléfono</label>
+                                    <label for="phone_user">Teléfono <span class="text-danger" >*</span></label>
                                     <input type="number" class="form-control" id="phone_user" name="phone_user"
                                         onkeypress="isInputNumber(event)">
                                 </div>
                                 <div class="form-group">
-                                    <label for="mail">Email</label>
+                                    <label for="mail">Email <span class="text-danger" >*</span></label>
                                     <input type="email" class="form-control" id="mail" name="mail">
                                 </div>
                                 <div style="display: none" class="form-group password-container">
@@ -79,7 +79,8 @@ $passwordGenerate = generatePassword(); ?>
                 </form>
                 <div class="p-xxs font-italic bg-muted border-top-bottom text ">
                     <span class="font-bold">NOTA:</span> Al agregar un nuevo Usuario se enviará al email las
-                    credenciales para que pueda iniciar sesión. El sistema genera automáticamente una contraseña
+                    credenciales para que pueda iniciar sesión. El sistema genera automáticamente una contraseña<br>
+                    <span class="text-danger" >*</span> Campo Obligatorio
                 </div>
             </div>
         </div>

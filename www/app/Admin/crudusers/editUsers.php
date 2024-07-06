@@ -66,7 +66,7 @@ if (isset($_POST['id'])) {
                                     </div>
                                     <!-- Campo Nombre -->
                                     <div class="form-group">
-                                        <label for="name_user">Nombre *</label>
+                                        <label for="name_user">Nombre  <span class="text-danger" >*</span></label>
                                         <input type="text" class="form-control" id="name_user" name="name_user" value="<?php if (isset($row['name_user'])) {
                                             echo $row['name_user'];
                                         } ?>" required>
@@ -74,7 +74,7 @@ if (isset($_POST['id'])) {
                                     </div>
                                     <!-- Campo Apellido -->
                                     <div class="form-group">
-                                        <label for="surname_user">Apellido *</label>
+                                        <label for="surname_user">Apellido  <span class="text-danger" >*</span></label>
                                         <input type="text" class="form-control" id="surname_user" name="surname_user"
                                             value="<?php if (isset($row['surname_user'])) {
                                                 echo $row['surname_user'];
@@ -83,7 +83,7 @@ if (isset($_POST['id'])) {
                                     </div>
                                     <!-- Campo Email -->
                                     <div class="form-group">
-                                        <label for="mail">Email *</label>
+                                        <label for="mail">Email  <span class="text-danger" >*</span></label>
                                         <input type="email" class="form-control" id="mail" name="mail" value="<?php if (isset($row['mail'])) {
                                             echo $row['mail'];
                                         } ?>" readonly>
@@ -94,7 +94,7 @@ if (isset($_POST['id'])) {
                                 <div class="col-md-6">
                                     <!-- Campo Cargo -->
                                     <div class="form-group">
-                                        <label for="rol">Cargo *</label>
+                                        <label for="rol">Cargo  <span class="text-danger" >*</span></label>
                                         <select class="form-control" name="rol" id="rol" required>
                                             <option value="1" <?php if ($row["id_rol"] === 1)
                                                 echo 'selected'; ?>>
@@ -107,7 +107,7 @@ if (isset($_POST['id'])) {
 
                                     <!-- Campo Teléfono -->
                                     <div class="form-group">
-                                        <label for="phone_user">Teléfono *</label>
+                                        <label for="phone_user">Teléfono  <span class="text-danger" >*</span></label>
                                         <input type="number" class="form-control" id="phone_user" name="phone_user"
                                             placeholder="5491234567890" value="<?php if (isset($row['phone_user'])) {
                                                 echo $row['phone_user'];
@@ -139,10 +139,11 @@ if (isset($_POST['id'])) {
                         <div class="text-center" id="response-message"></div>
                     </form>
 
-                    <div class="p-xxs font-italic bg-muted border-top-bottom text-center">
+                    <div class="p-xxs font-italic bg-muted border-top-bottom">
                         <span class="font-bold">NOTA:</span> Al tiltar la casilla de Generar contraseña, se genera una
                         nueva
-                        contraseña aleatoriamente y se enviará al email del Usuario
+                        contraseña aleatoriamente y se enviará al email del Usuario<br>
+                        <span class="text-danger" >*</span> Campo Obligatorio
                     </div>
                 </div>
             </div>

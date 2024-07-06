@@ -119,27 +119,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->fetch();
 
                 if ($existing_state == 2) {
+                    $response['status'] = 'user_in_deleted';
+                    $response['message'] = 'Email esta en la lista de iliminados';
                     // Actualizar usuario si está marcado como eliminado
-                    $update_stmt = $conn->prepare(SQL_UPDATE_USER_BY_EMAIL);
-                    $update_stmt->bind_param("ssssiis", $name, $surname, $phone, $pass, $state, $role, $mail);
-
-                    if ($update_stmt->execute()) {
-                        $result = enviarCorreoYRegistrar($name, $mail, $_POST["user_password"]);
-                        if ($result['status'] == 'success') {
-                            $response['status'] = 'success';
-                            $response['message'] = $result['message'] . '';
-                            echo json_encode($response);
-                            exit;
+                    if ($_GET["isUpdate"]){
+                        $update_stmt = $conn->prepare(SQL_UPDATE_USER_BY_EMAIL);
+                        $update_stmt->bind_param("ssssiis", $name, $surname, $phone, $pass, $state, $role, $mail);
+    
+                        if ($update_stmt->execute()) {
+                            $result = enviarCorreoYRegistrar($name, $mail, $_POST["user_password"]);
+                            if ($result['status'] == 'success') {
+                                $response['status'] = 'success';
+                                $response['message'] = $result['message'] . '';
+                                echo json_encode($response);
+                                exit;
+                            } else {
+                                $response['message'] = ' Datos registrados pero:' . $result['message'] . '';
+                                echo json_encode($response);
+                                exit;
+                            }
                         } else {
-                            $response['message'] = ' Datos registrados pero:' . $result['message'] . '';
+                            $response['message'] = ' Error al agregar! ';
                             echo json_encode($response);
                             exit;
                         }
-                    } else {
-                        $response['message'] = ' Error al agregar! ';
-                        echo json_encode($response);
-                        exit;
                     }
+                   
                 } else {
                     $response['message'] = 'El correo ya existe en la base de datos con el Rol: ' . $existing_role . '';
                     echo json_encode($response);
