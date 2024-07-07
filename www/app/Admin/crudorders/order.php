@@ -81,12 +81,10 @@ include('../../Querys/querys.php');
                                             <th data-hide="all">Cliente</th>
                                             <th data-toggle="true">Fecha y Hora</th>
                                             <th data-toggle="true">Descripción</th>
-                                            
                                             <th data-toggle="true">Prioridad</th>
                                             <th data-hide="all">Dirección</th>
                                             <th data-hide="all">Piso</th>
                                             <th data-hide="all">Dpto</th>
-                                            <th data-hide="all">Servidor</th>
                                             <th data-hide="all">Estado</th>
                                             <th data-hide="all">Tecnico Asignado</th>
                                             <th>Acción</th>
@@ -107,7 +105,6 @@ include('../../Querys/querys.php');
                                             echo '<td>' . $row["address"] . ' ' . $row["height"] . '</td>';
                                             echo '<td>' . $row["floor"] . '</td>';
                                             echo '<td>' . $row["departament"] . '</td>';
-                                            echo '<td>' . $row["order_server"] . '</td>';
                                             echo '<td>' . $row["state_order"] . '</td>';
                                             echo '<td>' . $row["name_user"] . ' ' . $row["surname_user"] . '</td>';
                                             echo '<td>

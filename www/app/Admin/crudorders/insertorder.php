@@ -103,30 +103,6 @@ if (isset($_GET['id_client'])) {
                                         <input type="text" class="form-control" id="id_client" name="id_client" value="<?php echo htmlspecialchars($client_name . ' ' . $client_lastname); ?>" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label for="order_description">Descripcion</label>
-                                        <input type="text" class="form-control" id="order_description" name="order_description">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="order_server">Servidor</label>
-                                        <input type="number" class="form-control" id="order_server" name="order_server">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address">Dirección</label>
-                                        <input type="text" class="form-control" id="address" name="address">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="height">Altura</label>
-                                        <input type="text" class="form-control" id="height" name="height">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="floor">Piso</label>
-                                        <input type="text" class="form-control" id="floor" name="floor">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="departament">Departamento</label>
-                                        <input type="text" class="form-control" id="departament" name="departament">
-                                    </div>
-                                    <div class="form-group">
                                         <label for="id_priority">Prioridad</label>
                                         <select name="id_priority" id="id_priority" class="form-control">
                                             <?php
@@ -185,6 +161,26 @@ if (isset($_GET['id_client'])) {
                                             ?>
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="order_description">Descripción</label>
+                                        <input type="text" class="form-control" id="order_description" name="order_description">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Dirección</label>
+                                        <input type="text" class="form-control" id="address" name="address">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="height">Altura</label>
+                                        <input type="text" class="form-control" id="height" name="height">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="floor">Piso</label>
+                                        <input type="text" class="form-control" id="floor" name="floor">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="departament">Departamento</label>
+                                        <input type="text" class="form-control" id="departament" name="departament">
+                                    </div>
                                     <div class="modal-footer">
                         <button type="submit" class="ladda-button btn btn-primary"
                             data-style="zoom-in">Agregar</button>
@@ -217,6 +213,7 @@ $(document).ready(function () {
                 var messageContainer = $('#response-message');
                 if (response.status === 'success') {
                     messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
+                    $('#add-product-form')[0].reset(); // Vaciar el formulario
                 } else {
                     messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
                 }
@@ -233,6 +230,7 @@ $(document).ready(function () {
     });
 });
 </script>
+
 
 
 </body>

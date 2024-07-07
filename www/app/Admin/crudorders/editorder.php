@@ -85,6 +85,7 @@ if (isset($_POST['id'])) {
         echo '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">No se encontró ningúna orden con ese ID.</div>';
     }
 }
+
 ?>
 
 <body>
@@ -101,7 +102,7 @@ if (isset($_POST['id'])) {
                 <div class="modal-body">
                     <form id="change-product-form" action="" method="POST">
                                     <div style="display: none;" class="form-group">
-                                        <label for="id_order">ID Orden</label>
+                                        <label for="id_order">N° de Orden</label>
                                         <input type="text" class="form-control" id="id_order" name="id_order" value="<?php if (isset($row['id_order'])) {
                                                                                                                             echo $row['id_order'];
                                                                                                                         } ?>" readonly>
@@ -118,16 +119,68 @@ if (isset($_POST['id'])) {
                                                                                         echo $row['id_client'];
                                                                                     } ?>">
                                     <div class="form-group">
+                                        <label for="id_priority">Prioridad</label>
+                                        <select name="id_priority" id="id_priority" class="form-control">
+                                            <option value="1" <?php if ($row["id_priority"] === 1)
+                                                echo 'selected'; ?>>Normal
+                                            </option>
+                                            <option value="2" <?php if ($row["id_priority"] === 2)
+                                                echo 'selected'; ?>>Urgente
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="technic_id">Técnico Asignado</label>
+                                        <select name="technic_id" id="technic_id" class="form-control">
+                                            <?php
+                                            $technic = $row['technic_id'];
+                                            $stmt = $conn->prepare(SQL_SELECT_TECNS_ORDER_BY_ID);
+                                            $stmt->bind_param("i", $technic);
+                                            $stmt->execute();
+                                            $result = $stmt->get_result();
+                                            
+                                            if ($result->num_rows > 0) {
+                                                $row_technic = $result->fetch_assoc();
+                                                $name_technic = $row_technic["name_user"] . ' ' . $row_technic["surname_user"];
+                                                $id_technic = $row_technic["id_user"];
+                                            }
+
+                                            $stmt_all = $conn->prepare(SQL_SELECT_TECNS_ORDERS);
+                                            $stmt_all->execute();
+                                            $result_all = $stmt_all->get_result();
+
+                                            foreach ($result_all as $tech) {
+                                                $technicName = $tech["name_user"] . ' ' . $tech["surname_user"];
+                                                $technicId = $tech["id_user"];
+                                                $selected = ($technicId == $id_technic) ? "selected" : "";
+                                                    echo "<option value='$technicId' $selected>$technicName</option>";
+                                            
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="state_order">Estado</label>
+                                        <select name="id_state_order" id="id_state_order" class="form-control">
+                                            <option value="1" <?php if ($row["id_state_order"] === 1)
+                                                echo 'selected'; ?>>Confirmada
+                                            </option>
+                                            <option value="2" <?php if ($row["id_state_order"] === 2)
+                                                echo 'selected'; ?>>Cancelada
+                                            </option>
+                                            <option value="3" <?php if ($row["id_state_order"] === 3)
+                                                echo 'selected'; ?>>Pendiente
+                                            </option>
+                                            <option value="4" <?php if ($row["id_state_order"] === 4)
+                                                echo 'selected'; ?>>Realizada
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="order_description">Descripcion</label>
                                         <input type="text" class="form-control" id="order_description" name="order_description" value="<?php if (isset($row['order_description'])) {
                                                                                                                                             echo $row['order_description'];
                                                                                                                                         } ?>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="order_server">Servidor</label>
-                                        <input type="number" class="form-control" id="order_server" name="order_server" value="<?php if (isset($row['order_server'])) {
-                                                                                                                                    echo $row['order_server'];
-                                                                                                                                } ?>">
                                     </div>
                                     <div class="form-group">
                                         <label for="address">Dirección</label>
@@ -153,95 +206,7 @@ if (isset($_POST['id'])) {
                                                                                                                                 echo $row['departament'];
                                                                                                                             } ?>">
                                     </div>
-                                    <div class="form-group">
-                                        <label for="id_priority">Prioridad</label>
-                                        <select name="id_priority" id="id_priority" class="form-control">
-                                            <?php
-
-                                            $priority = $row['id_priority'];
-                                            $stmt = $conn->prepare(SQL_SELECT_PRIORITYS_ORDER_BY_ID);
-                                            $stmt->bind_param("i", $priority);
-                                            $stmt->execute();
-                                            $result = $stmt->get_result();
-
-                                            if ($result->num_rows > 0) {
-                                                $row_priority = $result->fetch_assoc();
-                                                $name_priority = $row_priority["priority"];
-                                                $id_priority = $row_priority["id_priority"];
-                                            }
-                                            $stmt = $conn->prepare(SQL_SELECT_PRIORITYS_ORDERS);
-                                            $stmt->execute();
-                                            $rows = $stmt->get_result();
-
-                                            foreach ($rows as $priority) {
-                                                $priorityName = $priority["priority"];
-                                                $priorityId = $priority["id_priority"];
-                                                $selected = ($priorityId == $id_priority) ? "selected" : "";
-                                                echo "<option value='$priorityId' $selected>$priorityName</option>";
-                                            }
-
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="technic_id">Tencnico Asignado</label>
-                                        <select name="technic_id" id="technic_id" class="form-control">
-                                            <?php
-
-                                            $technic = $row['technic_id'];
-                                            $stmt = $conn->prepare(SQL_SELECT_TECNS_ORDER_BY_ID);
-                                            $stmt->bind_param("i", $technic);
-                                            $stmt->execute();
-                                            $result = $stmt->get_result();
-
-                                            if ($result->num_rows > 0) {
-                                                $row_technic = $result->fetch_assoc();
-                                                $name_technic = $row_technic["name_user"];
-                                                $id_technic = $row_technic["id_user"];
-                                            }
-                                            $stmt = $conn->prepare(SQL_SELECT_TECNS_ORDERS);
-                                            $stmt->execute();
-                                            $rows = $stmt->get_result();
-
-                                            foreach ($rows as $technic) {
-                                                $technicName = $technic["name_user"] . ' ' . $technic["surname_user"];
-                                                $technicId = $technic["id_user"];
-                                                $selected = ($technicId == $technic_id) ? "selected" : "";
-                                                echo "<option value='$technicId' $selected>$technicName</option>";
-                                            }
-
-                                            ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="state_order">Estado</label>
-                                        <select name="id_state_order" id="id_state_order" class="form-control">
-                                            <?php
-
-                                            $state = $row['id_state_order'];
-                                            $stmt = $conn->prepare(SQL_SELECT_STATE_ORDER_BY_ID);
-                                            $stmt->bind_param("i", $state);
-                                            $stmt->execute();
-                                            $result = $stmt->get_result();
-
-                                            if ($result->num_rows > 0) {
-                                                $row_state = $result->fetch_assoc();
-                                                $name_state = $row_state["state_order"];
-                                                $id_state_order = $row_state["id_state_order"];
-                                            }
-                                            $stmt = $conn->prepare(SQL_SELECT_STATUS_ORDERS);
-                                            $stmt->execute();
-                                            $rows = $stmt->get_result();
-
-                                            foreach ($rows as $state) {
-                                                $stateName = $state["state_order"];
-                                                $stateId = $state["id_state_order"];
-                                                $selected = ($stateId == $id_state_user) ? "selected" : "";
-                                                echo "<option value='$stateId' $selected>$stateName</option>";
-                                            }
-                                            ?>
-                                        </select>
-                                    </div>
+                                    
                                     <div class="modal-footer">
                             <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Actualizar</button>
                             <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
