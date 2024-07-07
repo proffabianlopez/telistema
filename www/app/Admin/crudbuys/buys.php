@@ -45,34 +45,34 @@ include('../../Querys/querys.php');
                     <h2>Compras</h2>
                 </div>
                 <div class="ibox-content">
-                    <form id="searchForm" method="GET" action="">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="state">Estado de Compra:</label>
-                                    <select name="state" id="state" class="form-control">
-                                        <option value="">Seleccionar</option>
-                                        <option value="Pendiente">Pendiente</option>
-                                        <option value="Completado">Completado</option>
-                                        <option value="Cancelado">Cancelado</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="product_name">Nombre del Producto:</label>
-                                    <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Nombre del Producto">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="date">Fecha:</label>
-                                    <input type="date" name="date" id="date" class="form-control">
-                                </div>
-                            </div>
+                <form id="searchForm" method="GET" action="">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="state_name">Estado de Compra:</label>
+                            <select name="state_name" id="state_name" class="form-control">
+                                <option value="">Seleccionar</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Completado">Completado</option>
+                                <option value="Cancelado">Cancelado</option>
+                            </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Buscar</button>
-                    </form>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="material_name">Nombre del Producto:</label>
+                            <input type="text" name="material_name" id="material_name" class="form-control" placeholder="Nombre del Producto">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="date_buy">Fecha:</label>
+                            <input type="date" name="date_buy" id="date_buy" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
                     <br>
                 </div>
 
@@ -85,27 +85,43 @@ include('../../Querys/querys.php');
                                 </div>
 
                                 <div class="ibox-content">
-                                    <?php
-                                    $sql = "SELECT * FROM buys WHERE 1=1";
+                                <?php
+                                // Conectar a la base de datos
 
-                                    if (isset($_GET['state']) && $_GET['state'] != '') {
-                                        $estado = $conn->real_escape_string($_GET['state']);
-                                        $sql .= " AND name_state = '$estado'";
+                                if ($conn->connect_error) {
+                                    die("Conexión fallida: " . $conn->connect_error);
+                                }
+                            
+                                  // Validar que al menos un criterio de búsqueda esté presente
+                                if (!isset($_GET['state_name']) && !isset($_GET['material_name']) && !isset($_GET['date_buy']) || 
+                                (empty($_GET['state_name']) && empty($_GET['material_name']) && empty($_GET['date_buy']))) {
+                                echo "Por favor, realice una búsqueda para ver los resultados.";
+                            
+                            }   else {
+                                    $sql = SQL_SELECT_BUYS;
+                        
+                                    if (isset($_GET['state_name']) && $_GET['state_name'] != '') {
+                                        $estado = $conn->real_escape_string($_GET['state_name']);
+                                        $sql .= " AND st.state_order = '$estado'";
                                     }
-
-                                    if (isset($_GET['product_name']) && $_GET['product_name'] != '') {
-                                        $producto = $conn->real_escape_string($_GET['product_name']);
-                                        $sql .= " AND material_name LIKE '%$producto%'";
+                        
+                                    if (isset($_GET['material_name']) && $_GET['material_name'] != '') {
+                                        $producto = $conn->real_escape_string($_GET['material_name']);
+                                        $sql .= " AND m.material_name LIKE '%$producto%'";
                                     }
-
-                                    if (isset($_GET['date']) && $_GET['date'] != '') {
-                                        $fecha = $conn->real_escape_string($_GET['date']);
-                                        $sql .= " AND DATE(fecha) = '$fecha'";
+                        
+                                    if (isset($_GET['date_buy']) && $_GET['date_buy'] != '') {
+                                        $fecha = $conn->real_escape_string($_GET['date_buy']);
+                                        $sql .= " AND DATE(b.date_buy) = '$fecha'";
                                     }
-
+                        
+                                
+                                    // Mensaje de depuración para la consulta SQL
+                                    //echo "<pre>$sql</pre>";
+                                
                                     $result = $conn->query($sql);
-
-                                    if (isset($_GET['state']) || isset($_GET['product_name']) || isset($_GET['date'])) {
+                                
+                                    if (isset($_GET['state_name']) || isset($_GET['material_name']) || isset($_GET['date_buy'])) {
                                         if ($result->num_rows > 0) {
                                             echo '<table class="footable table table-stripped toggle-arrow-tiny">
                                                     <thead>
@@ -115,35 +131,40 @@ include('../../Querys/querys.php');
                                                         <th data-hide="phone">Cantidad</th>
                                                         <th data-hide="phone">Medida</th>
                                                         <th data-hide="all">Costo</th>
+                                                        <th data-hide="all">Fecha de Compra</th>
                                                         <th data-hide="phone">Estado</th>
                                                         <th class="text-right footable-visible footable-sortable footable-last-column footable-sorted">Acción<span class="footable-sort-indicator"></span></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>';
-
+                                
                                             while ($row = $result->fetch_assoc()) {
+                                                $date = $row["date_buy"];
+                                                $formatted_date = date("d-m-Y", strtotime($date));
+                                                $formatted_cost = number_format($row["cost"], 2, ',', '.'); // Formatea el costo
+
                                                 echo '<tr>';
                                                 echo '<td>' . $row["material_name"] . '</td>';
                                                 echo '<td>' . $row["supplier_name"] . '</td>';
                                                 echo '<td>' . $row["ammount"] . '</td>';
                                                 echo '<td>' . $row["name_measure"] . '</td>';
-                                                echo '<td>$ ' . $row["cost"] . '</td>';
-
-                                                if ($row["name_state"] == "Pendiente") {
+                                                echo '<td>$ ' . $formatted_cost . '</td>';
+                                                echo '<td>' . $formatted_date . '</td>';
+                                
+                                                if ($row["state_order"] == "Pendiente") {
                                                     echo '<td class="footable-visible" style="display: table-cell;">
-                                                            <span class="label label-success">' . $row["name_state"] . '</span>
-                                                        </td>';
-                                                } elseif ($row["name_state"] == "Completado") {
+                                                            <span class="label label-success">' . $row["state_order"] . '</span></td>';
+                                                } elseif ($row["state_order"] == "Completado") {
                                                     echo '<td class="footable-visible" style="display: table-cell;">
-                                                            <span class="label label-primary">' . $row["name_state"] . '</span></td>';
-                                                } elseif ($row["name_state"] == "Cancelado") {
+                                                            <span class="label label-primary">' . $row["state_order"] . '</span></td>';
+                                                } elseif ($row["state_order"] == "Cancelado") {
                                                     echo '<td class="footable-visible" style="display: table-cell;">
-                                                            <span class="label label-warning">' . $row["name_state"] . '</span></td>';
+                                                            <span class="label label-warning">' . $row["state_order"] . '</span></td>';
                                                 }
-
+                                
                                                 echo '<td class="text-right footable-visible footable-last-column">';
                                                 echo '<div class="btn-group">';
-                                                if ($row["name_state"] != "Completado" && $row["name_state"] != "Cancelado") {
+                                                if ($row["state_order"] != "Completado" && $row["state_order"] != "Cancelado") {
                                                     echo '<button onclick="openEditModal(' . $row["id_buy"] . ')" class="btn-white btn btn-xs" style="margin-right: 5px;">Editar</button>';
                                                     echo '<button onclick="openCompleteModal(' . $row["id_buy"] . ')" class="label label-primary" style="margin-right: 5px;">Completar</button>';
                                                     echo '<button onclick="openDeleteModal(' . $row["id_buy"] . ')" class="btn btn-danger btn-xs" style="margin-right: 5px;">Cancelar</button>';
@@ -152,7 +173,7 @@ include('../../Querys/querys.php');
                                                 echo '</td>';
                                                 echo '</tr>';
                                             }
-
+                                
                                             echo '</tbody></table>';
                                         } else {
                                             echo "No hay compras que coincidan con los criterios de búsqueda.";
@@ -160,6 +181,9 @@ include('../../Querys/querys.php');
                                     } else {
                                         echo "Por favor, realice una búsqueda para ver los resultados.";
                                     }
+                                }
+                                
+                                    $conn->close();
                                     ?>
 
                                     <tfoot>
