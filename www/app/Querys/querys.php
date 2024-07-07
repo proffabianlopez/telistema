@@ -115,10 +115,6 @@ define(
 );
 
 
-define('SQL_DELETE_TECHNIC', '
-        DELETE FROM users
-        WHERE id_user = ?');
-
 define('SQL_SELECT_TECHNIC_BY_EMAIL_STATE_ROL', '
         SELECT r.rol, u.id_state_user
         FROM users u
@@ -131,21 +127,21 @@ define('SQL_SELECT_TECHNIC_BY_EMAIL_STATE_ROL', '
 // Suppliers
 //////////////////////////////////////////////////////////////////
 
-define('SQL_FROM_SUPPLIERS', '
-        SELECT * FROM  suppliers');
+define(
+        'SQL_FROM_SUPPLIERS',
+        'SELECT *
+        FROM suppliers 
+        WHERE id_state_user != 2'
+);
 
 
-define('SQL_INSERT_SUPPLIER', '
-        INSERT INTO suppliers (supplier_name, phone, mail, address, id_state_user)
-        VALUES (?, ?, ?, ?, ?)');
+define('SQL_INSERT_SUPPLIER', 'INSERT INTO suppliers (supplier_name, phone, mail, address, id_state_user) VALUES (?, ?, ?, ?, 1)');
 
-define('SQL_UPDATE_SUPPLIER', '
-        UPDATE suppliers
+define('SQL_UPDATE_SUPPLIER',
+        'UPDATE suppliers
         SET supplier_name = ?,
         phone = ?,
-        mail = ?,
-        address = ?, 
-        id_state_user = ?
+        address = ?
         WHERE id_supplier = ?');
 
 
@@ -154,10 +150,28 @@ define('SQL_SELECT_SUPPLIER_BY_ID', '
         WHERE id_supplier = ?');
 
 
-define('SQL_DELETE_SUPPLIER', '
-        DELETE FROM suppliers
-        WHERE id_supplier = ?');
+define(
+        'SQL_DELETE_SUPPLIER',
+        'UPDATE suppliers
+        SET id_state_user = 2
+        WHERE id_supplier = ?'
+);
 
+define(
+        'SQL_SELECT_SUPPLIER_BY_EMAIL',
+        'SELECT id_state_user
+        FROM suppliers
+        WHERE mail = ?'
+);
+define(
+        'SQL_UPDATE_SUPPLIER_BY_EMAIL',
+        ' UPDATE suppliers
+        SET supplier_name = ?,
+        phone = ?,
+        address = ?,
+        id_state_user = 1
+        WHERE mail = ?'
+);
 /////////////////////////////////
 // check level password
 ////////////////
@@ -461,7 +475,7 @@ define('SQL_SELECT_STATE', '
         SELECT state_user
         FROM states_users
         WHERE id_state_user = ?');
-        
+
 /////////////////////////////////////////////////////////////////////////////////////
 // Buys
 //////////////////////////////////////////////////////////////////
@@ -501,7 +515,8 @@ define('SQL_SELECT_BUYS', '
             suppliers s ON b.id_supplier = s.id_supplier');
 
 define(
-        'SQL_SELECT_BUY_BY_ID', '
+        'SQL_SELECT_BUY_BY_ID',
+        '
         SELECT u.*
         FROM buys u
         WHERE u.id_buy = ?;'

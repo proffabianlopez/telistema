@@ -10,68 +10,85 @@ $(document).ready(function () {
         location.reload();
     });
 
+
     $.validator.addMethod("lettersonly", function (value, element) {
         return this.optional(element) || /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s']+$/i.test(value);
     }, "Solo se permiten letras en este campo.");
 
     function setupFormValidation(formId) {
-        $(formId).validate({
-            rules: {
-                name_user: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 20,
-                    lettersonly: true
-                },
-                phone_user: {
-                    required: true,
-                    number: true,
-                    min: 999999999999,
-                    max: 9999999999999
-                },
-                surname_user: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 20,
-                    lettersonly: true
-                },
-                mail: {
-                    required: true,
-                    maxlength: 100,
-                    minlength: 11,
-                    email: true
-                },
-                max: {
-                    required: true,
-                    maxlength: 4
+        var rules = {};
+        var messages = {};
+    
+        $(formId).find('.validate-field').each(function() {
+            var elementClasses = $(this).attr('class').split(' ');
+            var fieldName = $(this).attr('name');
+    
+            elementClasses.forEach(function(cls) {
+                switch (cls) {
+                    case 'vname':
+                        rules[fieldName] = {
+                            required: true,
+                            minlength: 3,
+                            maxlength: 20,
+                            lettersonly: true
+                        };
+                        messages[fieldName] = {
+                            required: "Este campo es obligatorio.",
+                            minlength: "Por favor, ingrese al menos 3 caracteres.",
+                            maxlength: "Por favor, ingrese un máximo de 20 caracteres.",
+                            lettersonly: "Solo se permiten letras"
+                        };
+                        break;
+    
+                    case 'vphone':
+                        rules[fieldName] = {
+                            required: true,
+                            number: true,
+                            min: 999999999999,
+                            max: 9999999999999
+                        };
+                        messages[fieldName] = {
+                            required: "Por favor, ingrese un número de teléfono.",
+                            number: "Por favor, ingrese un número válido.",
+                            min: "Formato inválido, ingrese el formato 5491122222333",
+                            max: "Formato inválido, ingrese el formato 5491122222333"
+                        };
+                        break;
+    
+                    case 'vemail':
+                        rules[fieldName] = {
+                            required: true,
+                            maxlength: 100,
+                            minlength: 11,
+                            email: true
+                        };
+                        messages[fieldName] = {
+                            required: "Este campo es obligatorio.",
+                            minlength: "Ingrese un email válido",
+                            maxlength: "Por favor, ingrese un máximo de 100 caracteres.",
+                            email: "Ingrese un email válido"
+                        };
+                        break;
+    
+                    case 'vaddress':
+                        rules[fieldName] = {
+                            required: true,
+                            maxlength: 100,
+                            minlength: 3
+                        };
+                        messages[fieldName] = {
+                            required: "Este campo es obligatorio.",
+                            maxlength: "Por favor, ingrese un máximo de 100 caracteres.",
+                            minlength: "Por favor, ingrese un minimo de 3 caracteres."
+                        };
+                        break;
                 }
-            },
-            messages: {
-                name_user: {
-                    required: "Este campo es obligatorio.",
-                    minlength: "Por favor, ingrese al menos 3 caracteres.",
-                    maxlength: "Por favor, ingrese un maximo de 20 caracteres.",
-                    lettersonly: "Solo se permite letras"
-                },
-                surname_user: {
-                    required: "Este campo es obligatorio.",
-                    minlength: "Por favor, ingrese al menos 3 caracteres.",
-                    maxlength: "Por favor, ingrese un maximo de 20 caracteres.",
-                    lettersonly: "Solo se permite letras"
-                },
-                mail: {
-                    required: "Este campo es obligatorio.",
-                    minlength: "Ingrese un email valido",
-                    maxlength: "Por favor, ingrese un maximo de 100 caracteres.",
-                    email: "Ingrese un email valido"
-                },
-                phone_user: {
-                    required: "Por favor, ingrese un número de teléfono.",
-                    number: "Por favor, ingrese un número válido.",
-                    min: "Formato invalido, ingrese el formato 5491122222333",
-                    max: "Formato invalido, ingrese el formato 5491122222333"
-                },
-            }
+            });
+        });
+    
+        $(formId).validate({
+            rules: rules,
+            messages: messages
         });
     }
 
@@ -79,14 +96,14 @@ $(document).ready(function () {
         $(formId).on('submit', function (e) {
             e.preventDefault();
             var formData = $(this).serialize();
-    
+
             if (!$(formId).valid()) {
                 return; // Salir si el formulario no es válido
             }
-    
-            var laddaButton = Ladda.create(document.querySelector('.ladda-button'));
+
+            var laddaButton = Ladda.create(document.querySelector(formId + ' .ladda-button'));
             laddaButton.start();
-    
+
             $.ajax({
                 type: 'POST',
                 url: actionUrl,
@@ -94,7 +111,7 @@ $(document).ready(function () {
                 dataType: 'json',
                 success: function (response) {
                     var messageContainer = $('#response-message');
-    
+
                     if (response.status === "user_in_deleted") {
                         swal({
                             title: "Este email ya estuvo registrado",
@@ -125,14 +142,14 @@ $(document).ready(function () {
                                                         location.reload();
                                                     }
                                                 };
-                                                toastr.success( updateResponse.message, '¡Actualizado!');
+                                                toastr.success(updateResponse.message, '¡Actualizado!');
                                             });
                                         } else {
                                             swal({
                                                 title: "Error",
                                                 text: updateResponse.message,
                                                 type: "error"
-                                            });change
+                                            });
                                         }
                                     },
                                     error: function (xhr, status, error) {
@@ -177,12 +194,20 @@ $(document).ready(function () {
             });
         });
     }
-    
-    
+
     // Configurar validación y envío para cada formulario
+
+    // USER
     setupFormValidation("#change-insertuser-form");
     handleFormSubmit("#change-insertuser-form", 'usersController.php?token=' + token + '&action=add_user');
 
     setupFormValidation("#change-edituser-form");
     handleFormSubmit("#change-edituser-form", 'usersController.php?token=' + token + '&action=edit_user&email=' + email);
+
+    // SUPPLIER
+    setupFormValidation("#change-insertsupplier-form");
+    handleFormSubmit("#change-insertsupplier-form", 'suppliersController.php?token=' + token + '&action=add_supplier&email=' + email);
+
+    setupFormValidation("#change-editsupplier-form");
+    handleFormSubmit("#change-editsupplier-form", 'suppliersController.php?token=' + token + '&action=edit_supplier');
 });
