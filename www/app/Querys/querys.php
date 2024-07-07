@@ -290,8 +290,7 @@ define('SQL_SELECT_ORDER_BY_ID', '
         SELECT 
         o.id_order, 
         o.order_date,
-        o.order_description, 
-        o.order_server,
+        o.order_description,
         o.address, 
         o.height,
         o.floor, 
@@ -545,8 +544,7 @@ define('SQL_ORDER_BY_ID_TEC', '
     SELECT 
         o.id_order, 
         o.order_date,
-        o.order_description, 
-        o.order_server,
+        o.order_description,
         o.address, 
         o.height,
         o.floor, 
