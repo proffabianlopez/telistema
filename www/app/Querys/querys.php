@@ -244,8 +244,7 @@ define('SQL_ORDER_BY_ID', '
     SELECT 
         o.id_order, 
         o.order_date, 
-        o.order_description, 
-        o.order_server,
+        o.order_description,
         o.address, 
         o.height,
         o.floor, 
@@ -259,7 +258,7 @@ define('SQL_ORDER_BY_ID', '
         cl.client_lastname
     FROM 
         orders o
-    JOIN 
+    INNER JOIN 
         prioritys p ON o.id_priority = p.id_priority
     LEFT JOIN 
         states_orders so ON o.id_state_order = so.id_state_order
@@ -268,13 +267,14 @@ define('SQL_ORDER_BY_ID', '
     LEFT JOIN
         clients cl ON o.id_client = cl.id_client
     WHERE 
-        o.id_client = ?');
+        o.id_client = ? AND so.id_state_order != 5
+');
+
 
 define('SQL_INSERT_ORDER', '
         INSERT INTO orders 
                 (order_date,
-                order_description, 
-                order_server, 
+                order_description,
                 address, 
                 height, 
                 floor, 
@@ -284,21 +284,23 @@ define('SQL_INSERT_ORDER', '
                 id_state_order, 
                 admin_id, 
                 technic_id) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 
 define('SQL_SELECT_ORDER_BY_ID', '
         SELECT 
         o.id_order, 
         o.order_date,
-        o.order_description, 
-        o.order_server,
+        o.order_description,
         o.address, 
         o.height,
         o.floor, 
         o.departament,
         o.id_client,
+        o.id_priority,
         p.priority,
+        o.id_state_order,
         so.state_order,
+        o.technic_id,
         u.name_user,
         u.surname_user,
         cl.client_name,
@@ -316,20 +318,11 @@ define('SQL_SELECT_ORDER_BY_ID', '
     WHERE 
         o.id_order =?');
 
-define('SQL_SELECT_STATE_ORDER_BY_ID', '
-            SELECT id_state_order, state_order 
-            FROM states_orders
-            WHERE id_state_order = ?');
-
-define('SQL_SELECT_STATUS_ORDERS', '
-            SELECT * FROM states_orders');
-
 define('SQL_UPDATE_ORDER', '
         UPDATE 
                 orders
         SET 
                 order_description = ?,
-                order_server = ?,
                 address = ?, 
                 height = ?,
                 floor = ?,
@@ -341,23 +334,13 @@ define('SQL_UPDATE_ORDER', '
         WHERE   
                 id_order = ?');
 
-
-
-define('SQL_SELECT_PRIORITYS_ORDER_BY_ID', '
-        SELECT id_priority, priority 
-        FROM prioritys
-        WHERE id_priority = ?');
-
-define('SQL_SELECT_PRIORITYS_ORDERS', '
-        SELECT * FROM prioritys');
-
 define('SQL_SELECT_TECNS_ORDER_BY_ID', '
-    SELECT id_user, name_user, surname_user, id_rol 
+    SELECT *
     FROM users
     WHERE id_user = ?');
 
 define('SQL_SELECT_TECNS_ORDERS', '
-    SELECT id_user, name_user, surname_user, id_rol 
+    SELECT *
     FROM users
     WHERE id_rol = 2');
 
@@ -367,15 +350,15 @@ define('SQL_SELECT_CLIENT_BY_ID', '
         WHERE id_client = ?');
 
 define('SQL_DELETE_ORDER', '
-        DELETE FROM orders
+        UPDATE orders
+        SET id_state_order = 5
         WHERE id_client = ? AND id_order = ?');
 
 define('SQL_FROM_ORDERS', '
         SELECT 
         o.id_order, 
         o.order_date,
-        o.order_description, 
-        o.order_server,
+        o.order_description,
         o.address, 
         o.height,
         o.floor, 

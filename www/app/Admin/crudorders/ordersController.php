@@ -42,14 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Checking for Empty Fields
         if (empty($_REQUEST['order_description'])) {
             $response['message'] = 'El campo Descripcion es obligatorio.';
-        } elseif (empty($_REQUEST["order_server"])) {
-            $response['message'] = 'El campo Servidor es obligatorio.';
         } elseif (empty($_REQUEST["address"])) {
             $response['message'] = 'El campo Dirección es obligatorio.';
         } else {
             // Assigning User Values to Variable
             $order_description = $_POST['order_description'];
-            $order_server = $_POST['order_server'];
             $address = capitalizeWords($_POST['address']);
             $height = $_POST['height'];
             $floor = trim($_POST['floor']);
@@ -63,9 +60,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = SQL_UPDATE_ORDER;
             $stmt = $conn->prepare($sql);
             $stmt->bind_param(
-                "sisissiiiii",
+                "ssissiiiii",
                 $order_description,
-                $order_server,
                 $address,
                 $height,
                 $floor,
@@ -92,15 +88,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_client = $_SESSION['id_client'];
         if (empty($_REQUEST['order_description'])) {
             $response['message'] = 'El campo Descripcion es obligatorio.';
-        } elseif (empty($_REQUEST["order_server"])) {
-            $response['message'] = 'El campo Servidor es obligatorio.';
         } elseif (empty($_REQUEST["address"])) {
             $response['message'] = 'El campo Dirección es obligatorio.';
         } else {
             date_default_timezone_set('America/Argentina/Buenos_Aires');
             $order_date = date('Y-m-d H:i:s');
             $order_description = $_POST['order_description'];
-            $order_server = $_POST['order_server'];
             $address = capitalizeWords($_POST['address']);
             $height = $_POST['height'];
             $floor = trim($_POST['floor']);
@@ -111,8 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $technic_id = $_POST['technic_id'];
 
             $stmt = $conn->prepare(SQL_INSERT_ORDER);
-            $stmt->bind_param("ssisissiiiii", $order_date, $order_description, $order_server, $address, $height, $floor, $departament, $id_client, $id_priority, $id_state_order, $admin_id, $technic_id);
-
+            $stmt->bind_param("sssissiiiii", $order_date, $order_description, $address, $height, $floor, $departament, $id_client, $id_priority, $id_state_order, $admin_id, $technic_id);
             if ($stmt->execute()) {
                 $response['status'] = 'success';
                 $response['message'] = 'Agregado con éxito';
