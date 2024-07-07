@@ -78,7 +78,6 @@ include('../../includes/header.php');
                   <small class="text-muted">Fecha : <?php echo $order_datetime; ?></small>
                   <div class="small m-t-xs">
                     Dirección: <?php echo $row["address"] . " " . $row["height"]; ?><br>
-                    Servidor: <?php echo $row["order_server"]; ?><br>
                     Descripción: <?php echo $row["order_description"]; ?>
                     
                   </div>

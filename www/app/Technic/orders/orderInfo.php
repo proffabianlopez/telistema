@@ -82,12 +82,6 @@ if (isset($_REQUEST['view'])) {
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-2 control-label">Servidor:</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" value="<?php echo $row["order_server"]; ?>" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
                                                     <label class="col-sm-2 control-label">Descripción:</label>
                                                     <div class="col-sm-10">
                                                         <textarea class="form-control" rows="5" readonly><?php echo $row["order_description"]; ?></textarea>
