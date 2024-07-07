@@ -4,7 +4,7 @@ session_start();
 // Verifica si la sesión está iniciada y el token es válido
 if (!isset($_SESSION['is_login']) || !isset($_GET['token']) || $_GET['token'] !== $_SESSION['token']) {
     // Si no hay sesión o el token no es válido, redirige al usuario o muestra un mensaje de error
-     header("Location:../../includes/404/404.php");
+    header("Location:../../includes/404/404.php");
     exit();
 }
 
@@ -44,21 +44,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'El campo Nombre es obligatorio.';
         } elseif (empty($_REQUEST["phone"])) {
             $response['message'] = 'El campo Teléfono es obligatorio.';
-        } elseif (empty($_REQUEST["mail"])) {
-            $response['message'] = 'El campo Email es obligatorio.';
         } elseif (empty($_REQUEST["address"])) {
             $response['message'] = 'El campo Dirección es obligatorio.';
         } else {
             $id = $_REQUEST['id_supplier'];
             $name = capitalizeWords(trim($_REQUEST['supplier_name']));
             $phone = trim($_REQUEST['phone']);
-            $mail = trim($_REQUEST['mail']);
             $address = capitalizeWords(trim($_REQUEST['address']));
-            $id_state = $_REQUEST['id_state_user'];
-        
             $stmt = $conn->prepare(SQL_UPDATE_SUPPLIER);
-            $stmt->bind_param("ssssii", $name, $phone, $mail, $address, $id_state, $id);
-        
+            $stmt->bind_param("sssi", $name, $phone, $address, $id);
+
             if ($stmt->execute()) {
                 $response['status'] = 'success';
                 $response['message'] = 'Actualizado con exito';
@@ -70,6 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
         }
+        echo json_encode($response);
+        exit;
     } elseif ($_GET['action'] === 'add_supplier') {
         // Checking for Empty Fields
         if (empty($_REQUEST['supplier_name'])) {
@@ -86,26 +83,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $phone = trim($_REQUEST['phone']);
             $mail = trim($_REQUEST['mail']);
             $address = capitalizeWords(trim($_REQUEST['address']));
-            $id_state = $_REQUEST['id_state_user'];
-            $id_state = 1; // ¿Este valor siempre será 1?
 
             // Prepara la consulta
-            $stmt = $conn->prepare(SQL_INSERT_SUPPLIER);
-        
-            // Asocia parámetros y ejecuta la consulta
-            $stmt->bind_param("ssssi", $name, $phone, $mail, $address, $id_state);
-            if ($stmt->execute()) {
-                $response['status'] = 'success';
-                $response['message'] = 'Agregado con éxito';
+            // $stmt = $conn->prepare(SQL_INSERT_SUPPLIER);
+
+            // // Asocia parámetros y ejecuta la consulta
+            // $stmt->bind_param("ssssi", $name, $phone, $mail, $address, $id_state);
+            // if ($stmt->execute()) {
+            //     $response['status'] = 'success';
+            //     $response['message'] = 'Agregado con éxito';
+            // } else {
+            //     $response['message'] = 'No se pudo agregar: ' . $stmt->error;
+            // }
+
+            // Verifica si el correo ya existe en la base de datos
+            $stmt = $conn->prepare(SQL_SELECT_SUPPLIER_BY_EMAIL);
+            $stmt->bind_param("s", $mail);
+            $stmt->execute();
+            $stmt->store_result();
+
+            if ($stmt->num_rows > 0) {
+                $stmt->bind_result($existing_state);
+                $stmt->fetch();
+
+                if ($existing_state == 2) {
+                    $response['status'] = 'user_in_deleted';
+                    $response['message'] = 'Email esta en la lista de iliminados';
+                    // Actualizar usuario si está marcado como eliminado
+                    if ($_GET["isUpdate"]) {
+                        $update_stmt = $conn->prepare(SQL_UPDATE_SUPPLIER_BY_EMAIL);
+                        $update_stmt->bind_param("ssss", $name, $phone, $address, $mail);
+
+                        if ($update_stmt->execute()) {
+                            $response['status'] = 'success';
+                            $response['message'] = 'Agregado con éxito';
+                        } else {
+                            $response['message'] = ' Error al agregar! ';
+                            echo json_encode($response);
+                            exit;
+                        }
+                    }
+
+                } else {
+                    $response['message'] = 'El correo ya existe en la base de datos';
+                    echo json_encode($response);
+                    exit;
+                }
             } else {
-                $response['message'] = 'No se pudo agregar: ' . $stmt->error;
+                // Prepara la consulta
+                $stmt = $conn->prepare(SQL_INSERT_SUPPLIER);
+
+                // Asocia parámetros y ejecuta la consulta
+                $stmt->bind_param("ssss", $name, $phone, $mail, $address);
+                if ($stmt->execute()) {
+                    $response['status'] = 'success';
+                    $response['message'] = 'Agregado con éxito';
+                } else {
+                    $response['message'] = 'No se pudo agregar: ' . $stmt->error;
+                }
+
             }
         }
         echo json_encode($response);
         exit;
-
     } elseif ($_POST['action'] === 'delete_supplier') {
-        $id_supplier = $_REQUEST['id_supplier'];
+        $id_supplier = $_POST['id'];
 
         $stmt = $conn->prepare(SQL_DELETE_SUPPLIER);
 

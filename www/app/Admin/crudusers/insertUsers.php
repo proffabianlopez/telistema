@@ -16,7 +16,7 @@ include ('../configsmtp/generate_config.php');
 $passwordGenerate = generatePassword(); ?>
 
 </body>
-<div class="modal inmodal fase" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal inmodal fase" data-backdrop="static" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content animated bounceInRight">
             <div class="modal-header">
@@ -33,15 +33,15 @@ $passwordGenerate = generatePassword(); ?>
                             <!-- Primera columna -->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name_user">Nombre <span class="text-danger" >*</span></label>
-                                    <input type="text" class="form-control" id="name_user" name="name_user">
+                                    <label for="name_user">Nombre <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control validate-field vname" id="name_user" name="name_user">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name_user">Apellido <span class="text-danger" >*</span></label>
-                                    <input type="text" class="form-control" id="surname_user" name="surname_user">
+                                    <label for="name_user">Apellido <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control validate-field vname" id="surname_user" name="surname_user">
                                 </div>
                                 <div class="form-group">
-                                    <label for="name_user">Cargo <span class="text-danger" >*</span></label>
+                                    <label for="name_user">Cargo <span class="text-danger">*</span></label>
 
                                     <select class="form-control" name="rol" id="rol">
                                         <option value="1">Administrador</option>
@@ -52,17 +52,17 @@ $passwordGenerate = generatePassword(); ?>
                             <!-- Segunda columna -->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="phone_user">Teléfono <span class="text-danger" >*</span></label>
-                                    <input type="number" class="form-control" id="phone_user" name="phone_user"
+                                    <label for="phone_user">Teléfono <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control validate-field vphone" id="phone_user" name="phone_user"
                                         onkeypress="isInputNumber(event)">
                                 </div>
                                 <div class="form-group">
-                                    <label for="mail">Email <span class="text-danger" >*</span></label>
-                                    <input type="email" class="form-control" id="mail" name="mail">
+                                    <label for="mail">Email <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control validate-field vemail" id="mail" name="mail">
                                 </div>
                                 <div style="display: none" class="form-group password-container">
                                     <label for="user_password">Contraseña</label>
-                                    <input type="password" class="form-control" id="user_password" name="user_password"
+                                    <input type="password" class="form-control validate-field" id="user_password" name="user_password"
                                         value="<?php echo $passwordGenerate; ?>" readonly>
                                     <span class="glyphicon glyphicon-eye-open toggle-password"></span>
                                 </div>
@@ -80,7 +80,7 @@ $passwordGenerate = generatePassword(); ?>
                 <div class="p-xxs font-italic bg-muted border-top-bottom text ">
                     <span class="font-bold">NOTA:</span> Al agregar un nuevo Usuario se enviará al email las
                     credenciales para que pueda iniciar sesión. El sistema genera automáticamente una contraseña<br>
-                    <span class="text-danger" >*</span> Campo Obligatorio
+                    <span class="text-danger">*</span> Campo Obligatorio
                 </div>
             </div>
         </div>
@@ -88,7 +88,8 @@ $passwordGenerate = generatePassword(); ?>
 </div>
 
 <script>
-    let token = '<?php echo $token; ?>'
+    let token = '<?php echo $token; ?>';
+    let email = '';
 </script>
 <script src="../../js/main.js"></script>
 

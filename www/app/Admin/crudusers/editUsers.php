@@ -5,7 +5,7 @@ session_start();
 // Verifica si la sesión está iniciada y el token es válido
 if (!isset($_SESSION['is_login']) || !isset($_GET['token']) || $_GET['token'] !== $_SESSION['token']) {
     // Si no hay sesión o el token no es válido, redirige al usuario o muestra un mensaje de error
-     header("Location:../../includes/404/404.php");
+    header("Location:../../includes/404/404.php");
     exit();
 }
 
@@ -41,7 +41,7 @@ if (isset($_POST['id'])) {
 ?>
 
 <body>
-    <div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal inmodal fade" data-backdrop="static" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content animated bounceInRight">
                 <div class="modal-header">
@@ -66,35 +66,36 @@ if (isset($_POST['id'])) {
                                     </div>
                                     <!-- Campo Nombre -->
                                     <div class="form-group">
-                                        <label for="name_user">Nombre  <span class="text-danger" >*</span></label>
-                                        <input type="text" class="form-control" id="name_user" name="name_user" value="<?php if (isset($row['name_user'])) {
-                                            echo $row['name_user'];
-                                        } ?>" required>
+                                        <label for="name_user">Nombre <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control validate-field vname" id="name_user"
+                                            name="name_user" value="<?php if (isset($row['name_user'])) {
+                                                echo $row['name_user'];
+                                            } ?>" required>
 
                                     </div>
                                     <!-- Campo Apellido -->
                                     <div class="form-group">
-                                        <label for="surname_user">Apellido  <span class="text-danger" >*</span></label>
-                                        <input type="text" class="form-control" id="surname_user" name="surname_user"
-                                            value="<?php if (isset($row['surname_user'])) {
+                                        <label for="surname_user">Apellido <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control validate-field vname" id="surname_user"
+                                            name="surname_user" value="<?php if (isset($row['surname_user'])) {
                                                 echo $row['surname_user'];
                                             } ?>" required>
 
                                     </div>
-                                    <!-- Campo Email -->
                                     <div class="form-group">
-                                        <label for="mail">Email  <span class="text-danger" >*</span></label>
-                                        <input type="email" class="form-control" id="mail" name="mail" value="<?php if (isset($row['mail'])) {
-                                            echo $row['mail'];
-                                        } ?>" readonly>
-
+                                        <label for="mail">Email (no editable) </label>
+                                        <p class="form-control" id="mail" name="mail">
+                                            <?php if (isset($row['mail'])) {
+                                                echo $row['mail'];
+                                            } ?></p>
                                     </div>
+
                                 </div>
                                 <!-- Segunda columna -->
                                 <div class="col-md-6">
                                     <!-- Campo Cargo -->
                                     <div class="form-group">
-                                        <label for="rol">Cargo  <span class="text-danger" >*</span></label>
+                                        <label for="rol">Cargo <span class="text-danger">*</span></label>
                                         <select class="form-control" name="rol" id="rol" required>
                                             <option value="1" <?php if ($row["id_rol"] === 1)
                                                 echo 'selected'; ?>>
@@ -107,9 +108,9 @@ if (isset($_POST['id'])) {
 
                                     <!-- Campo Teléfono -->
                                     <div class="form-group">
-                                        <label for="phone_user">Teléfono  <span class="text-danger" >*</span></label>
-                                        <input type="number" class="form-control" id="phone_user" name="phone_user"
-                                            placeholder="5491234567890" value="<?php if (isset($row['phone_user'])) {
+                                        <label for="phone_user">Teléfono <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control validate-field vphone" id="phone_user"
+                                            name="phone_user" placeholder="5491234567890" value="<?php if (isset($row['phone_user'])) {
                                                 echo $row['phone_user'];
                                             } ?>" onkeypress="isInputNumber(event)" required>
 
@@ -143,7 +144,7 @@ if (isset($_POST['id'])) {
                         <span class="font-bold">NOTA:</span> Al tiltar la casilla de Generar contraseña, se genera una
                         nueva
                         contraseña aleatoriamente y se enviará al email del Usuario<br>
-                        <span class="text-danger" >*</span> Campo Obligatorio
+                        <span class="text-danger">*</span> Campo Obligatorio
                     </div>
                 </div>
             </div>
@@ -155,7 +156,7 @@ if (isset($_POST['id'])) {
     </script>
     <script src="../../js/main.js"></script>
     <script>
-    
+
         $(document).ready(function () {
 
             $('#mail').prop('readonly', true);
