@@ -9,6 +9,7 @@ define('SQL_LOGIN', '
                 u.surname_user, 
                 u.mail, 
                 u.user_password, 
+                u.id_rol,
                 r.rol, 
                 s.state_user
         FROM 

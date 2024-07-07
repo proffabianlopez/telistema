@@ -5,7 +5,7 @@ define('PAGE', 'MenusNav');
 
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
     $rEmail = $_SESSION['mail'];
-    $rolUser = $_SESSION['user_role'];
+    $rolUser = $_SESSION['user_idRol'];
 } else {
     echo "<script> location.href='../login.php'; </script>";
 }
@@ -37,7 +37,7 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
         </div>
     </li>
 
-    <?php if ($rolUser == 'admin') { ?>
+    <?php if ($rolUser == 1) { ?>
 
         <li class=" <?php if (PAGE == 'dashboard admin') {
             echo 'active';
@@ -133,7 +133,7 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
         <?php } ?>
 
         <!-- TECNICO -->
-        <?php if ($rolUser == 'technic') { ?>
+        <?php if ($rolUser == 2) { ?>
 
         <li class=" <?php if (PAGE == 'dashboard tecnico') {
             echo 'active';

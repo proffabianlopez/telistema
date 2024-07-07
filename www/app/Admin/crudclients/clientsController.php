@@ -4,7 +4,7 @@ session_start();
 // Verifica si la sesión está iniciada y el token es válido
 if (!isset($_SESSION['is_login']) || !isset($_GET['token']) || $_GET['token'] !== $_SESSION['token']) {
     // Si no hay sesión o el token no es válido, redirige al usuario o muestra un mensaje de error
-    header("Location: ../../includes/404.php");
+     header("Location:../../includes/404/404.php");
     exit();
 }
 
@@ -16,7 +16,7 @@ $response = [
 ];
 
 if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
-    if ($_SESSION['user_role'] != 'admin') {
+    if ($_SESSION['user_idRol'] != 1) {
         $response['message'] = 'Acceso denegado.';
         echo json_encode($response);
         exit;

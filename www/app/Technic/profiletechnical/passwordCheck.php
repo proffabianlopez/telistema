@@ -15,7 +15,7 @@ $response = [
 ];
 
 if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
-    if ($_SESSION['user_role'] != 'technic') {
+    if ( $_SESSION['user_idRol'] != 2) {
         $response['message'] = 'Acceso denegado.';
         echo json_encode($response);
         exit;

@@ -2,7 +2,7 @@
 session_start();
 define('TITLE', 'Error 404');
 define('PAGE', '404');
-include ('../includes/header.php'); ?>
+include ('../../includes/header.php'); ?>
 
 <body>
 
@@ -12,7 +12,7 @@ include ('../includes/header.php'); ?>
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
                 <?php
-                include ('../includes/menu.php'); ?>
+                include ('../../includes/menu.php'); ?>
 
             </div>
         </nav>
@@ -64,7 +64,7 @@ include ('../includes/header.php'); ?>
 
 
 
-    <?php include ('../includes/footer.php'); ?>
+    <?php include ('../../includes/footer.php'); ?>
 </body>
 
 </html>
