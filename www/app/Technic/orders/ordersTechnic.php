@@ -1,8 +1,8 @@
 <?php
 session_start();
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
-  if ($_SESSION['user_role'] != 'technic') {
-    echo "<script> location.href='../../includes/404.php'; </script>";
+  if ( $_SESSION['user_idRol'] != 2) {
+    header("Location:../../includes/404/404.php");
   }
   $rEmail = $_SESSION['mail'];
   $rolUser = $_SESSION['user_role'];

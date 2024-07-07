@@ -2,11 +2,11 @@
 session_start();
 ////////////////////////////////
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
-    if ($_SESSION['user_role'] != 'admin') {
+    if ($_SESSION['user_idRol'] != 1) {
         echo "<script> location.href='../includes/404.php'; </script>";
     }
     $rEmail = $_SESSION['mail'];
-    $rolUser = $_SESSION['user_role'];
+    $rolUser = $_SESSION['user_idRol'];
 } else {
     echo "<script> location.href='../login.php'; </script>";
 }

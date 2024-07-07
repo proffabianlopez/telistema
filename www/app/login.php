@@ -37,18 +37,19 @@ if (!isset($_SESSION['is_login'])) {
             $_SESSION['user_id'] = $row['id_user'];
             $_SESSION['user_surname'] = $row['surname_user'];
             $_SESSION['user_role'] = $row['rol'];
+            $_SESSION['user_idRol'] = $row['id_rol'];
             $_SESSION['state_user'] = $row['state_user'];
             $_SESSION['mail'] = $Email;
             $_SESSION['is_login'] = true;
 
             // Determinar el rol del usuario
-            $Rol = $_SESSION['user_role'];
+            $Rol = $_SESSION['user_idRol'];
 
-            if ($Rol == 'admin') {
+            if ($Rol == 1) {
               // Redireccionar a la página del panel de control del administrador
               echo "<script> location.href='Admin/dashboard/dashboard.php'; </script>";
               exit;
-            } elseif ($Rol == 'technic') {
+            } elseif ($Rol == 2) {
               // Redireccionar a la página del perfil del técnico
               echo "<script> location.href='Technic/dashboard/dashboard.php'; </script>";
               exit;
@@ -66,10 +67,7 @@ if (!isset($_SESSION['is_login'])) {
       // Error al preparar la consulta
       $msg = '<div class="alert alert-danger mt-2" role="alert"> Error al preparar la consulta </div>';
     }
-  } else {
-    // Mail o pass no configurados
-    $msg = '<div class="alert alert-warning mt-2" role="alert"> Ingrese su correo electrónico y contraseña </div>';
-  }
+  } 
 } else {
   // Si el usuario ya está autenticado, redirigir al panel de control del administrador
   echo "<script> location.href='Admin/dashboard/dashboard.php'; </script>";
