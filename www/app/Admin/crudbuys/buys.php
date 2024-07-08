@@ -166,7 +166,7 @@ include('../../Querys/querys.php');
                                                 echo '<div class="btn-group">';
                                                 if ($row["state_order"] != "Completado" && $row["state_order"] != "Cancelado") {
                                                     echo '<button onclick="openEditModal(' . $row["id_buy"] . ')" class="btn-white btn btn-xs" style="margin-right: 5px;">Editar</button>';
-                                                    echo '<button onclick="openCompleteModal(' . $row["id_buy"] . ')" class="label label-primary" style="margin-right: 5px;">Completar</button>';
+                                                    echo '<button onclick="openCompleteModal(' . $row["id_buy"] . ')" class="label label-primary" style="margin-right: 5px;">Confirmar</button>';
                                                     echo '<button onclick="openDeleteModal(' . $row["id_buy"] . ')" class="btn btn-danger btn-xs" style="margin-right: 5px;">Cancelar</button>';
                                                 }
                                                 echo '</div>';

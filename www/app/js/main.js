@@ -146,6 +146,19 @@ $(document).ready(function () {
                 minlength: "Por favor, ingrese un minimo de 3 caracteres.",
               };
               break;
+
+              case "vname_product":
+              rules[fieldName] = {
+                required: true,
+                minlength: 3,
+                maxlength: 20,
+              };
+              messages[fieldName] = {
+                required: "Este campo es obligatorio.",
+                minlength: "Por favor, ingrese al menos 3 caracteres.",
+                maxlength: "Por favor, ingrese un máximo de 20 caracteres.",
+              };
+              break;
           }
         });
       });
@@ -372,6 +385,7 @@ $(document).ready(function () {
     "clientsController.php?token=" + token + "&action=edit_client"
   );
 
+
   // BUYS
   setupFormValidation("#add-buy-form");
   buysFormSubmit(
@@ -391,4 +405,10 @@ $(document).ready(function () {
      "#change-editorder-form",
      "ordersController.php?token=" + token + "&action=edit_order"
    );
+
+    //PRODUCTS
+    setupFormValidation("#add-product-form");
+    buysFormSubmit("#add-product-form", 'materialsController.php?token=' + token + '&action=add_product');
+
+
 });
