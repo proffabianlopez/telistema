@@ -41,52 +41,53 @@ include('../configsmtp/generate_config.php');
             <div class="modal-body">
 
                 <form id="add-buy-form" action="" method="POST">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="id_supplier">Proveedor <span class="text-danger">*</span></label>
-                                <select name="id_supplier" id="id_supplier" class="form-control">
-                                    <option value="" selected disabled></option>
-                                    <?php
-                                    $stmt = $conn->prepare(SQL_FROM_SUPPLIERS);
-                                    $stmt->execute();
-                                    $rows = $stmt->get_result();
-                                    foreach ($rows as $state) {
-                                        $stateName = $state["supplier_name"];
-                                        $stateId = $state["id_supplier"];
-                                        echo "<option value='$stateId'>$stateName</option>";
-                                    }
-                                    ?>
-                                </select>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_supplier">Proveedor <span class="text-danger">*</span></label>
+                                    <select name="id_supplier" id="id_supplier" class="form-control">
+                                        <option value="" selected disabled></option>
+                                        <?php
+                                        $stmt = $conn->prepare(SQL_FROM_SUPPLIERS);
+                                        $stmt->execute();
+                                        $rows = $stmt->get_result();
+                                        foreach ($rows as $state) {
+                                            $stateName = $state["supplier_name"];
+                                            $stateId = $state["id_supplier"];
+                                            echo "<option value='$stateId'>$stateName</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="material_name">Nombre <span class="text-danger">*</span></label>
+                                    <select name="id_material" id="id_material" class="form-control">
+                                        <option value="" selected disabled></option>
+                                        <?php
+                                        $stmt = $conn->prepare(SQL_SELECT_MATERIALS);
+                                        $stmt->execute();
+                                        $rows = $stmt->get_result();
+                                        foreach ($rows as $name) {
+                                            $materialName = $name["material_name"];
+                                            $nameId = $name["id_material"];
+                                            echo "<option value='$nameId'>$materialName</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="material_name">Nombre <span class="text-danger">*</span></label>
-                                <select name="id_material" id="id_material" class="form-control">
-                                    <option value="" selected disabled></option>
-                                    <?php
-                                    $stmt = $conn->prepare(SQL_SELECT_MATERIALS);
-                                    $stmt->execute();
-                                    $rows = $stmt->get_result();
-                                    foreach ($rows as $name) {
-                                        $materialName = $name["material_name"];
-                                        $nameId = $name["id_material"];
-                                        echo "<option value='$nameId'>$materialName</option>";
-                                    }
-                                    ?>
-                                </select>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="cost">Costo <span class="text-danger">*</span></label>
+                                    <input type="number" name="cost" id="cost" class="form-control validate-field vcost reset" placeholder="Costo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ammount">Cantidad <span class="text-danger">*</span></label>
+                                    <input type="number" name="ammount" id="ammount" class="form-control validate-field vammount reset" placeholder="Cantidad">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="cost">Costo <span class="text-danger">*</span></label>
-                                <input type="number" name="cost" id="cost" class="form-control" placeholder="Costo">
-                            </div>
-                            <div class="form-group">
-                                <label for="ammount">Cantidad <span class="text-danger">*</span></label>
-                                <input type="number" name="ammount" id="ammount" class="form-control" placeholder="Cantidad">
-                            </div>
-                        </div>
-                            <br>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-cart-plus"></i> Comprar</button>
                                 <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
@@ -103,48 +104,14 @@ include('../configsmtp/generate_config.php');
     </div>
 </div>
 
+
+
 <script>
-    $(document).ready(function() {
-        $('#add-buy-form').on('submit', function(e) {
-            e.preventDefault();
-            var formData = $(this).serialize();
-            $.ajax({
-                type: 'POST',
-                url: 'buysController.php?token=<?php echo $_SESSION['token']; ?>&action=add_buy',
-                data: formData,
-                dataType: 'json',
-                success: function(response) {
-                    var messageContainer = $('#response-message');
-                    if (response.status === 'success') {
-                        messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
-                        resetForm();
-
-                        setTimeout(function() {
-                            messageContainer.html('');
-                        },  3000);
-                    } else {
-                        messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.log(xhr.responseText);
-                    $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX: ' + error + '<br>' + xhr.responseText + '</div>');
-                }
-            });
-        });
-
-        $('.reload').click(function() {
-            location.reload();
-        });
-
-        function resetForm() {
-            $('#id_material').val('');
-            $('#cost').val('');
-            $('#ammount').val('');
-        }
-    });
+    let token = '<?php echo $token; ?>';
+    let email = '';
 </script>
 
+<script src="../../js/main.js"></script>
 
 </body>
 

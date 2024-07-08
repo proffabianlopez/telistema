@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode($response);
             exit();
         }
-    } elseif (isset($_GET['action']) && $_GET['action'] === 'add_buy') {
+    } elseif ($_GET['action'] === 'add_buy') {
         // Checking for Empty Fields
         if (empty($_POST["id_material"])) {
             $response['message'] = 'El campo Nombre es obligatorio.';
