@@ -54,80 +54,88 @@ if (isset($_POST['id'])) {
 
 <body>
     <div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog">
             <div class="modal-content animated bounceInRight">
                 <div class="modal-header">
                     <button type="button" class="close reload" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                     </button>
-                    <i class="bi bi-person-gear modal-icon"></i>
                     <h4 class="modal-title">Editar Producto</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="change-product-form" action="" method="POST">
-                        <div style="display: none" class="form-group">
-                            <label for="id_material">ID Producto</label>
-                            <input type="text" class="form-control" id="id_material" name="id_material" value="<?php if (isset($row['id_material'])) {
-                                                                                                                    echo $row['id_material'];
-                                                                                                                } ?>" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="material_name">Nombre</label>
-                            <input type="text" class="form-control" id="material_name" name="material_name" value="<?php if (isset($row['material_name'])) {
-                                                                                                                        echo $row['material_name'];
-                                                                                                                    } ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Descripción</label>
-                            <input type="text" class="form-control" id="description" name="description" value="<?php if (isset($row['description'])) {
-                                                                                                                    echo $row['description'];
-                                                                                                                } ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="stock">Cantidad</label>
-                            <input type="text" class="form-control" id="stock" name="stock" value="<?php if (isset($row['stock'])) {
-                                                                                                                    echo $row['stock'];
-                                                                                                                } ?>">
-                        </div>
-                        <div class="form-group">
-                            <label for="id_measure">Unidad de Medida</label>
-                            <select name="id_measure" id="id_measure" class="form-control">
-                                <?php
-                                $state = $row['id_measure'];
-                                $stmt = $conn->prepare(SQL_SELECT_MEASURE_BY_ID);
-                                $stmt->bind_param("i", $state);
-                                $stmt->execute();
-                                $result = $stmt->get_result();
+                    <form id="change-editproduct-form" action="" method="POST">
+                        <div class="container-fluid">
+                            <div class="row">
+                            <div class="col-md-6">
+                                <div style="display: none" class="form-group">
+                                    <label for="id_material">ID Producto</label>
+                                    <input type="text" class="form-control" id="id_material" name="id_material" value="<?php if (isset($row['id_material'])) {
+                                                                                                                            echo $row['id_material'];
+                                                                                                                        } ?>" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="material_name">Nombre</label>
+                                    <input type="text" class="form-control validate-field vname_product " id="material_name" name="material_name" value="<?php if (isset($row['material_name'])) {
+                                                                                                                                echo $row['material_name'];
+                                                                                                                            } ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Descripción</label>
+                                    <textarea class="form-control validate-field vtextarea" id="description" name="description"
+                                            style="resize: none; max-width: 100%;"><?php if (isset($row['description'])) {
+                                                                                                                            echo $row['description'];
+                                                                                                                        } ?>"</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="stock">Cantidad</label>
+                                    <input type="text" class="form-control validate-field vammount" id="stock" name="stock" value="<?php if (isset($row['stock'])) {
+                                                                                                                            echo $row['stock'];
+                                                                                                                        } ?>">
+                                </div>
+                            </div>   
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_measure">Unidad de Medida</label>
+                                        <select name="id_measure" id="id_measure" class="form-control">
+                                                <?php
+                                                $state = $row['id_measure'];
+                                                $stmt = $conn->prepare(SQL_SELECT_MEASURE_BY_ID);
+                                                $stmt->bind_param("i", $state);
+                                                $stmt->execute();
+                                                $result = $stmt->get_result();
 
-                                // Verificar si hay resultados
-                                if ($result->num_rows > 0) {
-                                    $row_state = $result->fetch_assoc();
-                                    $name_state = $row_state["name_measure"];
-                                    $id_measure = $row_state["id_measure"];
-                                } else {
-                                    $id_measure = 0; // O el valor que desees
-                                }
+                                                // Verificar si hay resultados
+                                                if ($result->num_rows > 0) {
+                                                    $row_state = $result->fetch_assoc();
+                                                    $name_state = $row_state["name_measure"];
+                                                    $id_measure = $row_state["id_measure"];
+                                                } else {
+                                                    $id_measure = 0; // O el valor que desees
+                                                }
 
-                                // Obtener todos los estados de la tabla measures
-                                $stmt = $conn->prepare(SQL_SELECT_MEASURES);
-                                $stmt->execute();
-                                $rows = $stmt->get_result();
+                                                // Obtener todos los estados de la tabla measures
+                                                $stmt = $conn->prepare(SQL_SELECT_MEASURES);
+                                                $stmt->execute();
+                                                $rows = $stmt->get_result();
 
-                                foreach ($rows as $state) {
-                                    $stateName = $state["name_measure"];
-                                    $stateId = $state["id_measure"];
-                                    $selected = ($stateId == $id_measure) ? "selected" : "";
-                                    echo "<option value='$stateId' $selected>$stateName</option>";
-                                }
-                                ?>
-                            </select>
+                                                foreach ($rows as $state) {
+                                                    $stateName = $state["name_measure"];
+                                                    $stateId = $state["id_measure"];
+                                                    $selected = ($stateId == $id_measure) ? "selected" : "";
+                                                    echo "<option value='$stateId' $selected>$stateName</option>";
+                                                }
+                                                ?>
+                                            </select></script>
+                                </div>
+                                <div class="form-group">
+                                    <label for="stock_alert">Alerta de Stock</label>
+                                    <input type="text" class="form-control validate-field vammount" id="stock_alert" name="stock_alert" value="<?php if (isset($row['stock_alert'])) {
+                                                                                                                            echo $row['stock_alert'];
+                                                                                                                        } ?>">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="stock_alert">Alerta de Stock</label>
-                            <input type="text" class="form-control" id="stock_alert" name="stock_alert" value="<?php if (isset($row['stock_alert'])) {
-                                                                                                                    echo $row['stock_alert'];
-                                                                                                                } ?>">
-                        </div>
+                        <br>
                         <div class="modal-footer">
                             <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Actualizar</button>
                             <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
@@ -144,7 +152,7 @@ if (isset($_POST['id'])) {
         </div>
     </div>
 
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             var laddaButton;
 
@@ -180,8 +188,14 @@ if (isset($_POST['id'])) {
                 location.reload();
             });
         });
+    </script> -->
+
+    <script>
+        let token = '<?php echo $token; ?>';
+        let email = '';
     </script>
 
+    <script src="../../js/main.js"></script>
 </body>
 
 </html>
