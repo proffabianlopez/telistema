@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = $_REQUEST['id_material'];
             $id_measure = $_REQUEST['id_measure'];
             $name = capitalizeWords(trim($_REQUEST['material_name']));
-            $description = capitalizeWords(trim($_REQUEST['description']));
+            $description = trim($_REQUEST['description']);
             $stock = $_REQUEST['stock'];
             $stockAlert = $_REQUEST['stock_alert'];
             

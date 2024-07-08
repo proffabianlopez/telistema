@@ -409,5 +409,10 @@ $(document).ready(function () {
     setupFormValidation("#add-product-form");
     buysFormSubmit("#add-product-form", 'materialsController.php?token=' + token + '&action=add_product');
 
+    setupFormValidation("#change-editproduct-form");
+    handleFormSubmit(
+      "#change-editproduct-form",
+      "materialsController.php?token=" + token + "&action=edit_product"
+    );
 
 });

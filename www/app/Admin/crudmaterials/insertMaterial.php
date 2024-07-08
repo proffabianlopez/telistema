@@ -25,7 +25,7 @@ include ('../configsmtp/generate_config.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Producto</title>
-    <!-- Incluye tus estilos y scripts aquí -->
+
 </head>
 
 </body>
