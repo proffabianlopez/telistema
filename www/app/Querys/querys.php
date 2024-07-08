@@ -376,6 +376,7 @@ define('SQL_UPDATE_ORDER', '
         UPDATE 
                 orders
         SET 
+                order_date = ?,
                 order_description = ?,
                 address = ?, 
                 height = ?,
