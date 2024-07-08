@@ -72,8 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Checking for Empty Fields
         if (empty($_POST["id_material"])) {
             $response['message'] = 'El campo Nombre es obligatorio.';
-        } elseif (empty($_POST["id_measure"])) {
-            $response['message'] = 'El campo Medida es obligatorio.';
         } elseif (empty($_POST["id_supplier"])) {
             $response['message'] = 'El campo Proveedor es obligatorio.';
         } elseif (empty($_POST["cost"])) {
@@ -81,29 +79,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif (empty($_POST["ammount"])) {
             $response['message'] = 'El campo Cantidad es obligatorio.';
         } else {
+            // Getting the values from POST
             $date_buy = new DateTime();
             $formatted_date_buy = $date_buy->format('Y-m-d H:i:s');
             $ammount = $_POST['ammount'];
             $cost = $_POST['cost'];
             $id_supplier = $_POST['id_supplier'];
             $id_material = $_POST['id_material'];
-            $id_measure = $_POST['id_measure'];
             $id_user = $_SESSION['user_id'];
             $id_state_order = 3; // Asigna el estado predeterminado
-
-            $stmt = $conn->prepare(SQL_INSERT_BUY);
-            $stmt->bind_param("sdiiisii", $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_state_order);
-
-            if ($stmt->execute()) {
-                $response['status'] = 'success';
-                $response['message'] = 'Agregado con éxito';
+    
+            // Obtener el id_measure basado en el id_material
+            $id_measure = getIdMeasureBasedOnMaterial($id_material, $conn);
+    
+            if ($id_measure === null) {
+                $response['message'] = 'El material seleccionado no tiene una unidad de medida válida.';
             } else {
-                $response['message'] = 'No se pudo agregar: ' . $stmt->error;
+                // Preparar la consulta con el campo id_measure añadido
+                $stmt = $conn->prepare(SQL_INSERT_BUY);
+                $stmt->bind_param("sidiiiii", $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_state_order);
+    
+                if ($stmt->execute()) {
+                    $response['status'] = 'success';
+                    $response['message'] = 'Agregado con éxito';
+                } else {
+                    $response['message'] = 'No se pudo agregar: ' . $stmt->error;
+                }
             }
         }
         echo json_encode($response);
         exit();
-    } elseif (isset($_POST['action']) && $_POST['action'] === 'complete_buy') {
+    }elseif (isset($_POST['action']) && $_POST['action'] === 'complete_buy') {
         $id_buy = $_POST['id'];
 
         $stmt = $conn->prepare(SQL_MODIFY_STATUS_BUY);
@@ -140,4 +146,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response['message'] = 'Fallo la operación';
     echo json_encode($response);
     exit();
+}
+
+
+function getIdMeasureBasedOnMaterial($id_material, $conn) {
+    $sql = SQL_SELECT_MEASURE;
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_material);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    return $row ? $row['id_measure'] : null;
 }

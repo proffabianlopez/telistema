@@ -131,7 +131,7 @@ include('../../Querys/querys.php');
                                                         <th data-hide="phone">Cantidad</th>
                                                         <th data-hide="phone">Medida</th>
                                                         <th data-hide="all">Costo</th>
-                                                        <th data-hide="all">Fecha de Compra</th>
+                                                        <th data-hide="all">Compra</th>
                                                         <th data-hide="phone">Estado</th>
                                                         <th class="text-right footable-visible footable-sortable footable-last-column footable-sorted">Acción<span class="footable-sort-indicator"></span></th>
                                                     </tr>

@@ -406,8 +406,10 @@ define('SQL_SELECT_MATERIALS', '
         FROM materials u
         WHERE u.id_status != 2');
 
-
-
+define('SQL_SELECT_MEASURE', '
+        SELECT id_measure
+        FROM materials WHERE id_material = ?'
+);
 define(
         'SQL_SELECT_PRODUCT_BY_ID',
         '
