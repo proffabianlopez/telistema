@@ -19,7 +19,7 @@ $(document).ready(function () {
     },
     "Solo se permiten letras en este campo."
   );
-  
+
   function setupFormValidation(formId) {
     var rules = {};
     var messages = {};
@@ -93,12 +93,12 @@ $(document).ready(function () {
               rules[fieldName] = {
                 required: true,
                 max: 99999999,
-                min: 0
+                min: 0,
               };
               messages[fieldName] = {
                 required: "Este campo es obligatorio.",
                 max: "Por favor, ingrese un máximo de 8 digitos.",
-                min: "Por favor, no ingreses números negativos"
+                min: "Por favor, no ingreses números negativos",
               };
               break;
             case "vfloor_dep":
@@ -109,29 +109,41 @@ $(document).ready(function () {
                 maxlength: "Por favor, ingrese un máximo de 8 caracteres.",
               };
               break;
-           case 'vcost':
-                  rules[fieldName] = {
-                      required: true,
-                      number: true,
-                      min: 0,
-                  };
-                  messages[fieldName] = {
-                      required: "Este campo es obligatorio.",
-                      number: "Por favor, ingrese un número válido.",
-                      min: "Solo se permiten numeros positivos."
-                  };
-                  break;
-
-              case 'vammount':
+            case "vcost":
               rules[fieldName] = {
-                  required: true,
-                  number: true,
-                  min: 0,
+                required: true,
+                number: true,
+                min: 0,
               };
               messages[fieldName] = {
-                  required: "Este campo es obligatorio.",
-                  number: "Por favor, ingrese un número válido.",
-                  min: "Solo se permiten numeros positivos."
+                required: "Este campo es obligatorio.",
+                number: "Por favor, ingrese un número válido.",
+                min: "Solo se permiten numeros positivos.",
+              };
+              break;
+
+            case "vammount":
+              rules[fieldName] = {
+                required: true,
+                number: true,
+                min: 0,
+              };
+              messages[fieldName] = {
+                required: "Este campo es obligatorio.",
+                number: "Por favor, ingrese un número válido.",
+                min: "Solo se permiten numeros positivos.",
+              };
+              break;
+            case "vtextarea":
+              rules[fieldName] = {
+                required: true,
+                maxlength: 150,
+                minlength: 3,
+              };
+              messages[fieldName] = {
+                required: "Este campo es obligatorio.",
+                maxlength: "Por favor, ingrese un máximo de 255 caracteres.",
+                minlength: "Por favor, ingrese un minimo de 3 caracteres.",
               };
               break;
           }
@@ -218,7 +230,8 @@ $(document).ready(function () {
                         title: "Error",
                         text: "Hubo un problema al actualizar.",
                         type: "error",
-                        setupFormValidatio});
+                        setupFormValidatio,
+                      });
                     },
                   });
                 } else {
@@ -261,59 +274,64 @@ $(document).ready(function () {
     });
   }
 
+  function buysFormSubmit(formId, actionUrl) {
+    $(formId).on("submit", function (e) {
+      e.preventDefault();
+      var formData = $(this).serialize();
 
-    function buysFormSubmit(formId, actionUrl) {
-    
-        $(formId).on('submit', function(e) {
-            e.preventDefault();
-            var formData = $(this).serialize();
-
-            if (!$(formId).valid()) {
-                return; // Salir si el formulario no es válido
-            }
-            $.ajax({
-                type: 'POST',
-                url: actionUrl,
-                data: formData,
-                dataType: 'json',
-                success: function(response) {
-                    var messageContainer = $('#response-message');
-                    if (response.status === 'success') {
-                        setTimeout(function () {
-                            toastr.options = {
-                                closeButton: true,
-                                progressBar: true,
-                                showMethod: 'slideDown',
-                                timeOut: 1500,
-                            };
-                            toastr.success(response.message, 'ÉXITO');
-                        });
-                        //messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
-                        resetForm();
-
-                        setTimeout(function() {
-                            messageContainer.html('');
-                        },  3000);
-                    } else {
-                        messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.log(xhr.responseText);
-                    $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX: ' + error + '<br>' + xhr.responseText + '</div>');
-                }
+      if (!$(formId).valid()) {
+        return; // Salir si el formulario no es válido
+      }
+      $.ajax({
+        type: "POST",
+        url: actionUrl,
+        data: formData,
+        dataType: "json",
+        success: function (response) {
+          var messageContainer = $("#response-message");
+          if (response.status === "success") {
+            setTimeout(function () {
+              toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                showMethod: "slideDown",
+                timeOut: 1500,
+              };
+              toastr.success(response.message, "ÉXITO");
             });
-        });
+            //messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
+            resetForm();
 
-        $('.reload').click(function() {
-            location.reload();
-        });
+            setTimeout(function () {
+              messageContainer.html("");
+            }, 3000);
+          } else {
+            messageContainer.html(
+              '<div class="alert alert-danger">' + response.message + "</div>"
+            );
+          }
+        },
+        error: function (xhr, status, error) {
+          console.log(xhr.responseText);
+          $("#response-message").html(
+            '<div class="alert alert-danger">Error en la solicitud AJAX: ' +
+              error +
+              "<br>" +
+              xhr.responseText +
+              "</div>"
+          );
+        },
+      });
+    });
 
-        function resetForm() {
-            $('.reset').val('');
-        }
+    $(".reload").click(function () {
+      location.reload();
+    });
 
+    function resetForm() {
+      $(".reset").val("");
     }
+  }
 
   // Configurar validación y envío para cada formulario
 
@@ -328,7 +346,6 @@ $(document).ready(function () {
     "#change-edituser-form",
     "usersController.php?token=" + token + "&action=edit_user&email=" + email
   );
-
 
   // SUPPLIER
   setupFormValidation("#change-insertsupplier-form");
@@ -349,14 +366,29 @@ $(document).ready(function () {
     "#change-insertclient-form",
     "clientsController.php?token=" + token + "&action=add_client"
   );
- setupFormValidation("#change-editclient-form");
+  setupFormValidation("#change-editclient-form");
   handleFormSubmit(
     "#change-editclient-form",
     "clientsController.php?token=" + token + "&action=edit_client"
   );
-      
-    // BUYS
-    setupFormValidation("#add-buy-form");
-    buysFormSubmit("#add-buy-form", 'buysController.php?token=' + token + '&action=add_buy');
 
+  // BUYS
+  setupFormValidation("#add-buy-form");
+  buysFormSubmit(
+    "#add-buy-form",
+    "buysController.php?token=" + token + "&action=add_buy"
+  );
+
+
+   //ORDERS
+   setupFormValidation("#change-insertclient-form");
+   handleFormSubmit(
+     "#change-insertclient-form",
+     "clientsController.php?token=" + token + "&action=add_client"
+   );
+   setupFormValidation("#change-editorder-form");
+   handleFormSubmit(
+     "#change-editorder-form",
+     "ordersController.php?token=" + token + "&action=edit_order"
+   );
 });

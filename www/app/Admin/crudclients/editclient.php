@@ -1,14 +1,10 @@
 <?php
 session_start();
 ////////////////////////////////
-if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
-  if ($_SESSION['user_idRol'] != 1) {
-    header("Location:../../includes/404/404.php");
-  }
-  $rEmail = $_SESSION['mail'];
-  $rolUser = $_SESSION['user_role'];
-} else {
-  echo "<script> location.href='../../login.php'; </script>";
+if (!isset($_SESSION['is_login']) || !isset($_GET['token']) || $_GET['token'] !== $_SESSION['token']) {
+  // Si no hay sesión o el token no es válido, redirige al usuario o muestra un mensaje de error
+  header("Location:../../includes/404/404.php");
+  exit();
 }
 ////////////////////////////////
 // Genera un token CSRF y lo guarda en la sesión
@@ -147,7 +143,7 @@ if (isset($_POST['id'])) {
 
     <script>
         let token = '<?php echo $token; ?>';
-        let email = '<?php echo $email; ?>';
+        let email = '';
     </script>
     <script src="../../js/main.js"></script>
     <script>
