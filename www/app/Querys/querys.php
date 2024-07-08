@@ -320,6 +320,8 @@ define('SQL_ORDER_BY_ID', '
         clients cl ON o.id_client = cl.id_client
     WHERE 
         o.id_client = ? AND so.id_state_order != 5
+    ORDER BY 
+        o.id_order ASC
 ');
 
 
@@ -386,6 +388,13 @@ define('SQL_UPDATE_ORDER', '
         WHERE   
                 id_order = ?');
 
+define('SQL_SELECT_PRIORITYS_ORDER_BY_ID', '
+                SELECT id_priority, priority 
+                FROM prioritys
+                WHERE id_priority = ?');
+        
+define('SQL_SELECT_PRIORITYS_ORDERS', '
+                SELECT * FROM prioritys');
 define('SQL_SELECT_TECNS_ORDER_BY_ID', '
     SELECT *
     FROM users
