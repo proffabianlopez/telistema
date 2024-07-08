@@ -74,13 +74,13 @@ if (isset($_POST['id'])) {
                                                                                                                         } ?>" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label for="material_name">Nombre</label>
+                                    <label for="material_name">Nombre <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control validate-field vname_product " id="material_name" name="material_name" value="<?php if (isset($row['material_name'])) {
                                                                                                                                 echo $row['material_name'];
                                                                                                                             } ?>">
                                 </div>
                                 <div class="form-group">
-                                    <label for="description">Descripción</label>
+                                    <label for="description">Descripción <span class="text-danger">*</span></label>
                                     <textarea class="form-control validate-field vtextarea" id="description" name="description"
                                             style="resize: none; max-width: 100%;"><?php if (isset($row['description'])) {
                                                                                                                             echo $row['description'];
@@ -95,7 +95,7 @@ if (isset($_POST['id'])) {
                             </div>   
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="id_measure">Unidad de Medida</label>
+                                    <label for="id_measure">Unidad de Medida <span class="text-danger">*</span></label>
                                         <select name="id_measure" id="id_measure" class="form-control">
                                                 <?php
                                                 $state = $row['id_measure'];
@@ -145,7 +145,8 @@ if (isset($_POST['id'])) {
 
 
                     <div class="p-xxs font-italic bg-muted border-top-bottom text">
-                        <span class="font-bold">NOTA:</span> Al editar un producto, asegúrese de revisar y actualizar correctamente todos los campos. Los cambios realizados se reflejarán inmediatamente en el sistema.
+                        <span class="font-bold">NOTA:</span> Al editar un producto, asegúrese de revisar y actualizar correctamente todos los campos. Los cambios realizados se reflejarán inmediatamente en el sistema.<br>
+                        <span class="text-danger">*</span> Campo Obligatorio.
                     </div>
                 </div>
             </div>
