@@ -35,7 +35,7 @@ if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_us
 
 include ('../../dbConnection.php');
 include ('../../Querys/querys.php');
-include ('../../Admin/generate_config.php');
+include ('../../Admin/configsmtp/generate_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($_POST["current_pass"])) {
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         if ($row['id_state_user'] == 2) {
                             $response['message'] = 'Cuenta Inactiva.';
                         } else if ($row['id_state_user'] == 1) {
-                            include ('../Admin/endEmail.php');
+                           // include ('../Admin/endEmail.php');
                            // $result2 = enviarCorreoYRegistrar($name, $mail, $newPass, $phone);
                             //if ($result2['status'] == 'success') {
                                 $pass = password_hash($newPass, PASSWORD_DEFAULT);
@@ -143,8 +143,8 @@ function validatePassword($password)
 
 function getPasswordLevel($password)
 {
-    include ('../dbConnection.php');
-    include ('../Querys/querys.php');
+    include ('../../dbConnection.php');
+    include ('../../Querys/querys.php');
     $sql = SQL_PASSWORD_LEVEL;
     $result = $conn->query($sql);
 
