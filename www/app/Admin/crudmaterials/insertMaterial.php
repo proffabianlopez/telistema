@@ -44,11 +44,11 @@ include ('../configsmtp/generate_config.php');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="material_name">Nombre</label>
+                                    <label for="material_name">Nombre <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control validate-field vname_product reset" id="material_name" name="material_name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="description">Descripción</label>
+                                    <label for="description">Descripción <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control reset" id="description" name="description">
                                 </div>
                                 <div class="form-group">
@@ -58,7 +58,7 @@ include ('../configsmtp/generate_config.php');
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                        <label for="id_measure">Unidad de Medida</label>
+                                        <label for="id_measure">Unidad de Medida <span class="text-danger">*</span></label>
                                         <select name="id_measure" id="id_measure" class="form-control reset">
                                         <option value="" selected disabled></option>
                                         <?php
@@ -120,7 +120,8 @@ include ('../configsmtp/generate_config.php');
                     <div class="text-center" id="response-message"></div>
                 </form>
                 <div class="p-xxs font-italic bg-muted border-top-bottom text ">
-                    <span class="font-bold">NOTA:</span> Al agregar un nuevo producto, asegúrese de completar todos los campos obligatorios. La información ingresada se reflejará inmediatamente en el sistema.
+                    <span class="font-bold">NOTA:</span> Al agregar un nuevo producto, asegúrese de completar todos los campos obligatorios. La información ingresada se reflejará inmediatamente en el sistema.<br>
+                    <span class="text-danger">*</span> Campo Obligatorio.
                 </div>
             </div>
         </div>
