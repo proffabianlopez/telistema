@@ -19,27 +19,28 @@ $token = $_SESSION['token'];
 
 define('TITLE', 'Ordenes');
 define('PAGE', 'Ordenes Admin');
-include('../../includes/header.php');
-include('../../dbConnection.php');
-include('../../Querys/querys.php');
+include ('../../includes/header.php');
+include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
 ?>
 
 <body>
     <div id="wrapper">
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
-                <?php include('../../includes/menu.php') ?>
+                <?php include ('../../includes/menu.php') ?>
             </div>
         </nav>
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i
+                                class="fa fa-bars"></i> </a>
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                        <a id="logout">
+                            <a id="logout">
                                 <i class="fa fa-sign-out"></i> Cerrar Sesión
                             </a>
                         </li>
@@ -109,11 +110,11 @@ include('../../Querys/querys.php');
                                             echo '<td>' . $row["name_user"] . ' ' . $row["surname_user"] . '</td>';
                                             echo '<td>
                                                     <div class="btn-group" role="group">
-                                                         <button id="edit-' . $row["id_order"] .'*'.$row["id_client"]. '-' . $token . '" data-crud="orders" class="btn btn-warning btn-xs modaledit-btn" >
+                                                         <button id="edit-' . $row["id_order"] . '*' . $row["id_client"] . '-' . $token . '" data-crud="orders" class="btn btn-warning btn-xs modaledit-btn " style="margin-right: 5px" >
                                                        <i class="bi bi-pencil-square"></i>
                                                     </button>
                                                      
-                                                         <button id="delete-' . $row["id_order"] .'*'.$row["id_client"]. '-' . $token . '" data-crud="orders" class="btn btn-danger btn-xs delete-btn" >
+                                                         <button id="delete-' . $row["id_order"] . '*' . $row["id_client"] . '-' . $token . '" data-crud="orders" class="btn btn-danger btn-xs delete-btn" >
                                                         <i class="bi bi-trash"></i>
                                                     </button>
                                                     </div>
@@ -156,7 +157,7 @@ include('../../Querys/querys.php');
 
     <div id="edit-form-container" style="display: none;"></div>
     <?php
-    include('../../includes/footer.php');
+    include ('../../includes/footer.php');
     ?>
     <script>
         $(document).ready(function () {

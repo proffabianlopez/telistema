@@ -110,10 +110,10 @@ include('../../Querys/querys.php');
                                         echo '<td>' . $row["departament"] . '</td>';
                                         echo '<td>
                                                 <div class="btn-group" role="group">
-                                                    <button id="edit-' . $row["id_client"] . '-' . $token . '" data-crud="clients" class="btn btn-warning btn-xs modaledit-btn" >
+                                                    <button id="edit-' . $row["id_client"] . '-' . $token . '" data-crud="clients" class="btn btn-warning btn-xs modaledit-btn " style="margin-right: 5px" >
                                                             <i class="bi bi-pencil-square"></i>
                                                      </button>
-                                                   <button id="delete-' . $row["id_client"] . '-' . $token . '" data-crud="clients" class="btn btn-danger btn-xs delete-btn" >
+                                                   <button id="delete-' . $row["id_client"] . '-' . $token . '" data-crud="clients" class="btn btn-danger btn-xs delete-btn " style="margin-right: 5px"" >
                                                             <i class="bi bi-trash"></i>
                                                   </button>
                                                     
