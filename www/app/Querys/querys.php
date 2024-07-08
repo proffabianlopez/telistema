@@ -26,37 +26,72 @@ define('SQL_LOGIN', '
 /////////////////////////////////////////////////////////////////////////////////////
 // Clients
 //////////////////////////////////////////////////////////////////
-define('SQL_FROM_CLIENTS', '
-        SELECT * FROM clients');
+define(
+        'SQL_FROM_CLIENTS',
+        'SELECT * 
+        FROM clients
+        WHERE id_state_user != 2'
+);
 
 define('SQL_CLIENT_BY_ID', '
         SELECT * FROM clients
         WHERE id_client = ?');
 
-define('SQL_INSERT_CLIENT', '
-        INSERT INTO clients 
-        (client_name, client_lastname, phone, mail, address, height, floor, departament, id_state_user) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+define(
+        'SQL_INSERT_CLIENT',
+        'INSERT INTO clients (client_name, client_lastname, phone, mail, address, height, floor, departament, id_state_user) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)'
+);
 
-define('SQL_UPDATE_CLIENT', '
-        UPDATE clients 
+define(
+        'SQL_UPDATE_CLIENT',
+        ' UPDATE clients 
         SET client_name = ?,
         client_lastname = ?,
         phone = ?, 
-        mail = ?,
         address = ?,
         height = ?, 
         floor = ?, 
         departament = ?
-        WHERE id_client = ?');
+        WHERE id_client = ?'
+);
 
 
-define('SQL_DELETE_CLIENT', '
-        DELETE FROM clients
-        WHERE id_client = ?');
+define(
+        'SQL_DELETE_CLIENT',
+        'UPDATE clients
+        SET id_state_user = 2
+        WHERE id_client = ?'
+);
 
+define(
+        'SQL_SELECT_CLIENT_BY_EMAIL',
+        'SELECT id_state_user
+        FROM clients
+        WHERE mail = ?'
+);
 
-/////////////////////////////////////////////////////////////////////////////////////
+define(
+        'SQL_UPDATE_CLIENT_BY_EMAIL',
+        '  UPDATE clients 
+        SET client_name = ?,
+        client_lastname = ?,
+        phone = ?, 
+        address = ?,
+        height = ?, 
+        floor = ?, 
+        departament = ?,
+        id_state_user = 1
+        WHERE mail = ?'
+);
+define(
+        'SQL_VERIFIC_ORDER_CLIENT',
+        ' SELECT *
+        FROM orders
+        WHERE id_client = ? AND (id_state_order = 3 OR id_state_order = 1)
+'
+);
+
+//////////////////////////////////////////////////////////////////////////
 // Technics
 //////////////////////////////////////////////////////////////////
 define('SQL_SELECT_TECHNIC', '
@@ -137,12 +172,14 @@ define(
 
 define('SQL_INSERT_SUPPLIER', 'INSERT INTO suppliers (supplier_name, phone, mail, address, id_state_user) VALUES (?, ?, ?, ?, 1)');
 
-define('SQL_UPDATE_SUPPLIER',
+define(
+        'SQL_UPDATE_SUPPLIER',
         'UPDATE suppliers
         SET supplier_name = ?,
         phone = ?,
         address = ?
-        WHERE id_supplier = ?');
+        WHERE id_supplier = ?'
+);
 
 
 define('SQL_SELECT_SUPPLIER_BY_ID', '

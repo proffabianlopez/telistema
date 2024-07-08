@@ -91,7 +91,7 @@ if (isset($_POST['id'])) {
                   
                 <div class="form-group">
                     <label for="phone">Teléfono <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control validate-field vphone" id="phone" name="phone" value="<?php if (isset($row['phone'])) {
+                    <input type="number" class="form-control validate-field vphone" id="phone" name="phone" value="<?php if (isset($row['phone'])) {
                       echo $row['phone'];
                     } ?>" onkeypress="isInputNumber(event)">
                   </div>

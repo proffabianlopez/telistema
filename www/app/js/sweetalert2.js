@@ -79,7 +79,7 @@ function Delete(id, crudClass, token) {
       break;
     case "clients":
       url = "clientsController.php?token=" + token;
-      action = "delete_clients";
+      action = "delete_client";
       break;
     case "technicians":
       url = "techniciansController.php?token=" + token;
