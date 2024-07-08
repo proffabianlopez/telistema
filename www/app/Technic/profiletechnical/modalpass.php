@@ -25,7 +25,7 @@ $token = $_SESSION['token'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cambiar Contraseña</title>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
     <style>
         .password-container {
             position: relative;
@@ -53,7 +53,7 @@ $token = $_SESSION['token'];
                     <h4 class="modal-title">Cambiar Contraseña</h4>
                 </div>
                 <div class="modal-body">
-               
+
                     <form id="change-password-form" class="m-t">
                         <div class="form-group password-container">
                             <input type="password" id="user_password_current" class="form-control user_password"
@@ -71,13 +71,14 @@ $token = $_SESSION['token'];
                             <span class="glyphicon glyphicon-eye-open toggle-password"></span>
                         </div>
                         <div class="modal-footer">
-                            <button type="button"  class="btn btn-white reload"
-                                data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
                             <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                         <div class="text-center" id="response-message"></div>
                     </form>
-                    <div class="p-xxs font-italic bg-muted border-top-bottom text "> <span class="font-bold" >NOTA:</span>  una contraseña segura debe contener por lo menos una MAYÚSCULA, numeros, un caracter especial y un largo de 12</div>
+                    <div class="p-xxs font-italic bg-muted border-top-bottom text "> <span
+                            class="font-bold">NOTA:</span> una contraseña segura debe contener por lo menos una
+                        MAYÚSCULA, numeros, un caracter especial y un largo de 12</div>
                 </div>
             </div>
         </div>
@@ -119,7 +120,17 @@ $token = $_SESSION['token'];
                     success: function (response) {
                         var messageContainer = $('#response-message');
                         if (response.status === 'success') {
-                            messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
+                            $("#myModal6").modal("hide"); // Cierra el modal
+                            setTimeout(function () {
+                                toastr.options = {
+                                    closeButton: true,
+                                    progressBar: true,
+                                    showMethod: "slideDown",
+                                    timeOut: 2500,
+                                   
+                                };
+                                toastr.success(response.message, "ÉXITO");
+                            });
                         } else {
                             messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
                         }

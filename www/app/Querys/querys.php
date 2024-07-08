@@ -104,8 +104,7 @@ WHERE r.rol = "technic";
 define('SQL_SELECT_TECHNIC_BY_ID', '
 SELECT u.*
 FROM users u
-JOIN roles r ON u.id_rol = r.id_rol
-WHERE r.rol = "technic" AND u.id_user = ?;
+WHERE u.id_rol = 2 AND u.id_user = ?;
 ');
 
 define('SQL_SELECT_STATE_BY_ID', '
