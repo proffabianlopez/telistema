@@ -46,6 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'El campo Dirección es obligatorio.';
         } else {
             // Assigning User Values to Variable
+            date_default_timezone_set('America/Argentina/Buenos_Aires');
+            $order_date = date('Y-m-d H:i:s');
             $order_description = $_POST['order_description'];
             $address = capitalizeWords($_POST['address']);
             $height = $_POST['height'];
@@ -60,7 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = SQL_UPDATE_ORDER;
             $stmt = $conn->prepare($sql);
             $stmt->bind_param(
-                "ssissiiiii",
+                "sssissiiiii",
+                $order_date,
                 $order_description,
                 $address,
                 $height,
