@@ -443,7 +443,9 @@ define('SQL_SELECT_MATERIALS', '
         FROM materials u
         WHERE u.id_status != 2');
 
-define('SQL_SELECT_MEASURE', '
+define(
+        'SQL_SELECT_MEASURE',
+        '
         SELECT id_measure
         FROM materials WHERE id_material = ?'
 );
@@ -596,3 +598,17 @@ define('SQL_ORDER_BY_ID_TEC', '
         clients cl ON o.id_client = cl.id_client
     WHERE 
         o.technic_id = ?');
+/////////////////////////////////////////////////////////////////////////////////////
+// orders_dashboard
+//////////////////////////////////////////////////////////////////
+define('SQL_COUNT_ORDERS_WITH_STATE', '
+    SELECT 
+        COUNT(*) AS total_orders,
+        SUM(CASE WHEN o.id_state_order = 1 THEN 1 ELSE 0 END) AS confirmadas,
+        SUM(CASE WHEN o.id_state_order = 2 THEN 1 ELSE 0 END) AS canceladas,
+        SUM(CASE WHEN o.id_state_order = 3 THEN 1 ELSE 0 END) AS pendientes,
+        SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) AS realizadas,
+        SUM(CASE WHEN o.id_state_order = 5 THEN 1 ELSE 0 END) AS inactivas
+    FROM orders o
+    JOIN states_orders so ON o.id_state_order = so.id_state_order
+');

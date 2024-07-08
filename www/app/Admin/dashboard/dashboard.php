@@ -16,6 +16,22 @@ define('TITLE', 'Dashboard Admin');
 define('PAGE', 'dashboard admin');
 include('../../includes/header.php');
 include('../../dbConnection.php');
+include('../../Querys/querys.php');
+
+////////////////////////////////
+$sql = SQL_COUNT_ORDERS_WITH_STATE;
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+  $row = $result->fetch_assoc();
+  $confirmadas = $row['confirmadas'];
+  $canceladas = $row['canceladas'];
+  $pendientes = $row['pendientes'];
+  $realizadas = $row['realizadas'];
+  $inactivas = $row['inactivas'];
+} else {
+  $confirmadas = $canceladas = $pendientes = $realizadas = $inactivas = 0;
+}
 
 
 // $sql = "SELECT max(request_id) FROM submitrequest_tb";
@@ -70,11 +86,11 @@ include('../../dbConnection.php');
           <div class="widget style1 custom-bg-1">
             <div class="row">
               <div class="col-xs-4 text-center">
-                <i class="fa fa-bell fa-5x"></i>
+                <i class="fa fa-check-square-o fa-5x"></i>
               </div>
               <div class="col-xs-8 text-right">
-
-                <h2 class="font-bold">4</h2>
+                <span> Ordenes Confirmadas </span>
+                <h2 class="font-bold"><?php echo $confirmadas; ?></h2>
               </div>
             </div>
           </div>
@@ -88,7 +104,7 @@ include('../../dbConnection.php');
               </div>
               <div class="col-xs-8 text-right">
                 <span> Ordenes Finalizadas </span>
-                <h2 class="font-bold">26</h2>
+                <h2 class="font-bold"><?php echo $realizadas; ?></h2>
               </div>
             </div>
           </div>
@@ -101,7 +117,7 @@ include('../../dbConnection.php');
               </div>
               <div class="col-xs-8 text-right">
                 <span> Ordenes Pendientes </span>
-                <h2 class="font-bold">260</h2>
+                <h2 class="font-bold"><?php echo $pendientes; ?></h2>
               </div>
             </div>
           </div>
@@ -113,8 +129,8 @@ include('../../dbConnection.php');
                 <i class="fa fa-exclamation-triangle fa-5x"></i>
               </div>
               <div class="col-xs-8 text-right">
-                <span> Ordenes Prioritarias </span>
-                <h2 class="font-bold">12</h2>
+                <span> Ordenes Canceladas </span>
+                <h2 class="font-bold"><?php echo $canceladas; ?></h2>
               </div>
             </div>
           </div>
