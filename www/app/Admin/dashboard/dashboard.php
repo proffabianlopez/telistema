@@ -25,29 +25,11 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
   $row = $result->fetch_assoc();
   $confirmadas = $row['confirmadas'];
-  $canceladas = $row['canceladas'];
   $pendientes = $row['pendientes'];
   $realizadas = $row['realizadas'];
-  $inactivas = $row['inactivas'];
 } else {
-  $confirmadas = $canceladas = $pendientes = $realizadas = $inactivas = 0;
+  $confirmadas = $pendientes = $realizadas = 0;
 }
-
-
-// $sql = "SELECT max(request_id) FROM submitrequest_tb";
-// $result = $conn->query($sql);
-// $row = mysqli_fetch_row($result);
-// $submitrequest = $row[0];
-
-// $sql = "SELECT max(request_id) FROM assignwork_tb";
-// $result = $conn->query($sql);
-// $row = mysqli_fetch_row($result);
-// $assignwork = $row[0];
-
-// $sql = "SELECT * FROM technician_tb";
-// $result = $conn->query($sql);
-// $totaltech = $result->num_rows;
-
 ?>
 <div id="wrapper">
 
@@ -82,7 +64,7 @@ if ($result->num_rows > 0) {
 
     <div class="wrapper wrapper-content animated fadeInRight">
       <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-4">
           <div class="widget style1 custom-bg-1">
             <div class="row">
               <div class="col-xs-4 text-center">
@@ -95,7 +77,7 @@ if ($result->num_rows > 0) {
             </div>
           </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
 
           <div class="widget style1 custom-bg-2">
             <div class="row">
@@ -109,7 +91,7 @@ if ($result->num_rows > 0) {
             </div>
           </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
           <div class="widget style1 custom-bg-3">
             <div class="row">
               <div class="col-xs-4">
@@ -118,19 +100,6 @@ if ($result->num_rows > 0) {
               <div class="col-xs-8 text-right">
                 <span> Ordenes Pendientes </span>
                 <h2 class="font-bold"><?php echo $pendientes; ?></h2>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="widget style1 custom-bg-4">
-            <div class="row">
-              <div class="col-xs-4">
-                <i class="fa fa-exclamation-triangle fa-5x"></i>
-              </div>
-              <div class="col-xs-8 text-right">
-                <span> Ordenes Canceladas </span>
-                <h2 class="font-bold"><?php echo $canceladas; ?></h2>
               </div>
             </div>
           </div>

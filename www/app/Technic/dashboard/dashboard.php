@@ -16,22 +16,19 @@ define('TITLE', 'Dashboard');
 define('PAGE', 'dashboard');
 include('../../includes/header.php');
 include('../../dbConnection.php');
+include('../../Querys/querys.php');
 
+$sql = SQL_COUNT_ORDERS_WITH_STATE_TECHNIC;
+$result = $conn->query($sql);
 
-// $sql = "SELECT max(request_id) FROM submitrequest_tb";
-// $result = $conn->query($sql);
-// $row = mysqli_fetch_row($result);
-// $submitrequest = $row[0];
-
-// $sql = "SELECT max(request_id) FROM assignwork_tb";
-// $result = $conn->query($sql);
-// $row = mysqli_fetch_row($result);
-// $assignwork = $row[0];
-
-// $sql = "SELECT * FROM technician_tb";
-// $result = $conn->query($sql);
-// $totaltech = $result->num_rows;
-
+if ($result->num_rows > 0) {
+  $row = $result->fetch_assoc();
+  $confirmadas = $row['confirmadas'];
+  $pendientes = $row['pendientes'];
+  $realizadas = $row['realizadas'];
+} else {
+  $confirmadas = $pendientes = $realizadas = 0;
+}
 ?>
 <div id="wrapper">
 
@@ -65,20 +62,20 @@ include('../../dbConnection.php');
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
       <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-4">
           <div class="widget style1 custom-bg-1">
             <div class="row">
               <div class="col-xs-4 text-center">
-                <i class="fa fa-bell fa-5x"></i>
+                <i class="fa fa-check-square-o fa-5x"></i>
               </div>
               <div class="col-xs-8 text-right">
-
-                <h2 class="font-bold">4</h2>
+                <span> Ordenes Confirmadas </span>
+                <h2 class="font-bold"><?php echo $confirmadas; ?></h2>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
 
           <div class="widget style1 custom-bg-2">
             <div class="row">
@@ -87,12 +84,12 @@ include('../../dbConnection.php');
               </div>
               <div class="col-xs-8 text-right">
                 <span> Ordenes Finalizadas </span>
-                <h2 class="font-bold">26</h2>
+                <h2 class="font-bold"><?php echo $realizadas; ?></h2>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-4">
           <div class="widget style1 custom-bg-3">
             <div class="row">
               <div class="col-xs-4">
@@ -100,20 +97,7 @@ include('../../dbConnection.php');
               </div>
               <div class="col-xs-8 text-right">
                 <span> Ordenes Pendientes </span>
-                <h2 class="font-bold">260</h2>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="widget style1 custom-bg-4">
-            <div class="row">
-              <div class="col-xs-4">
-                <i class="fa fa-exclamation-triangle fa-5x"></i>
-              </div>
-              <div class="col-xs-8 text-right">
-                <span> Ordenes Prioritarias </span>
-                <h2 class="font-bold">12</h2>
+                <h2 class="font-bold"><?php echo $pendientes; ?></h2>
               </div>
             </div>
           </div>
