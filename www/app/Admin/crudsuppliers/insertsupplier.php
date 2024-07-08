@@ -5,11 +5,7 @@ if (!isset($_SESSION['is_login']) || !isset($_GET['token']) || $_GET['token'] !=
   // Si no hay sesión o el token no es válido, redirige al usuario o muestra un mensaje de error
   header("Location:../../includes/404/404.php");
   exit();
-} // Genera un token CSRF y lo guarda en la sesión if (!isset($_SESSION['token']))
-{
-  $_SESSION['token'] = bin2hex(random_bytes(32));
 }
-$token = $_SESSION['token'];
 ////////////////////////////////
 // Genera un token CSRF y lo guarda en la sesión
 if (!isset($_SESSION['token'])) {
@@ -51,7 +47,7 @@ include ('../../Querys/querys.php');
                   </div>
                   <div class="form-group">
                     <label for="phone">Telefono <span class="text-danger" >*</span></label>
-                    <input type="text" class="form-control validate-field vphone" id="phone" name="phone">
+                    <input type="number" class="form-control validate-field vphone" id="phone" name="phone">
                   </div>
                 </div>
                 <!-- Segunda columna -->
