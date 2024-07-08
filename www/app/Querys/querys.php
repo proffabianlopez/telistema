@@ -392,7 +392,7 @@ define('SQL_SELECT_PRIORITYS_ORDER_BY_ID', '
                 SELECT id_priority, priority 
                 FROM prioritys
                 WHERE id_priority = ?');
-        
+
 define('SQL_SELECT_PRIORITYS_ORDERS', '
                 SELECT * FROM prioritys');
 define('SQL_SELECT_TECNS_ORDER_BY_ID', '
@@ -614,10 +614,22 @@ define('SQL_COUNT_ORDERS_WITH_STATE', '
     SELECT 
         COUNT(*) AS total_orders,
         SUM(CASE WHEN o.id_state_order = 1 THEN 1 ELSE 0 END) AS confirmadas,
-        SUM(CASE WHEN o.id_state_order = 2 THEN 1 ELSE 0 END) AS canceladas,
         SUM(CASE WHEN o.id_state_order = 3 THEN 1 ELSE 0 END) AS pendientes,
-        SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) AS realizadas,
-        SUM(CASE WHEN o.id_state_order = 5 THEN 1 ELSE 0 END) AS inactivas
+        SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) AS realizadas
     FROM orders o
     JOIN states_orders so ON o.id_state_order = so.id_state_order
+');
+/////////////////////////////////////////////////////////////////////////////////////
+// orders_dashboard_technics
+//////////////////////////////////////////////////////////////////
+define('SQL_COUNT_ORDERS_WITH_STATE_TECHNIC', '
+    SELECT 
+        COUNT(*) AS total_orders,
+        SUM(CASE WHEN o.id_state_order = 1 THEN 1 ELSE 0 END) AS confirmadas,
+        SUM(CASE WHEN o.id_state_order = 2 THEN 1 ELSE 0 END) AS canceladas,
+        SUM(CASE WHEN o.id_state_order = 3 THEN 1 ELSE 0 END) AS pendientes,
+        SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) AS realizadas
+    FROM orders o
+    JOIN states_orders so ON o.id_state_order = so.id_state_order
+    WHERE technic_id =?
 ');
