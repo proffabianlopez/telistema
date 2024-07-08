@@ -97,6 +97,11 @@ include ('../../Querys/querys.php');
 
                                             $order_datetime = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date']);
                                             $order_datetime_formatted = $order_datetime->format('d/m/Y H:i');
+                                            
+                                            //Si son null , les coloca un -
+                                            $floor = isset($row["floor"]) && $row["floor"] !== '' ? $row["floor"] : '-';
+                                            $departament = isset($row["departament"]) && $row["departament"] !== '' ? $row["departament"] : '-';
+                                        
                                             echo '<tr>';
                                             echo '<td>' . $row["id_order"] . '</td>';
                                             echo '<td>' . $row["client_name"] . ' ' . $row['client_lastname'] . '</td>';
@@ -104,8 +109,8 @@ include ('../../Querys/querys.php');
                                             echo '<td>' . $row["order_description"] . '</td>';
                                             echo '<td>' . $row["priority"] . '</td>';
                                             echo '<td>' . $row["address"] . ' ' . $row["height"] . '</td>';
-                                            echo '<td>' . $row["floor"] . '</td>';
-                                            echo '<td>' . $row["departament"] . '</td>';
+                                            echo '<td>' . $floor . '</td>';
+                                            echo '<td>' . $departament . '</td>';
                                             echo '<td>' . $row["state_order"] . '</td>';
                                             echo '<td>' . $row["name_user"] . ' ' . $row["surname_user"] . '</td>';
                                             echo '<td>
@@ -176,7 +181,7 @@ include ('../../Querys/querys.php');
                     $("#myModal6").modal("show");
                 },
                 error: function () {
-                    alert("Error al cargar el formulario de edición.");
+                    alert("Error al cargar el formulario.");
                 }
             });
         }

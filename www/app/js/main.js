@@ -91,7 +91,6 @@ $(document).ready(function () {
               break;
             case "vhousenumber":
               rules[fieldName] = {
-                required: true,
                 max: 99999999,
                 min: 0,
               };
@@ -395,10 +394,10 @@ $(document).ready(function () {
 
 
    //ORDERS
-   setupFormValidation("#change-insertclient-form");
-   handleFormSubmit(
-     "#change-insertclient-form",
-     "clientsController.php?token=" + token + "&action=add_client"
+   setupFormValidation("#change-insertorder-form");
+   buysFormSubmit(
+     "#change-insertorder-form",
+     "ordersController.php?token=" + token + "&action=add_order"
    );
    setupFormValidation("#change-editorder-form");
    handleFormSubmit(
