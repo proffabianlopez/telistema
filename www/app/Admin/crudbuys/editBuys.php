@@ -5,7 +5,7 @@ session_start();
 // Verifica si la sesión está iniciada y el token es válido
 if (!isset($_SESSION['is_login']) || !isset($_GET['token']) || $_GET['token'] !== $_SESSION['token']) {
     // Si no hay sesión o el token no es válido, redirige al usuario o muestra un mensaje de error
-     header("Location:../../includes/404/404.php");
+    header("Location:../../includes/404/404.php");
     exit();
 }
 
@@ -22,7 +22,7 @@ include('../configsmtp/endEmail.php');
 if (isset($_GET['id'])) {
 
     $id_user = $_GET['id'];
-    $stmt = $conn->prepare(SQL_SELECT_BUY_BY_ID);
+    $stmt = $conn->prepare(SQL_SELECT_BUYS);
     $stmt->bind_param("i", $id_user);
     $stmt->execute();
 
@@ -54,145 +54,96 @@ if (isset($_GET['id'])) {
 
 <body>
     <div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog modal-xl">
+        <div class="modal-dialog">
             <div class="modal-content animated bounceInRight">
                 <div class="modal-header">
                     <button type="button" class="close reload" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                     </button>
-                    <i class="bi bi-person-gear modal-icon"></i>
                     <h4 class="modal-title">Editar Compra</h4>
                 </div>
                 <div class="modal-body">
                     <form id="change-buy-form" action="" method="POST">
-                        <div style="display: none" class="form-group">
-                            <label for="id_buy">ID Compra</label>
-                            <input type="text" class="form-control" id="id_buy" name="id_buy" value="<?php if (isset($row['id_buy'])) {
-                                                                                                            echo $row['id_buy'];
-                                                                                                        } ?>" readonly>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <!-- Primera columna -->
+                                <div class="col-md-6">
+                                    <div style="display: none" class="form-group">
+                                        <label for="id_buy">ID Compra</label>
+                                        <input type="text" class="form-control" id="id_buy" name="id_buy" value="<?php if (isset($row['id_buy'])) {
+                                            echo $row['id_buy'];
+                                        } ?>" readonly>
+                                    </div>
 
-                                <label for="id_material">Producto</label>
-                                <select name="id_material" id="id_material" class="form-control">
-                                    <?php
-                                    $state = $row['id_material'];
-                                    $stmt = $conn->prepare(SQL_SELECT_PRODUCT_BY_ID);
-                                    $stmt->bind_param("i", $state);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
+                                    <div class="form-group">
+                                    <label for="remito">N° Remito <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <input type="text" name="remito_first_part" id="remito_first_part" class="form-control validate-field vcost" placeholder="Primeros 4 dígitos" maxlength="4" style="width: 35%;" required>
+                                            <input type="text" name="remito_second_part" id="remito_second_part" class="form-control validate-field vcost" placeholder="Siguientes 8 dígitos" maxlength="8" style="width: 60%;" required>
+                                        </div>
+                                    </div>
 
-                                    // Verificar si hay resultados
-                                    if ($result->num_rows > 0) {
-                                        $row_state = $result->fetch_assoc();
-                                        $name_state = $row_state["material_name"];
-                                        $id_material = $row_state["id_material"];
-                                    } else {
-                                        $id_material = 0; // O el valor que desees
-                                    }
+                                    <div class="form-group">
+                                        <label for="material_name">Producto <span class="text-danger">*</span></label>
+                                        <select name="id_material" id="id_material" class="form-control">
+                                            <?php
+                                            // Obtener todos los estados de la tabla measures
+                                            $stmt = $conn->prepare(SQL_SELECT_MATERIALS);
+                                            $stmt->execute();
+                                            $rows = $stmt->get_result();
 
-                                    // Obtener todos los estados de la tabla measures
-                                    $stmt = $conn->prepare(SQL_SELECT_MATERIALS);
-                                    $stmt->execute();
-                                    $rows = $stmt->get_result();
+                                            foreach ($rows as $state) {
+                                                $stateName = $state["material_name"];
+                                                $stateId = $state["id_material"];
+                                                $selected = ($stateId == $id_measure) ? "selected" : "";
+                                                echo "<option value='$stateId' $selected>$stateName</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
 
-                                    foreach ($rows as $state) {
-                                        $stateName = $state["material_name"];
-                                        $stateId = $state["id_material"];
-                                        $selected = ($stateId == $id_measure) ? "selected" : "";
-                                        echo "<option value='$stateId' $selected>$stateName</option>";
-                                    }
-                                    ?>
-                                </select>
+                                    <div class="form-group">
+                                        <label for="id_supplier">Proveedor</label>
+                                        <select name="id_supplier" id="id_supplier" class="form-control">
+                                            <?php
+                                            // Obtener todos los estados de la tabla measures
+                                            $stmt = $conn->prepare(SQL_FROM_SUPPLIERS);
+                                            $stmt->execute();
+                                            $rows = $stmt->get_result();
+
+                                            foreach ($rows as $state) {
+                                                $stateName = $state["supplier_name"];
+                                                $stateId = $state["id_supplier"];
+                                                $selected = ($stateId == $id_measure) ? "selected" : "";
+                                                echo "<option value='$stateId' $selected>$stateName</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="cost">Costo</label>
+                                        <input type="number" name="cost" id="cost" class="form-control" value="<?php if (isset($row['cost'])) {
+                                                                                                                    echo $row['cost'];
+                                                                                                                } ?>" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ammount">Cantidad</label>
+                                        <input type="number" class="form-control" id="ammount" name="ammount" value="<?php if (isset($row['ammount'])) {
+                                                                                                                            echo $row['ammount'];
+                                                                                                                        } ?>" />
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Actualizar</button>
+                                    <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
+                                </div>
+                                <div class="text-center" id="response-message"></div>
                             </div>
-
-                            <div class="col-sm-4">
-                                <label for="id_supplier">Proveedor</label>
-                                <select name="id_supplier" id="id_supplier" class="form-control">
-                                    <?php
-                                    $state = $row['id_supplier'];
-                                    $stmt = $conn->prepare(SQL_SELECT_SUPPLIER_BY_ID);
-                                    $stmt->bind_param("i", $state);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-
-                                    // Verificar si hay resultados
-                                    if ($result->num_rows > 0) {
-                                        $row_state = $result->fetch_assoc();
-                                        $name_state = $row_state["supplier_name"];
-                                        $id_supplier = $row_state["id_supplier"];
-                                    } else {
-                                        $id_supplier = 0; // O el valor que desees
-                                    }
-
-                                    // Obtener todos los estados de la tabla measures
-                                    $stmt = $conn->prepare(SQL_FROM_SUPPLIERS);
-                                    $stmt->execute();
-                                    $rows = $stmt->get_result();
-
-                                    foreach ($rows as $state) {
-                                        $stateName = $state["supplier_name"];
-                                        $stateId = $state["id_supplier"];
-                                        $selected = ($stateId == $id_measure) ? "selected" : "";
-                                        echo "<option value='$stateId' $selected>$stateName</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-
-                            <div class="col-sm-4">
-                                <label for="id_measure">Unidad de Medida</label>
-                                <select name="id_measure" id="id_measure" class="form-control">
-                                    <?php
-                                    $state = $row['id_measure'];
-                                    $stmt = $conn->prepare(SQL_SELECT_MEASURE_BY_ID);
-                                    $stmt->bind_param("i", $state);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-
-                                    // Verificar si hay resultados
-                                    if ($result->num_rows > 0) {
-                                        $row_state = $result->fetch_assoc();
-                                        $name_state = $row_state["name_measure"];
-                                        $id_measure = $row_state["id_measure"];
-                                    } else {
-                                        $id_measure = 0; // O el valor que desees
-                                    }
-
-                                    // Obtener todos los estados de la tabla measures
-                                    $stmt = $conn->prepare(SQL_SELECT_MEASURES);
-                                    $stmt->execute();
-                                    $rows = $stmt->get_result();
-
-                                    foreach ($rows as $state) {
-                                        $stateName = $state["name_measure"];
-                                        $stateId = $state["id_measure"];
-                                        $selected = ($stateId == $id_measure) ? "selected" : "";
-                                        echo "<option value='$stateId' $selected>$stateName</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row mt-3">
-                            <div class="col-sm-4">
-                                <label for="cost">Costo</label>
-                                <input type="number" name="cost" id="cost" class="form-control" value="<?php if (isset($row['cost'])) { echo $row['cost']; } ?>" />
-                            </div>
-                            
-                            <div class="col-sm-4">
-                                <label for="ammount">Cantidad</label>
-                                <input type="number" class="form-control" id="ammount" name="ammount" value="<?php if (isset($row['ammount'])) { echo $row['ammount']; } ?>" />
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Actualizar</button>
-                            <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
-                        </div>
-                        <div class="text-center" id="response-message"></div>
+                        </div>    
                     </form>
 
 

@@ -83,18 +83,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'El campo Nombre es obligatorio.';
         } elseif (empty($_POST["id_supplier"])) {
             $response['message'] = 'El campo Proveedor es obligatorio.';
+        } elseif (empty($_REQUEST["date_buy"])) {
+            $response['message'] = 'El campo Fecha es obligatorio.';
         } elseif (empty($_POST["cost"])) {
             $response['message'] = 'El campo Costo es obligatorio.';
         } elseif (empty($_POST["ammount"])) {
-            $response['message'] = 'El campo Cantidad es obligatorio.';
+            $response['message'] = 'El campo Cantidabuyd es obligatorio.';
         } elseif (empty($_REQUEST["remito_first_part"])) {
             $response['message'] = 'El campo Remito es obligatorio.';
         } elseif (empty($_REQUEST["remito_second_part"])) {
             $response['message'] = 'El campo Remito es obligatorio.'; 
         } else {
             // Getting the values from POST
-            $date_buy = new DateTime();
-            $formatted_date_buy = $date_buy->format('Y-m-d H:i:s');
+            $date_buy = $_POST['date_buy'];
             $ammount = $_POST['ammount'];
             $cost = $_POST['cost'];
             $id_supplier = $_POST['id_supplier'];
@@ -113,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 // Preparar la consulta con el campo id_measure añadido
                 $stmt = $conn->prepare(SQL_INSERT_BUY);
-                $stmt->bind_param("ssidiiiii", $numero_remito, $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_state_order);
+                $stmt->bind_param("ssidiiiii", $numero_remito, $date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_state_order);
     
                 if ($stmt->execute()) {
                     $response['status'] = 'success';

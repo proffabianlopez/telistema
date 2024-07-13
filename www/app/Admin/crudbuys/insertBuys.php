@@ -44,11 +44,8 @@ include('../configsmtp/generate_config.php');
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="remito">N° Remito <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="text" name="remito_first_part" id="remito_first_part" class="form-control validate-field vcost" placeholder="Primeros 4 dígitos" maxlength="4" style="width: 35%;" required>
-                                        <input type="text" name="remito_second_part" id="remito_second_part" class="form-control validate-field vcost" placeholder="Siguientes 8 dígitos" maxlength="8" style="width: 60%;" required>
-                                    </div>
+                                    <label for="date_buy">Fecha:</label>
+                                    <input type="date" name="date_buy" id="date_buy" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="id_supplier">Proveedor <span class="text-danger">*</span></label>
@@ -66,6 +63,14 @@ include('../configsmtp/generate_config.php');
                                         ?>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="remito">N° Remito <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" name="remito_first_part" id="remito_first_part" class="form-control validate-field vcost" placeholder="Primeros 4 dígitos" maxlength="4" style="width: 35%;" required>
+                                        <input type="text" name="remito_second_part" id="remito_second_part" class="form-control validate-field vcost" placeholder="Siguientes 8 dígitos" maxlength="8" style="width: 60%;" required>
+                                    </div>
+                                </div>
+                                
                                 <div class="form-group">
                                     <label for="id_material">Producto <span class="text-danger">*</span></label>
                                     <select name="id_material" id="id_material" class="form-control validate-field select reset">
