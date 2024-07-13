@@ -154,7 +154,7 @@ include('../../Querys/querys.php');
                                         }
 
                                         //Mensaje de depuración para la consulta SQL
-                                        //echo "<pre>$sql</pre>";
+                                        echo "<pre>$sql</pre>";
 
                                         $result = $conn->query($sql);
 
@@ -180,6 +180,7 @@ include('../../Querys/querys.php');
                                                     $date = $row["date_buy"];
                                                     $formatted_date = date("d-m-Y", strtotime($date));
                                                     $formatted_cost = number_format($row["cost"], 2, ',', '.');
+                                                    $remittance = $row["remittance"];
                                                     $first_part = substr($remittance, 0, 4);
                                                     $second_part = substr($remittance, 4);
                                                     $formatted_remittance = $first_part . '-' . $second_part;
