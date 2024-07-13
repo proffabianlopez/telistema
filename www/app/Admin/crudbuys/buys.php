@@ -52,11 +52,11 @@ include('../../Querys/querys.php');
                                     <label for="search_by">Buscar por:</label>
                                     <select name="search_by" id="search_by" class="form-control">
                                         <option value="">Seleccionar</option>
-                                        <option value="state_name">Estado de Compra</option>
-                                        <option value="material_name">Nombre del Producto</option>
-                                        <option value="id_supplier">Proveedor</option>
                                         <option value="date_buy">Fecha</option>
                                         <option value="remittance">N° de Remito</option>
+                                        <option value="id_supplier">Proveedor</option>
+                                        <option value="state_name">Estado de Compra</option>
+                                        <option value="material_name">Nombre del Producto</option>
                                     </select>
                                 </div>
                             </div>
@@ -201,7 +201,7 @@ include('../../Querys/querys.php');
                                                             <span class="label label-primary">' . $row["state_order"] . '</span></td>';
                                                     } elseif ($row["state_order"] == "Cancelado") {
                                                         echo '<td class="footable-visible" style="display: table-cell;">
-                                                            <span class="label label-warning">' . $row["state_order"] . '</span></td>';
+                                                            <span class="label label-cancel">' . $row["state_order"] . '</span></td>';
                                                     }
 
                                                     echo '<td class="text-right footable-visible footable-last-column">';
