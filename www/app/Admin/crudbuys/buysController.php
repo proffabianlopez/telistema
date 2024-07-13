@@ -45,10 +45,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'El campo Costo es obligatorio.';
         } elseif (empty($_REQUEST["ammount"])) {
             $response['message'] = 'El campo Cantidad es obligatorio.';
+        } elseif (empty($_REQUEST["remito_first_part"])) {
+            $response['message'] = 'El campo Remito es obligatorio.';
+        } elseif (empty($_REQUEST["remito_second_part"])) {
+            $response['message'] = 'El campo Remito es obligatorio.'; 
         } else {
             $id_buy = $_REQUEST['id_buy'];
             $date_buy = new DateTime();
             $formatted_date_buy = $date_buy->format('Y-m-d H:i:s');
+            $remito_first_part = $_POST['remito_first_part'];
+            $remito_second_part = $_POST['remito_second_part'];
             $ammount = $_REQUEST['ammount'];
             $cost = $_REQUEST['cost'];
             $id_supplier = $_REQUEST['id_supplier'];
@@ -56,8 +62,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id_measure = $_REQUEST['id_measure'];
             $id_user = $_SESSION['user_id'];
 
+            $numero_remito = trim($remito_first_part . "-" . $remito_second_part);
+
             $stmt = $conn->prepare(SQL_UPDATE_BUY);
-            $stmt->bind_param("sidiiiii", $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_buy);
+
+            $stmt->bind_param("ssidiiiii", $numero_remito, $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_buy);
 
             if ($stmt->execute()) {
                 $response['status'] = 'success';
@@ -78,6 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'El campo Costo es obligatorio.';
         } elseif (empty($_POST["ammount"])) {
             $response['message'] = 'El campo Cantidad es obligatorio.';
+        } elseif (empty($_REQUEST["remito_first_part"])) {
+            $response['message'] = 'El campo Remito es obligatorio.';
+        } elseif (empty($_REQUEST["remito_second_part"])) {
+            $response['message'] = 'El campo Remito es obligatorio.'; 
         } else {
             // Getting the values from POST
             $date_buy = new DateTime();
@@ -88,7 +101,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id_material = $_POST['id_material'];
             $id_user = $_SESSION['user_id'];
             $id_state_order = 3; // Asigna el estado predeterminado
-    
+            $remito_first_part = $_POST['remito_first_part'];
+            $remito_second_part = $_POST['remito_second_part'];
+            $numero_remito = trim($remito_first_part . $remito_second_part);
+
             // Obtener el id_measure basado en el id_material
             $id_measure = getIdMeasureBasedOnMaterial($id_material, $conn);
     
@@ -97,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 // Preparar la consulta con el campo id_measure añadido
                 $stmt = $conn->prepare(SQL_INSERT_BUY);
-                $stmt->bind_param("sidiiiii", $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_state_order);
+                $stmt->bind_param("ssidiiiii", $numero_remito, $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_state_order);
     
                 if ($stmt->execute()) {
                     $response['status'] = 'success';

@@ -117,7 +117,7 @@ $(document).ready(function () {
               messages[fieldName] = {
                 required: "Este campo es obligatorio.",
                 number: "Por favor, ingrese un número válido.",
-                min: "Solo se permiten numeros positivos.",
+                min: "El costo no puede ser negativo!",
               };
               break;
 
@@ -130,9 +130,19 @@ $(document).ready(function () {
               messages[fieldName] = {
                 required: "Este campo es obligatorio.",
                 number: "Por favor, ingrese un número válido.",
-                min: "Solo se permiten numeros positivos.",
+                min: "La cantidad no puede ser negativa!",
               };
               break;
+
+              case "select":
+              rules[fieldName] = {
+                required: true,
+              };
+              messages[fieldName] = {
+                required: "Debe seleccionar una opción.",
+              };
+              break;
+
             case "vtextarea":
               rules[fieldName] = {
                 required: true,
@@ -161,6 +171,33 @@ $(document).ready(function () {
           }
         });
       });
+
+      rules["remito_first_part"] = {
+        required: true,
+        digits: true, // Solo permite dígitos
+        minlength: 4,
+        maxlength: 4,
+      };
+      messages["remito_first_part"] = {
+        required: "Este campo es obligatorio.",
+        digits: "Ingrese solo dígitos.",
+        minlength: "Debe tener exactamente 4 dígitos.",
+        maxlength: "Debe tener exactamente 4 dígitos.",
+      };
+  
+      rules["remito_second_part"] = {
+        required: true,
+        digits: true, // Solo permite dígitos
+        minlength: 8,
+        maxlength: 8,
+      };
+      messages["remito_second_part"] = {
+        required: "Este campo es obligatorio.",
+        digits: "Ingrese solo dígitos.",
+        minlength: "Debe tener exactamente 8 dígitos.",
+        maxlength: "Debe tener exactamente 8 dígitos.",
+      };
+
 
     $(formId).validate({
       rules: rules,
