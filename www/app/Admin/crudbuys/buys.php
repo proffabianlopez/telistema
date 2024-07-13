@@ -55,8 +55,8 @@ include('../../Querys/querys.php');
                                         <option value="date_buy">Fecha</option>
                                         <option value="remittance">N° de Remito</option>
                                         <option value="id_supplier">Proveedor</option>
+                                        <option value="material_name">Producto</option>
                                         <option value="state_name">Estado de Compra</option>
-                                        <option value="material_name">Nombre del Producto</option>
                                     </select>
                                 </div>
                             </div>
@@ -85,8 +85,8 @@ include('../../Querys/querys.php');
                             </div>
                             <div class="col-md-3" id="product_container" style="display: none;">
                                 <div class="form-group">
-                                    <label for="material_name">Nombre de Producto:</label>
-                                    <input type="text" name="material_name" id="material_name" class="form-control" placeholder="N° de Remito">
+                                    <label for="material_name">Producto:</label>
+                                    <input type="text" name="material_name" id="material_name" class="form-control" placeholder="Nombre de Producto">
                                 </div>
                             </div>
                             <div class="col-md-3" id="supplier_container" style="display: none;">
@@ -154,7 +154,7 @@ include('../../Querys/querys.php');
                                         }
 
                                         //Mensaje de depuración para la consulta SQL
-                                        echo "<pre>$sql</pre>";
+                                        //echo "<pre>$sql</pre>";
 
                                         $result = $conn->query($sql);
 
