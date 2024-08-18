@@ -66,14 +66,14 @@ include('../configsmtp/generate_config.php');
                                 <div class="form-group">
                                     <label for="remito">N° Remito <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <input type="text" name="remito_first_part" id="remito_first_part" class="form-control validate-field vcost" placeholder="Primeros 4 dígitos" maxlength="4" style="width: 35%;" required>
-                                        <input type="text" name="remito_second_part" id="remito_second_part" class="form-control validate-field vcost" placeholder="Siguientes 8 dígitos" maxlength="8" style="width: 60%;" required>
+                                        <input type="text" name="remito_first_part" id="remito_first_part" class="form-control validate-field vcost" placeholder="4 dígitos" maxlength="4" style="width: 35%;" required>
+                                        <input type="text" name="remito_second_part" id="remito_second_part" class="form-control validate-field vcost" placeholder="8 dígitos" maxlength="8" style="width: 60%;" required>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="id_material">Producto <span class="text-danger">*</span></label>
-                                    <select name="id_material" id="id_material" class="form-control validate-field select reset">
+                                    <select name="id_material" id="id_material" class="form-control validate-field select reset" >
                                         <option value="" selected disabled></option>
                                         <?php
                                         $stmt = $conn->prepare(SQL_SELECT_MATERIALS);
