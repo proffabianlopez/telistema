@@ -76,12 +76,18 @@ if (isset($_GET['id'])) {
                                     </div>
 
                                     <div class="form-group">
-                                    <label for="remito">N° Remito <span class="text-danger">*</span></label>
+                                        <label for="remito">N° Remito <span class="text-danger">*</span></label>
                                         <div class="input-group">
-                                            <input type="text" name="remito_first_part" id="remito_first_part" class="form-control validate-field vcost" placeholder="Primeros 4 dígitos" maxlength="4" style="width: 35%;" required>
-                                            <input type="text" name="remito_second_part" id="remito_second_part" class="form-control validate-field vcost" placeholder="Siguientes 8 dígitos" maxlength="8" style="width: 60%;" required>
+                                            <!-- Campo para la primera parte del remito (4 dígitos) -->
+                                            <input type="text" name="remito_first_part" id="remito_first_part" class="form-control validate-field vcost" placeholder="4 dígitos" maxlength="4" style="width: 35%;" required 
+                                            value="<?php echo isset($row['remittance']) ? substr($row['remittance'], 0, 4) : ''; ?>" />
+
+                                            <!-- Campo para la segunda parte del remito (8 dígitos) -->
+                                            <input type="text" name="remito_second_part" id="remito_second_part" class="form-control validate-field vcost" placeholder="8 dígitos" maxlength="8" style="width: 60%;" required 
+                                            value="<?php echo isset($row['remittance']) ? substr($row['remittance'], 4) : ''; ?>" />
                                         </div>
                                     </div>
+
 
                                     <div class="form-group">
                                         <label for="material_name">Producto <span class="text-danger">*</span></label>
