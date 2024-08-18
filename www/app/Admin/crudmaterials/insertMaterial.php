@@ -59,7 +59,7 @@ include ('../configsmtp/generate_config.php');
                             <div class="col-md-6">
                                 <div class="form-group">
                                         <label for="id_measure">Unidad de Medida <span class="text-danger">*</span></label>
-                                        <select name="id_measure" id="id_measure" class="form-control reset">
+                                        <select name="id_measure" id="id_measure" class="form-control validate-field select reset">
                                         <option value="" selected disabled></option>
                                         <?php
                                         // Verifica si existe el campo 'id_measure' en el array $row y asígnalo a $state

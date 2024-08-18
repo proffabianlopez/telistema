@@ -517,6 +517,7 @@ define('SQL_SELECT_STATE', '
 define(
         'SQL_INSERT_BUY',
         'INSERT INTO buys (
+                remittance,
                 date_buy,
                 ammount,
                 cost,
@@ -525,11 +526,11 @@ define(
                 id_measure,
                 id_user,
                 id_state_order)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
 );
 
 define('SQL_SELECT_BUYS', '
-        SELECT b.id_buy, b.date_buy, b.ammount, b.cost, m.material_name, s.supplier_name, st.state_order, me.name_measure
+        SELECT b.id_buy, b.remittance, b.date_buy, b.ammount, b.cost, m.material_name, s.supplier_name, st.state_order, me.name_measure
         FROM buys b
         JOIN materials m ON b.id_material = m.id_material
         JOIN measures me ON b.id_measure = me.id_measure
@@ -557,7 +558,8 @@ define(
 define(
         'SQL_UPDATE_BUY',
         'UPDATE buys
-        SET 
+        SET     
+                remittance = ?,
                 date_buy = ?,
                 ammount = ?,
                 cost = ?,
