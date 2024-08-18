@@ -56,11 +56,11 @@ include('../../Querys/querys.php');
                                         <option value="remittance">N° de Remito</option>
                                         <option value="id_supplier">Proveedor</option>
                                         <option value="material_name">Producto</option>
-                                        <option value="state_name">Estado de Compra</option>
+                                        <!-- <option value="state_name">Estado de Compra</option> -->
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3" id="state_name_container" style="display: none;">
+                            <!-- <div class="col-md-3" id="state_name_container" style="display: none;">
                                 <div class="form-group">
                                     <label for="state_name">Estado de Compra:</label>
                                     <select name="state_name" id="state_name" class="form-control">
@@ -70,7 +70,7 @@ include('../../Querys/querys.php');
                                         <option value="Cancelado">Cancelado</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3" id="date_buy_container" style="display: none;">
                                 <div class="form-group">
                                     <label for="date_buy">Fecha:</label>
@@ -170,7 +170,6 @@ include('../../Querys/querys.php');
                                                         <th data-hide="all">N° Remito</th>
                                                         <th data-hide="all">Costo</th>
                                                         <th data-hide="all">Compra</th>
-                                                        <th data-hide="phone">Estado</th>
                                                         <th class="text-right footable-visible footable-sortable footable-last-column footable-sorted">Acción<span class="footable-sort-indicator"></span></th>
                                                     </tr>
                                                     </thead>
@@ -194,16 +193,16 @@ include('../../Querys/querys.php');
                                                     echo '<td>$ ' . $formatted_cost . '</td>';
                                                     echo '<td>' . $formatted_date . '</td>';
 
-                                                    if ($row["state_order"] == "Pendiente") {
-                                                        echo '<td class="footable-visible" style="display: table-cell;">
-                                                            <span class="label label-success">' . $row["state_order"] . '</span></td>';
-                                                    } elseif ($row["state_order"] == "Completado") {
-                                                        echo '<td class="footable-visible" style="display: table-cell;">
-                                                            <span class="label label-primary">' . $row["state_order"] . '</span></td>';
-                                                    } elseif ($row["state_order"] == "Cancelado") {
-                                                        echo '<td class="footable-visible" style="display: table-cell;">
-                                                            <span class="label label-cancel">' . $row["state_order"] . '</span></td>';
-                                                    }
+                                                    // if ($row["state_order"] == "Pendiente") {
+                                                    //     echo '<td class="footable-visible" style="display: table-cell;">
+                                                    //         <span class="label label-success">' . $row["state_order"] . '</span></td>';
+                                                    // } elseif ($row["state_order"] == "Completado") {
+                                                    //     echo '<td class="footable-visible" style="display: table-cell;">
+                                                    //         <span class="label label-primary">' . $row["state_order"] . '</span></td>';
+                                                    // } elseif ($row["state_order"] == "Cancelado") {
+                                                    //     echo '<td class="footable-visible" style="display: table-cell;">
+                                                    //         <span class="label label-cancel">' . $row["state_order"] . '</span></td>';
+                                                    // }
 
                                                     echo '<td class="text-right footable-visible footable-last-column">';
                                                     echo '<div class="btn-group">';
@@ -361,11 +360,11 @@ include('../../Querys/querys.php');
 
             function openDeleteModal(id) {
                 swal({
-                    title: "¿Estás seguro?",
+                    title: "¿Estás seguro que deseas Cancelar?",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#1ab394",
-                    confirmButtonText: "¡Sí, cancelar!",
+                    confirmButtonText: "Sí",
                     cancelButtonText: "Cancelar",
                     closeOnConfirm: false
                 }, function() {
