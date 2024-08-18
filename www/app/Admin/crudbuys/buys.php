@@ -56,11 +56,11 @@ include('../../Querys/querys.php');
                                         <option value="remittance">N° de Remito</option>
                                         <option value="id_supplier">Proveedor</option>
                                         <option value="material_name">Producto</option>
-                                        <option value="state_name">Estado de Compra</option>
+                                        <!-- <option value="state_name">Estado de Compra</option> -->
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3" id="state_name_container" style="display: none;">
+                            <!-- <div class="col-md-3" id="state_name_container" style="display: none;">
                                 <div class="form-group">
                                     <label for="state_name">Estado de Compra:</label>
                                     <select name="state_name" id="state_name" class="form-control">
@@ -70,7 +70,7 @@ include('../../Querys/querys.php');
                                         <option value="Cancelado">Cancelado</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3" id="date_buy_container" style="display: none;">
                                 <div class="form-group">
                                     <label for="date_buy">Fecha:</label>
