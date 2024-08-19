@@ -1,6 +1,5 @@
 <?php
 session_start();
-////////////////////////////////
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
     if ($_SESSION['user_idRol'] != 1) {
         echo "<script> location.href='../includes/404.php'; </script>";
@@ -10,7 +9,6 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 } else {
     echo "<script> location.href='../login.php'; </script>";
 }
-////////////////////////////////
 // Genera un token CSRF y lo guarda en la sesión
 if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));

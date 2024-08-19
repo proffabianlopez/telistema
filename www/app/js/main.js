@@ -171,25 +171,29 @@ $(document).ready(function () {
   function handleFormSubmit(formId, actionUrl) {
     $(formId).on("submit", function (e) {
       e.preventDefault();
-      var formData = $(this).serialize();
-
+      
+      // Crear un objeto FormData para manejar la subida de archivos y otros datos del formulario
+      var formData = new FormData(this);
+  
       if (!$(formId).valid()) {
         return; // Salir si el formulario no es válido
       }
-
+  
       var laddaButton = Ladda.create(
         document.querySelector(formId + " .ladda-button")
       );
       laddaButton.start();
-
+  
       $.ajax({
         type: "POST",
         url: actionUrl,
         data: formData,
         dataType: "json",
+        contentType: false, // No establecer el content-type automáticamente
+        processData: false, // No procesar los datos, enviar el objeto FormData tal como está
         success: function (response) {
           var messageContainer = $("#response-message");
-
+  
           if (response.status === "user_in_deleted") {
             swal(
               {
@@ -202,16 +206,17 @@ $(document).ready(function () {
               },
               function (isConfirm) {
                 if (isConfirm) {
-                  // Mantén el laddaButton activo aquí
                   $.ajax({
                     type: "POST",
                     url: actionUrl + "&isUpdate=true",
                     data: formData,
                     dataType: "json",
+                    contentType: false,
+                    processData: false,
                     success: function (updateResponse) {
-                      laddaButton.stop(); // Detén el laddaButton aquí
+                      laddaButton.stop();
                       if (updateResponse.status === "success") {
-                        $("#myModal6").modal("hide"); // Cierra el modal
+                        $("#myModal6").modal("hide");
                         setTimeout(function () {
                           toastr.options = {
                             closeButton: true,
@@ -222,10 +227,7 @@ $(document).ready(function () {
                               location.reload();
                             },
                           };
-                          toastr.success(
-                            updateResponse.message,
-                            "¡Actualizado!"
-                          );
+                          toastr.success(updateResponse.message, "¡Actualizado!");
                         });
                       } else {
                         swal({
@@ -236,24 +238,23 @@ $(document).ready(function () {
                       }
                     },
                     error: function (xhr, status, error) {
-                      laddaButton.stop(); // Detén el laddaButton aquí
+                      laddaButton.stop();
                       console.error(xhr.responseText);
                       swal({
                         title: "Error",
                         text: "Hubo un problema al actualizar.",
                         type: "error",
-                        setupFormValidatio,
                       });
                     },
                   });
                 } else {
-                  laddaButton.stop(); // Detén el laddaButton si se cancela
+                  laddaButton.stop();
                 }
               }
             );
           } else if (response.status === "success") {
-            laddaButton.stop(); // Detén el laddaButton aquí
-            $("#myModal6").modal("hide"); // Cierra el modal
+            laddaButton.stop();
+            $("#myModal6").modal("hide");
             setTimeout(function () {
               toastr.options = {
                 closeButton: true,
@@ -267,14 +268,14 @@ $(document).ready(function () {
               toastr.success(response.message, "ÉXITO");
             });
           } else {
-            laddaButton.stop(); // Detén el laddaButton aquí
+            laddaButton.stop();
             messageContainer.html(
               '<div class="alert alert-danger">' + response.message + "</div>"
             );
           }
         },
         error: function (xhr, status, error) {
-          laddaButton.stop(); // Detén el laddaButton aquí
+          laddaButton.stop();
           console.log(xhr.responseText);
           $("#response-message").html(
             '<div class="alert alert-danger">Error en la solicitud AJAX: ' +
@@ -285,6 +286,7 @@ $(document).ready(function () {
       });
     });
   }
+  
 
   function buysFormSubmit(formId, actionUrl) {
     $(formId).on("submit", function (e) {
@@ -393,18 +395,25 @@ $(document).ready(function () {
   );
 
 
-   //ORDERS
-   setupFormValidation("#change-insertorder-form");
-   buysFormSubmit(
-     "#change-insertorder-form",
-     "ordersController.php?token=" + token + "&action=add_order"
-   );
-   setupFormValidation("#change-editorder-form");
-   handleFormSubmit(
-     "#change-editorder-form",
-     "ordersController.php?token=" + token + "&action=edit_order"
-   );
+  //ORDERS
+  setupFormValidation("#change-editordertec-form");
+  handleFormSubmit(
+    "#change-editordertec-form",
+    "controllerOrders.php?token=" + token + "&action=edit_order_technic"
+  );
+  setupFormValidation("#change-insertorder-form");
+  buysFormSubmit(
+    "#change-insertorder-form",
+    "ordersController.php?token=" + token + "&action=add_order"
+  );
+  setupFormValidation("#change-editorder-form");
+  handleFormSubmit(
+    "#change-editorder-form",
+    "ordersController.php?token=" + token + "&action=edit_order"
+  );
 
+  
+  
     //PRODUCTS
     setupFormValidation("#add-product-form");
     buysFormSubmit("#add-product-form", 'materialsController.php?token=' + token + '&action=add_product');
