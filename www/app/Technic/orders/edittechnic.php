@@ -134,7 +134,7 @@ if (isset($_POST['id'])) {
                             </div>
                             <div class="form-group">
                                 <label for="name_image" class="form-label">Imagen</label>
-                                <input type="file" class="form-control" id="name_image" name="name_image" accept="image/*"                      >
+                                <input type="file" class="form-control" id="name_image" name="name_image" accept="image/*">
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Actualizar</button>
@@ -163,41 +163,6 @@ if (isset($_POST['id'])) {
             $('#full_name_client').prop('readonly', true);
             $('#full_name_client').attr('disabled', 'disabled');
 
-        });
-    </script>
-    <script>
-        // Asegúrate de que este código se ejecute después de que el DOM esté completamente cargado
-        $(document).ready(function() {
-            $('#change-editordertec-form').on('submit', function(event) {
-                event.preventDefault(); // Prevenir el envío del formulario para depuración
-
-                // Crear un objeto FormData para recoger los datos del formulario
-                var formData = new FormData(this);
-
-                // Convertir el FormData a un objeto simple para loguear
-                var dataObj = {};
-                formData.forEach(function(value, key) {
-                    dataObj[key] = value;
-                });
-
-                // Loguear los datos en la consola
-              console.log('Datos del formulario:', dataObj);
-
-                // Opcional: Enviar el formulario manualmente para probar si los datos están correctos
-                // $.ajax({
-                //     url: $(this).attr('action'),
-                //     method: 'POST',
-                //     data: formData,
-                //     processData: false,
-                //     contentType: false,
-                //     success: function(response) {
-                //         console.log('Respuesta del servidor:', response);
-                //     },
-                //     error: function(jqXHR, textStatus, errorThrown) {
-                //         console.error('Error en la solicitud:', textStatus, errorThrown);
-                //     }
-                // });
-            });
         });
     </script>
     <script src="../../js/main.js"></script>
