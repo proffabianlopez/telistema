@@ -1,14 +1,10 @@
 <?php
 session_start();
-////////////////////////////////
+
 if (!isset($_SESSION['is_login']) || !isset($_GET['token']) || $_GET['token'] !== $_SESSION['token']) {
-    // Si no hay sesión o el token no es válido, redirige al usuario o muestra un mensaje de error
     header("Location:../../includes/404/404.php");
     exit();
   }
-  ////////////////////////////////
-  // Genera un token CSRF y lo guarda en la sesión
-
 if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
@@ -21,52 +17,6 @@ include ('../../Querys/querys.php');
 include ('../configsmtp/generate_config.php');
 include ('../../includes/header.php');
 
-// if (isset($_REQUEST['update'])) {
-//     if (($_POST['order_date'] == "") || ($_POST['order_hour'] == "")) {
-//         $msg = '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert"> Complete los campos </div>';
-//     } else {
-//         $order_date = $_POST['order_date'];
-//         $order_hour = $_POST['order_hour'];
-//         $order_description = $_POST['order_description'];
-//         $order_server = $_POST['order_server'];
-//         $address = capitalizeWords($_POST['address']);
-//         $height = $_POST['height'];
-//         $floor = trim($_POST['floor']);
-//         $departament = trim($_POST['departament']);
-//         $id_client = $_POST['id_client'];
-//         $id_priority = trim($_POST['id_priority']);
-//         $id_material = trim($_POST['id_material']);
-//         $id_state_order = trim($_POST['id_state_order']);
-//         $technic_id = trim($_POST['technic_id']);
-//         $id_order = $_POST['id_order'];
-
-//         $sql = SQL_UPDATE_ORDER;
-//         $stmt = $conn->prepare($sql);
-//         $stmt->bind_param(
-//             "sssisissiiiiii",
-//             $order_date,
-//             $order_hour,
-//             $order_description,
-//             $order_server,
-//             $address,
-//             $height,
-//             $floor,
-//             $departament,
-//             $id_client,
-//             $id_priority,
-//             $id_material,
-//             $id_state_order,
-//             $technic_id,
-//             $id_order
-//         );
-
-//         if ($stmt->execute()) {
-//             $msg = '<div class="alert alert-success col-sm-6 ml-5 mt-2" role="alert"> Actualizado con éxito </div>';
-//         } else {
-//             $msg = '<div class="alert alert-danger col-sm-6 ml-5 mt-2" role="alert"> No se pudo actualizar </div>';
-//         }
-//     }
-// }
 if (isset($_POST['id'])) {
     $id = explode('*', $_POST['id']);
 
@@ -82,9 +32,7 @@ if (isset($_POST['id'])) {
         echo '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">No se encontró ningúna orden con ese ID.</div>';
     }
 }
-
 ?>
-
 <body>
     <div class="modal inmodal fade" id="myModal6" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -93,15 +41,12 @@ if (isset($_POST['id'])) {
                     <button type="button" class="close reload" data-dismiss="modal">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                     </button>
-
                     <h4 class="modal-title">Editar Orden</h4>
                 </div>
                 <div class="modal-body">
                     <form id="change-editorder-form" action="" method="POST">
-                        <!-- Contenedor principal flex -->
                         <div class="container-fluid">
                             <div class="row">
-                                <!-- Primera columna -->
                                 <div class="col-md-6">
                                     <div style="display: none;" class="form-group">
                                         <label for="id_order">N° de Orden</label>
@@ -183,7 +128,6 @@ if (isset($_POST['id'])) {
                                             } ?></textarea>
                                     </div>
                                 </div>
-                                <!-- Segunda columna -->
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="address">Dirección  <span class="text-danger">*</span></label>
@@ -220,12 +164,9 @@ if (isset($_POST['id'])) {
                             <div class="text-center" id="response-message"></div>
                         </div>
                     </form>
-
-
-
                     <div class="p-xxs font-italic bg-muted border-top-bottom text">
                         <span class="font-bold">NOTA:</span> Al editar una Orden, asegúrese de revisar y actualizar
-                        correctamente todos los campos. Los cambios realizados se reflejarán inmediatamente en el
+                        correctamente todos los campos. Los cambios realizados se reflejarán inmediatamente en el 
                         sistema.<br>
                         <span class="text-danger">*</span> Campo Obligatorio
                     </div>

@@ -608,7 +608,31 @@ define('SQL_ORDER_BY_ID_TEC', '
     LEFT JOIN
         clients cl ON o.id_client = cl.id_client
     WHERE 
-        o.technic_id = ?');
+        o.technic_id = ?
+    AND 
+        o.id_state_order != 5
+');
+
+define('SQL_UPDATE_ORDER_TECHNIC', '
+        UPDATE 
+                orders
+        SET 
+                order_description = ?,
+                address = ?, 
+                height = ?,
+                floor = ?,
+                departament = ?,
+                id_client = ?,
+                id_priority = ?,
+                id_state_order = ?,
+                technic_id = ?
+        WHERE   
+                id_order = ?');
+
+define('SQL_INSERT_IMG_ORDER',
+        'INSERT INTO images (name_image, id_order)
+        VALUES (?, ?)');
+            
 /////////////////////////////////////////////////////////////////////////////////////
 // orders_dashboard
 //////////////////////////////////////////////////////////////////

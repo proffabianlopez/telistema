@@ -16,12 +16,11 @@ $response = [
 ];
 
 if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
-    if ($_SESSION['user_idRol'] != 1) {
+    if ($_SESSION['user_idRol'] != 1 ) {
         $response['message'] = 'Acceso denegado.';
         echo json_encode($response);
         exit;
     }
-
 } else {
     $response['message'] = 'Por favor, inicie sesión para continuar.';
     echo json_encode($response);
@@ -143,4 +142,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode($response);
     exit;
 }
-?>

@@ -9,6 +9,10 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 } else {
   echo "<script> location.href='../../login.php'; </script>";
 }
+if (!isset($_SESSION['token'])) {
+  $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+$token = $_SESSION['token'];
 
 define('TITLE', 'Ordenes');
 define('PAGE', 'Ordenes technic');
@@ -79,17 +83,14 @@ include('../../includes/header.php');
                   <div class="small m-t-xs">
                     Dirección: <?php echo $row["address"] . " " . $row["height"]; ?><br>
                     Descripción: <?php echo $row["order_description"]; ?>
-                    
                   </div>
                   <div class="m-t text-right">
-                  <form action="orderInfo.php" method="POST" style="display:inline;">
-    <input type="hidden" name="id_order" value="<?php echo $row['id_order']; ?>">
-    <button class="btn btn-xs btn-outline btn-primary" type="submit" name="view" value="View">
-        Info <i class="fa fa-long-arrow-right"></i>
-    </button>
-</form>
-
-                  </div>
+                    <?php 
+                    echo '<button id="edit-' . $row["id_order"] . '-' . $token . '" data-crud="technicians" class="modaledit-btn" style="margin-right: 5px">
+                            Info <i class="fa fa-long-arrow-right"></i>
+                          </button>';
+                    ?>
+                </div>
 
                 </div>
               </div>
@@ -112,6 +113,7 @@ include('../../includes/header.php');
       </div>
     </div>
   </div>
+  <div id="edit-form-container" style="display: none;"></div>
 <?php
 include('../../includes/footer.php');
 ?>
