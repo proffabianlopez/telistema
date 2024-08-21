@@ -69,18 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     echo json_encode($response);
                     exit;
                 }
-            } elseif (empty($ruta_imagen)) {
-                $response['message'] = 'La imagen es obligatoria.';
-                echo json_encode($response);
-                exit;
-            }
-            if (empty($ruta_imagen) || !is_numeric($id_order)) {
-                $response['message'] = 'Datos inválidos.';
-                echo json_encode($response);
-                exit;
             }
 
-            $stmt = $conn->prepare(SQL_INSERT_IMG_ORDER);
+            if ($ruta_imagen) {
+                $stmt = $conn->prepare(SQL_INSERT_IMG_ORDER);
             if ($stmt === false) {
                 $response['message'] = 'Error en la preparación de la consulta: ' . $conn->error;
                 echo json_encode($response);
@@ -95,6 +87,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
             $stmt->close();
+            }
+
+            
 
             $sql = SQL_UPDATE_ORDER_TECHNIC; 
             $stmt = $conn->prepare($sql);
