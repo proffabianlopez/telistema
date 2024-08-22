@@ -1,0 +1,8 @@
+.config.php
+.querys.php
+.vscode/
+/data
+/Querys
+.env
+.yml
+.sql
