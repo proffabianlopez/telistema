@@ -4,7 +4,6 @@ session_start();
 
 // Verifica si la sesión está iniciada y el token es válido
 if (!isset($_SESSION['is_login']) || !isset($_GET['token']) || $_GET['token'] !== $_SESSION['token']) {
-    // Si no hay sesión o el token no es válido, redirige al usuario o muestra un mensaje de error
     header("Location:../../includes/404/404.php");
     exit();
 }
@@ -14,27 +13,22 @@ if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
 }
 $token = $_SESSION['token'];
+
 include('../../dbConnection.php');
 include('../../Querys/querys.php');
-include('../configsmtp/generate_config.php');
-include('../configsmtp/endEmail.php');
 
 if (isset($_GET['id'])) {
-
     $id_user = $_GET['id'];
-    $stmt = $conn->prepare(SQL_SELECT_BUYS);
-    $stmt->bind_param("i", $id_user);
-    $stmt->execute();
 
-    // Obtener resultados de la consulta
+    // Preparar la consulta para obtener la compra específica
+    $stmt = $conn->prepare(SQL_SELECT_BUY_BY_ID);
+    $stmt->bind_param('i', $id_user);
+    $stmt->execute();
     $result = $stmt->get_result();
 
-    // Verificar si hay resultados
     if ($result->num_rows > 0) {
-        // Obtener la fila como un array asociativo
         $row = $result->fetch_assoc();
     } else {
-        // Mostrar un mensaje si no se encuentra ningún cliente con el ID proporcionado
         echo '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">No se encontró ningún producto con ese ID.</div>';
     }
 } else {
@@ -70,39 +64,38 @@ if (isset($_GET['id'])) {
                                 <div class="col-md-6">
                                     <div style="display: none" class="form-group">
                                         <label for="id_buy">ID Compra</label>
-                                        <input type="text" class="form-control" id="id_buy" name="id_buy" value="<?php if (isset($row['id_buy'])) {
-                                            echo $row['id_buy'];
-                                        } ?>" readonly>
+                                        <input type="text" class="form-control" id="id_buy" name="id_buy" value="<?php echo isset($row['id_buy']) ? $row['id_buy'] : ''; ?>" readonly>
                                     </div>
-
+                                    <div class="form-group">
+                                        <label for="date_buy">Fecha:</label>
+                                        <input type="date" name="date_buy" id="date_buy" class="form-control" value="<?php echo isset($row['date_buy']) ? $row['date_buy'] : ''; ?>">
+                                    </div>
                                     <div class="form-group">
                                         <label for="remito">N° Remito <span class="text-danger">*</span></label>
                                         <div class="input-group">
-                                            <!-- Campo para la primera parte del remito (4 dígitos) -->
-                                            <input type="text" name="remito_first_part" id="remito_first_part" class="form-control validate-field vcost" placeholder="4 dígitos" maxlength="4" style="width: 35%;" required 
-                                            value="<?php echo isset($row['remittance']) ? substr($row['remittance'], 0, 4) : ''; ?>" />
-
-                                            <!-- Campo para la segunda parte del remito (8 dígitos) -->
-                                            <input type="text" name="remito_second_part" id="remito_second_part" class="form-control validate-field vcost" placeholder="8 dígitos" maxlength="8" style="width: 60%;" required 
-                                            value="<?php echo isset($row['remittance']) ? substr($row['remittance'], 4) : ''; ?>" />
+                                            <input type="text" name="remito_first_part" id="remito_first_part" class="form-control validate-field vcost" placeholder="4 dígitos" maxlength="4" style="width: 35%;" required value="<?php echo isset($row['remittance']) ? substr($row['remittance'], 0, 4) : ''; ?>" />
+                                            <input type="text" name="remito_second_part" id="remito_second_part" class="form-control validate-field vcost" placeholder="8 dígitos" maxlength="8" style="width: 60%;" required value="<?php echo isset($row['remittance']) ? substr($row['remittance'], 4) : ''; ?>" />
                                         </div>
                                     </div>
-
 
                                     <div class="form-group">
                                         <label for="material_name">Producto <span class="text-danger">*</span></label>
                                         <select name="id_material" id="id_material" class="form-control">
                                             <?php
-                                            // Obtener todos los estados de la tabla measures
-                                            $stmt = $conn->prepare(SQL_SELECT_MATERIALS);
+                                            // Obtener todos los productos de la tabla materials
+                                            $stmt = $conn->prepare("SELECT id_material, material_name FROM materials");
                                             $stmt->execute();
-                                            $rows = $stmt->get_result();
+                                            $result = $stmt->get_result();
 
-                                            foreach ($rows as $state) {
-                                                $stateName = $state["material_name"];
-                                                $stateId = $state["id_material"];
-                                                $selected = ($stateId == $id_measure) ? "selected" : "";
-                                                echo "<option value='$stateId' $selected>$stateName</option>";
+                                            // ID del material asociado a la compra actual
+                                            $id_material_compra = isset($row['id_material']) ? $row['id_material'] : '';
+
+                                            while ($material = $result->fetch_assoc()) {
+                                                $materialId = $material['id_material'];
+                                                $materialName = $material['material_name'];
+                                                // Verifica si el ID del material coincide con el ID seleccionado en la compra
+                                                $selected = ($materialId == $id_material_compra) ? "selected" : "";
+                                                echo "<option value='$materialId' $selected>$materialName</option>";
                                             }
                                             ?>
                                         </select>
@@ -112,34 +105,33 @@ if (isset($_GET['id'])) {
                                         <label for="id_supplier">Proveedor</label>
                                         <select name="id_supplier" id="id_supplier" class="form-control">
                                             <?php
-                                            // Obtener todos los estados de la tabla measures
-                                            $stmt = $conn->prepare(SQL_FROM_SUPPLIERS);
+                                            // Obtener todos los proveedores de la tabla suppliers
+                                            $stmt = $conn->prepare("SELECT id_supplier, supplier_name FROM suppliers");
                                             $stmt->execute();
-                                            $rows = $stmt->get_result();
+                                            $result = $stmt->get_result();
 
-                                            foreach ($rows as $state) {
-                                                $stateName = $state["supplier_name"];
-                                                $stateId = $state["id_supplier"];
-                                                $selected = ($stateId == $id_measure) ? "selected" : "";
-                                                echo "<option value='$stateId' $selected>$stateName</option>";
+                                            // ID del proveedor asociado a la compra actual
+                                            $currentSupplierId = isset($row['id_supplier']) ? $row['id_supplier'] : '';
+
+                                            while ($supplier = $result->fetch_assoc()) {
+                                                $supplierId = $supplier['id_supplier'];
+                                                $supplierName = $supplier['supplier_name'];
+                                                // Verifica si el ID del proveedor coincide con el ID seleccionado en la compra
+                                                $selected = ($supplierId == $currentSupplierId) ? "selected" : "";
+                                                echo "<option value='$supplierId' $selected>$supplierName</option>";
                                             }
                                             ?>
                                         </select>
                                     </div>
-
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="cost">Costo</label>
-                                        <input type="number" name="cost" id="cost" class="form-control" value="<?php if (isset($row['cost'])) {
-                                                                                                                    echo $row['cost'];
-                                                                                                                } ?>" />
+                                        <input type="number" name="cost" id="cost" class="form-control" value="<?php echo isset($row['cost']) ? $row['cost'] : ''; ?>" />
                                     </div>
                                     <div class="form-group">
                                         <label for="ammount">Cantidad</label>
-                                        <input type="number" class="form-control" id="ammount" name="ammount" value="<?php if (isset($row['ammount'])) {
-                                                                                                                            echo $row['ammount'];
-                                                                                                                        } ?>" />
+                                        <input type="number" class="form-control" id="ammount" name="ammount" value="<?php echo isset($row['ammount']) ? $row['ammount'] : ''; ?>" />
                                     </div>
                                 </div>
 
@@ -149,9 +141,8 @@ if (isset($_GET['id'])) {
                                 </div>
                                 <div class="text-center" id="response-message"></div>
                             </div>
-                        </div>    
+                        </div>
                     </form>
-
 
                     <div class="p-xxs font-italic bg-muted border-top-bottom text">
                         <span class="font-bold">NOTA:</span> Al editar un producto, asegúrese de revisar y actualizar correctamente todos los campos. Los cambios realizados se reflejarán inmediatamente en el sistema.
@@ -174,7 +165,7 @@ if (isset($_GET['id'])) {
 
                 $.ajax({
                     type: 'POST',
-                    url: 'buysController.php?token=<?php echo $_SESSION["token"]; ?>&action=edit_buy', // La URL de tu archivo PHP
+                    url: 'buysController.php?token=<?php echo $_SESSION["token"]; ?>&action=edit_buy',
                     data: formData,
                     dataType: 'json',
                     success: function(response) {
