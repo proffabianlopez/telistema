@@ -610,8 +610,9 @@ define('SQL_ORDER_BY_ID_TEC', '
     WHERE 
         o.technic_id = ?
     AND 
-        o.id_state_order != 5
+        o.id_state_order NOT IN (4, 5)
 ');
+
 
 define('SQL_UPDATE_ORDER_TECHNIC', '
         UPDATE 
@@ -632,6 +633,38 @@ define('SQL_UPDATE_ORDER_TECHNIC', '
 define('SQL_INSERT_IMG_ORDER',
         'INSERT INTO images (name_image, id_order)
         VALUES (?, ?)');
+
+define('SQL_SELECT_ORDERS_TECHNIC', '
+    SELECT 
+        o.id_order, 
+        o.order_date, 
+        o.order_description,
+        o.address, 
+        o.height,
+        o.floor, 
+        o.departament,
+        o.id_client, 
+        p.priority,
+        so.state_order,
+        u.name_user,
+        u.surname_user,
+        cl.client_name,
+        cl.client_lastname
+    FROM 
+        orders o
+    INNER JOIN 
+        prioritys p ON o.id_priority = p.id_priority
+    LEFT JOIN 
+        states_orders so ON o.id_state_order = so.id_state_order
+    LEFT JOIN 
+        users u ON o.technic_id = u.id_user
+    LEFT JOIN
+        clients cl ON o.id_client = cl.id_client
+    WHERE 
+        o.technic_id = ? AND so.id_state_order = 4
+    ORDER BY 
+        o.id_order ASC
+');
             
 /////////////////////////////////////////////////////////////////////////////////////
 // orders_dashboard

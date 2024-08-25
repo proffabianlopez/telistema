@@ -48,6 +48,18 @@ include('../../includes/header.php');
       <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
           <h2>Ordenes de Trabajo</h2>
+          <ol class="breadcrumb">
+                    <li>
+                        <a href="../dashboard/dashboard.php">Inicio</a>
+                    </li>
+                    <li class="active">
+                        <strong>Ordenes de trabajo</strong>
+                    </li>
+                    <li>
+                        <a href="historyOrders.php">Historial de Ordenes</a>
+                    </li>
+
+                </ol>
         </div>
       </div>
       <div class="wrapper wrapper-content animated fadeInRight">

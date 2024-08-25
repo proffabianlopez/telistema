@@ -31,8 +31,11 @@
     <!-- Toastr style -->
     <link href="../../css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
-      <!-- Gritter -->
-      <link href="../../js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+    <!-- Gritter -->
+    <link href="../../js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+
+    <!-- DataTables -->
+    <link href="../../css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 
     <style>
         .password-container {
