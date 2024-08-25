@@ -43,7 +43,6 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Compra</title>
-    <!-- Incluye tus estilos y scripts aquí -->
 </head>
 
 <body>
@@ -83,7 +82,7 @@ if (isset($_GET['id'])) {
                                         <select name="id_material" id="id_material" class="form-control">
                                             <?php
                                             // Obtener todos los productos de la tabla materials
-                                            $stmt = $conn->prepare("SELECT id_material, material_name FROM materials");
+                                            $stmt = $conn->prepare(SQL_SELECT_MATERIALS);
                                             $stmt->execute();
                                             $result = $stmt->get_result();
 
@@ -106,7 +105,7 @@ if (isset($_GET['id'])) {
                                         <select name="id_supplier" id="id_supplier" class="form-control">
                                             <?php
                                             // Obtener todos los proveedores de la tabla suppliers
-                                            $stmt = $conn->prepare("SELECT id_supplier, supplier_name FROM suppliers");
+                                            $stmt = $conn->prepare(SQL_FROM_SUPPLIERS);
                                             $stmt->execute();
                                             $result = $stmt->get_result();
 
