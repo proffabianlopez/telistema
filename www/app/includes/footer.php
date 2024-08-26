@@ -77,3 +77,8 @@
 
 <!-- MAIN -->
 <script src="../../js/main.js"></script>
+
+<!-- DataTables-->
+<script src="../../js/plugins/dataTables/datatables.min.js"></script>
+
+    
