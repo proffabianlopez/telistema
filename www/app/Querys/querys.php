@@ -566,7 +566,6 @@ define(
                 cost = ?,
                 id_supplier = ?,
                 id_material = ?,
-                id_measure = ?,
                 id_user = ?
         WHERE id_buy = ?'
 );
