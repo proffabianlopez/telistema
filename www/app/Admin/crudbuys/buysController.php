@@ -37,8 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Checking for Empty Fields
         if (empty($_REQUEST["id_material"])) {
             $response['message'] = 'El campo Nombre es obligatorio.';
-        } elseif (empty($_REQUEST["id_measure"])) {
-            $response['message'] = 'El campo Medida es obligatorio.';
         } elseif (empty($_REQUEST["id_supplier"])) {
             $response['message'] = 'El campo Proveedor es obligatorio.';
         } elseif (empty($_REQUEST["cost"])) {
@@ -59,14 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $cost = $_REQUEST['cost'];
             $id_supplier = $_REQUEST['id_supplier'];
             $id_material = $_REQUEST['id_material'];
-            $id_measure = $_REQUEST['id_measure'];
             $id_user = $_SESSION['user_id'];
 
-            $numero_remito = trim($remito_first_part . "-" . $remito_second_part);
+            $numero_remito = trim($remito_first_part . $remito_second_part);
 
             $stmt = $conn->prepare(SQL_UPDATE_BUY);
 
-            $stmt->bind_param("ssidiiiii", $numero_remito, $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_measure, $id_user, $id_buy);
+            $stmt->bind_param("ssidiiii", $numero_remito, $formatted_date_buy, $ammount, $cost, $id_supplier, $id_material, $id_user, $id_buy);
 
             if ($stmt->execute()) {
                 $response['status'] = 'success';

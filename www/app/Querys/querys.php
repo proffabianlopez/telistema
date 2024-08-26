@@ -536,15 +536,16 @@ define('SQL_SELECT_BUYS', '
         JOIN measures me ON b.id_measure = me.id_measure
         JOIN suppliers s ON b.id_supplier = s.id_supplier
         JOIN states_orders st ON b.id_state_order = st.id_state_order
-        WHERE 1=1');
-
-define(
-        'SQL_SELECT_BUY_BY_ID',
-        '
-        SELECT u.*
-        FROM buys u
-        WHERE u.id_buy = ?;'
+        WHERE 1=1'
 );
+
+
+define('SQL_SELECT_BUY_BY_ID', '
+            SELECT b.id_buy, b.remittance, b.date_buy, b.ammount, b.cost, b.id_material, b.id_supplier, b.id_measure
+            FROM buys b
+            WHERE b.id_buy = ?'
+);
+        
 
 define(
         'SQL_MODIFY_STATUS_BUY',
@@ -565,7 +566,6 @@ define(
                 cost = ?,
                 id_supplier = ?,
                 id_material = ?,
-                id_measure = ?,
                 id_user = ?
         WHERE id_buy = ?'
 );
