@@ -98,8 +98,11 @@ include('../../includes/header.php');
                   </div>
                   <div class="m-t text-right">
                     <?php 
-                    echo '<button id="edit-' . $row["id_order"] . '-' . $token . '" data-crud="technicians" class="modaledit-btn" style="margin-right: 5px">
-                            Info <i class="fa fa-long-arrow-right"></i>
+                    echo '<button id="edit-' . $row["id_order"] . '-' . $token . '" data-crud="reports" class="modaledit-btn btn btn-xs btn-outline btn-primary" style="margin-right: 5px">
+                    Reporte
+                  </button>';   
+                    echo '<button id="edit-' . $row["id_order"] . '-' . $token . '" data-crud="technicians" class="modaledit-btn btn btn-xs btn-outline btn-primary" style="margin-right: 5px">
+                            Info
                           </button>';
                     ?>
                 </div>

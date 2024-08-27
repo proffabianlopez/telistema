@@ -618,15 +618,8 @@ define('SQL_UPDATE_ORDER_TECHNIC', '
         UPDATE 
                 orders
         SET 
-                order_description = ?,
-                address = ?, 
-                height = ?,
-                floor = ?,
-                departament = ?,
-                id_client = ?,
-                id_priority = ?,
                 id_state_order = ?,
-                technic_id = ?
+                report_technic  = ?
         WHERE   
                 id_order = ?');
 
