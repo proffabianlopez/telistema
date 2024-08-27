@@ -31,20 +31,13 @@ include('../../Admin/configsmtp/generate_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_GET['action'] === 'edit_order_technic') {
-        if (empty($_POST['order_description'])) {
-            $response['message'] = 'El campo Descripción es obligatorio.';
-        } elseif (empty($_POST['address'])) {
-            $response['message'] = 'El campo Dirección es obligatorio.';
+        if (empty($_POST['id_state_order'])) {
+            $response['message'] = 'El campo Estado es obligatorio.';
+        } elseif (empty($_POST['report_technic'])) {
+            $response['message'] = 'El campo Reporte es obligatorio.';
         } else {
-            $order_description = $_POST['order_description'];
-            $address = capitalizeWords($_POST['address']);
-            $height = $_POST['height'];
-            $floor = trim($_POST['floor']);
-            $departament = trim($_POST['departament']);
-            $id_client = $_POST['id_client'];
-            $id_priority = trim($_POST['id_priority']);
             $id_state_order = trim($_POST['id_state_order']);
-            $technic_id = trim($_POST['technic_id']);
+            $report_technic = $_POST['report_technic'];
             $id_order = $_POST['id_order'];
 
             $ruta_imagen = '';
@@ -78,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode($response);
                 exit;
             }
-
             $stmt->bind_param("si", $ruta_imagen, $id_order);
             if (!$stmt->execute()) {
                 $response['message'] = 'No se pudo agregar la imagen: ' . $stmt->error;
@@ -100,16 +92,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $stmt->bind_param(
-                "ssissiiiii",
-                $order_description,
-                $address,
-                $height,
-                $floor,
-                $departament,
-                $id_client,
-                $id_priority,
+                "isi",
                 $id_state_order,
-                $technic_id,
+                $report_technic,
                 $id_order
             );
 
