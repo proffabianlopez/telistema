@@ -39,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id_state_order = trim($_POST['id_state_order']);
             $report_technic = $_POST['report_technic'];
             $id_order = $_POST['id_order'];
-
             $ruta_imagen = '';
 
             if (isset($_FILES['name_image']) && $_FILES['name_image']['error'] === UPLOAD_ERR_OK) {
@@ -64,24 +63,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            if ($ruta_imagen) {
-                $stmt = $conn->prepare(SQL_INSERT_IMG_ORDER);
-            if ($stmt === false) {
-                $response['message'] = 'Error en la preparación de la consulta: ' . $conn->error;
-                echo json_encode($response);
-                exit;
-            }
-            $stmt->bind_param("si", $ruta_imagen, $id_order);
-            if (!$stmt->execute()) {
-                $response['message'] = 'No se pudo agregar la imagen: ' . $stmt->error;
-                $stmt->close();
-                echo json_encode($response);
-                exit;
-            }
-            $stmt->close();
-            }
+            if (!empty($ruta_imagen)) {
+                $sql_check_image = SQL_SELECT_IMG_TECHNIC;
+                $stmt_check = $conn->prepare($sql_check_image);
+                $stmt_check->bind_param("i", $id_order);
+                $stmt_check->execute();
+                $result_check = $stmt_check->get_result();
+                
+                if ($result_check->num_rows > 0) {
+                    // Si ya hay una imagen para la orden,mensaje de error
+                    $response['message'] = 'Esta orden ya tiene una imagen registrada en el sistema.';
+                    echo json_encode($response);
+                    exit;
+                }
 
-            
+                $stmt = $conn->prepare(SQL_INSERT_IMG_ORDER);
+                if ($stmt === false) {
+                    $response['message'] = 'Error en la preparación de la consulta: ' . $conn->error;
+                    echo json_encode($response);
+                    exit;
+                }
+                $stmt->bind_param("si", $ruta_imagen, $id_order);
+                if (!$stmt->execute()) {
+                    $response['message'] = 'No se pudo agregar la imagen: ' . $stmt->error;
+                    $stmt->close();
+                    echo json_encode($response);
+                    exit;
+                }
+                $stmt->close();
+            }
 
             $sql = SQL_UPDATE_ORDER_TECHNIC; 
             $stmt = $conn->prepare($sql);
@@ -115,4 +125,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode($response);
     exit;
 }
-
