@@ -658,7 +658,15 @@ define('SQL_SELECT_ORDERS_TECHNIC', '
     ORDER BY 
         o.id_order ASC
 ');
-            
+
+define(
+        'SQL_SELECT_IMG_TECHNIC',
+        'SELECT * 
+        FROM images 
+        WHERE id_order = ?'
+);
+
+  
 /////////////////////////////////////////////////////////////////////////////////////
 // orders_dashboard
 //////////////////////////////////////////////////////////////////
