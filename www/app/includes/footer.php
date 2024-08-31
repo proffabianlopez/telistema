@@ -81,4 +81,3 @@
 <!-- DataTables-->
 <script src="../../js/plugins/dataTables/datatables.min.js"></script>
 
-    
