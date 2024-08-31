@@ -41,7 +41,6 @@ if ($result->num_rows > 0) {
     echo '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">No se encontró ningún usuario con el ID proporcionado.</div>';
     exit;
 }
-
 ?>
 
 <body>
@@ -79,14 +78,15 @@ if ($result->num_rows > 0) {
                                 </div>
                                 <!-- Campo Nombre -->
                                 <div class="form-group">
-                                    <label for="name_user">Nombre <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control validate-field vname" id="name_user" name="name_user" value="<?php echo htmlspecialchars($row['name_user']); ?>" required>
+                                    <label for="name_user">Nombre <span class="text-danger"></span></label>
+                                    <input type="text" class="form-control validate-field vname" id="name_user" name="name_user" value="<?php echo htmlspecialchars($row['name_user']); ?>">
                                 </div>
                                 <!-- Campo Apellido -->
                                 <div class="form-group">
-                                    <label for="surname_user">Apellido <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control validate-field vname" id="surname_user" name="surname_user" value="<?php echo htmlspecialchars($row['surname_user']); ?>" required>
+                                    <label for="surname_user">Apellido <span class="text-danger"></span></label>
+                                    <input type="text" class="form-control validate-field vname" id="surname_user" name="surname_user" value="<?php echo htmlspecialchars($row['surname_user']); ?>">
                                 </div>
+                                <!-- Campo Mail -->
                                 <div class="form-group">
                                     <label for="mail">Email (no editable)</label>
                                     <p class="form-control" id="mail" name="mail"><?php echo htmlspecialchars($row['mail']); ?></p>
@@ -96,13 +96,28 @@ if ($result->num_rows > 0) {
                             <div class="col-md-6">
                                 <!-- Campo Cargo -->
                                 <div class="form-group">
-                                    <label for="rol">Cargo</label>
-                                    <label class="form-control" id="user_role"><?php echo htmlspecialchars($row['user_role']); ?></label>
+                                    <label for="user_role">Cargo</label>
+                                    <p class="form-control" id="user_role">
+                                        <?php
+                    
+                                        switch ($row['id_rol']) {
+                                            case 1:
+                                                echo 'Administrador';
+                                                break;
+                                            case 2:
+                                                echo 'Técnico';
+                                                break;
+                                            default:
+                                                echo 'Desconocido';
+                                                break;
+                                        }
+                                        ?>
+                                    </p>
                                 </div>
                                 <!-- Campo Teléfono -->
                                 <div class="form-group">
-                                    <label for="phone_user">Teléfono <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control validate-field vphone" id="phone_user" name="phone_user" placeholder="5491234567890" value="<?php echo htmlspecialchars($row['phone_user']); ?>" onkeypress="isInputNumber(event)" required>
+                                    <label for="phone_user">Teléfono <span class="text-danger"></span></label>
+                                    <input type="number" class="form-control validate-field vphone" id="phone_user" name="phone_user" placeholder="5491234567890" value="<?php echo htmlspecialchars($row['phone_user']); ?>" onkeypress="isInputNumber(event)">
                                 </div>
                                 <!-- Campo Generar nueva contraseña -->
                                 <div class="form-group">
@@ -135,7 +150,6 @@ if ($result->num_rows > 0) {
         </div>
     </div>
 
-    <div id="edit-form-container" style="display: none;"></div>
     <?php include('../../includes/footer.php'); ?>
     <script>
         $(document).ready(function () {
