@@ -28,7 +28,7 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
                     </span> <span class="text-muted text-xs block"><?php echo ucfirst($_SESSION['user_role']) ?><b
                             class="caret"></b></span>
                 </span> </a>
-                <a href="../../Admin/dashboard/profile.php">Mi Perfil
+                <a href="../../Admin/profileAdmin/profile.php">Mi Perfil
                 </a>
         <div class="logo-element">
             TL+
