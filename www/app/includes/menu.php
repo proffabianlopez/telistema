@@ -28,10 +28,8 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
                     </span> <span class="text-muted text-xs block"><?php echo ucfirst($_SESSION['user_role']) ?><b
                             class="caret"></b></span>
                 </span> </a>
-            <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                <li><a href="../logout.php">Cerrar Sesión</a></li>
-            </ul>
-        </div>
+                <a href="../../Admin/dashboard/profile.php">Mi Perfil
+                </a>
         <div class="logo-element">
             TL+
         </div>
@@ -130,6 +128,7 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
                     Cambiar Clave</span>
             </a>
         </li> -->
+        
         <?php } ?>
 
         <!-- TECNICO -->
