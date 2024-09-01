@@ -37,6 +37,14 @@
     <!-- DataTables -->
     <link href="../../css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 
+    <link href="../../css/plugins/summernote/summernote.css" rel="stylesheet">
+    
+    <link href="../../css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+
+    <link href="../../css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
+    <link href="css/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
+
     <style>
         .password-container {
             position: relative;

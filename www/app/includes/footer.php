@@ -81,3 +81,11 @@
 <!-- DataTables-->
 <script src="../../js/plugins/dataTables/datatables.min.js"></script>
 
+<!-- SUMMERNOTE -->
+<script src="../../js/plugins/summernote/summernote.min.js"></script>
+
+<!-- Data picker -->
+<script src="../../js/plugins/datapicker/bootstrap-datepicker.js"></script>
+   
+<!-- blueimp gallery -->
+<script src="js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>

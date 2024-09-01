@@ -636,13 +636,15 @@ define('SQL_SELECT_ORDERS_TECHNIC', '
         o.height,
         o.floor, 
         o.departament,
+        o.report_technic,
         o.id_client, 
         p.priority,
         so.state_order,
         u.name_user,
         u.surname_user,
         cl.client_name,
-        cl.client_lastname
+        cl.client_lastname,
+        i.name_image
     FROM 
         orders o
     INNER JOIN 
@@ -653,6 +655,8 @@ define('SQL_SELECT_ORDERS_TECHNIC', '
         users u ON o.technic_id = u.id_user
     LEFT JOIN
         clients cl ON o.id_client = cl.id_client
+    LEFT JOIN 
+        images i ON o.id_order = i.id_order
     WHERE 
         o.technic_id = ? AND so.id_state_order = 4
     ORDER BY 
