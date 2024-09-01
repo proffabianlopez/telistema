@@ -19,7 +19,7 @@ include('../../dbConnection.php');
 include('../../Querys/querys.php');
 
 ////////////////////////////////
-$sql = SQL_COUNT_ORDERS_WITH_STATE;
+$sql = SQL_COUNT_ORDERS_WITH_STATE30;
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -29,6 +29,11 @@ if ($result->num_rows > 0) {
   $realizadas = $row['realizadas'];
   $totalordenes=$row['total_orders'];
   $ordenescriticas=$row['criticas'];
+  $porcentaje_confirmadas = $row['porcentaje_confirmadas'];
+  $porcentaje_pendientes = $row['porcentaje_pendientes'];
+  $porcentaje_realizadas = $row['porcentaje_realizadas'];
+  $porcentaje_criticas=$row['porcentaje_criticas'];
+  
 } else {
   $confirmadas = $pendientes = $realizadas =$totalordenes=$ordenescriticas= 0;
 }
@@ -70,7 +75,7 @@ if ($result->num_rows > 0) {
                             </div>
                             <div class="ibox-content">
                                 <h1 class="no-margins"><?php echo $pendientes; ?></h1>
-                                <div class="stat-percent font-bold text-success">20% <i class="fa fa-bolt"></i></div> <!-- calcular el porcentaje sobre el total de ordenes-->
+                                <div class="stat-percent font-bold text-success"><?php echo $porcentaje_pendientes; ?>% <i class="fa fa-bolt"></i></div> <!-- calcular el porcentaje sobre el total de ordenes-->
                                 <small>Total Pendientes</small>
                             </div>
                         </div>
@@ -83,7 +88,7 @@ if ($result->num_rows > 0) {
                             </div>
                             <div class="ibox-content">
                                 <h1 class="no-margins"><?php echo $ordenescriticas; ?></h1> 
-                                <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
+                                <div class="stat-percent font-bold text-info"><?php echo $porcentaje_criticas; ?>% <i class="fa fa-level-up"></i></div>
                                 <small>Pendientes Criticas</small>
                             </div>
                         </div>
@@ -96,7 +101,7 @@ if ($result->num_rows > 0) {
                             </div>
                             <div class="ibox-content">
                                 <h1 class="no-margins"><?php echo $realizadas; ?></h1>
-                                <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
+                                <div class="stat-percent font-bold text-navy"><?php echo $porcentaje_realizadas; ?>% <i class="fa fa-level-up"></i></div>
                                 <small>Total de Ordenes</small>
                             </div>
                         </div>
@@ -109,7 +114,7 @@ if ($result->num_rows > 0) {
                             </div>
                             <div class="ibox-content">
                                 <h1 class="no-margins"><?php echo $totalordenes;?></h1>
-                                <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
+                                <div class="stat-percent font-bold text-danger"><i class="fa fa-level-up"></i></div>
                                 <small>Total</small>
                             </div>
                         </div>
