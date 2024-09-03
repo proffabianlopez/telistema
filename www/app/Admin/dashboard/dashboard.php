@@ -47,9 +47,7 @@ if ($result->num_rows > 0) {
         </div>
         <ul class="nav navbar-top-links navbar-right">
           <li>
-            <a href="../../logout.php" id="logout">
-              <i class="fa fa-sign-out"></i> Cerrar Sesión
-            </a>
+           
           </li>
         </ul>
 
