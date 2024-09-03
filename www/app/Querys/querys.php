@@ -679,10 +679,41 @@ define('SQL_COUNT_ORDERS_WITH_STATE', '
         COUNT(*) AS total_orders,
         SUM(CASE WHEN o.id_state_order = 1 THEN 1 ELSE 0 END) AS confirmadas,
         SUM(CASE WHEN o.id_state_order = 3 THEN 1 ELSE 0 END) AS pendientes,
-        SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) AS realizadas
+        SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) AS realizadas,
+        SUM(CASE WHEN o.id_priority = 2 THEN 1 ELSE 0 END) AS criticas
     FROM orders o
     JOIN states_orders so ON o.id_state_order = so.id_state_order
 ');
+
+define('SQL_COUNT_ORDERS_WITH_STATE30', '
+        SELECT 
+    COUNT(*) AS total_orders,
+    SUM(CASE WHEN o.id_state_order = 1 THEN 1 ELSE 0 END) AS confirmadas,
+    SUM(CASE WHEN o.id_state_order = 3 THEN 1 ELSE 0 END) AS pendientes,
+    SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) AS realizadas,
+    SUM(CASE WHEN o.id_priority = 2 THEN 1 ELSE 0 END) AS criticas,
+    -- Calcular los porcentajes
+    ROUND(
+        (SUM(CASE WHEN o.id_state_order = 1 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 
+        2
+    ) AS porcentaje_confirmadas,
+    ROUND(
+        (SUM(CASE WHEN o.id_state_order = 3 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 
+        2
+    ) AS porcentaje_pendientes,
+    ROUND(
+        (SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 
+        2
+    ) AS porcentaje_realizadas,
+    ROUND(
+        (SUM(CASE WHEN o.id_priority = 2 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 
+        2
+    ) AS porcentaje_criticas
+FROM orders o
+JOIN states_orders so ON o.id_state_order = so.id_state_order
+WHERE o.order_date >= CURDATE() - INTERVAL 30 DAY
+');
+
 /////////////////////////////////////////////////////////////////////////////////////
 // orders_dashboard_technics
 //////////////////////////////////////////////////////////////////
