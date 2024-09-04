@@ -1,45 +1,53 @@
 <?php
 session_start();
-//////////////////////////////////
+////////////////////////////////
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
   if ($_SESSION['user_idRol'] != 2) {
     header("Location:../../includes/404/404.php");
   }
   $rEmail = $_SESSION['mail'];
   $rolUser = $_SESSION['user_role'];
-  $technic_id = $_SESSION['technic_id'];
-  var_dump($_SESSION['technic_id']);
-  exit;
- 
 } else {
   echo "<script> location.href='../../login.php'; </script>";
 }
-//////////////////////////////////
+////////////////////////////////
 
 define('TITLE', 'Dashboard');
 define('PAGE', 'dashboard');
 include('../../includes/header.php');
 include('../../dbConnection.php');
 include('../../Querys/querys.php');
-
-// Asigna el ID del técnico que necesitas
-
-
-
 // Preparar la consulta
 $stmt = $conn->prepare(SQL_COUNT_ORDERS_WITH_STATE_TECHNIC);
-if ($stmt === false) {
-    die('Error preparing the statement: ' . $conn->error);
-}
 
-// Vincular el parámetro
-$stmt->bind_param('i', $technic_id);
+// Asumimos que tienes una variable $technic_id definida en algún lugar
+$technic_id = $_SESSION['user_id']; // O cualquier otro valor apropiado
+
+// Enlazar el parámetro
+$stmt->bind_param("i", $technic_id);
 
 // Ejecutar la consulta
 $stmt->execute();
 
-// Obtener los resultados
+// Obtener el resultado
 $result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $confirmadas = $row['confirmadas'];
+    $pendientes = $row['pendientes'];
+    $realizadas = $row['realizadas'];
+} else {
+    $confirmadas = $pendientes = $realizadas = 0;
+}
+
+// Cerrar la declaración
+$stmt->close();
+
+/*
+$sql = SQL_COUNT_ORDERS_WITH_STATE_TECHNIC;
+$result = $conn->query($sql);
+
 if ($result->num_rows > 0) {
   $row = $result->fetch_assoc();
   $confirmadas = $row['confirmadas'];
@@ -47,12 +55,8 @@ if ($result->num_rows > 0) {
   $realizadas = $row['realizadas'];
 } else {
   $confirmadas = $pendientes = $realizadas = 0;
-}
-
-// Cerrar la consulta
-$stmt->close();
+}*/
 ?>
-
 <div id="wrapper">
 
   <nav class="navbar-default navbar-static-side" role="navigation">
@@ -74,11 +78,13 @@ $stmt->close();
             </a>
           </li>
         </ul>
+
       </nav>
     </div>
     <div class="row wrapper border-bottom white-bg page-heading">
       <div class="col-lg-9">
         <h2>Inicio</h2>
+
       </div>
     </div>
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -97,6 +103,7 @@ $stmt->close();
           </div>
         </div>
         <div class="col-lg-4">
+
           <div class="widget style1 custom-bg-2">
             <div class="row">
               <div class="col-xs-4">
@@ -126,6 +133,7 @@ $stmt->close();
     </div>
     <div class="footer">
       <div class="pull-right">
+
       </div>
       <div>
         <strong>Copyright</strong> Telistema &copy; 2024
@@ -139,4 +147,6 @@ include('../../includes/footer.php');
 ?>
 
 </body>
+
+
 </html>
