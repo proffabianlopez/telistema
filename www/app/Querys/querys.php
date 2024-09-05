@@ -21,7 +21,12 @@ define('SQL_LOGIN', '
         WHERE 
                 u.mail = ?             
         LIMIT 1;');
-
+////////
+//users
+////////
+define('SQL_SELEC_USERS',
+'SELECT * FROM users
+ WHERE id_user=?');
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Clients

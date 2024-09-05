@@ -3,6 +3,9 @@ session_start();
 define('TITLE', 'Technic Profile');
 define('PAGE', 'Technic Profile');
 include ('../../dbConnection.php');
+include ('../../Querys/querys.php');
+
+
 
 ////////////////////////////////
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
@@ -21,6 +24,17 @@ if (!isset($_SESSION['token'])) {
 }
 $token = $_SESSION['token'];
 
+$stmt = $conn->prepare(SQL_SELEC_USERS);
+$technic_id = $_SESSION['user_id'];
+$stmt->bind_param("i", $technic_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+    
+    $surname = $row['surname'];
+    
+    
+
 ?>
 <?php
 include ('../../includes/header.php'); ?>
@@ -36,6 +50,7 @@ include ('../../includes/header.php'); ?>
 
             </div>
         </nav>
+        
 
         <div id="page-wrapper" class="gray-bg">
 
@@ -64,42 +79,65 @@ include ('../../includes/header.php'); ?>
 
                 </div>
             </div>
-            <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row m-b-lg m-t-lg">
+                <div class="col-md-6">
 
-
-                <div class="row m-b-lg m-t-lg">
-                    <div class="col-md-6">
-                        <div class="profile-info">
-                            <div class="">
-                                <div>
-                                    <h2 class="no-margins">
-                                    <?php if (isset($_SESSION['user_name'])) {
-                                              echo $_SESSION['user_name'];
-                                            } ?>
-
-                                            <?php if (isset($_SESSION['user_name'])) {
-                                           echo     $_SESSION['user_surname'];
-                                            } ?>
-                                    </h2>
-                                    <br>
-                                    <h4><strong>Email:</strong> <?php if (isset($_SESSION['mail'])) {
-                                              echo $_SESSION['mail'];
-                                            } ?></h4>
-                                    <h4><strong>Cargo:</strong> <?php if (isset($_SESSION['user_role'])) {
-                                              echo $_SESSION['user_role'];
-                                            } ?></h4>
-                                   
-                                </div>
+                    <div class="profile-image">
+                        <img src="../../img/logo.png" class="rounded-circle circle-border m-b-md" alt="profile">
+                    </div>
+                    <div class="profile-info">
+                        <div class="">
+                            <div>
+                                <h2 class="no-margins">
+                                <?php
+                                 echo $name_user = $row['name_user'];  ?>
+                                  <?php echo $surname = $row['surname_user'];?>
+                                </h2>
+                                <h4>Perfil del Tecnico</h4>
+                                <small>
+                                técnico de mantenimiento informatico con 3 años de experiencia en el sector, 
+                                especializado en la gestión y ejecución de tareas de mantenimiento preventivo y correctivo.
+                                </small>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <table class="table small m-b-xs">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <strong>Email:</strong> <?php echo $mail = $row['mail'];?>
+                            </td>
+                           
 
+                        </tr>
+                        <tr>
+                             <td>
+                                <strong>Celular</strong> <?php echo $phone_user = $row['phone_user'];?>
+                            </td>
+                        </tr>
+                        <tr>
+                        <td>
+                                <strong>Cargo</strong> <?php if (isset($_SESSION['user_role'])) {
+                                              echo $_SESSION['user_role'];
+                                              
+                                            } ?>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="text-center">
                     <button type="button" class="btn btn-primary" onclick="openEditModal()">
                         Cambiar contraseña
                     </button>
                 </div>
+            </div>
+           
+            
+
+              
 
 
 
