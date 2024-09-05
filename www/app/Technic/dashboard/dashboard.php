@@ -17,7 +17,34 @@ define('PAGE', 'dashboard');
 include('../../includes/header.php');
 include('../../dbConnection.php');
 include('../../Querys/querys.php');
+// Preparar la consulta
+$stmt = $conn->prepare(SQL_COUNT_ORDERS_WITH_STATE_TECHNIC);
 
+// Asumimos que tienes una variable $technic_id definida en algún lugar
+$technic_id = $_SESSION['user_id']; // O cualquier otro valor apropiado
+
+// Enlazar el parámetro
+$stmt->bind_param("i", $technic_id);
+
+// Ejecutar la consulta
+$stmt->execute();
+
+// Obtener el resultado
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $confirmadas = $row['confirmadas'];
+    $pendientes = $row['pendientes'];
+    $realizadas = $row['realizadas'];
+} else {
+    $confirmadas = $pendientes = $realizadas = 0;
+}
+
+// Cerrar la declaración
+$stmt->close();
+
+/*
 $sql = SQL_COUNT_ORDERS_WITH_STATE_TECHNIC;
 $result = $conn->query($sql);
 
@@ -28,7 +55,7 @@ if ($result->num_rows > 0) {
   $realizadas = $row['realizadas'];
 } else {
   $confirmadas = $pendientes = $realizadas = 0;
-}
+}*/
 ?>
 <div id="wrapper">
 
