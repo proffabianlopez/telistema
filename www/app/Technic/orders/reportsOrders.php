@@ -67,7 +67,7 @@ include('../../includes/header.php');
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
-        echo '<table class="table table-bordered table-stripped">
+        echo '<table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th style="width: 90px;">Orden N°</th>
@@ -85,7 +85,7 @@ include('../../includes/header.php');
                 $image_path = '' . htmlspecialchars($row["name_image"]);
                 echo '<tr>';
                 echo '<td>' . $row["id_order"] . '</td>';
-                echo '<td>' . '<a href="' . $image_path . '" title="Image" data-gallery="" alt="Imagen" ><img src="' . $image_path . '" style="max-width: 150px; max-height: 150px;"></a>' . '</td>';
+                echo '<td>' . '<a href="' . $image_path . '" title="Image" data-gallery="" alt="Imagen" ><img src="' . $image_path . '" style="max-width: 200px; max-height: 200px;"></a>' . '</td>';
                 echo '<td>' . $order_datetime_formatted . '</td>';
                 echo '<td>' . htmlspecialchars($row["report_technic"]) . '</td>';
                 echo '<td>' . $row["state_order"] . '</td>';
@@ -112,6 +112,9 @@ include('../../includes/header.php');
         </div>
     </div>
 </div>
+<div id="fullscreen-img-container" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
+    <img id="fullscreen-img" style="max-width:200%; max-height:200%;" />
+</div>
 
 <?php include('../../includes/footer.php'); ?>
 
@@ -126,6 +129,24 @@ include('../../includes/header.php');
             autoclose: true
         });
     });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fullscreenImgContainer = document.getElementById('fullscreen-img-container');
+    const fullscreenImg = document.getElementById('fullscreen-img');
+
+    document.querySelectorAll('table img').forEach(img => {
+        img.addEventListener('click', function(event) {
+            event.preventDefault();
+            fullscreenImg.src = this.src;
+            fullscreenImgContainer.style.display = 'flex';
+        });
+    });
+
+    fullscreenImgContainer.addEventListener('click', function() {
+        fullscreenImgContainer.style.display = 'none'; 
+    });
+});
 </script>
 
 </body>
