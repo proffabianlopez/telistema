@@ -36,13 +36,6 @@ include ('../../Querys/querys.php');
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i
                                 class="fa fa-bars"></i> </a>
                     </div>
-                    <ul class="nav navbar-top-links navbar-right">
-                        <li>
-                            <a id="logout">
-                                <i class="fa fa-sign-out"></i> Cerrar Sesión
-                            </a>
-                        </li>
-                    </ul>
                 </nav>
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
