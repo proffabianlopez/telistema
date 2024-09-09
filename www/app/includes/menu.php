@@ -27,9 +27,8 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
                             class="font-bold"><?php echo ucfirst($_SESSION['user_name']) ?></strong>
                     </span> <span class="text-muted text-xs block"><?php echo ucfirst($_SESSION['user_role']) ?><b
                             class="caret"></b></span>
-                </span> </a>
-                <a href="../../Admin/profileAdmin/profile.php">Mi Perfil
-                </a>
+                </span> 
+                
         <div class="logo-element">
             TL+
         </div>
@@ -112,6 +111,7 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
                     Reportes de Ordenes</span>
             </a>
         </li> -->
+
         <li class=" <?php if (PAGE == 'Actualización de Email') {
             echo 'active';
         } ?>">
@@ -122,13 +122,23 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
             <!-- </li>
         <li class=" <?php if (PAGE == 'changepass') {
             echo 'active';
-        } ?>">
+        } ?>
+        ">
             <a href="../Admin/changepass.php">
                 <i class="bi bi-key"></i><span class="nav-label">
                     Cambiar Clave</span>
             </a>
         </li> -->
         
+        <li class=" <?php if (PAGE == 'Admin Profile') {
+            echo 'active';
+        } ?>">
+            <a href="../../Admin/profileAdmin/AdminProfile.php">
+                <i class="bi bi-person-circle"></i></i><span class="nav-label">
+                    Perfil <span class="sr-only">(current)</span></span>
+            </a>
+        </li>
+
         <?php } ?>
 
         <!-- TECNICO -->
