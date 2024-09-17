@@ -33,7 +33,7 @@ $result = $stmtr->get_result();
 $row = $result->fetch_assoc();
 
 if ($row) {
-    $surname = $row['surname'];
+    $surname = $row['surname_user'];
     $name_user = $row['name_user'];
     $mail = $row['mail'];
     $phone_user = $row['phone_user'];
@@ -45,23 +45,6 @@ if ($row) {
 }
 
 $stmtr->close();
-
-// Preparar y ejecutar la consulta para contar las órdenes con estado del técnico
-$stmt = $conn->prepare(SQL_COUNT_ORDERS_WITH_STATE_TECHNIC);
-$stmt->bind_param("i", $technic_id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $confirmadas = $row['confirmadas'];
-    $pendientes = $row['pendientes'];
-    $realizadas = $row['realizadas'];
-} else {
-    $confirmadas = $pendientes = $realizadas = 0;
-}
-$stmt->close();
-
 ?>
 <?php include ('../../includes/header.php'); ?>
 
@@ -123,7 +106,12 @@ $stmt->close();
                         <tbody>
                         <tr>
                             <td>
-                                <strong>Email:</strong> <?php echo htmlspecialchars($mail); ?>
+                            <strong>Nombre:</strong> <?php echo htmlspecialchars($name_user); ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            <strong>Apellido:</strong> <?php echo htmlspecialchars($surname); ?>
                             </td>
                         </tr>
                         <tr>
@@ -133,7 +121,7 @@ $stmt->close();
                         </tr>
                         <tr>
                             <td>
-                                <strong>Cargo:</strong> <?php echo htmlspecialchars($rolUser); ?>
+                            <strong>Email:</strong> <?php echo htmlspecialchars($mail); ?>
                             </td>
                         </tr>
                         </tbody>
@@ -147,58 +135,7 @@ $stmt->close();
                 </div>
             </div>
 
-            <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="widget style1 custom-bg-1">
-                            <div class="row">
-                                <div class="col-xs-4 text-center">
-                                    <i class="fa fa-check-square-o fa-5x"></i>
-                                </div>
-                                <div class="col-xs-8 text-right">
-                                    <span> Ordenes Confirmadas </span>
-                                    <h2 class="font-bold"><?php echo htmlspecialchars($confirmadas); ?></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="widget style1 custom-bg-2">
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <i class="fa fa-check fa-5x"></i>
-                                </div>
-                                <div class="col-xs-8 text-right">
-                                    <span> Ordenes Finalizadas </span>
-                                    <h2 class="font-bold"><?php echo htmlspecialchars($realizadas); ?></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="widget style1 custom-bg-3">
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <i class="fa fa-exclamation fa-5x"></i>
-                                </div>
-                                <div class="col-xs-8 text-right">
-                                    <span> Ordenes Pendientes </span>
-                                    <h2 class="font-bold"><?php echo htmlspecialchars($pendientes); ?></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer">
-                <div class="pull-right"></div>
-                <div>
-                    <strong>Copyright</strong> Telistema &copy; 2024
-                </div>
-            </div>
-        </div>
-    </div>
+           
 
     <?php include ('../../includes/footer.php'); ?>
     <div id="edit-form-container" style="display: none;"></div>
