@@ -649,7 +649,8 @@ define('SQL_SELECT_ORDERS_TECHNIC', '
         u.surname_user,
         cl.client_name,
         cl.client_lastname,
-        i.name_image
+        i.name_image,
+        i.id_order
     FROM 
         orders o
     INNER JOIN 
