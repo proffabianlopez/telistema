@@ -62,8 +62,6 @@ include('../../Querys/querys.php');
                         while ($row = $result->fetch_assoc()) {
                             if ($row['state_order'] == 'Pendiente') {
                                 $pendientes[] = $row;
-                            } elseif ($row['state_order'] == 'Confirmada') {
-                                $confirmadas[] = $row;
                             } elseif ($row['state_order'] == 'Realizada') {
                                 $completas[] = $row;
                             } elseif ($row['state_order'] == 'Cancelada') { 
@@ -82,22 +80,6 @@ include('../../Querys/querys.php');
                                         <strong>Orden: </strong><?= $row["id_order"] ?><br>
                                         <strong>Descripción: </strong><?= $row["order_description"] ?><br>
                                         <strong>Fecha: </strong><?= date('d/m/Y', strtotime($row["order_date"])) ?>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="ibox">
-                        <div class="ibox-content">
-                            <h3>Confirmadas</h3>
-                            <ul class="sortable-list connectList agile-list">
-                                <?php foreach ($confirmadas as $row): ?>
-                                    <li class="info-element" id="task<?= $row['id_order'] ?>" style="cursor: default;">
-                                        <strong>Orden: </strong><?= $row["id_order"] ?><br>
-                                        <strong>Descripción: </strong><?= $row["order_description"] ?><br>
-                                        <strong>Fecha: </strong><?= date('d/m/Y', strtotime($row["order_date"]))?>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
