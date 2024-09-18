@@ -96,6 +96,24 @@ define(
 '
 );
 
+
+//////////////////////////////////////////////////////////////////////////
+// Admins
+//////////////////////////////////////////////////////////////////
+define('SQL_SELECT_ADMIN', '
+SELECT u.*
+FROM users u
+JOIN roles r ON u.id_rol = r.id_rol
+WHERE r.rol = "admin";
+');
+
+define('SQL_SELECT_ADMIN_BY_ID', '
+SELECT u.*
+FROM users u
+WHERE u.id_rol = 1 AND u.id_user = ?;
+');
+
+
 //////////////////////////////////////////////////////////////////////////
 // Technics
 //////////////////////////////////////////////////////////////////
@@ -734,9 +752,11 @@ define('SQL_COUNT_ORDERS_WITH_STATE_TECHNIC', '
     WHERE technic_id =? AND 
     o.id_state_order NOT IN (4)
 ');
+
 define('SQL_COUNT_ORDERS_FINISH', '
     SELECT 
         COUNT(*) AS total_orders,
         SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) AS realizadas
     FROM orders o
-    WHERE technic_id = ?');
+    WHERE technic_id = ?
+');

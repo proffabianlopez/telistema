@@ -64,82 +64,79 @@ if ($result->num_rows > 0) {
                 </div>
                 <div class="col-lg-2"></div>
             </div>
+
             <div class="wrapper wrapper-content animated fadeInRight">
-                <form id="change-edituser-form" role="change-edituser-form" action="" method="POST">
-                    <!-- Contenedor principal flex -->
-                    <div class="container-fluid">
-                        <div class="row">
-                            <!-- Primera columna -->
-                            <div class="col-md-6">
-                                <!-- Campo ID User (oculto) -->
-                                <div style="display: none;" class="form-group">
-                                    <label for="id_user">ID User</label>
-                                    <input type="text" class="form-control" id="id_user" name="id_user" value="<?php echo htmlspecialchars($row['id_user']); ?>" readonly>
-                                </div>
-                                <!-- Campo Nombre -->
-                                <div class="form-group">
-                                    <label for="name_user">Nombre <span class="text-danger"></span></label>
-                                    <input type="text" class="form-control validate-field vname" id="name_user" name="name_user" value="<?php echo htmlspecialchars($row['name_user']); ?>">
-                                </div>
-                                <!-- Campo Apellido -->
-                                <div class="form-group">
-                                    <label for="surname_user">Apellido <span class="text-danger"></span></label>
-                                    <input type="text" class="form-control validate-field vname" id="surname_user" name="surname_user" value="<?php echo htmlspecialchars($row['surname_user']); ?>">
-                                </div>
-                                <!-- Campo Mail -->
-                                <div class="form-group">
-                                    <label for="mail">Email (no editable)</label>
-                                    <p class="form-control" id="mail" name="mail"><?php echo htmlspecialchars($row['mail']); ?></p>
-                                </div>
-                            </div>
-                            <!-- Segunda columna -->
-                            <div class="col-md-6">
-                                <!-- Campo Cargo -->
-                                <div class="form-group">
-                                    <label for="user_role">Cargo</label>
-                                    <p class="form-control" id="user_role">
-                                        <?php
-                    
-                                        switch ($row['id_rol']) {
-                                            case 1:
-                                                echo 'Administrador';
-                                                break;
-                                            case 2:
-                                                echo 'Técnico';
-                                                break;
-                                            default:
-                                                echo 'Desconocido';
-                                                break;
-                                        }
-                                        ?>
-                                    </p>
-                                </div>
-                                <!-- Campo Teléfono -->
-                                <div class="form-group">
-                                    <label for="phone_user">Teléfono <span class="text-danger"></span></label>
-                                    <input type="number" class="form-control validate-field vphone" id="phone_user" name="phone_user" placeholder="5491234567890" value="<?php echo htmlspecialchars($row['phone_user']); ?>" onkeypress="isInputNumber(event)">
-                                </div>
-                                <!-- Campo Generar nueva contraseña -->
-                                <div class="form-group">
-                                    <label> Generar una nueva contraseña?</label>
-                                    <div class="onoffswitch">
-                                        <input type="checkbox" class="onoffswitch-checkbox" id="new_pass" name="new_pass">
-                                        <label class="onoffswitch-label" for="new_pass">
-                                            <span class="onoffswitch-inner"></span>
-                                            <span class="onoffswitch-switch"></span>
-                                        </label>
-                                    </div>
+                <div class="row m-b-lg m-t-lg ibox-content">
+                    <div class="col-md-6">
+                        <div class="profile-image">
+                            <img src="../../../img/team-3.jpg" class="rounded-circle circle-border m-b-md" alt="profile">
+                        </div>
+                        <div class="profile-info">
+                            <div class="">
+                                <div>
+                                    <h2 class="no-margins">
+                                        <?php echo htmlspecialchars($row['name_user']); ?>
+                                        <?php echo htmlspecialchars($row['surname_user']); ?>
+                                    </h2>
+                                    <h4>Perfil del Administrador</h4>
+                                    <small>
+                                        Técnico de mantenimiento informático con 3 años de experiencia en el sector,
+                                        especializado en la gestión y ejecución de tareas de mantenimiento preventivo y correctivo.
+                                    </small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Botones de acción -->
-                    <div class="modal-footer text-center">
-                        <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Actualizar</button>
+
+                    <div class="col-md-3">
+                        <table class="table small m-b-xs">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <strong>Email:</strong> <?php echo htmlspecialchars($row['mail']); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Celular:</strong> <?php echo htmlspecialchars($row['phone_user']); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Cargo:</strong>
+                                        <?php
+                                            switch ($row['id_rol']) {
+                                                case 1:
+                                                    echo 'Administrador';
+                                                    break;
+                                                case 2:
+                                                    echo 'Técnico';
+                                                    break;
+                                                default:
+                                                    echo 'Desconocido';
+                                                    break;
+                                            }
+                                        ?>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <!-- Mensaje de respuesta -->
-                    <div class="text-center" id="response-message"></div>
-                </form>
+
+                    <div class="col-md-3" role="group">
+                        <button id="edit-<?php echo ($row["id_user"] . '-' . $token); ?>" data-crud="admin" class="btn btn-primary modaledit-btn ">
+                            Modificar perfil
+                        </button>
+                        <button id="edit-<?php echo ($row["id_user"] . '-' . $token); ?>" data-crud="adminPassword" class="btn btn-primary modaledit-btn ">
+                            Cambiar Contraseña
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="wrapper wrapper-content animated fadeInRight">
+
             </div>
             <div class="footer">
                 <div class="pull-right"></div>
@@ -149,13 +146,36 @@ if ($result->num_rows > 0) {
             </div>
         </div>
     </div>
-
+    <div id="editpassword-form-container" style="display: none;"></div>
+    <div id="edit-form-container" style="display: none;"></div>
+    <script>
+        let token = "<?php echo $token; ?>"
+        let email = "<?php echo $row['mail']; ?>"
+    </script>
     <?php include('../../includes/footer.php'); ?>
     <script>
         $(document).ready(function () {
             $('.footable').footable();
             $('.footable2').footable();
         });
+
+        // Cambiar contraseña
+       /* function openEditModal() {
+            // Realiza una solicitud AJAX para obtener el formulario de edición
+            $.ajax({
+                url: "../crudusers/modalpass.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
+                type: "GET",
+                success: function (response) {
+                    // Muestra el formulario de edición en el contenedor
+                    $("#editpassword-form-container").html(response).slideDown();
+                    // Abre el modal
+                    $("#myModal6").modal("show");
+                },
+                error: function () {
+                    alert("Error al cargar el formulario de edición.");
+                }
+            });
+        }*/
     </script>
 </body>
 </html>

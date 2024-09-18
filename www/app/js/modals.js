@@ -11,6 +11,7 @@ document.querySelectorAll(".modaledit-btn").forEach((button) => {
     // Realiza una solicitud AJAX para obtener el formulario de edición
     let url= "";
 
+     
     switch (crudClass) {
         case "users":
             url = "editUsers.php?token="+ token;
@@ -26,9 +27,18 @@ document.querySelectorAll(".modaledit-btn").forEach((button) => {
             break;
         case "suppliers":
             url = "editsupplier.php?token="+ token;
-            break; 
-        case "technicians":
-            url = "edittechnic.php?token="+ token;
+            break;
+        case "admin":
+            url = "editAdmin.php?token="+ token;
+            break;
+        case "adminPassword":
+            url = "../crudusers/modalpass.php?token="+ token;
+            break;
+        case "technic":
+            url = "editTechnic.php?token="+ token;
+            break;
+        case "technicPassword":
+            url = "modalpass.php?token="+ token;
             break;
         case "reports":
             url = "reportTechnic.php?token="+ token;
@@ -47,11 +57,13 @@ document.querySelectorAll(".modaledit-btn").forEach((button) => {
         success: function(response) {
             // Muestra el formulario de edición en el contenedor
             $("#edit-form-container").html(response).slideDown();
-            // Abre el modal
             $("#myModal6").modal("show");
         },
         error: function() {
             alert("Error al cargar el formulario de edición.");
+        },
+        complete: function(error) {
+            console.log(error)
         }
     });
 }
