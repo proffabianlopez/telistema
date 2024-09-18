@@ -215,7 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         } else {
-            $response['message'] = "No pones eliminar a si mismo";
+            $response['message'] = "No te podes eliminar a ti mismo";
             echo json_encode($response);
             exit;
         }

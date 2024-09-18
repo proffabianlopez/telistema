@@ -323,7 +323,6 @@ $(document).ready(function () {
       });
     });
   }
-  
 
   function buysFormSubmit(formId, actionUrl) {
     $(formId).on("submit", function (e) {
@@ -396,6 +395,20 @@ $(document).ready(function () {
   handleFormSubmit(
     "#change-edituser-form",
     "usersController.php?token=" + token + "&action=edit_user&email=" + email
+  );
+
+  // ADMIN
+  setupFormValidation("#change-editadmin-form");
+  handleFormSubmit(
+      "#change-editadmin-form",
+      "../crudusers/usersController.php?token=" + token + "&action=edit_user&email=" + email
+  );
+
+  // TECHNIC
+  setupFormValidation("#change-edittechnic-form");
+  handleFormSubmit(
+      "#change-edittechnic-form",
+      "../crudusers/usersController.php?token=" + token + "&action=edit_user&email=" + email
   );
 
   // SUPPLIER
