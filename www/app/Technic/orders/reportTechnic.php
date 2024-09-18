@@ -59,9 +59,6 @@ if (isset($_POST['id'])) {
                                     <div class="form-group">
                                         <label for="state_order">Estado <span class="text-danger">*</span></label>
                                         <select name="id_state_order" id="id_state_order" class="form-control">
-                                            <option value="1" <?php if ($row["id_state_order"] === 1)
-                                                echo 'selected'; ?>>
-                                                Confirmada</option>
                                             <option value="2" <?php if ($row["id_state_order"] === 2)
                                                 echo 'selected'; ?>>
                                                 Cancelada</option>

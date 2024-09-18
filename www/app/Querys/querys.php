@@ -667,7 +667,8 @@ define('SQL_SELECT_ORDERS_TECHNIC', '
         u.surname_user,
         cl.client_name,
         cl.client_lastname,
-        i.name_image
+        i.name_image,
+        i.id_order
     FROM 
         orders o
     INNER JOIN 
@@ -743,11 +744,19 @@ WHERE o.order_date >= CURDATE() - INTERVAL 30 DAY
 define('SQL_COUNT_ORDERS_WITH_STATE_TECHNIC', '
     SELECT 
         COUNT(*) AS total_orders,
-        SUM(CASE WHEN o.id_state_order = 1 THEN 1 ELSE 0 END) AS confirmadas,
+        SUM(CASE WHEN o.id_priority = 2 THEN 1 ELSE 0 END) AS criticas,
         SUM(CASE WHEN o.id_state_order = 2 THEN 1 ELSE 0 END) AS canceladas,
-        SUM(CASE WHEN o.id_state_order = 3 THEN 1 ELSE 0 END) AS pendientes,
-        SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) AS realizadas
+        SUM(CASE WHEN o.id_priority = 1 THEN 1 ELSE 0 END) AS pendientes
     FROM orders o
     JOIN states_orders so ON o.id_state_order = so.id_state_order
-    WHERE technic_id =?
+    WHERE technic_id =? AND 
+    o.id_state_order NOT IN (4)
+');
+
+define('SQL_COUNT_ORDERS_FINISH', '
+    SELECT 
+        COUNT(*) AS total_orders,
+        SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) AS realizadas
+    FROM orders o
+    WHERE technic_id = ?
 ');

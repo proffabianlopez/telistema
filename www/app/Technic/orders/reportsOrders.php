@@ -66,38 +66,84 @@ include('../../includes/header.php');
     $stmt->bind_param("i", $id_technic);
     $stmt->execute();
     $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        echo '<table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th style="width: 90px;">Orden N°</th>
-                        <th>Imagen</th>
-                        <th>Fecha</th>
-                        <th>Reporte</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>';
-        while ($row = $result->fetch_assoc()) {
-            if ($row['report_technic'] !== null) {
-                $order_datetime = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date']);
-                $order_datetime_formatted = $order_datetime->format('d/m/Y');
-                $image_path = '' . htmlspecialchars($row["name_image"]);
-                echo '<tr>';
-                echo '<td>' . $row["id_order"] . '</td>';
-                echo '<td>' . '<a href="' . $image_path . '" title="Image" data-gallery="" alt="Imagen" ><img src="' . $image_path . '" style="max-width: 200px; max-height: 200px;"></a>' . '</td>';
-                echo '<td>' . $order_datetime_formatted . '</td>';
-                echo '<td>' . htmlspecialchars($row["report_technic"]) . '</td>';
-                echo '<td>' . $row["state_order"] . '</td>';
-                echo '</tr>';
-            }
+    
+    $orders = [];
+    
+    // Agrupar los datos por id_order
+    while ($row = $result->fetch_assoc()) {
+        $id_order = $row["id_order"];
+        if (!isset($orders[$id_order])) {
+            $orders[$id_order] = [
+                "id_order" => $id_order,
+                "order_date" => $row["order_date"],
+                "report_technic" => $row["report_technic"],
+                "state_order" => $row["state_order"],
+                "images" => []
+            ];
         }
+        if (!empty($row["name_image"])) {
+            $orders[$id_order]["images"][] = $row["name_image"];
+        }
+    }
+
+    if (count($orders) > 0) {
+        echo '<table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Orden N°</th>
+                <th style="width: 300px;">Imagen</th>
+                <th>Fecha</th>
+                <th>Reporte</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>';
+
+        foreach ($orders as $order) {
+        $order_datetime = DateTime::createFromFormat('Y-m-d H:i:s', $order['order_date']);
+        $order_datetime_formatted = $order_datetime->format('d/m/Y');
+
+        echo '<tr>';
+        echo '<td>' . $order["id_order"] . '</td>';
+        echo '<td>';
+
+        // Carrusel para las imágenes
+        if (count($order["images"]) > 0) {
+        echo '<div id="carousel_' . $order["id_order"] . '" class="carousel slide" data-ride="carousel" style="width: 350px; height: 250px; overflow: hidden;">';
+        echo '<div class="carousel-inner">';
+
+        foreach ($order["images"] as $index => $image) {
+            echo '<div class="item ' . ($index == 0 ? 'active' : '') . '" style="width: 350px; height: 250px;">';
+            echo '<img src="' . htmlspecialchars($image) . '" style="width: 100%; height: 100%; object-fit: contain;">';
+            echo '</div>';
+        }
+
+        echo '</div>';
+
+        if (count($order["images"]) > 1) {
+            echo '<a class="left carousel-control" href="#carousel_' . $order["id_order"] . '" data-slide="prev">';
+            echo '<span class="icon-prev"></span>';
+            echo '</a>';
+            echo '<a class="right carousel-control" href="#carousel_' . $order["id_order"] . '" data-slide="next">';
+            echo '<span class="icon-next"></span>';
+            echo '</a>';
+        }
+
+        echo '</div>';
+        } 
+        echo '</td>';
+        echo '<td>' . $order_datetime_formatted . '</td>';
+        echo '<td>' . htmlspecialchars($order["report_technic"]) . '</td>';
+        echo '<td>' . $order["state_order"] . '</td>';
+        echo '</tr>';
+        }
+
         echo '</tbody></table>';
+
     } else {
         echo '<div class="col-md-12"><p>No hay órdenes de trabajo disponibles.</p></div>';
     }
 }
-
                                 ?>
                             </div>
                         </div>
@@ -106,48 +152,15 @@ include('../../includes/header.php');
             </div>
         </div>
         <div class="footer">
-            <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2017
-            </div>
+        <div class="pull-right"></div>
+        <div>
+          <strong>Copyright</strong> Telistema &copy; 2024
         </div>
+      </div>
     </div>
-</div>
-<div id="fullscreen-img-container" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
-    <img id="fullscreen-img" style="max-width:200%; max-height:200%;" />
 </div>
 
 <?php include('../../includes/footer.php'); ?>
-
-<script>
-    $(document).ready(function(){
-        $('.summernote').summernote();
-        $('.input-group.date').datepicker({
-            todayBtn: "linked",
-            keyboardNavigation: false,
-            forceParse: false,
-            calendarWeeks: true,
-            autoclose: true
-        });
-    });
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const fullscreenImgContainer = document.getElementById('fullscreen-img-container');
-    const fullscreenImg = document.getElementById('fullscreen-img');
-
-    document.querySelectorAll('table img').forEach(img => {
-        img.addEventListener('click', function(event) {
-            event.preventDefault();
-            fullscreenImg.src = this.src;
-            fullscreenImgContainer.style.display = 'flex';
-        });
-    });
-
-    fullscreenImgContainer.addEventListener('click', function() {
-        fullscreenImgContainer.style.display = 'none'; 
-    });
-});
-</script>
 
 </body>
 </html>

@@ -20,42 +20,34 @@ include('../../Querys/querys.php');
 // Preparar la consulta
 $stmt = $conn->prepare(SQL_COUNT_ORDERS_WITH_STATE_TECHNIC);
 
-// Asumimos que tienes una variable $technic_id definida en algún lugar
-$technic_id = $_SESSION['user_id']; // O cualquier otro valor apropiado
-
-// Enlazar el parámetro
+$technic_id = $_SESSION['user_id']; 
 $stmt->bind_param("i", $technic_id);
-
-// Ejecutar la consulta
 $stmt->execute();
-
-// Obtener el resultado
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $confirmadas = $row['confirmadas'];
+    $criticas = $row['criticas'];
     $pendientes = $row['pendientes'];
-    $realizadas = $row['realizadas'];
+    
 } else {
-    $confirmadas = $pendientes = $realizadas = 0;
+    $criticas = $pendientes = $realizadas = 0;
 }
-
-// Cerrar la declaración
 $stmt->close();
 
-/*
-$sql = SQL_COUNT_ORDERS_WITH_STATE_TECHNIC;
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-  $row = $result->fetch_assoc();
-  $confirmadas = $row['confirmadas'];
-  $pendientes = $row['pendientes'];
+$stmtt = $conn->prepare(SQL_COUNT_ORDERS_FINISH);
+$technic_id = $_SESSION['user_id']; 
+$stmtt->bind_param("i", $technic_id);
+$stmtt->execute();
+$resulti = $stmtt->get_result();
+if ($resulti->num_rows > 0) {
+  $row = $resulti->fetch_assoc();
   $realizadas = $row['realizadas'];
 } else {
-  $confirmadas = $pendientes = $realizadas = 0;
-}*/
+  $realizadas = 0;
+}
+$stmtt->close();
+
 ?>
 <div id="wrapper">
 
@@ -96,8 +88,8 @@ if ($result->num_rows > 0) {
                 <i class="fa fa-check-square-o fa-5x"></i>
               </div>
               <div class="col-xs-8 text-right">
-                <span> Ordenes Confirmadas </span>
-                <h2 class="font-bold"><?php echo $confirmadas; ?></h2>
+                <span> Ordenes Pendientes Criticas </span>
+                <h2 class="font-bold"><?php echo $criticas; ?></h2>
               </div>
             </div>
           </div>
@@ -110,8 +102,8 @@ if ($result->num_rows > 0) {
                 <i class="fa fa-check fa-5x"></i>
               </div>
               <div class="col-xs-8 text-right">
-                <span> Ordenes Finalizadas </span>
-                <h2 class="font-bold"><?php echo $realizadas; ?></h2>
+              <span> Ordenes Pendientes </span>
+              <h2 class="font-bold"><?php echo $pendientes; ?></h2>
               </div>
             </div>
           </div>
@@ -123,8 +115,8 @@ if ($result->num_rows > 0) {
                 <i class="fa fa-exclamation fa-5x"></i>
               </div>
               <div class="col-xs-8 text-right">
-                <span> Ordenes Pendientes </span>
-                <h2 class="font-bold"><?php echo $pendientes; ?></h2>
+              <span> Ordenes Finalizadas </span>
+              <h2 class="font-bold"><?php echo $realizadas; ?></h2>
               </div>
             </div>
           </div>
