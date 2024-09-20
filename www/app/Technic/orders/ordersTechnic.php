@@ -99,7 +99,7 @@ include('../../includes/header.php');
             $priority = $row['priority'];
             $priorityClass = ($priority == 'Urgente') ? 'style="background-color: red;"' : '';
 
-            // Agregar clases para filtrar
+            // Clases para filtrar
             $orderClass = ($priority == 'Urgente') ? 'urgent-order' : 'normal-order';
     ?>
             <div class="col-md-3 order-box <?php echo $orderClass; ?>">
