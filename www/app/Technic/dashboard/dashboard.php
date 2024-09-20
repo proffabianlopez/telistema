@@ -29,6 +29,7 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $criticas = $row['criticas'];
     $pendientes = $row['pendientes'];
+    $anteriores = $row['anteriores'];
     
 } else {
     $criticas = $pendientes = $realizadas = 0;
@@ -79,48 +80,73 @@ $stmtt->close();
 
       </div>
     </div>
+     
+    
+
     <div class="wrapper wrapper-content animated fadeInRight">
       <div class="row">
-        <div class="col-lg-4">
-          <div class="widget style1 custom-bg-1">
-            <div class="row">
-              <div class="col-xs-4 text-center">
-                <i class="fa fa-check-square-o fa-5x"></i>
-              </div>
-              <div class="col-xs-8 text-right">
-                <span> Ordenes Pendientes Criticas </span>
-                <h2 class="font-bold"><?php echo $criticas; ?></h2>
-              </div>
+        <div class="col-lg-12">
+            <div class="widget red-bg p-lg text-center">
+                        <div class="m-b-md">
+                            <i class="fa fa-bell fa-4x"></i>
+                            <h1 class="m-xs"><?php echo $criticas; ?></h1>
+                            <h2 class="font-bold no-margins">
+                                Ordenes Urgentes Criticas
+                                <br>
+                                MAXIMA PRIORIDAD
+                            </h2>
+                           
+                        </div>
             </div>
-          </div>
         </div>
-        <div class="col-lg-4">
+       
 
-          <div class="widget style1 custom-bg-2">
-            <div class="row">
-              <div class="col-xs-4">
-                <i class="fa fa-check fa-5x"></i>
-              </div>
-              <div class="col-xs-8 text-right">
-              <span> Ordenes Pendientes </span>
-              <h2 class="font-bold"><?php echo $pendientes; ?></h2>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="col-lg-4">
-          <div class="widget style1 custom-bg-3">
-            <div class="row">
-              <div class="col-xs-4">
-                <i class="fa fa-exclamation fa-5x"></i>
-              </div>
-              <div class="col-xs-8 text-right">
-              <span> Ordenes Finalizadas </span>
-              <h2 class="font-bold"><?php echo $realizadas; ?></h2>
-              </div>
+        <div class="widget navy-bg p-lg text-center">
+                        <div class="m-b-md">
+                            <i class="fa fa-bell fa-4x"></i>
+                            <h1 class="m-xs"><?php echo $pendientes; ?></h1>
+                            <h2 class="font-bold no-margins">
+                                Ordenes Pendientes Diarias
+                                <br>
+                                TERMINAR EN EL DIA
+                            </h2>
+                           
+                        </div>
             </div>
-          </div>
         </div>
+        
+
+        <div class="col-lg-4">
+            <div class="widget yellow-bg p-lg text-center">
+                        <div class="m-b-md">
+                            <i class="fa fa-bell fa-4x"></i>
+                            <h1 class="m-xs"><?php echo $anteriores; ?></h1>
+                            <h2 class="font-bold no-margins">
+                                Ordenes Pendientes Anteriores
+                                <br>
+                                A TERMINAR
+                            </h2>
+                           
+                        </div>
+            </div>
+        </div>
+         
+        <div class="col-lg-4">
+            <div class="widget blue-bg p-lg text-center">
+                        <div class="m-b-md">
+                            <i class="fa fa-bell fa-4x"></i>
+                            <h1 class="m-xs"><?php echo $realizadas; ?></h1>
+                            <h2 class="font-bold no-margins">
+                                Ordenes realizadas
+                                <br>
+                                TERMINADAS
+                            </h2>
+                           
+                        </div>
+            </div>
+        </div>
+
       </div>
     </div>
     <div class="footer">
