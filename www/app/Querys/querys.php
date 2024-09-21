@@ -711,7 +711,7 @@ define('SQL_COUNT_ORDERS_WITH_STATE', '
     JOIN states_orders so ON o.id_state_order = so.id_state_order
 ');
 
-define('SQL_COUNT_ORDERS_WITH_STATE30', '
+define('SQL_COUNT_ORDERS_WITH_STATE_WEEK', '
         SELECT 
     COUNT(*) AS total_orders,
     SUM(CASE WHEN o.id_state_order = 1 THEN 1 ELSE 0 END) AS confirmadas,
@@ -737,7 +737,43 @@ define('SQL_COUNT_ORDERS_WITH_STATE30', '
     ) AS porcentaje_criticas
 FROM orders o
 JOIN states_orders so ON o.id_state_order = so.id_state_order
-WHERE o.order_date >= CURDATE() - INTERVAL 30 DAY
+WHERE o.order_date >= CURDATE() - INTERVAL (WEEKDAY(CURDATE()) + 1) DAY
+  AND o.order_date < CURDATE() + INTERVAL (7 - WEEKDAY(CURDATE())) DAY
+
+');
+// Traigo todas las ordenes de los ultimos 7 dias, contando el actual.
+define('SQL_ALL_ORDERS_WEEK', '
+    SELECT 
+    o.id_order, 
+    o.order_date,
+    o.order_description,
+    o.address, 
+    o.height,
+    o.floor, 
+    o.departament,
+    o.id_client,
+    p.priority,
+    so.state_order,
+    u.name_user,
+    u.surname_user,
+    cl.client_name,
+    cl.client_lastname
+FROM 
+    orders o
+JOIN 
+    prioritys p ON o.id_priority = p.id_priority
+LEFT JOIN 
+    states_orders so ON o.id_state_order = so.id_state_order
+LEFT JOIN 
+    users u ON o.technic_id = u.id_user
+LEFT JOIN
+    clients cl ON o.id_client = cl.id_client
+WHERE 
+    o.order_date >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+    AND o.order_date <= NOW();
+
+
+
 ');
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -746,19 +782,23 @@ WHERE o.order_date >= CURDATE() - INTERVAL 30 DAY
 define('SQL_COUNT_ORDERS_WITH_STATE_TECHNIC', '
     SELECT 
         COUNT(*) AS total_orders,
-        SUM(CASE WHEN o.id_priority = 2 THEN 1 ELSE 0 END) AS criticas,
+        SUM(CASE WHEN o.id_priority = 2 AND o.order_date >= CURDATE() THEN 1 ELSE 0 END) AS criticas,
+        SUM(CASE WHEN o.id_priority = 1 AND o.order_date >= CURDATE() THEN 1 ELSE 0 END) AS pendientes,
         SUM(CASE WHEN o.id_state_order = 2 THEN 1 ELSE 0 END) AS canceladas,
-        SUM(CASE WHEN o.id_priority = 1 THEN 1 ELSE 0 END) AS pendientes
+        SUM(CASE WHEN o.id_priority IN (1, 2) AND o.order_date < CURDATE() THEN 1 ELSE 0 END) AS anteriores
     FROM orders o
     JOIN states_orders so ON o.id_state_order = so.id_state_order
-    WHERE technic_id =? AND 
+    WHERE technic_id = ? AND 
     o.id_state_order NOT IN (4)
 ');
+
 
 define('SQL_COUNT_ORDERS_FINISH', '
     SELECT 
         COUNT(*) AS total_orders,
-        SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) AS realizadas
+        SUM(CASE WHEN o.id_state_order = 4 AND o.order_date >= CURDATE() THEN 1 ELSE 0 END) AS realizadas,
+        SUM(CASE WHEN o.id_state_order = 4 AND o.order_date < CURDATE() THEN 1 ELSE 0 END) AS fin
     FROM orders o
     WHERE technic_id = ?
 ');
+
