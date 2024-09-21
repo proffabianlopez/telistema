@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
   if ($_SESSION['user_idRol'] != 2) {
     header("Location:../../includes/404/404.php");
