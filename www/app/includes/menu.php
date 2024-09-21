@@ -171,9 +171,9 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
         <li class=" <?php if (PAGE == 'Ordenes') {
             echo 'active';
         } ?>">
-            <a href="#"><i class="bi bi-receipt"></i><span class="nav-label">Ordenes Asignadas</span><span class="fa arrow"></span></a>
+            <a href="#"><i class="bi bi-receipt"></i><span class="nav-label">Ordenes de Trabajo</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="../../Technic/orders/ordersTechnic.php">Ordenes Asignadas</a></li>
+                    <li><a href="../../Technic/orders/ordersTechnic.php">Ordenes de trabajo</a></li>
                     <li><a href="../../Technic/orders/reportsOrders.php">Reportes </a></li>
                     <li><a href="../../Technic/orders/historyOrders.php">Historial </a></li>
                 </ul>

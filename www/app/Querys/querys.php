@@ -634,8 +634,6 @@ define('SQL_ORDER_BY_ID_TEC', '
         o.technic_id = ?
     AND 
         o.id_state_order NOT IN (4, 5)
-    AND 
-        o.order_date >= NOW() - INTERVAL 1 DAY
 ');
 
 
