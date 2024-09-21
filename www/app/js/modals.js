@@ -34,8 +34,8 @@ document.querySelectorAll(".modaledit-btn").forEach((button) => {
         case "adminPassword":
             url = "../crudusers/modalpass.php?token="+ token;
             break;
-        case "technic":
-            url = "editTechnic.php?token="+ token;
+        case "technicians":
+            url = "edittechnic.php?token="+ token;
             break;
         case "technicPassword":
             url = "modalpass.php?token="+ token;

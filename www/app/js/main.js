@@ -473,5 +473,37 @@ $(document).ready(function () {
       "#change-editproduct-form",
       "materialsController.php?token=" + token + "&action=edit_product"
     );
-
+  
 });
+
+
+document.getElementById('show-urgent').addEventListener('click', function() {
+  // Mostrar solo órdenes urgentes
+  var urgentOrders = document.querySelectorAll('.urgent-order');
+  var normalOrders = document.querySelectorAll('.normal-order');
+
+  // Ocultar normales y mostrar urgentes
+  normalOrders.forEach(function(order) {
+    order.style.display = 'none';
+  });
+  urgentOrders.forEach(function(order) {
+    order.style.display = 'block';
+  });
+});
+
+document.getElementById('show-normal').addEventListener('click', function() {
+  // Mostrar solo órdenes normales
+  var urgentOrders = document.querySelectorAll('.urgent-order');
+  var normalOrders = document.querySelectorAll('.normal-order');
+
+  // Ocultar urgentes y mostrar normales
+  urgentOrders.forEach(function(order) {
+    order.style.display = 'none';
+  });
+  normalOrders.forEach(function(order) {
+    order.style.display = 'block';
+  });
+});
+
+// Mostrar solo las órdenes urgentes por defecto al cargar la página
+document.getElementById('show-urgent').click();
