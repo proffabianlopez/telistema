@@ -90,25 +90,34 @@ if (isset($_GET['id_client'])) {
                                         <input type="hidden" class="form-control" id="admin_id" name="admin_id" value="<?php echo htmlspecialchars($admin_id); ?>">
                                     </div>
                                     <div class="form-group">
-                                        <label for="id_client">Cliente</label>
-                                        <?php
-                                        $stmt = $conn->prepare(SQL_SELECT_CLIENT_BY_ID);
-                                        $stmt->bind_param("i", $id_client);
-                                        $stmt->execute();
-                                        $result = $stmt->get_result();
-
-                                        if ($result->num_rows > 0) {
-                                            $row_client = $result->fetch_assoc();
-                                            $id_client = $row_client["id_client"];
-                                            $client_name = $row_client["client_name"];
-                                            $client_lastname = $row_client["client_lastname"];
-                                        }
-                                        ?>
-                                        <input type="text" class="form-control" id="id_client" name="id_client" value="<?php echo htmlspecialchars($client_name . ' ' . $client_lastname); ?>" readonly>
+                                        <label for="cuicuit_number">N° de Circuito <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control reset" id="cuicuit_number" name="cuicuit_number">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id_client">Cliente <span class="text-danger">*</span></label>
+                                        <select class="form-control" id="id_client" name="id_client" required>
+                                            <option value=""></option>
+                                            <?php
+                                            $stmt = $conn->prepare(SQL_SELECT_ALL_CLIENTS);
+                                            $stmt->execute();
+                                            $result = $stmt->get_result();
+                                            if ($result->num_rows > 0) {
+                                                while ($row_client = $result->fetch_assoc()) {
+                                                    $id_client = $row_client["id_client"];
+                                                    $client_name = $row_client["client_name"];
+                                                    $client_lastname = $row_client["client_lastname"];
+                                                    echo '<option value="' . htmlspecialchars($id_client) . '">' . htmlspecialchars($client_name . ' ' . $client_lastname) . '</option>';
+                                                }
+                                            } else {
+                                                echo '<option>No hay clientes disponibles</option>';
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="id_priority">Prioridad <span class="text-danger">*</span></label>
                                         <select name="id_priority" id="id_priority" class="form-control">
+                                            <option value=""> </option>
                                             <?php
                                             $priority = $row['id_priority'];
                                             $stmt = $conn->prepare(SQL_SELECT_PRIORITYS_ORDER_BY_ID);
@@ -138,6 +147,7 @@ if (isset($_GET['id_client'])) {
                                     <div class="form-group">
                                         <label for="technic_id">Asignar Técnico <span class="text-danger">*</span></label>
                                         <select name="technic_id" id="technic_id" class="form-control">
+                                        <option value=""></option>
                                             <?php
                                             $user = $row['id_user'];
                                             $stmt = $conn->prepare(SQL_SELECT_TECNS_ORDER_BY_ID);
@@ -172,6 +182,36 @@ if (isset($_GET['id_client'])) {
                                 </div>
                                 <!-- Segunda columna -->
                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                            <label for="id_type_work">Tipo de trabajo <span class="text-danger">*</span></label>
+                                            <select name="id_type_work" id="id_type_work" class="form-control">
+                                                <option value=""> </option>
+                                                <?php
+                                                $type_work = $row['id_type_work'];
+                                                $stmt = $conn->prepare(SQL_SELECT_TYPES_WORKS_ORDER_BY_ID);
+                                                $stmt->bind_param("i", $type_work);
+                                                $stmt->execute();
+                                                $result = $stmt->get_result();
+                                                if ($result->num_rows > 0) {
+                                                    $row_type_work = $result->fetch_assoc();
+                                                    $id_priority = $row_type_work["id_type_work"];
+                                                    $name_type_work = $row_type_work["type_work"];
+                                                } else {
+                                                    $id_priority = 1;
+                                                }
+
+                                                $stmt = $conn->prepare(SQL_SELECT_TYPES_WORKS_ORDERS);
+                                                $stmt->execute();
+                                                $rows = $stmt->get_result();
+                                                foreach ($rows as $type_work) {
+                                                    $type_workName = $type_work["type_work"];
+                                                    $type_workId = $type_work["id_type_work"];
+                                                    $selected = ($type_workId == $id_type_work) ? "selected" : "";
+                                                    echo "<option value='$type_workId' $selected>$type_workName</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
                                     <div class="form-group">
                                         <label for="address">Dirección <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control validate-field vaddress reset" id="address" name="address">

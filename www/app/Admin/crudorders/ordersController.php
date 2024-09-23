@@ -52,6 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $height = $_POST['height'];
             $floor = trim($_POST['floor']);
             $departament = trim($_POST['departament']);
+            $cuicuit_number = $_POST['circuit_number'];
+            $id_type_work = $_POST['id_type_work'];
             $id_client = $_POST['id_client'];
             $id_priority = trim($_POST['id_priority']);
             $id_state_order = trim($_POST['id_state_order']);
@@ -61,18 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = SQL_UPDATE_ORDER;
             $stmt = $conn->prepare($sql);
             $stmt->bind_param(
-                "sssissiiiii",
-                $order_date,
-                $order_description,
-                $address,
-                $height,
-                $floor,
-                $departament,
-                $id_client,
-                $id_priority,
-                $id_state_order,
-                $technic_id,
-                $id_order
+                "sssissiiiiiii", $order_date, $order_description, $address, $height, $floor, $departament, $cuicuit_number, $id_type_work, $id_client, $id_priority, $id_state_order, $technic_id, $id_order
             );
             if ($stmt->execute()) {
                 $response['status'] = 'success';
@@ -86,8 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     } elseif ($_GET['action'] === 'add_order') {
-        // Checking for Empty Fields
-        $id_client = $_SESSION['id_client'];
         if (empty($_REQUEST['order_description'])) {
             $response['message'] = 'El campo Descripcion es obligatorio.';
         } elseif (empty($_REQUEST["address"])) {
@@ -100,13 +89,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $height = $_POST['height'];
             $floor = trim($_POST['floor']);
             $departament = trim($_POST['departament']);
+            $cuicuit_number = $_POST['cuicuit_number'];
+            $id_type_work = $_POST['id_type_work'];
+            $id_client = $_POST['id_client'];
             $id_priority = $_POST['id_priority'];
             $id_state_order = 3;
             $admin_id = $_POST['admin_id'];
             $technic_id = $_POST['technic_id'];
 
             $stmt = $conn->prepare(SQL_INSERT_ORDER);
-            $stmt->bind_param("sssissiiiii", $order_date, $order_description, $address, $height, $floor, $departament, $id_client, $id_priority, $id_state_order, $admin_id, $technic_id);
+            $stmt->bind_param("sssissiiiiiii", $order_date, $order_description, $address, $height, $floor, $departament, $cuicuit_number, $id_type_work, $id_client, $id_priority, $id_state_order, $admin_id, $technic_id);
             if ($stmt->execute()) {
                 $response['status'] = 'success';
                 $response['message'] = 'Agregado con éxito';
@@ -120,9 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($_POST['action'] === 'delete_order') {
         $id = explode('*', $_POST['id']);
         $id_order = $id[0];
-        $id_client = $id[1];
         $stmt = $conn->prepare(SQL_DELETE_ORDER);
-        $stmt->bind_param("ii", $id_client, $id_order);
+        $stmt->bind_param("i", $id_order);
 
         if ($stmt->execute()) {
             $response['status'] = 'success';

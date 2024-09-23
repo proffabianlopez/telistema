@@ -55,14 +55,40 @@ if (isset($_POST['id'])) {
                                         } ?>" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label for="id_client">Cliente (No editable)</label>
-                                        <p class="form-control" id="full_name_client"><?php if (isset($row['client_name']) && isset($row['client_lastname'])) {
-                                            echo $row['client_name'] . ' ' . $row['client_lastname'];
-                                        } ?></p> 
+                                        <label for="circuit_number">N° de Circuito <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" id="circuit_number" name="circuit_number" value="<?php if (isset($row['circuit_number'])) {
+                                            echo $row['circuit_number'];
+                                        } ?>">
+                                    </div> 
+                                    <div class="form-group">
+                                        <label for="id_client">Cliente <span class="text-danger">*</span></label>
+                                        <select name="id_client" id="id_client" class="form-control">
+                                            <?php
+                                            $client = $row['id_client'];
+                                            $stmt = $conn->prepare(SQL_SELECT_CLIENTS_ORDER_BY_ID);
+                                            $stmt->bind_param("i", $client);
+                                            $stmt->execute();
+                                            $result = $stmt->get_result();
+
+                                            if ($result->num_rows > 0) {
+                                                $row_client = $result->fetch_assoc();
+                                          $name_client = $row_client["client_name"] . ' ' . $row_client["client_lastname"];
+                                                $id_client = $row_client["id_client"];
+                                            }
+
+                                            $stmt_all = $conn->prepare(SQL_SELECT_ALL_CLIENTS);
+                                            $stmt_all->execute();
+                                            $result_all = $stmt_all->get_result();
+
+                                            foreach ($result_all as $clie) {
+                                                $clientName = $clie["client_name"] . ' ' . $clie["client_lastname"];
+                                                $clientId = $clie["id_client"];
+                                                $selected = ($clientId == $id_client) ? "selected" : "";
+                                                echo "<option value='$clientId' $selected>$clientName</option>";
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
-                                    <input type="hidden" name="id_client" value="<?php if (isset($row['id_client'])) {
-                                        echo $row['id_client'];
-                                    } ?>">
                                     <div class="form-group">
                                         <label for="id_priority">Prioridad <span class="text-danger">*</span></label>
                                         <select name="id_priority" id="id_priority" class="form-control">
@@ -86,7 +112,7 @@ if (isset($_POST['id'])) {
 
                                             if ($result->num_rows > 0) {
                                                 $row_technic = $result->fetch_assoc();
-                                                $name_technic = $row_technic["name_user"] . ' ' . $row_technic["surname_user"];
+                                          $name_technic = $row_technic["name_user"] . ' ' . $row_technic["surname_user"];
                                                 $id_technic = $row_technic["id_user"];
                                             }
 
@@ -117,15 +143,19 @@ if (isset($_POST['id'])) {
                                                 Realizada</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="order_description">Descripción <span class="text-danger">*</span></label>
-                                        <textarea class="form-control validate-field vtextarea" id="order_description" name="order_description"
-                                            style="resize: none; max-width: 100%;"><?php if (isset($row['order_description'])) {
-                                                echo $row['order_description'];
-                                            } ?></textarea>
-                                    </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="id_type_work">Tipo de trabajo <span class="text-danger">*</span></label>
+                                        <select name="id_type_work" id="id_type_work" class="form-control">
+                                            <option value="1" <?php if ($row["id_type_work"] === 1)
+                                                echo 'selected'; ?>>
+                                                Alta</option>
+                                            <option value="2" <?php if ($row["id_type_work"] === 2)
+                                                echo 'selected'; ?>>
+                                                Reparación</option>
+                                        </select>
+                                    </div>
                                     <div class="form-group">
                                         <label for="address">Dirección  <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control validate-field vaddress" id="address" name="address" value="<?php if (isset($row['address'])) {
@@ -153,6 +183,13 @@ if (isset($_POST['id'])) {
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                        <label for="order_description">Descripción <span class="text-danger">*</span></label>
+                                        <textarea class="form-control validate-field vtextarea" id="order_description" name="order_description"
+                                            style="resize: none; max-width: 100%;"><?php if (isset($row['order_description'])) {
+                                                echo $row['order_description'];
+                                            } ?></textarea>
+                                </div>
                             <div class="modal-footer">
                                 <button type="submit" class="ladda-button btn btn-primary"
                                     data-style="zoom-in">Actualizar</button>
@@ -176,16 +213,6 @@ if (isset($_POST['id'])) {
         let email = '';
     </script>
     <script src="../../js/main.js"></script>
-    <script>
-
-$(document).ready(function () {
-
-    $('#full_name_client').prop('readonly', true);
-    $('#full_name_client').attr('disabled', 'disabled');
-
-});
-
-</script>
 </body>
 
 </html>
