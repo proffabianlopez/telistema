@@ -44,13 +44,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'El campo Teléfono es obligatorio.';
         } else {
 
+            // Obtener los datos del usuario a editar
+            // Necesito el rol y el correo actual ya que no los voy a actualizar
+            $user_id = $_REQUEST['id_user'];
+
+            $stmt = $conn->prepare(SQL_SELECT_USER_BY_ID);
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+
+            // Obtener resultados de la consulta
+            $result = $stmt->get_result();
+
+            // Verificar si hay resultados
+            if ($result->num_rows > 0) {
+                // Obtener la fila como un array asociativo
+                $row = $result->fetch_assoc();
+
+            } else {
+                
+                exit;
+            }
+
             // Assigning User Values to Variable
             $id = $_REQUEST['id_user'];
             $name = capitalizeWords(trim($_REQUEST['name_user']));
             $surname = capitalizeWords(trim($_REQUEST['surname_user']));
             $phone = trim($_REQUEST['phone_user']);
-            $mail = trim($_GET['email']);
-            $role = trim($_REQUEST['rol']);
+            $mail = trim($row['mail']); // No se edita, se trae de request
+            $role = trim($row['id_rol']); // No se edita, se trae de request
             $pass_hash = null;
             $new_pass = null;
             if (isset($_POST["new_pass"])) {
@@ -75,13 +96,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         exit;
                     }
                 }
-                // below msg display on form submit success
+                
                 $response['status'] = 'success';
                 $response['message'] = 'Actualizado con exito';
                 echo json_encode($response);
                 exit;
             } else {
-                // below msg display on form submit failed
+                
                 $response['message'] = 'No se pudo actuazar: ';
                 echo json_encode($response);
                 exit;
@@ -207,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
             } else {
-                $response['message'] = "No podes elimanar ";
+                $response['message'] = "No podes eliminar ";
                 $response['message1'] = "El Usuario tiene Ordenes Pendientes asignadas";
                 echo json_encode($response);
                 exit;
