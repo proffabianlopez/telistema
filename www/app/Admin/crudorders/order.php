@@ -9,6 +9,7 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
 } else {
     echo "<script> location.href='../login.php'; </script>";
 }
+
 // Genera un token CSRF y lo guarda en la sesión
 if (!isset($_SESSION['token'])) {
     $_SESSION['token'] = bin2hex(random_bytes(32));
@@ -33,8 +34,7 @@ include ('../../Querys/querys.php');
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i
-                                class="fa fa-bars"></i> </a>
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
                     </div>
                 </nav>
             </div>
@@ -54,72 +54,71 @@ include ('../../Querys/querys.php');
                             </div>
                             <div class="ibox-content">
                                 <?php
-                                if (isset($_POST['id_client'])) {
-                                    $_SESSION['id_client'] = $_POST['id_client'];
-                                    $id_client = $_POST['id_client'];
-                                    $stmt = $conn->prepare(SQL_ORDER_BY_ID);
-                                    if ($stmt === false) {
-                                        die('Error en la preparación de la consulta: ' . $conn->error);
-                                    }
-                                    $stmt->bind_param("i", $id_client);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
+                                $stmt = $conn->prepare(SQL_ORDER_BY_ID);
+                                if ($stmt === false) {
+                                    die('Error en la preparación de la consulta: ' . $conn->error);
+                                }
+                                $stmt->execute();
+                                $result = $stmt->get_result();
 
-                                    if ($result->num_rows > 0) {
-                                        echo ' <table class="footable table table-stripped toggle-arrow-tiny">
-                                        <thead>
-                                        <tr>
-                                            <th data-hide="all">N° de Orden</th>
-                                            <th data-hide="all">Cliente</th>
-                                            <th data-toggle="true">Fecha y Hora</th>
-                                            <th data-toggle="true">Descripción</th>
-                                            <th data-toggle="true">Prioridad</th>
-                                            <th data-hide="all">Dirección</th>
-                                            <th data-hide="all">Piso</th>
-                                            <th data-hide="all">Dpto</th>
-                                            <th data-hide="all">Estado</th>
-                                            <th data-hide="all">Tecnico Asignado</th>
-                                            <th>Acción</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        ';
-                                        while ($row = $result->fetch_assoc()) {
+                                if ($result->num_rows > 0) {
+                                    echo ' <table class="footable table table-stripped toggle-arrow-tiny">
+                                    <thead>
+                                    <tr>
+                                        <th data-hide="all">Orden</th>
+                                        <th data-hide="all">N° de Circuito</th>
+                                        <th data-hide="all">Cliente</th>
+                                        <th data-toggle="true">Fecha</th>
+                                        <th data-toggle="true">Prioridad</th>
+                                        <th data-toggle="true">Tipo de Trabajo</th>
+                                        <th data-hide="all">Dirección</th>
+                                        <th data-hide="all">Piso</th>
+                                        <th data-hide="all">Dpto</th>
+                                        <th data-hide="all">Estado</th>
+                                        <th data-hide="all">Tecnico Asignado</th>
+                                        <th data-hide="all">Descripción</th>
 
-                                            $order_datetime = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date']);
-                                            $order_datetime_formatted = $order_datetime->format('d/m/Y H:i');
-                                            
-                                            //Si son null , les coloca un -
-                                            $floor = isset($row["floor"]) && $row["floor"] !== '' ? $row["floor"] : '-';
-                                            $departament = isset($row["departament"]) && $row["departament"] !== '' ? $row["departament"] : '-';
+                                        <th>Acción</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    ';
+                                    while ($row = $result->fetch_assoc()) {
+                                        $order_datetime = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date']);
+                                        $order_datetime_formatted = $order_datetime->format('d/m/Y');
                                         
-                                            echo '<tr>';
-                                            echo '<td>' . $row["id_order"] . '</td>';
-                                            echo '<td>' . $row["client_name"] . ' ' . $row['client_lastname'] . '</td>';
-                                            echo '<td>' . $order_datetime_formatted . '</td>';
-                                            echo '<td>' . $row["order_description"] . '</td>';
-                                            echo '<td>' . $row["priority"] . '</td>';
-                                            echo '<td>' . $row["address"] . ' ' . $row["height"] . '</td>';
-                                            echo '<td>' . $floor . '</td>';
-                                            echo '<td>' . $departament . '</td>';
-                                            echo '<td>' . $row["state_order"] . '</td>';
-                                            echo '<td>' . $row["name_user"] . ' ' . $row["surname_user"] . '</td>';
-                                            echo '<td>
-                                                    <div class="btn-group" role="group">
-                                                         <button id="edit-' . $row["id_order"] . '*' . $row["id_client"] . '-' . $token . '" data-crud="orders" class="btn btn-warning btn-xs modaledit-btn " style="margin-right: 5px" >
-                                                       <i class="bi bi-pencil-square"></i>
-                                                    </button>
-                                                     
-                                                         <button id="delete-' . $row["id_order"] . '*' . $row["id_client"] . '-' . $token . '" data-crud="orders" class="btn btn-danger btn-xs delete-btn" >
-                                                        <i class="bi bi-trash"></i>
-                                                    </button>
-                                                    </div>
-                                                </td>';
-                                            echo '</tr>';
-                                        }
-                                        echo '</tbody>
-                                        </table>';
+                                        // Si son null, coloca un "-"
+                                        $floor = isset($row["floor"]) && $row["floor"] !== '' ? $row["floor"] : '-';
+                                        $departament = isset($row["departament"]) && $row["departament"] !== '' ? $row["departament"] : '-';
+                                    
+                                        echo '<tr>';
+                                        echo '<td>' . $row["id_order"] . '</td>';
+                                        echo '<td>' . $row["circuit_number"] . '</td>';
+                                        echo '<td>' . $row["client_name"] . ' ' . $row['client_lastname'] . '</td>';
+                                        echo '<td>' . $order_datetime_formatted . '</td>';
+                                        echo '<td>' . $row["priority"] . '</td>';
+                                        echo '<td>' . $row["type_work"] . '</td>';
+                                        echo '<td>' . $row["address"] . ' ' . $row["height"] . '</td>';
+                                        echo '<td>' . $floor . '</td>';
+                                        echo '<td>' . $departament . '</td>';
+                                        echo '<td>' . $row["state_order"] . '</td>';
+                                        echo '<td>' . $row["name_user"] . ' ' . $row["surname_user"] . '</td>';
+                                        echo '<td>' . $row["order_description"] . '</td>';
+                                        echo '<td>
+                                                <div class="btn-group" role="group">
+                                                     <button id="edit-' . $row["id_order"] . '-' . $token . '" data-crud="orders" class="btn btn-warning btn-xs modaledit-btn" style="margin-right: 5px">
+                                                   <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                                 
+                                                     <button id="delete-' . $row["id_order"] . '-' . $token . '" data-crud="orders" class="btn btn-danger btn-xs delete-btn">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                                </div>
+                                            </td>';
+                                        echo '</tr>';
                                     }
+                                    echo '</tbody>
+                                    </table>';
                                 } else {
                                     echo "0 Resultado";
                                 }
@@ -163,10 +162,10 @@ include ('../../Querys/querys.php');
         function openNewOrderModal() {
             // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({
-                url: "insertorder.php?token=<?php echo $token; ?>&&id_client=<?php echo $id_client; ?>", // Ruta al archivo de edición de usuario
+                url: "insertorder.php?token=<?php echo $token; ?>", // Ruta al archivo de inserción de orden
                 type: "GET",
                 success: function (response) {
-                    // Muestra el formulario de edición en el contenedor
+                    // Muestra el formulario de inserción en el contenedor
                     $("#edit-form-container").html(response).slideDown();
                     // Abre el modal
                     $("#myModal6").modal("show");

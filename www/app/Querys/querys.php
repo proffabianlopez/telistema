@@ -323,6 +323,8 @@ define('SQL_ORDER_BY_ID', '
         o.height,
         o.floor, 
         o.departament,
+        o.circuit_number,
+        t_w.type_work,
         o.id_client, 
         p.priority,
         so.state_order,
@@ -340,12 +342,13 @@ define('SQL_ORDER_BY_ID', '
         users u ON o.technic_id = u.id_user
     LEFT JOIN
         clients cl ON o.id_client = cl.id_client
+    LEFT JOIN
+        types_works t_w ON o.id_type_work = t_w.id_type_work
     WHERE 
-        o.id_client = ? AND so.id_state_order != 5
+        so.id_state_order != 5
     ORDER BY 
-        o.id_order ASC
+        o.circuit_number ASC
 ');
-
 
 define('SQL_INSERT_ORDER', '
         INSERT INTO orders 
@@ -354,13 +357,15 @@ define('SQL_INSERT_ORDER', '
                 address, 
                 height, 
                 floor, 
-                departament, 
+                departament,
+                circuit_number,
+                id_type_work, 
                 id_client,
                 id_priority,
                 id_state_order, 
                 admin_id, 
                 technic_id) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 
 define('SQL_SELECT_ORDER_BY_ID', '
         SELECT 
@@ -371,6 +376,8 @@ define('SQL_SELECT_ORDER_BY_ID', '
         o.height,
         o.floor, 
         o.departament,
+        o.circuit_number,
+        t_w.id_type_work,
         o.id_client,
         o.id_priority,
         p.priority,
@@ -380,7 +387,8 @@ define('SQL_SELECT_ORDER_BY_ID', '
         u.name_user,
         u.surname_user,
         cl.client_name,
-        cl.client_lastname
+        cl.client_lastname,
+        t_w.type_work
     FROM 
         orders o
     JOIN 
@@ -391,6 +399,8 @@ define('SQL_SELECT_ORDER_BY_ID', '
         users u ON o.technic_id = u.id_user
     LEFT JOIN
         clients cl ON o.id_client = cl.id_client
+    LEFT JOIN
+        types_works t_w ON o.id_type_work = t_w.id_type_work
     WHERE 
         o.id_order =?');
 
@@ -404,6 +414,8 @@ define('SQL_UPDATE_ORDER', '
                 height = ?,
                 floor = ?,
                 departament = ?,
+                circuit_number = ?,
+                id_type_work = ?,
                 id_client = ?,
                 id_priority = ?,
                 id_state_order = ?,
@@ -418,6 +430,7 @@ define('SQL_SELECT_PRIORITYS_ORDER_BY_ID', '
 
 define('SQL_SELECT_PRIORITYS_ORDERS', '
                 SELECT * FROM prioritys');
+
 define('SQL_SELECT_TECNS_ORDER_BY_ID', '
     SELECT *
     FROM users
@@ -428,15 +441,28 @@ define('SQL_SELECT_TECNS_ORDERS', '
     FROM users
     WHERE id_rol = 2');
 
-define('SQL_SELECT_CLIENT_BY_ID', '
-        SELECT id_client, client_name, client_lastname
-        FROM clients 
-        WHERE id_client = ?');
+define('SQL_SELECT_CLIENTS_ORDER_BY_ID', '
+    SELECT *
+    FROM clients
+    WHERE id_client = ?');
+
+define('SQL_SELECT_ALL_CLIENTS', '
+    SELECT id_client, client_name, client_lastname
+    FROM clients
+    WHERE id_state_user != 2');
+
+define('SQL_SELECT_TYPES_WORKS_ORDER_BY_ID', '
+                SELECT id_type_work, type_work
+                FROM types_works
+                WHERE id_type_work = ?');
+
+define('SQL_SELECT_TYPES_WORKS_ORDERS', '
+                SELECT * FROM types_works');
 
 define('SQL_DELETE_ORDER', '
         UPDATE orders
         SET id_state_order = 5
-        WHERE id_client = ? AND id_order = ?');
+        WHERE id_order = ?');
 
 define('SQL_FROM_ORDERS', '
         SELECT 

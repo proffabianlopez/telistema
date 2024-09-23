@@ -116,30 +116,17 @@ include('../../Querys/querys.php');
                                                    <button id="delete-' . $row["id_client"] . '-' . $token . '" data-crud="clients" class="btn btn-danger btn-xs delete-btn " style="margin-right: 5px"" >
                                                             <i class="bi bi-trash"></i>
                                                   </button>
-                                                    
-                                                    <form action="../crudorders/order.php" method="POST" style="display:inline;">
-                                                    <input type="hidden" name="id_client" value="' . $row["id_client"] . '">
-                                                    <button class="btn btn-primary btn-xs" name="order" value="Order">
-                                                    <i class="bi bi-receipt"></i>
-                                                    </button>
-                                                    </form>
-
                                                 </div>
                                                 
                                             </td>';
                                         echo '</tr>';
                                     }
-
                                     echo '</tbody>
                                     </table>';
                                 } else {
                                     echo "0 Resultado";
                                 }
-
                                 ?>
-
-
-
                                 <tfoot>
                                     <tr>
                                         <td colspan="5">
@@ -147,36 +134,26 @@ include('../../Querys/querys.php');
                                         </td>
                                     </tr>
                                 </tfoot>
-
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="footer">
                 <div class="pull-right">
-
                 </div>
                 <div>
                     <strong>Copyright</strong> Telistema &copy; 2024
                 </div>
             </div>
-
         </div>
     </div>
-
-
-
     <div id="small-chat">
         <a class="open-small-chat" onclick="openNewClientsModal()">
             <i class="bi bi-plus-lg"></i>
         </a>
     </div>
-
     <div id="edit-form-container" style="display: none;"></div>
-
     <?php
     include('../../includes/footer.php');
     ?>
@@ -185,20 +162,13 @@ include('../../Querys/querys.php');
 
             $('.footable').footable();
             $('.footable2').footable();
-
-        
-
         });
-
         function openNewClientsModal() {
-            // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({
-                url: "insertclient.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
+                url: "insertclient.php?token=<?php echo $token; ?>",
                 type: "GET",
                 success: function (response) {
-                    // Muestra el formulario de edición en el contenedor
                     $("#edit-form-container").html(response).slideDown();
-                    // Abre el modal
                     $("#myModal6").modal("show");
                 },
                 error: function () {
@@ -208,5 +178,4 @@ include('../../Querys/querys.php');
         }
     </script>
 </body>
-
 </html>
