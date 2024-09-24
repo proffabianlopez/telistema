@@ -2,7 +2,6 @@
 session_start();
 ////////////////////////////////
 if (!isset($_SESSION['is_login']) || !isset($_GET['token']) || $_GET['token'] !== $_SESSION['token']) {
-  // Si no hay sesión o el token no es válido, redirige al usuario o muestra un mensaje de error
   header("Location:../../includes/404/404.php");
   exit();
 }
@@ -66,7 +65,7 @@ include ('../configsmtp/generate_config.php');
                     <input type="text" class="form-control validate-field vaddress" id="address" name="address">
                   </div>
                   <div class="form-group">
-                    <label for="height">Altura <span class="text-danger">*</span></label>
+                    <label for="height">Altura</label>
                     <input type="number" class="form-control validate-field vhousenumber" id="height" name="height">
                   </div>
                   <div class="form-group">
