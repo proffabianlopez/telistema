@@ -96,11 +96,14 @@ include ('../../Querys/querys.php');
                                             echo '<td>' . $row["rol"] . '</td>';
                                             echo '<td>
                                                     <div class="btn-group" role="group">
-                                                        <button id="edit-' . $row["id_user"] . '-' . $token . '" data-crud="users" class="btn btn-warning btn-xs  modaledit-btn " style="margin-right: 5px" >
+                                                        <button id="edit-' . $row["id_user"] . '-' . $token . '" data-crud="users" class="btn btn-warning btn-xs  modaledit-btn" style="margin-right: 5px" >
                                                             <i class="bi bi-pencil-square"></i>
                                                         </button>
-                                                        <button id="delete-' . $row["id_user"] . '-' . $token . '" data-crud="users" class="btn btn-danger btn-xs delete-btn" >
+                                                        <button id="delete-' . $row["id_user"] . '-' . $token . '" data-crud="users" class="btn btn-danger btn-xs delete-btn" style="margin-right: 5px">
                                                             <i class="bi bi-trash"></i>
+                                                        </button>
+                                                        <button id="edit-' . $row["id_user"] . '-' . $token . '" data-crud="technicPassword" class="btn btn-primary btn-xs modaledit-btn">
+                                                            <i class="bi bi-key"></i>
                                                         </button>
                                                     </div>
                                                 </td>
