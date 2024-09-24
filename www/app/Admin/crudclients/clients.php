@@ -83,14 +83,13 @@ include('../../Querys/querys.php');
                                     echo ' <table class="footable table table-stripped toggle-arrow-tiny">
                                 <thead>
                                 <tr>
-                                    <th data-hide="all">Id</th>
+                                    <th data-hide="all">N°</th>
                                     <th data-toggle="true">Nombre</th>
                                     <th data-hide="phone">Apellido</th>
                                     <th data-hide="phone">Telefono</th>
                                     <th data-hide="all">Email</th>
-                                    <th data-hide="all">Direccion</th>
+                                    <th data-hide="all">Dirección</th>
                                     <th data-hide="all">Piso</th>
-                                    <th data-hide="all">Altura</th>
                                     <th data-hide="all">Dpto</th>
                                     <th>Accion</th>
                                     </tr>
@@ -98,16 +97,19 @@ include('../../Querys/querys.php');
                                 <tbody>
                                 ';
                                     while ($row = $result->fetch_assoc()) {
+
+                                        // Si son null, coloca un "-"
+                                        $floor = isset($row["floor"]) && $row["floor"] !== '' ? $row["floor"] : '-';
+                                        $departament = isset($row["departament"]) && $row["departament"] !== '' ? $row["departament"] : '-';
                                         echo '<tr>';
                                         echo '<td>' . $row["id_client"] . '</td>';
                                         echo '<td>' . $row["client_name"] . '</td>';
                                         echo '<td>' . $row["client_lastname"] . '</td>';
                                         echo '<td>' . $row["phone"] . '</td>';
                                         echo '<td>' . $row["mail"] . '</td>';
-                                        echo '<td>' . $row["address"] . '</td>';
-                                        echo '<td>' . $row["height"] . '</td>';
-                                        echo '<td>' . $row["floor"] . '</td>';
-                                        echo '<td>' . $row["departament"] . '</td>';
+                                        echo '<td>' . $row["address"] . ' ' . $row["height"] . '</td>';
+                                        echo '<td>' . $floor . '</td>';
+                                        echo '<td>' . $departament . '</td>';
                                         echo '<td>
                                                 <div class="btn-group" role="group">
                                                     <button id="edit-' . $row["id_client"] . '-' . $token . '" data-crud="clients" class="btn btn-warning btn-xs modaledit-btn " style="margin-right: 5px" >

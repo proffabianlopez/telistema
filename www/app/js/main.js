@@ -46,7 +46,6 @@ $(document).ready(function () {
                 lettersonly: "Solo se permiten letras",
               };
               break;
-
             case "vphone":
               rules[fieldName] = {
                 required: true,

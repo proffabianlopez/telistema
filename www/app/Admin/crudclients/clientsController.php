@@ -48,8 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'El campo Teléfono es obligatorio.';
         } elseif (empty($_REQUEST["address"])) {
             $response['message'] = 'El campo Dirección es obligatorio.';
-        } elseif (empty($_REQUEST["height"])) {
-            $response['message'] = 'El campo Altura es obligatorio.';
         } else {
             // Assigning User Values to Variable
             $id_client = $_REQUEST['id_client'];
@@ -87,8 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $response['message'] = 'El campo Teléfono es obligatorio.';
         } elseif (empty($_REQUEST["address"])) {
             $response['message'] = 'El campo Dirección es obligatorio.';
-        } elseif (empty($_REQUEST["height"])) {
-            $response['message'] = 'El campo Altura es obligatorio.';
         } else {
             // Assigning User Values to Variable
             $id_client = $_REQUEST['id_client'];
