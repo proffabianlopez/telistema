@@ -83,7 +83,7 @@ if (isset($_POST['id'])) {
 
                                     </div>
                                     <div class="form-group">
-                                        <label for="mail">Email (no editable) </label>
+                                        <label for="mail">Email </label>
                                         <p class="form-control" id="mail" name="mail">
                                             <?php if (isset($row['mail'])) {
                                                 echo $row['mail'];
@@ -95,13 +95,11 @@ if (isset($_POST['id'])) {
                                 <div class="col-md-6">
                                     <!-- Campo Cargo -->
                                     <div class="form-group">
-                                        <label for="rol">Cargo <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="rol" id="rol" required>
-                                            <option value="1" <?php if ($row["id_rol"] === 1)
-                                                echo 'selected'; ?>>
-                                                Administrador</option>
-                                            <option value="2" <?php if ($row["id_rol"] === 2)
-                                                echo 'selected'; ?>>Técnico
+                                        <label for="rol">Cargo </label>
+                                        <select class="form-control" name="rol" id="rol" disabled>
+                                            <option value="<?php echo $row["id_rol"]; ?>" selected>
+                                                <?php echo ($row["id_rol"] === 1) ?
+                                                    'Administrador' : 'Técnico'; ?>
                                             </option>
                                         </select>
                                     </div>
