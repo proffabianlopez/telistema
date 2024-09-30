@@ -712,7 +712,7 @@ define('SQL_SELECT_ORDERS_TECHNIC', '
     WHERE 
         o.technic_id = ? AND so.id_state_order = 4
     ORDER BY 
-        o.id_order ASC
+        o.id_order DESC
 ');
 
 define(
