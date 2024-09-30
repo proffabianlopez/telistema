@@ -65,73 +65,59 @@ if ($result->num_rows > 0) {
                 <div class="col-lg-2"></div>
             </div>
 
+            <!-- Contenido del perfil -->
             <div class="wrapper wrapper-content animated fadeInRight">
                 <div class="row m-b-lg m-t-lg ibox-content">
-                    <div class="col-md-6">
+                    <div class="col-lg-6 text-center">
                         <div class="profile-image">
                             <img src="../../../img/team-3.jpg" class="rounded-circle circle-border m-b-md" alt="profile">
                         </div>
                         <div class="profile-info">
-                            <div class="">
-                                <div>
-                                    <h2 class="no-margins">
-                                        <?php echo htmlspecialchars($row['name_user']); ?>
-                                        <?php echo htmlspecialchars($row['surname_user']); ?>
-                                    </h2>
-                                    <h4>Perfil del Administrador</h4>
-                                    <small>
-                                        Técnico de mantenimiento informático con 3 años de experiencia en el sector,
-                                        especializado en la gestión y ejecución de tareas de mantenimiento preventivo y correctivo.
-                                    </small>
-                                </div>
-                            </div>
+                            <h2 class="no-margins">
+                                <?php echo htmlspecialchars($row['name_user']); ?>
+                                <?php echo htmlspecialchars($row['surname_user']); ?>
+                            </h2>
+                            <!----<h4>Perfil del Administrador</h4> -->
+                            <small>
+                                
+                            </small>
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <!-- Información adicional del usuario -->
+                    <div class="col-lg-3">
                         <table class="table small m-b-xs">
                             <tbody>
-                            <tr>
-                                <td>
-                                    <strong>Email:</strong> <?php echo htmlspecialchars($row['mail']); ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>Celular:</strong> <?php echo htmlspecialchars($row['phone_user']); ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <strong>Cargo:</strong>
-                                        <?php
+                                <tr>
+                                    <td><strong>Email:</strong> <?php echo htmlspecialchars($row['mail']); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Celular:</strong> <?php echo htmlspecialchars($row['phone_user']); ?></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cargo:</strong> 
+                                        <?php 
                                             switch ($row['id_rol']) {
-                                                case 1:
-                                                    echo 'Administrador';
-                                                    break;
-                                                case 2:
-                                                    echo 'Técnico';
-                                                    break;
-                                                default:
-                                                    echo 'Desconocido';
-                                                    break;
+                                                case 1: echo 'Administrador'; break;
+                                                case 2: echo 'Técnico'; break;
+                                                default: echo 'Desconocido'; break;
                                             }
                                         ?>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <div class="col-md-3" role="group">
-                        <button id="edit-<?php echo ($row["id_user"] . '-' . $token); ?>" data-crud="admin" class="btn btn-primary modaledit-btn ">
+                    <!-- Botones de acción -->
+                    <div class="col-lg-3 col-sm-12 d-flex flex-column align-items-center justify-content-center mt-4 mt-lg-0">
+                        <button id="edit-<?php echo ($row['id_user'] . '-' . $token); ?>" data-crud="admin" class="btn btn-primary btn-block mb-2">
                             Modificar perfil
                         </button>
-                        <button id="edit-<?php echo ($row["id_user"] . '-' . $token); ?>" data-crud="adminPassword" class="btn btn-primary modaledit-btn ">
+                        <button id="edit-<?php echo ($row['id_user'] . '-' . $token); ?>" data-crud="adminPassword" class="btn btn-primary btn-block">
                             Cambiar Contraseña
                         </button>
                     </div>
-
                 </div>
             </div>
 
@@ -146,36 +132,37 @@ if ($result->num_rows > 0) {
             </div>
         </div>
     </div>
+    
     <div id="editpassword-form-container" style="display: none;"></div>
     <div id="edit-form-container" style="display: none;"></div>
+
     <script>
-        let token = "<?php echo $token; ?>"
-        let email = "<?php echo $row['mail']; ?>"
+        let token = "<?php echo $token; ?>";
+        let email = "<?php echo $row['mail']; ?>";
     </script>
+
     <?php include('../../includes/footer.php'); ?>
+
     <script>
         $(document).ready(function () {
             $('.footable').footable();
             $('.footable2').footable();
         });
 
-        // Cambiar contraseña
-       /* function openEditModal() {
-            // Realiza una solicitud AJAX para obtener el formulario de edición
+        // Funcionalidad para cambiar contraseña (opcional)
+        /* function openEditModal() {
             $.ajax({
                 url: "../crudusers/modalpass.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
                 type: "GET",
                 success: function (response) {
-                    // Muestra el formulario de edición en el contenedor
                     $("#editpassword-form-container").html(response).slideDown();
-                    // Abre el modal
                     $("#myModal6").modal("show");
                 },
                 error: function () {
                     alert("Error al cargar el formulario de edición.");
                 }
             });
-        }*/
+        } */
     </script>
 </body>
 </html>
