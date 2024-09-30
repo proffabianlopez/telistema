@@ -53,9 +53,9 @@ $passwordGenerate = generatePassword(); ?>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="phone_user">Teléfono <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control validate-field vphone" id="phone_user" name="phone_user"
-                                        onkeypress="isInputNumber(event)">
+                                    <input type="tel" class="form-control validate-field" id="phone_user" name="phone_user">
                                 </div>
+                            
                                 <div class="form-group">
                                     <label for="mail">Email <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control validate-field vemail" id="mail" name="mail">
@@ -92,7 +92,22 @@ $passwordGenerate = generatePassword(); ?>
     let email = '';
 </script>
 <script src="../../js/main.js"></script>
+<script>
+  const input = document.querySelector("#phone_user");
+  const iti = window.intlTelInput(input, {
+    separateDialCode: true,
+    preferredCountries: ["ar", "us", "br", "mx"],
+    utilsScript: "../../js/utils.js"
+  });
 
+  document.getElementById('change-insertclient-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const fullNumber = iti.getNumber();
+    console.log("Número completo con código de área:", fullNumber);
+    document.getElementById('phone_user').value = fullNumber;
+    this.submit();
+  });
+  </script>
 </body>
 
 </html>

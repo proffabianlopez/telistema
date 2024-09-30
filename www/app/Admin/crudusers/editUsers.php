@@ -107,10 +107,10 @@ if (isset($_POST['id'])) {
                                     <!-- Campo Teléfono -->
                                     <div class="form-group">
                                         <label for="phone_user">Teléfono <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control validate-field vphone" id="phone_user"
+                                        <input type="tel" class="form-control validate-field vphone" id="phone_user"
                                             name="phone_user" placeholder="5491234567890" value="<?php if (isset($row['phone_user'])) {
                                                 echo $row['phone_user'];
-                                            } ?>" onkeypress="isInputNumber(event)" required>
+                                            } ?>"required>
 
                                     </div>
                                 </div>
@@ -150,6 +150,28 @@ if (isset($_POST['id'])) {
 
         });
 
+    </script>
+    <script>
+      const input = document.querySelector("#phone_user");
+      const iti = window.intlTelInput(input, {
+        separateDialCode: true,
+        preferredCountries: ["ar", "us", "br", "mx"],
+        utilsScript: "../../js/utils.js"
+      });
+
+      // Detecta el cambio de bandera
+      input.addEventListener("countrychange", function() {
+        // Limpiar el campo de tel
+        input.value = "";
+      });
+
+      // Cuando el formulario se envíe,se agrega el codigo de area
+      document.getElementById('change-editclient-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const fullNumber = iti.getNumber();
+        document.getElementById('phone_user').value = fullNumber;
+        this.submit();
+      });
     </script>
 
 </body>
