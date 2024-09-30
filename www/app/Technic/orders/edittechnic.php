@@ -54,7 +54,7 @@ if (isset($_POST['id'])) {
                                         <input type="text" class="form-control" id="id_order" name="id_order" value="<?php echo $row['id_order'] ?? ''; ?>" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label for="circuit_number">N° de Circuito <span class="text-danger">*</span></label>
+                                        <label for="circuit_number">N° de Circuito</label>
                                         <input type="text" class="form-control" id="circuit_number" name="circuit_number" value="<?php echo $row['circuit_number'] ?? ''; ?>" readonly>
                                     </div> 
                                     <div class="form-group">
@@ -85,7 +85,7 @@ if (isset($_POST['id'])) {
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="id_type_work">Tipo de trabajo <span class="text-danger">*</span></label>
+                                        <label for="id_type_work">Tipo de trabajo</label>
                                         <input type="text" class="form-control" id="id_type_work" name="id_type_work" value="<?php echo $row["id_type_work"] === 1 ? 'Alta' : 'Reparación'; ?>" readonly>
                                     </div>
                                     <div class="form-group">

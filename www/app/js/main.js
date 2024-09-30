@@ -35,13 +35,13 @@ $(document).ready(function () {
             case "vname":
               rules[fieldName] = {
                 required: true,
-                minlength: 3,
+                minlength: 2,
                 maxlength: 20,
                 lettersonly: true,
               };
               messages[fieldName] = {
                 required: "Este campo es obligatorio.",
-                minlength: "Por favor, ingrese al menos 3 caracteres.",
+                minlength: "Por favor, ingrese al menos 2 caracteres.",
                 maxlength: "Por favor, ingrese un máximo de 20 caracteres.",
                 lettersonly: "Solo se permiten letras",
               };
@@ -157,15 +157,30 @@ $(document).ready(function () {
               case "vname_product":
               rules[fieldName] = {
                 required: true,
-                minlength: 3,
+                minlength: 2,
                 maxlength: 20,
               };
               messages[fieldName] = {
                 required: "Este campo es obligatorio.",
-                minlength: "Por favor, ingrese al menos 3 caracteres.",
+                minlength: "Por favor, ingrese al menos 2 caracteres.",
                 maxlength: "Por favor, ingrese un máximo de 20 caracteres.",
               };
               break;
+
+              case "vcuicuit":
+                rules[fieldName] = {
+                    required: true,
+                    digits: true,
+                    maxlength: 6,
+                    minlength: 1,
+                };
+                messages[fieldName] = {
+                    required: "Este campo es obligatorio.",
+                    digits: "Por favor, ingrese solo dígitos.",
+                    maxlength: "Por favor, ingrese un máximo de 6 dígitos.",
+                    minlength: "Debe ingresar al menos 1 dígito.",
+                };
+                break;
           }
         });
       });

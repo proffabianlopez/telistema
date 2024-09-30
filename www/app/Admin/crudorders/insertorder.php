@@ -91,11 +91,11 @@ if (isset($_GET['id_client'])) {
                                     </div>
                                     <div class="form-group">
                                         <label for="cuicuit_number">N° de Circuito <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control reset" id="cuicuit_number" name="cuicuit_number">
+                                        <input type="number" class="form-control validate-field vcuicuit reset" id="cuicuit_number" name="cuicuit_number">
                                     </div>
                                     <div class="form-group">
                                         <label for="id_client">Cliente <span class="text-danger">*</span></label>
-                                        <select class="form-control" id="id_client" name="id_client" required>
+                                        <select class="form-control validate-field select reset" id="id_client" name="id_client" required>
                                             <option value=""></option>
                                             <?php
                                             $stmt = $conn->prepare(SQL_SELECT_ALL_CLIENTS);
@@ -116,20 +116,19 @@ if (isset($_GET['id_client'])) {
                                     </div>
                                     <div class="form-group">
                                         <label for="id_priority">Prioridad <span class="text-danger">*</span></label>
-                                        <select name="id_priority" id="id_priority" class="form-control">
-                                            <option value=""> </option>
+                                        <select class="form-control validate-field select reset" name="id_priority" id="id_priority">
+                                            <option value="" selected></option>
                                             <?php
                                             $priority = $row['id_priority'];
                                             $stmt = $conn->prepare(SQL_SELECT_PRIORITYS_ORDER_BY_ID);
                                             $stmt->bind_param("i", $priority);
                                             $stmt->execute();
                                             $result = $stmt->get_result();
+                                            $id_priority = null;
+
                                             if ($result->num_rows > 0) {
                                                 $row_state = $result->fetch_assoc();
                                                 $id_priority = $row_state["id_priority"];
-                                                $name_state = $row_state["priority"];
-                                            } else {
-                                                $id_priority = 1;
                                             }
 
                                             $stmt = $conn->prepare(SQL_SELECT_PRIORITYS_ORDERS);
@@ -144,9 +143,10 @@ if (isset($_GET['id_client'])) {
                                             ?>
                                         </select>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="technic_id">Asignar Técnico <span class="text-danger">*</span></label>
-                                        <select name="technic_id" id="technic_id" class="form-control">
+                                        <select name="technic_id" id="technic_id" class="form-control validate-field select reset">
                                         <option value=""></option>
                                             <?php
                                             $user = $row['id_user'];
@@ -184,7 +184,7 @@ if (isset($_GET['id_client'])) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                             <label for="id_type_work">Tipo de trabajo <span class="text-danger">*</span></label>
-                                            <select name="id_type_work" id="id_type_work" class="form-control">
+                                            <select name="id_type_work" id="id_type_work" class="form-control validate-field select reset">
                                                 <option value=""> </option>
                                                 <?php
                                                 $type_work = $row['id_type_work'];
