@@ -47,20 +47,19 @@ $(document).ready(function () {
               };
               break;
             case "vphone":
-              rules[fieldName] = {
-                required: true,
-                number: true,
-                min: 999999999999,
-                max: 9999999999999,
-              };
-              messages[fieldName] = {
-                required: "Por favor, ingrese un número de teléfono.",
-                number: "Por favor, ingrese un número válido.",
-                min: "Formato inválido, ingrese el formato 5491122222333",
-                max: "Formato inválido, ingrese el formato 5491122222333",
-              };
-              break;
-
+                rules[fieldName] = {
+                    required: true,
+                    digits: true,
+                    minlength: 11,
+                    maxlength: 11,
+                };
+                messages[fieldName] = {
+                    required: "Por favor, ingrese un número de teléfono.",
+                    digits: "Por favor, ingrese solo dígitos.",
+                    minlength: "Formato inválido. Faltan digitos. ",
+                    maxlength: "Formato inválido. Digitos demas ingresados. ",
+                };
+                break;
             case "vemail":
               rules[fieldName] = {
                 required: true,

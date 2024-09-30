@@ -50,8 +50,8 @@ include ('../configsmtp/generate_config.php');
                       name="client_lastname">
                   </div>
                   <div class="form-group">
-                    <label for="phone">Telefono <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control validate-field vphone" id="phone" name="phone">
+                    <label for="phone">Teléfono <span class="text-danger">*</span></label>
+                    <input type="tel" class="form-control validate-field" id="phone" name="phone">
                   </div>
                   <div class="form-group">
                     <label for="mail">Email <span class="text-danger">*</span></label>
@@ -100,6 +100,23 @@ include ('../configsmtp/generate_config.php');
     let email = '';
   </script>
   <script src="../../js/main.js"></script>
+  <script>
+  const input = document.querySelector("#phone");
+  const iti = window.intlTelInput(input, {
+    separateDialCode: true,
+    preferredCountries: ["ar", "us", "br", "mx"],
+    utilsScript: "../../js/utils.js"
+  });
+
+  document.getElementById('change-insertclient-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const fullNumber = iti.getNumber();
+    console.log("Número completo con código de área:", fullNumber);
+    document.getElementById('phone').value = fullNumber;
+    this.submit();
+  });
+  </script>
+
 
 </body>
 

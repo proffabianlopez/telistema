@@ -80,7 +80,7 @@ define(
         '  UPDATE clients 
         SET client_name = ?,
         client_lastname = ?,
-        phone = ?, 
+        phone = ?,
         address = ?,
         height = ?, 
         floor = ?, 
