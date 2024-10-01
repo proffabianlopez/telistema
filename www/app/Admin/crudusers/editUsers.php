@@ -83,8 +83,8 @@ if (isset($_POST['id'])) {
 
                                     </div>
                                     <div class="form-group">
-                                        <label for="mail">Email (no editable) </label>
-                                        <p class="form-control" id="mail" name="mail">
+                                        <label for="mail">Email </label>
+                                        <p class="form-control" id="mail" name="mail" disabled>
                                             <?php if (isset($row['mail'])) {
                                                 echo $row['mail'];
                                             } ?></p>
@@ -95,13 +95,11 @@ if (isset($_POST['id'])) {
                                 <div class="col-md-6">
                                     <!-- Campo Cargo -->
                                     <div class="form-group">
-                                        <label for="rol">Cargo <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="rol" id="rol" required>
-                                            <option value="1" <?php if ($row["id_rol"] === 1)
-                                                echo 'selected'; ?>>
-                                                Administrador</option>
-                                            <option value="2" <?php if ($row["id_rol"] === 2)
-                                                echo 'selected'; ?>>Técnico
+                                        <label for="rol">Cargo</label>
+                                        <select class="form-control" name="rol" id="rol" disabled>
+                                            <option value="<?php echo $row["id_rol"]; ?>" selected>
+                                                <?php echo ($row["id_rol"] === 1) ?
+                                                    'Administrador' : 'Técnico'; ?>
                                             </option>
                                         </select>
                                     </div>
@@ -109,23 +107,11 @@ if (isset($_POST['id'])) {
                                     <!-- Campo Teléfono -->
                                     <div class="form-group">
                                         <label for="phone_user">Teléfono <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control validate-field vphone" id="phone_user"
+                                        <input type="tel" class="form-control validate-field vphone" id="phone_user"
                                             name="phone_user" placeholder="5491234567890" value="<?php if (isset($row['phone_user'])) {
                                                 echo $row['phone_user'];
-                                            } ?>" onkeypress="isInputNumber(event)" required>
+                                            } ?>"required>
 
-                                    </div>
-                                    <!-- Campo Generar nueva contraseña -->
-                                    <div class="form-group">
-                                        <label> Generar una nueva contraseña?</label>
-                                        <div class="onoffswitch">
-                                            <input type="checkbox" class="onoffswitch-checkbox" id="new_pass"
-                                                name="new_pass">
-                                            <label class="onoffswitch-label" for="new_pass">
-                                                <span class="onoffswitch-inner"></span>
-                                                <span class="onoffswitch-switch"></span>
-                                            </label>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -164,6 +150,28 @@ if (isset($_POST['id'])) {
 
         });
 
+    </script>
+    <script>
+      const input = document.querySelector("#phone_user");
+      const iti = window.intlTelInput(input, {
+        separateDialCode: true,
+        preferredCountries: ["ar", "us", "br", "mx"],
+        utilsScript: "../../js/utils.js"
+      });
+
+      // Detecta el cambio de bandera
+      input.addEventListener("countrychange", function() {
+        // Limpiar el campo de tel
+        input.value = "";
+      });
+
+      // Cuando el formulario se envíe,se agrega el codigo de area
+      document.getElementById('change-editclient-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const fullNumber = iti.getNumber();
+        document.getElementById('phone_user').value = fullNumber;
+        this.submit();
+      });
     </script>
 
 </body>

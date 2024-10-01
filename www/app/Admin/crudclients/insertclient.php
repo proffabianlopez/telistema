@@ -2,7 +2,6 @@
 session_start();
 ////////////////////////////////
 if (!isset($_SESSION['is_login']) || !isset($_GET['token']) || $_GET['token'] !== $_SESSION['token']) {
-  // Si no hay sesión o el token no es válido, redirige al usuario o muestra un mensaje de error
   header("Location:../../includes/404/404.php");
   exit();
 }
@@ -51,8 +50,8 @@ include ('../configsmtp/generate_config.php');
                       name="client_lastname">
                   </div>
                   <div class="form-group">
-                    <label for="phone">Telefono <span class="text-danger">*</span></label>
-                    <input type="number" class="form-control validate-field vphone" id="phone" name="phone">
+                    <label for="phone">Teléfono <span class="text-danger">*</span></label>
+                    <input type="tel" class="form-control validate-field" id="phone" name="phone">
                   </div>
                   <div class="form-group">
                     <label for="mail">Email <span class="text-danger">*</span></label>
@@ -66,7 +65,7 @@ include ('../configsmtp/generate_config.php');
                     <input type="text" class="form-control validate-field vaddress" id="address" name="address">
                   </div>
                   <div class="form-group">
-                    <label for="height">Altura <span class="text-danger">*</span></label>
+                    <label for="height">Altura</label>
                     <input type="number" class="form-control validate-field vhousenumber" id="height" name="height">
                   </div>
                   <div class="form-group">
@@ -101,6 +100,23 @@ include ('../configsmtp/generate_config.php');
     let email = '';
   </script>
   <script src="../../js/main.js"></script>
+  <script>
+  const input = document.querySelector("#phone");
+  const iti = window.intlTelInput(input, {
+    separateDialCode: true,
+    preferredCountries: ["ar", "us", "br", "mx"],
+    utilsScript: "../../js/utils.js"
+  });
+
+  document.getElementById('change-insertclient-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const fullNumber = iti.getNumber();
+    console.log("Número completo con código de área:", fullNumber);
+    document.getElementById('phone').value = fullNumber;
+    this.submit();
+  });
+  </script>
+
 
 </body>
 

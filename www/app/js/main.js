@@ -35,33 +35,31 @@ $(document).ready(function () {
             case "vname":
               rules[fieldName] = {
                 required: true,
-                minlength: 3,
+                minlength: 2,
                 maxlength: 20,
                 lettersonly: true,
               };
               messages[fieldName] = {
                 required: "Este campo es obligatorio.",
-                minlength: "Por favor, ingrese al menos 3 caracteres.",
+                minlength: "Por favor, ingrese al menos 2 caracteres.",
                 maxlength: "Por favor, ingrese un máximo de 20 caracteres.",
                 lettersonly: "Solo se permiten letras",
               };
               break;
-
             case "vphone":
-              rules[fieldName] = {
-                required: true,
-                number: true,
-                min: 999999999999,
-                max: 9999999999999,
-              };
-              messages[fieldName] = {
-                required: "Por favor, ingrese un número de teléfono.",
-                number: "Por favor, ingrese un número válido.",
-                min: "Formato inválido, ingrese el formato 5491122222333",
-                max: "Formato inválido, ingrese el formato 5491122222333",
-              };
-              break;
-
+                rules[fieldName] = {
+                    required: true,
+                    digits: true,
+                    minlength: 11,
+                    maxlength: 11,
+                };
+                messages[fieldName] = {
+                    required: "Por favor, ingrese un número de teléfono.",
+                    digits: "Por favor, ingrese solo dígitos.",
+                    minlength: "Formato inválido. Faltan digitos. ",
+                    maxlength: "Formato inválido. Digitos demas ingresados. ",
+                };
+                break;
             case "vemail":
               rules[fieldName] = {
                 required: true,
@@ -159,15 +157,30 @@ $(document).ready(function () {
               case "vname_product":
               rules[fieldName] = {
                 required: true,
-                minlength: 3,
+                minlength: 2,
                 maxlength: 20,
               };
               messages[fieldName] = {
                 required: "Este campo es obligatorio.",
-                minlength: "Por favor, ingrese al menos 3 caracteres.",
+                minlength: "Por favor, ingrese al menos 2 caracteres.",
                 maxlength: "Por favor, ingrese un máximo de 20 caracteres.",
               };
               break;
+
+              case "vcuicuit":
+                rules[fieldName] = {
+                    required: true,
+                    digits: true,
+                    maxlength: 6,
+                    minlength: 1,
+                };
+                messages[fieldName] = {
+                    required: "Este campo es obligatorio.",
+                    digits: "Por favor, ingrese solo dígitos.",
+                    maxlength: "Por favor, ingrese un máximo de 6 dígitos.",
+                    minlength: "Debe ingresar al menos 1 dígito.",
+                };
+                break;
           }
         });
       });

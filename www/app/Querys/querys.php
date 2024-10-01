@@ -80,7 +80,7 @@ define(
         '  UPDATE clients 
         SET client_name = ?,
         client_lastname = ?,
-        phone = ?, 
+        phone = ?,
         address = ?,
         height = ?, 
         floor = ?, 
@@ -323,6 +323,8 @@ define('SQL_ORDER_BY_ID', '
         o.height,
         o.floor, 
         o.departament,
+        o.circuit_number,
+        t_w.type_work,
         o.id_client, 
         p.priority,
         so.state_order,
@@ -340,12 +342,13 @@ define('SQL_ORDER_BY_ID', '
         users u ON o.technic_id = u.id_user
     LEFT JOIN
         clients cl ON o.id_client = cl.id_client
+    LEFT JOIN
+        types_works t_w ON o.id_type_work = t_w.id_type_work
     WHERE 
-        o.id_client = ? AND so.id_state_order != 5
+        so.id_state_order != 5
     ORDER BY 
-        o.id_order ASC
+        o.circuit_number ASC
 ');
-
 
 define('SQL_INSERT_ORDER', '
         INSERT INTO orders 
@@ -354,13 +357,15 @@ define('SQL_INSERT_ORDER', '
                 address, 
                 height, 
                 floor, 
-                departament, 
+                departament,
+                circuit_number,
+                id_type_work, 
                 id_client,
                 id_priority,
                 id_state_order, 
                 admin_id, 
                 technic_id) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 
 define('SQL_SELECT_ORDER_BY_ID', '
         SELECT 
@@ -371,6 +376,8 @@ define('SQL_SELECT_ORDER_BY_ID', '
         o.height,
         o.floor, 
         o.departament,
+        o.circuit_number,
+        t_w.id_type_work,
         o.id_client,
         o.id_priority,
         p.priority,
@@ -380,7 +387,8 @@ define('SQL_SELECT_ORDER_BY_ID', '
         u.name_user,
         u.surname_user,
         cl.client_name,
-        cl.client_lastname
+        cl.client_lastname,
+        t_w.type_work
     FROM 
         orders o
     JOIN 
@@ -391,6 +399,8 @@ define('SQL_SELECT_ORDER_BY_ID', '
         users u ON o.technic_id = u.id_user
     LEFT JOIN
         clients cl ON o.id_client = cl.id_client
+    LEFT JOIN
+        types_works t_w ON o.id_type_work = t_w.id_type_work
     WHERE 
         o.id_order =?');
 
@@ -404,6 +414,8 @@ define('SQL_UPDATE_ORDER', '
                 height = ?,
                 floor = ?,
                 departament = ?,
+                circuit_number = ?,
+                id_type_work = ?,
                 id_client = ?,
                 id_priority = ?,
                 id_state_order = ?,
@@ -418,6 +430,7 @@ define('SQL_SELECT_PRIORITYS_ORDER_BY_ID', '
 
 define('SQL_SELECT_PRIORITYS_ORDERS', '
                 SELECT * FROM prioritys');
+
 define('SQL_SELECT_TECNS_ORDER_BY_ID', '
     SELECT *
     FROM users
@@ -428,15 +441,28 @@ define('SQL_SELECT_TECNS_ORDERS', '
     FROM users
     WHERE id_rol = 2');
 
-define('SQL_SELECT_CLIENT_BY_ID', '
-        SELECT id_client, client_name, client_lastname
-        FROM clients 
-        WHERE id_client = ?');
+define('SQL_SELECT_CLIENTS_ORDER_BY_ID', '
+    SELECT *
+    FROM clients
+    WHERE id_client = ?');
+
+define('SQL_SELECT_ALL_CLIENTS', '
+    SELECT id_client, client_name, client_lastname
+    FROM clients
+    WHERE id_state_user != 2');
+
+define('SQL_SELECT_TYPES_WORKS_ORDER_BY_ID', '
+                SELECT id_type_work, type_work
+                FROM types_works
+                WHERE id_type_work = ?');
+
+define('SQL_SELECT_TYPES_WORKS_ORDERS', '
+                SELECT * FROM types_works');
 
 define('SQL_DELETE_ORDER', '
         UPDATE orders
         SET id_state_order = 5
-        WHERE id_client = ? AND id_order = ?');
+        WHERE id_order = ?');
 
 define('SQL_FROM_ORDERS', '
         SELECT 
@@ -686,7 +712,7 @@ define('SQL_SELECT_ORDERS_TECHNIC', '
     WHERE 
         o.technic_id = ? AND so.id_state_order = 4
     ORDER BY 
-        o.id_order ASC
+        o.id_order DESC
 ');
 
 define(
@@ -713,37 +739,47 @@ define('SQL_COUNT_ORDERS_WITH_STATE', '
 
 define('SQL_COUNT_ORDERS_WITH_STATE_WEEK', '
         SELECT 
-    COUNT(*) AS total_orders,
-    SUM(CASE WHEN o.id_state_order = 1 THEN 1 ELSE 0 END) AS confirmadas,
-    SUM(CASE WHEN o.id_state_order = 3 THEN 1 ELSE 0 END) AS pendientes,
-    SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) AS realizadas,
-    SUM(CASE WHEN o.id_priority = 2 THEN 1 ELSE 0 END) AS criticas,
-    -- Calcular los porcentajes
-    ROUND(
-        (SUM(CASE WHEN o.id_state_order = 1 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 
-        2
-    ) AS porcentaje_confirmadas,
-    ROUND(
-        (SUM(CASE WHEN o.id_state_order = 3 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 
-        2
-    ) AS porcentaje_pendientes,
-    ROUND(
-        (SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 
-        2
-    ) AS porcentaje_realizadas,
-    ROUND(
-        (SUM(CASE WHEN o.id_priority = 2 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 
-        2
-    ) AS porcentaje_criticas
-FROM orders o
-JOIN states_orders so ON o.id_state_order = so.id_state_order
-WHERE o.order_date >= CURDATE() - INTERVAL (WEEKDAY(CURDATE()) + 1) DAY
-  AND o.order_date < CURDATE() + INTERVAL (7 - WEEKDAY(CURDATE())) DAY
+        COUNT(*) AS total_orders,
+        SUM(CASE WHEN o.id_state_order = 1 THEN 1 ELSE 0 END) AS confirmadas,
+        SUM(CASE WHEN o.id_priority = 1 AND o.id_state_order = 3 THEN 1 ELSE 0 END) AS pendientes,
+        SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) AS realizadas,
+        SUM(CASE WHEN o.id_priority = 2 AND o.id_state_order = 3 THEN 1 ELSE 0 END) AS criticas,
+        -- Calcular los porcentajes
+        ROUND(
+            (SUM(CASE WHEN o.id_state_order = 1 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 
+            2
+        ) AS porcentaje_confirmadas,
+        ROUND(
+            (SUM(CASE WHEN o.id_state_order = 3 AND o.id_priority = 1 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 
+            2
+        ) AS porcentaje_pendientes,
+        ROUND(
+            (SUM(CASE WHEN o.id_state_order = 4 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 
+            2
+        ) AS porcentaje_realizadas,
+        ROUND(
+            (SUM(CASE WHEN o.id_state_order = 3 AND o.id_priority = 2 THEN 1 ELSE 0 END) / COUNT(*)) * 100, 
+            2
+        ) AS porcentaje_criticas
+    FROM orders o
+    JOIN states_orders so ON o.id_state_order = so.id_state_order
+    WHERE 
+        (
+        -- Órdenes pendientes
+        (o.id_state_order = 3 
+             AND o.order_date >= CURDATE() - INTERVAL 7 DAY 
+             AND o.order_date < CURDATE() + INTERVAL 1 DAY)
+        OR
+        -- Órdenes realizadas
+        (o.id_state_order = 4 
+             AND o.order_date >= CURDATE() - INTERVAL 1 DAY 
+             AND o.order_date < CURDATE() + INTERVAL 1 DAY)
+        )
 
 ');
 // Traigo todas las ordenes de los ultimos 7 dias, contando el actual.
 define('SQL_ALL_ORDERS_WEEK', '
-    SELECT 
+  SELECT 
     o.id_order, 
     o.order_date,
     o.order_description,
@@ -769,8 +805,48 @@ LEFT JOIN
 LEFT JOIN
     clients cl ON o.id_client = cl.id_client
 WHERE 
-    o.order_date >= DATE_SUB(NOW(), INTERVAL 7 DAY)
-    AND o.order_date <= NOW();
+    (
+        -- Órdenes pendientes
+        (o.id_state_order = 3 
+             AND o.order_date >= CURDATE() - INTERVAL 7 DAY 
+             AND o.order_date < CURDATE() + INTERVAL 1 DAY)
+        OR
+        -- Órdenes realizadas
+        (o.id_state_order = 4 
+             AND o.order_date >= CURDATE() - INTERVAL 1 DAY 
+             AND o.order_date < CURDATE() + INTERVAL 1 DAY)
+    )
+');
+
+// Traigo todas las ordenes del último día, contando el actual.
+define('SQL_ALL_ORDERS_DAY', '
+    SELECT 
+    o.id_order, 
+    o.order_date,
+    o.order_description,
+    o.address, 
+    o.height,
+    o.floor, 
+    o.departament,
+    o.id_client,
+    p.priority,
+    so.state_order,
+    u.name_user,
+    u.surname_user,
+    cl.client_name,
+    cl.client_lastname
+FROM 
+    orders o
+JOIN 
+    prioritys p ON o.id_priority = p.id_priority
+LEFT JOIN 
+    states_orders so ON o.id_state_order = so.id_state_order
+LEFT JOIN 
+    users u ON o.technic_id = u.id_user
+LEFT JOIN
+    clients cl ON o.id_client = cl.id_client
+WHERE o.order_date >= CURDATE() - INTERVAL 1 DAY
+    AND o.order_date < CURDATE() + INTERVAL 1 DAY
 
 
 

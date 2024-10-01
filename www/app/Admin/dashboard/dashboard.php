@@ -29,13 +29,12 @@ if ($result->num_rows > 0) {
     $pendientes = $row['pendientes'];
     $realizadas = $row['realizadas'];
     $totalordenes = $row['total_orders'];
-    $ordenescriticas = $row['criticas'];
-    $porcentaje_confirmadas = $row['porcentaje_confirmadas'];
+    $criticas = $row['criticas'];
     $porcentaje_pendientes = $row['porcentaje_pendientes'];
     $porcentaje_realizadas = $row['porcentaje_realizadas'];
     $porcentaje_criticas = $row['porcentaje_criticas'];
 } else {
-    $confirmadas = $pendientes = $realizadas = $totalordenes = $ordenescriticas = 0;
+    $confirmadas = $pendientes = $realizadas = $totalordenes = $criticas = 0;
 }
 ?>
 
@@ -66,7 +65,7 @@ if ($result->num_rows > 0) {
             <?php
             $ordenes = [
                 ['label' => 'Órdenes Pendientes', 'valor' => $pendientes, 'color' => 'warning', 'porcentaje' => $porcentaje_pendientes],
-                ['label' => 'Órdenes Urgentes', 'valor' => $ordenescriticas, 'color' => 'danger', 'porcentaje' => $porcentaje_criticas],
+                ['label' => 'Órdenes Urgentes', 'valor' => $criticas, 'color' => 'danger', 'porcentaje' => $porcentaje_criticas],
                 ['label' => 'Órdenes Realizadas', 'valor' => $realizadas, 'color' => 'primary', 'porcentaje' => $porcentaje_realizadas],
             ];
 
@@ -104,16 +103,18 @@ if ($result->num_rows > 0) {
 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                        // Verificar primero si la prioridad es "Urgente"
-                        if ($row['priority'] == 'Urgente') {
-                            $urgentes[] = $row;
-                        }
-
-                        // Luego clasificar según el estado de la orden
-                        if ($row['state_order'] == 'Pendiente') {
-                            $pendientes[] = $row;
-                        } elseif ($row['state_order'] == 'Realizada') {
+                        // Primero traigo las órdenes Realizadas
+                        if ($row['state_order'] == 'Realizada') {
                             $completas[] = $row;
+                        } else {
+                            // Luego clasifico las órdenes Pendientes según la prioridad
+                            if ($row['state_order'] == 'Pendiente' && $row['priority'] == 'Normal') {
+                                $pendientes[] = $row;
+                            } elseif ($row['state_order'] == 'Pendiente' && $row['priority'] == 'Urgente') {
+                                $urgentes[] = $row;
+                            } else {
+                                // Nada
+                            }
                         }
                     }
                 }
