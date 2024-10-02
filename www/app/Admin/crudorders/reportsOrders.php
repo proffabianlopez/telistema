@@ -15,8 +15,8 @@ if (!isset($_SESSION['token'])) {
 }
 $token = $_SESSION['token'];
 
-define('TITLE', 'Ordenes');
-define('PAGE', 'Ordenes technic');
+define('TITLE', 'Reportes');
+define('PAGE', 'Reportes Admin');
 
 include('../../dbConnection.php');
 include('../../Querys/querys.php');
