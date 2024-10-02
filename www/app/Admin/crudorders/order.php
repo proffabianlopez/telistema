@@ -41,6 +41,14 @@ include ('../../Querys/querys.php');
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>Ordenes de trabajo</h2>
+                    <ol class="breadcrumb">
+                        <li class="active">
+                            <a href="order.php"><strong>Ordenes Asignadas</strong></a>
+                        </li>
+                        <li>
+                            <a href="reportsOrders.php">Reportes</a>
+                        </li>
+                    </ol>
                 </div>
                 <div class="col-lg-2">
                 </div>
