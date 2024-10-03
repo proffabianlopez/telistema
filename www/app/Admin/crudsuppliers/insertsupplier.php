@@ -47,7 +47,7 @@ include ('../../Querys/querys.php');
                   </div>
                   <div class="form-group">
                     <label for="phone">Telefono <span class="text-danger" >*</span></label>
-                    <input type="tel" class="form-control validate-field" id="phone" name="phone">
+                    <input type="tel" class="form-control validate-field iti__tel-input" id="phone" name="phone">
                   </div>
                 </div>
                 <!-- Segunda columna -->
