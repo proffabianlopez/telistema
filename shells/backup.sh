@@ -1,6 +1,6 @@
 #!/bin/bash
-cd /home/christian/Proyect/telistema/shells
-ENV_FILE="/home/christian/Proyect/telistema/.env"
+cd home/telistema/telistema/shells
+ENV_FILE="/home/telistema/telistema/.env"
 export $(grep -v '^#' "$ENV_FILE" | xargs)
 
 # Variables globales
@@ -8,7 +8,7 @@ BACKUP_CLIENT="Telistema"
 BACKUP_DATE=$(date +%Y%m%d_%H%M%S)
 DATE_PREV=$(date +%Y%m%d --date='-28 day')
 BACKUP_DIR_DB="../database_dump/"
-REMOTE_DIR_DB="/home/telistema/database_dump"
+REMOTE_DIR_DB="/home/telistema_backups/database_dump"
 REMOTE_USER="telistema_backups"
 REMOTE_HOST="149.50.133.229"
 REMOTE_PORT="5369"
