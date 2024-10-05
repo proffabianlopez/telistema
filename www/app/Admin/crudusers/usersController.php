@@ -197,6 +197,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         echo json_encode($response);
         exit;
+
+    } elseif ($_GET['action'] === 'edit_user_avatar') {
+        
+        $avatar = $_FILES['avatar'];
+
+        // Para validacion
+        $avatarMaxSize = 1024*1024; // 1MB
+        $tmp = explode('.',$_FILES['avatar']['name']);
+        $avatarType = strtolower(end($tmp)); // Formato de la imagen
+        $allowedTypes = array("jpeg", "jpg", "png", "gif");
+
+        // Valido  Archivos
+        if($avatar['error'] === UPLOAD_ERR_NO_FILE) {
+            $response['message'] = 'Por favor, ingrese una imagen.';
+        } elseif (in_array($avatarType, $allowedTypes) === false) {
+            $response['message'] = 'Solo se aceptan archivos JPEG, PNG y GIF.';
+        } elseif ($avatar['size'] > $avatarMaxSize) {
+            $response['message'] = 'El tamaño de la imagen supera el límite permitido (1MB).';
+        } elseif ($avatar['error'] !== 0) {
+            $response['message'] = 'Por favor, ingrese una imagen válida.';
+        } else {
+            $id_user = $_SESSION['user_id'];
+
+            // Obtengo lo necesario para guardarlo
+            $avatarFormat = explode(".", $avatar['name']); // jpg
+            $avatarFolderRoute = "../../img/avatars/"; // Donde se guarda
+            $avatarName = "avatar_" . time() . "." . end($avatarFormat); 
+
+            // Genero lo que se va a guardar en la base de datos
+            $avatarNewLocation =  $avatarFolderRoute . $avatarName;
+
+            $stmt = $conn->prepare(SQL_UPDATE_USER_AVATAR);
+            $stmt->bind_param('si', $avatarNewLocation, $id_user);
+
+            if ($stmt->execute()) {
+                // Muevo la imagen a su carpeta
+                move_uploaded_file($avatar['tmp_name'], $avatarNewLocation);
+
+                
+                $response['status'] = 'success';
+                $response['message'] = 'Actualizado con exito';
+                echo json_encode($response);
+                exit;
+            } else {
+                
+                $response['message'] = 'No se pudo actualizar: ';
+                echo json_encode($response);
+                exit;
+            }
+        }
+        echo json_encode($response);
+        exit;
+
+
     } elseif ($_POST['action'] === 'delete_user') {
 
         $id_user = $_POST['id'];
@@ -247,4 +301,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response['message'] = 'Fallo la opeación';
     echo json_encode($response);
     exit;
+}
+function isImage($filename)
+{
+    if(!$filename) {
+        return false;
+    }
+
+    $type = mime_content_type($filename);
+
+    // TODO: Verificar con los formatos permitidos
+    return strstr($type, 'image/');
 }
