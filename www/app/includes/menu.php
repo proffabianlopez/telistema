@@ -67,7 +67,7 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
                     } ?>">
             <a href="#"><i class="fa fa-gears"></i><span class="nav-label">Configuraciones</span><span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
-                <li><a href="../configsmtp/configEmailContact.php">Email de Contacto</a></li>
+                <li><a href="../configsmtp/configEmailContact.php"><i class="fa fa-gears"></i>Email de Contacto</a></li>
                 <li><a href="../../Admin/profileAdmin/AdminProfile.php">Perfil </a></li>
             </ul>
         </li>
