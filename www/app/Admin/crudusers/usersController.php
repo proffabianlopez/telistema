@@ -14,6 +14,7 @@ $response = [
     'status' => 'error',
     'message' => ''
 ];
+
 // Check para ver si es el técnico editando su avatar
 $technicAction = explode("=", $_SERVER['QUERY_STRING']);
 $technicAction = end($technicAction);
@@ -21,18 +22,6 @@ $isEditTechnicAvatar = strcmp($technicAction, "edit_user_avatar");
 
 if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
     if ($_SESSION['user_idRol'] != 1 && $isEditTechnicAvatar !== 0) {
-        $response['message'] = 'Acceso denegado.';
-        echo json_encode($response);
-        exit;
-    }
-} else {
-    $response['message'] = 'Por favor, inicie sesión para continuar.';
-    echo json_encode($response);
-    exit;
-}
-
-if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
-    if ($_SESSION['user_idRol'] != 1) {
         $response['message'] = 'Acceso denegado.';
         echo json_encode($response);
         exit;
@@ -77,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $row = $result->fetch_assoc();
 
             } else {
-                
+               
                 exit;
             }
 
@@ -118,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode($response);
                 exit;
             } else {
-                
+               
                 $response['message'] = 'No se pudo actuazar: ';
                 echo json_encode($response);
                 exit;
@@ -159,10 +148,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $response['status'] = 'user_in_deleted';
                     $response['message'] = 'Email esta en la lista de iliminados';
                     // Actualizar usuario si está marcado como eliminado
-                    if ($_GET["isUpdate"]){
+                    if ($_GET["isUpdate"]) {
                         $update_stmt = $conn->prepare(SQL_UPDATE_USER_BY_EMAIL);
                         $update_stmt->bind_param("ssssiis", $name, $surname, $phone, $pass, $state, $role, $mail);
-    
+
                         if ($update_stmt->execute()) {
                             $result = enviarCorreoYRegistrar($name, $mail, $_POST["user_password"]);
                             if ($result['status'] == 'success') {
@@ -181,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             exit;
                         }
                     }
-                   
+
                 } else {
                     $response['message'] = 'El correo ya existe en la base de datos con el Rol: ' . $existing_role . '';
                     echo json_encode($response);
@@ -214,8 +203,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         exit;
 
-    } elseif ($_GET['action'] === 'edit_User_Avatar') {
-        
+    } elseif ($_GET['action'] === 'edit_user_avatar') {
+        // Defino variables para mejor lectura
         $avatar = $_FILES['avatar'];
 
         // Para validacion
@@ -224,7 +213,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $avatarType = strtolower(end($tmp)); // Formato de la imagen
         $allowedTypes = array("jpeg", "jpg", "png", "gif");
 
-        // Valida si hay archivos vacios
+        // Checking for Empty Fields
         if($avatar['error'] === UPLOAD_ERR_NO_FILE) {
             $response['message'] = 'Por favor, ingrese una imagen.';
         } elseif (in_array($avatarType, $allowedTypes) === false) {
@@ -258,14 +247,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             } else {
                 
-                $response['message'] = 'No se pudo actualizar: ';
+                $response['message'] = 'No se pudo actuazar: ';
                 echo json_encode($response);
                 exit;
             }
         }
         echo json_encode($response);
         exit;
-
 
     } elseif ($_POST['action'] === 'delete_user') {
 
@@ -298,7 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
             } else {
-                $response['message'] = "No podes eliminar ";
+                $response['message'] = "No podes elimanar ";
                 $response['message1'] = "El Usuario tiene Ordenes Pendientes asignadas";
                 echo json_encode($response);
                 exit;
@@ -317,4 +305,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response['message'] = 'Fallo la opeación';
     echo json_encode($response);
     exit;
+}
+
+function isImage($filename)
+{
+    if(!$filename) {
+        return false;
+    }
+
+    $type = mime_content_type($filename);
+
+    // TODO: Verificar con los formatos permitidos
+    return strstr($type, 'image/');
 }
