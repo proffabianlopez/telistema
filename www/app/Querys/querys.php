@@ -312,10 +312,10 @@ define(
 );
 
 define(
-    'SQL_UPDATE_USER_AVATAR',
-    'UPDATE users
-    SET avatar_user = ?
-    WHERE id_user = ?'
+        'SQL_UPDATE_USER_AVATAR',
+        'UPDATE users
+        SET avatar_user = ?
+        WHERE id_user = ?'
 );
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////

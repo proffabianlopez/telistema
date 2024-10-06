@@ -153,6 +153,15 @@ $(document).ready(function () {
                 minlength: "Por favor, ingrese un minimo de 3 caracteres.",
               };
               break;
+              
+              case "vavatar":
+              rules[fieldName] = {
+                required: true,
+              };
+              messages[fieldName] = {
+                required: "Este campo es obligatorio.",
+              };
+              break;
 
               case "vname_product":
               rules[fieldName] = {
@@ -415,6 +424,11 @@ $(document).ready(function () {
   handleFormSubmit(
       "#change-editadmin-form",
       "../crudusers/usersController.php?token=" + token + "&action=edit_user&email=" + email
+  );
+  setupFormValidation("#change-adminavatar-form");
+  handleFormSubmit(
+      "#change-adminavatar-form",
+      "../crudusers/usersController.php?token=" + token + "&action=edit_user_avatar"
   );
 
   // TECHNIC

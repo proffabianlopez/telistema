@@ -43,6 +43,9 @@ document.querySelectorAll(".modaledit-btn").forEach((button) => {
         case "reports":
             url = "reportTechnic.php?token="+ token;
             break;
+        case "adminAvatar":
+            url = "../crudusers/editUserAvatar.php?token="+ token;
+            break;
         default:
             console.error("Clase de CRUD no reconocida");
             return;

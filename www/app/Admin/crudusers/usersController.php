@@ -14,6 +14,22 @@ $response = [
     'status' => 'error',
     'message' => ''
 ];
+// Check para ver si es el técnico editando su avatar
+$technicAction = explode("=", $_SERVER['QUERY_STRING']);
+$technicAction = end($technicAction);
+$isEditTechnicAvatar = strcmp($technicAction, "edit_user_avatar");
+
+if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
+    if ($_SESSION['user_idRol'] != 1 && $isEditTechnicAvatar !== 0) {
+        $response['message'] = 'Acceso denegado.';
+        echo json_encode($response);
+        exit;
+    }
+} else {
+    $response['message'] = 'Por favor, inicie sesión para continuar.';
+    echo json_encode($response);
+    exit;
+}
 
 if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
     if ($_SESSION['user_idRol'] != 1) {
@@ -198,7 +214,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode($response);
         exit;
 
-    } elseif ($_GET['action'] === 'edit_user_avatar') {
+    } elseif ($_GET['action'] === 'edit_User_Avatar') {
         
         $avatar = $_FILES['avatar'];
 
@@ -208,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $avatarType = strtolower(end($tmp)); // Formato de la imagen
         $allowedTypes = array("jpeg", "jpg", "png", "gif");
 
-        // Valido  Archivos
+        // Valida si hay archivos vacios
         if($avatar['error'] === UPLOAD_ERR_NO_FILE) {
             $response['message'] = 'Por favor, ingrese una imagen.';
         } elseif (in_array($avatarType, $allowedTypes) === false) {
@@ -223,7 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Obtengo lo necesario para guardarlo
             $avatarFormat = explode(".", $avatar['name']); // jpg
             $avatarFolderRoute = "../../img/avatars/"; // Donde se guarda
-            $avatarName = "avatar_" . time() . "." . end($avatarFormat); 
+            $avatarName = "avatar_" . time() . "." . end($avatarFormat); // avatar_1684391376
 
             // Genero lo que se va a guardar en la base de datos
             $avatarNewLocation =  $avatarFolderRoute . $avatarName;
@@ -301,15 +317,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response['message'] = 'Fallo la opeación';
     echo json_encode($response);
     exit;
-}
-function isImage($filename)
-{
-    if(!$filename) {
-        return false;
-    }
-
-    $type = mime_content_type($filename);
-
-    // TODO: Verificar con los formatos permitidos
-    return strstr($type, 'image/');
 }
