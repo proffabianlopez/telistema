@@ -46,7 +46,6 @@ if ($result->num_rows > 0) {
 if(!file_exists("../../img/avatars/" . $row['avatar_user']) || is_null($row['avatar_user'])) {
     $row['avatar_user'] = '../../img/avatars/default.png';
 }
-
 ?>
 
 <body>
@@ -164,7 +163,9 @@ if(!file_exists("../../img/avatars/" . $row['avatar_user']) || is_null($row['ava
             $('.footable2').footable();
         });
 
+
         // Cambiar contraseña Automatico Viejo
+
        /* function openEditModal() {
             // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({

@@ -129,9 +129,9 @@ $stmtr->close();
                 </div>
 
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary" onclick="openEditModal()">
-                        Cambiar contraseña
-                    </button>
+                <button type="button" class="btn btn-primary" style="display: none;" onclick="openEditModal()">
+                          Cambiar contraseña
+                </button>
                 </div>
             </div>
 
