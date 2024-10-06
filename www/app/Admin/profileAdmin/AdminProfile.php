@@ -42,6 +42,10 @@ if ($result->num_rows > 0) {
     exit;
 }
 
+// Defino avatar por default si el usuario no tiene uno
+if(!file_exists("../../img/avatars/" . $row['avatar_user']) || is_null($row['avatar_user'])) {
+    $row['avatar_user'] = '../../img/avatars/default.png';
+}
 ?>
 
 <body>
@@ -159,7 +163,9 @@ if ($result->num_rows > 0) {
             $('.footable2').footable();
         });
 
-        // Cambiar contraseña
+
+        // Cambiar contraseña Automatico Viejo
+
        /* function openEditModal() {
             // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({
