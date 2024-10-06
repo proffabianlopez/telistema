@@ -131,7 +131,6 @@ $stmtr->close();
                         </tbody>
                     </table>
                 </div>
-            </div>
 
            
 
