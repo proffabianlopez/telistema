@@ -492,9 +492,18 @@ define('SQL_FROM_ORDERS', '
         clients cl ON o.id_client = cl.id_client');
 
 /////////////////////////////////////////////////////////////////////////////////////
-// Products
+// MATERIALS
 //////////////////////////////////////////////////////////////////
 
+define('SQL_SELECT_STOCK', '
+        SELECT stock 
+        FROM materials 
+        WHERE id_material = ?');
+
+define('SQL_UPDATE_STOCK', '
+        UPDATE materials
+        SET stock = stock - ?
+        WHERE id_material = ? AND stock >= ?');
 
 define('SQL_SELECT_MATERIALS', '
         SELECT u. *
