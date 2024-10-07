@@ -6,3 +6,4 @@
 .env
 .yml
 .sql
+/database_dump
