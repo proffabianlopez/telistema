@@ -1,10 +1,11 @@
 .config.php
 .querys.php
 .vscode/
-/data
-/Querys
+data/
+Querys/
 .env
-.yml
-.sql
-/database_dump/
-.zip
+*.yml
+*.sql
+database_dump/
+*.zip
+img/*
