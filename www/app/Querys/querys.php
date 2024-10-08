@@ -728,6 +728,12 @@ define('SQL_INSERT_IMG_ORDER',
         'INSERT INTO images (name_image, id_order)
         VALUES (?, ?)');
 
+define('SQL_SELECT_STATE_ORDERS', '
+        SELECT state_order 
+        FROM `states_orders` 
+        WHERE 1');
+
+
 define('SQL_SELECT_ORDERS_TECHNIC_ADMIN', '
     SELECT 
         o.id_order, 

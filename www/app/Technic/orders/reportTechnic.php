@@ -61,6 +61,10 @@ if (isset($_POST['id'])) {
                                     <div class="form-group">
                                         <label for="state_order">Estado <span class="text-danger">*</span></label>
                                         <select name="id_state_order" id="id_state_order" class="form-control">
+                                        <?php if ($row["id_state_order"] === 2): ?>
+                                            <!-- Mostrar si la orden ya está cancelada pero sin posibilidad de modificar -->
+                                            <option value="2" selected>Cancelada</option>
+                                        <?php endif; ?>
                                             <option value="3" <?php if ($row["id_state_order"] === 3) echo 'selected'; ?>>Pendiente</option>
                                             <option value="4" <?php if ($row["id_state_order"] === 4) echo 'selected'; ?>>Realizada</option>
                                         </select>
