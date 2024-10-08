@@ -15,8 +15,13 @@ $response = [
     'message' => ''
 ];
 
+// Check para ver si es el técnico editando su avatar
+$technicAction = explode("=", $_SERVER['QUERY_STRING']);
+$technicAction = end($technicAction);
+$isEditTechnicAvatar = strcmp($technicAction, "edit_user_avatar");
+
 if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
-    if ($_SESSION['user_idRol'] != 1) {
+    if ($_SESSION['user_idRol'] != 1 && $isEditTechnicAvatar !== 0) {
         $response['message'] = 'Acceso denegado.';
         echo json_encode($response);
         exit;
@@ -61,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $row = $result->fetch_assoc();
 
             } else {
-                
+               
                 exit;
             }
 
@@ -102,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode($response);
                 exit;
             } else {
-                
+               
                 $response['message'] = 'No se pudo actuazar: ';
                 echo json_encode($response);
                 exit;
@@ -143,10 +148,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $response['status'] = 'user_in_deleted';
                     $response['message'] = 'Email esta en la lista de iliminados';
                     // Actualizar usuario si está marcado como eliminado
-                    if ($_GET["isUpdate"]){
+                    if ($_GET["isUpdate"]) {
                         $update_stmt = $conn->prepare(SQL_UPDATE_USER_BY_EMAIL);
                         $update_stmt->bind_param("ssssiis", $name, $surname, $phone, $pass, $state, $role, $mail);
-    
+
                         if ($update_stmt->execute()) {
                             $result = enviarCorreoYRegistrar($name, $mail, $_POST["user_password"]);
                             if ($result['status'] == 'success') {
@@ -165,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             exit;
                         }
                     }
-                   
+
                 } else {
                     $response['message'] = 'El correo ya existe en la base de datos con el Rol: ' . $existing_role . '';
                     echo json_encode($response);
@@ -197,6 +202,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         echo json_encode($response);
         exit;
+
+    } elseif ($_GET['action'] === 'edit_user_avatar') {
+        // Defino variables para mejor lectura
+        $avatar = $_FILES['avatar'];
+
+        // Para validacion
+        $avatarMaxSize = 1024*1024; // 1MB
+        $tmp = explode('.',$_FILES['avatar']['name']);
+        $avatarType = strtolower(end($tmp)); // Formato de la imagen
+        $allowedTypes = array("jpeg", "jpg", "png", "gif");
+
+        // Checking for Empty Fields
+        if($avatar['error'] === UPLOAD_ERR_NO_FILE) {
+            $response['message'] = 'Por favor, ingrese una imagen.';
+        } elseif (in_array($avatarType, $allowedTypes) === false) {
+            $response['message'] = 'Solo se aceptan archivos JPEG, PNG y GIF.';
+        } elseif ($avatar['size'] > $avatarMaxSize) {
+            $response['message'] = 'El tamaño de la imagen supera el límite permitido (1MB).';
+        } elseif ($avatar['error'] !== 0) {
+            $response['message'] = 'Por favor, ingrese una imagen válida.';
+        } else {
+            $id_user = $_SESSION['user_id'];
+
+            // Obtengo lo necesario para guardarlo
+            $avatarFormat = explode(".", $avatar['name']); // jpg
+            $avatarFolderRoute = "../../img/avatars/"; // Donde se guarda
+            $avatarName = "avatar_" . time() . "." . end($avatarFormat); // avatar_1684391376
+
+            // Genero lo que se va a guardar en la base de datos
+            $avatarNewLocation =  $avatarFolderRoute . $avatarName;
+
+            $stmt = $conn->prepare(SQL_UPDATE_USER_AVATAR);
+            $stmt->bind_param('si', $avatarNewLocation, $id_user);
+
+            if ($stmt->execute()) {
+                // Muevo la imagen a su carpeta
+                move_uploaded_file($avatar['tmp_name'], $avatarNewLocation);
+
+                
+                $response['status'] = 'success';
+                $response['message'] = 'Actualizado con exito';
+                echo json_encode($response);
+                exit;
+            } else {
+                
+                $response['message'] = 'No se pudo actuazar: ';
+                echo json_encode($response);
+                exit;
+            }
+        }
+        echo json_encode($response);
+        exit;
+
     } elseif ($_POST['action'] === 'delete_user') {
 
         $id_user = $_POST['id'];
@@ -228,7 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
             } else {
-                $response['message'] = "No podes eliminar ";
+                $response['message'] = "No podes elimanar ";
                 $response['message1'] = "El Usuario tiene Ordenes Pendientes asignadas";
                 echo json_encode($response);
                 exit;
@@ -247,4 +305,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response['message'] = 'Fallo la opeación';
     echo json_encode($response);
     exit;
+}
+
+function isImage($filename)
+{
+    if(!$filename) {
+        return false;
+    }
+
+    $type = mime_content_type($filename);
+
+    // TODO: Verificar con los formatos permitidos
+    return strstr($type, 'image/');
 }

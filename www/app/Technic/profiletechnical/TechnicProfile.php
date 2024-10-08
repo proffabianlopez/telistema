@@ -37,11 +37,17 @@ if ($row) {
     $name_user = $row['name_user'];
     $mail = $row['mail'];
     $phone_user = $row['phone_user'];
+    $avatar = $row['avatar_user'];
 } else {
     $name_user = 'No disponible';
     $surname = 'No disponible';
     $mail = 'No disponible';
     $phone_user = 'No disponible';
+    $avatar = "";
+}
+// Defino avatar por default si el usuario no tiene uno
+if(!file_exists("../../img/avatars/" . $row['avatar_user']) || is_null($row['avatar_user'])) {
+    $row['avatar_user'] = '../../img/avatars/default.png';
 }
 
 $stmtr->close();
@@ -64,9 +70,7 @@ $stmtr->close();
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <a href="../logout.php">
-                                <i class="fa fa-sign-out"></i> Cerrar Sección
-                            </a>
+                            
                         </li>
                     </ul>
                 </nav>
@@ -74,16 +78,19 @@ $stmtr->close();
 
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Perfil</h2>
+                    <h2>Mi Perfil</h2>
                 </div>
                 <div class="col-lg-2"></div>
             </div>
 
-            <div class="row m-b-lg m-t-lg">
+            <div class="row m-b-lg m-t-lg ibox-content">
                 <div class="col-md-6">
-                    <div class="profile-image">
-                        <img src="../../../img/team-3.jpg" class="rounded-circle circle-border m-b-md" alt="profile">
-                    </div>
+                    <a id="edit-<?php echo ($row["id_user"] . '-' . $token); ?>" data-crud="technicAvatar" class="modaledit-btn">
+                        <div class="profile-image">
+                            <img src="<?php echo htmlspecialchars($row['avatar_user']); ?>"  alt="Avatar de <?php echo htmlspecialchars($row['name_user']);?>" class="img-circle img-thumbnail">
+                        </div>
+                    </a>
+
                     <div class="profile-info">
                         <div class="">
                             <div>
@@ -92,10 +99,7 @@ $stmtr->close();
                                     <?php echo htmlspecialchars($surname); ?>
                                 </h2>
                                 <h4>Perfil del Técnico</h4>
-                                <small>
-                                    Técnico de mantenimiento informático con 3 años de experiencia en el sector, 
-                                    especializado en la gestión y ejecución de tareas de mantenimiento preventivo y correctivo.
-                                </small>
+                                
                             </div>
                         </div>
                     </div>
@@ -128,18 +132,15 @@ $stmtr->close();
                     </table>
                 </div>
 
-                <div class="text-center">
-                <button type="button" class="btn btn-primary" style="display: none;" onclick="openEditModal()">
-                          Cambiar contraseña
-                </button>
-                </div>
-            </div>
-
            
 
     <?php include ('../../includes/footer.php'); ?>
     <div id="edit-form-container" style="display: none;"></div>
     <!-- Sparkline -->
+    <script>
+        let token = "<?php echo $token; ?>"
+        let email = "<?php echo $row['mail']; ?>"
+    </script>
     <script src="js/plugins/sparkline/jquery.sparkline.min.js"></script>
 
     <script>
@@ -153,22 +154,22 @@ $stmtr->close();
             });
         });
 
-        function openEditModal() {
-            // Realiza una solicitud AJAX para obtener el formulario de edición
-            $.ajax({
-                url: "modalpass.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
-                type: "GET",
-                success: function (response) {
-                    // Muestra el formulario de edición en el contenedor
-                    $("#edit-form-container").html(response).slideDown();
-                    // Abre el modal
-                    $("#myModal6").modal("show");
-                },
-                error: function () {
-                    alert("Error al cargar el formulario de edición.");
-                }
-            });
-        }
+        //function openEditModal() {
+        //    // Realiza una solicitud AJAX para obtener el formulario de edición
+        //    $.ajax({
+        //        url: "modalpass.php?token=<?php //echo $token; ?>//", // Ruta al archivo de edición de usuario
+        //        type: "GET",
+        //        success: function (response) {
+        //            // Muestra el formulario de edición en el contenedor
+        //            $("#edit-form-container").html(response).slideDown();
+        //            // Abre el modal
+        //            $("#myModal6").modal("show");
+        //        },
+        //        error: function () {
+        //            alert("Error al cargar el formulario de edición.");
+        //        }
+        //    });
+        //}
     </script>
 </body>
 </html>

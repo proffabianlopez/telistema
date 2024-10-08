@@ -20,7 +20,7 @@ if (!isset($_SESSION['token'])) {
 $token = $_SESSION['token'];
 
 define('TITLE', 'Mi Perfil');
-define('PAGE', 'perfil');
+define('PAGE', 'Perfil');
 include('../../includes/header.php');
 include('../../dbConnection.php');
 include('../../Querys/querys.php');
@@ -41,6 +41,11 @@ if ($result->num_rows > 0) {
     echo '<div class="alert alert-warning col-sm-6 ml-5 mt-2" role="alert">No se encontró ningún usuario con el ID proporcionado.</div>';
     exit;
 }
+
+// Defino avatar por default si el usuario no tiene uno
+if(!file_exists("../../img/avatars/" . $row['avatar_user']) || is_null($row['avatar_user'])) {
+    $row['avatar_user'] = '../../img/avatars/default.png';
+}
 ?>
 
 <body>
@@ -50,6 +55,7 @@ if ($result->num_rows > 0) {
                 <?php include('../../includes/menu.php') ?>
             </div>
         </nav>
+
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -58,6 +64,7 @@ if ($result->num_rows > 0) {
                     </div>
                 </nav>
             </div>
+
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>Mi Perfil</h2>
@@ -65,63 +72,74 @@ if ($result->num_rows > 0) {
                 <div class="col-lg-2"></div>
             </div>
 
-            <!-- Contenido del perfil -->
-            <div class="wrapper wrapper-content animated fadeInRight">
-                <div class="row m-b-lg m-t-lg ibox-content">
-                    <div class="col-lg-6 text-center">
-                        <div class="profile-image">
-                            <img src="../../../img/team-3.jpg" class="rounded-circle circle-border m-b-md" alt="profile">
-                        </div>
+            <div class="row wrapper border-bottom white-bg m-t-sm">
+                <div class="row m-t-md m-b-md">
+                    <div class="col-md-6 m-b">
+                        <a id="edit-<?php echo ($row["id_user"] . '-' . $token); ?>" data-crud="adminAvatar" class="modaledit-btn">
+                            <div class="profile-image m-t-sm">
+                                <img src="<?php echo htmlspecialchars($row['avatar_user']); ?>"  alt="Avatar de <?php echo htmlspecialchars($row['name_user']);?>" class="img-circle img-thumbnail">
+                            </div>
+                        </a>
+
                         <div class="profile-info">
-                            <h2 class="no-margins">
-                                <?php echo htmlspecialchars($row['name_user']); ?>
-                                <?php echo htmlspecialchars($row['surname_user']); ?>
-                            </h2>
-                            <!----<h4>Perfil del Administrador</h4> -->
-                            <small>
-                                
-                            </small>
+                            <div class="row">
+                                <div class="col">
+                                    <h2>
+                                        <?php echo htmlspecialchars($row['name_user']); ?>
+                                        <?php echo htmlspecialchars($row['surname_user']); ?>
+                                    </h2>
+                                    <h4>Perfil del Administrador</h4>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Información adicional del usuario -->
-                    <div class="col-lg-3">
+                    <div class="col-md-3 m-b">
                         <table class="table small m-b-xs">
                             <tbody>
-                                <tr>
-                                    <td><strong>Email:</strong> <?php echo htmlspecialchars($row['mail']); ?></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Celular:</strong> <?php echo htmlspecialchars($row['phone_user']); ?></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Cargo:</strong> 
-                                        <?php 
-                                            switch ($row['id_rol']) {
-                                                case 1: echo 'Administrador'; break;
-                                                case 2: echo 'Técnico'; break;
-                                                default: echo 'Desconocido'; break;
-                                            }
-                                        ?>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    <strong>Email:</strong> <?php echo htmlspecialchars($row['mail']); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Celular:</strong> <?php echo htmlspecialchars($row['phone_user']); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Cargo:</strong>
+                                    <?php
+                                    switch ($row['id_rol']) {
+                                        case 1:
+                                            echo 'Administrador';
+                                            break;
+                                        case 2:
+                                            echo 'Técnico';
+                                            break;
+                                        default:
+                                            echo 'Desconocido';
+                                            break;
+                                    }
+                                    ?>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
 
-                    <!-- Botones de acción -->
-                    <div class="col-lg-3 col-sm-12 d-flex flex-column align-items-center justify-content-center mt-4 mt-lg-0">
-                        <button id="edit-<?php echo ($row['id_user'] . '-' . $token); ?>" data-crud="admin" class="btn btn-primary btn-block mb-2">
-                            Modificar perfil
+                    <div class="col-md-3 m-b-sm m-t-sm"  role="group">
+                        <button id="edit-<?php echo ($row["id_user"] . '-' . $token); ?>" data-crud="admin" class="btn btn-primary modaledit-btn m-b-sm">
+                            Modificar mi perfil
                         </button>
-                        <button id="edit-<?php echo ($row['id_user'] . '-' . $token); ?>" data-crud="adminPassword" class="btn btn-primary btn-block">
+                        <br class="mb-lg-2 mb-sm-1">
+                        <button id="edit-<?php echo ($row["id_user"] . '-' . $token); ?>" data-crud="adminPassword" class="btn btn-primary modaledit-btn">
                             Cambiar Contraseña
                         </button>
                     </div>
                 </div>
             </div>
-
-            <div class="wrapper wrapper-content animated fadeInRight">
 
             </div>
             <div class="footer">
@@ -132,37 +150,38 @@ if ($result->num_rows > 0) {
             </div>
         </div>
     </div>
-    
     <div id="editpassword-form-container" style="display: none;"></div>
     <div id="edit-form-container" style="display: none;"></div>
-
     <script>
-        let token = "<?php echo $token; ?>";
-        let email = "<?php echo $row['mail']; ?>";
+        let token = "<?php echo $token; ?>"
+        let email = "<?php echo $row['mail']; ?>"
     </script>
-
     <?php include('../../includes/footer.php'); ?>
-
     <script>
         $(document).ready(function () {
             $('.footable').footable();
             $('.footable2').footable();
         });
 
-        // Funcionalidad para cambiar contraseña (opcional)
-        /* function openEditModal() {
+
+        // Cambiar contraseña Automatico Viejo
+
+       /* function openEditModal() {
+            // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({
                 url: "../crudusers/modalpass.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
                 type: "GET",
                 success: function (response) {
+                    // Muestra el formulario de edición en el contenedor
                     $("#editpassword-form-container").html(response).slideDown();
+                    // Abre el modal
                     $("#myModal6").modal("show");
                 },
                 error: function () {
                     alert("Error al cargar el formulario de edición.");
                 }
             });
-        } */
+        }*/
     </script>
 </body>
 </html>
