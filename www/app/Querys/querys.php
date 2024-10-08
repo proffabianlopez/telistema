@@ -759,8 +759,6 @@ define('SQL_SELECT_ORDERS_TECHNIC_ADMIN', '
         clients cl ON o.id_client = cl.id_client
     LEFT JOIN 
         images i ON o.id_order = i.id_order
-    WHERE 
-        so.id_state_order = 4
     ORDER BY 
         o.id_order DESC
 ');
