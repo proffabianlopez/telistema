@@ -94,9 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Validar si hay múltiples imágenes
-            if (isset($_FILES['name_image']) && count($_FILES['name_image']['name']) > 0) {
+            if (isset($_FILES['name_image']) && !empty($_FILES['name_image']['name'][0])) {
                 $directorio_destino = '../../img/';
-            
+
                 if (!file_exists($directorio_destino)) {
                     if (!mkdir($directorio_destino, 0777, true)) {
                         $response['message'] = 'Error al crear el directorio de destino.';
@@ -104,16 +104,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         exit;
                     }
                 }
-            
+
                 // Procesar cada imagen
                 foreach ($_FILES['name_image']['tmp_name'] as $key => $archivo_temporal) {
                     if ($_FILES['name_image']['error'][$key] === UPLOAD_ERR_OK) {
-                        $nombre_archivo = uniqid() . '-' . basename($_FILES['name_image']['name'][$key]);
-            
+                        $nombre_archivo = basename($_FILES['name_image']['name'][$key]);
+
                         // Mover archivo al directorio de destino
                         if (move_uploaded_file($archivo_temporal, $directorio_destino . $nombre_archivo)) {
                             $ruta_imagen = $directorio_destino . $nombre_archivo;
-            
+
                             // Insertar ruta de imagen en la base de datos
                             $stmt = $conn->prepare(SQL_INSERT_IMG_ORDER);
                             if ($stmt === false) {
@@ -128,18 +128,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 exit;
                             }
                         } else {
-                            $response['message'] = 'Error al mover el archivo: ' . $nombre_archivo;
+                            $response['message'] = 'Error al subir el archivo: ' . $nombre_archivo;
                             echo json_encode($response);
                             exit;
                         }
-                    } else {
-                        $response['message'] = 'Error al subir el archivo: ' . $_FILES['name_image']['error'][$key];
-                        echo json_encode($response);
-                        exit;
                     }
                 }
             }
-            
+
+
 
             // Actualizar la orden
             $sql = SQL_UPDATE_ORDER_TECHNIC;
