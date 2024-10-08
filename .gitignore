@@ -8,4 +8,4 @@ Querys/
 *.sql
 database_dump/
 *.zip
-img/*
+www/app/img/*
