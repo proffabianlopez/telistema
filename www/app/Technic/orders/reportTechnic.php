@@ -61,22 +61,17 @@ if (isset($_POST['id'])) {
                                     <div class="form-group">
                                         <label for="state_order">Estado <span class="text-danger">*</span></label>
                                         <select name="id_state_order" id="id_state_order" class="form-control">
-
-                                            <?php if ($row["id_state_order"] === 2) : ?>
-                                                <!-- Mostrar si la orden ya está cancelada pero sin posibilidad de modificar -->
-                                                <option value="2" selected>Cancelada</option>
-                                            <?php endif; ?>
-                                            <option value="3" <?php if ($row["id_state_order"] === 3)
-                                                                    echo 'selected'; ?>>
-                                                Pendiente</option>
-                                            <option value="4" <?php if ($row["id_state_order"] === 4)
-                                                                    echo 'selected'; ?>>
-                                                Realizada</option>
+                                        <?php if ($row["id_state_order"] === 2): ?>
+                                            <!-- Mostrar si la orden ya está cancelada pero sin posibilidad de modificar -->
+                                            <option value="2" selected>Cancelada</option>
+                                        <?php endif; ?>
+                                            <option value="3" <?php if ($row["id_state_order"] === 3) echo 'selected'; ?>>Pendiente</option>
+                                            <option value="4" <?php if ($row["id_state_order"] === 4) echo 'selected'; ?>>Realizada</option>
                                         </select>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="order_description">Reporte <span class="text-danger">*</span></label>
+                                        <label for="report_technic">Reporte <span class="text-danger">*</span></label>
                                         <textarea class="form-control validate-field vtextarea" id="report_technic" name="report_technic"></textarea>
                                     </div>
 
@@ -93,23 +88,23 @@ if (isset($_POST['id'])) {
                                             <div class="material-row">
                                                 <div class="row">
                                                     <div class="col-md-7">
-                                                        <select name="materials[]" class="form-control" id="material-template">
-                                                            <option value=""></option>
-                                                            <?php
-                                                            $stmt = $conn->prepare(SQL_SELECT_MATERIALS);
-                                                            $stmt->execute();
-                                                            $result = $stmt->get_result();
-                                                            if ($result->num_rows > 0) {
-                                                                while ($row_material = $result->fetch_assoc()) {
-                                                                    $id_material = $row_material["id_material"];
-                                                                    $material_name = $row_material["material_name"];
-                                                                    echo '<option value="' . htmlspecialchars($id_material) . '">' . htmlspecialchars($material_name) . '</option>';
-                                                                }
-                                                            } else {
-                                                                echo '<option>No hay materiales disponibles</option>';
+                                                    <select name="materials[]" class="form-control" id="material-template">
+                                                        <option value=""></option>
+                                                        <?php
+                                                        $stmt = $conn->prepare(SQL_SELECT_MATERIALS);
+                                                        $stmt->execute();
+                                                        $result = $stmt->get_result();
+                                                        if ($result->num_rows > 0) {
+                                                            while ($row_material = $result->fetch_assoc()) {
+                                                                $id_material = $row_material["id_material"];
+                                                                $material_name = $row_material["material_name"];
+                                                                echo '<option value="' . htmlspecialchars($id_material) . '">' . htmlspecialchars($material_name) . '</option>';
                                                             }
-                                                            ?>
-                                                        </select>
+                                                        } else {
+                                                            echo '<option>No hay materiales disponibles</option>';
+                                                        }
+                                                        ?>
+                                                    </select>
 
                                                     </div>
                                                     <div class="col-md-3">
