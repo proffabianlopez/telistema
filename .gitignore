@@ -9,3 +9,5 @@ Querys/
 database_dump/
 *.zip
 www/app/img/*
+*.png
+*.jpg
