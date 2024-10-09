@@ -491,6 +491,11 @@ define('SQL_FROM_ORDERS', '
     LEFT JOIN
         clients cl ON o.id_client = cl.id_client');
 
+define('SQL_SELECT_NCUICUIT','
+        SELECT COUNT(*) 
+        FROM orders
+        WHERE circuit_number = ? AND DATE(order_date) = ? AND technic_id = ?');
+
 /////////////////////////////////////////////////////////////////////////////////////
 // Materials
 //////////////////////////////////////////////////////////////////
