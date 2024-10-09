@@ -18,7 +18,7 @@ if (!isset($_SESSION['token'])) {
 $token = $_SESSION['token'];
 
 define('TITLE', 'Usuarios');
-define('PAGE', 'usuarios');
+define('PAGE', 'Usuarios');
 include ('../../includes/header.php');
 include ('../../dbConnection.php');
 include ('../../Querys/querys.php');

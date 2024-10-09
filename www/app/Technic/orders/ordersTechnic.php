@@ -76,19 +76,7 @@ include('../../includes/header.php');
 
           </div>
 
-          <ul class="nav navbar-top-links navbar-right">
-
-            <li>
-
-              <a href="../../../logout.php">
-
-                <i class="fa fa-sign-out"></i> Cerrar Sesión
-
-              </a>
-
-            </li>
-
-          </ul>
+         
 
         </nav>
 
