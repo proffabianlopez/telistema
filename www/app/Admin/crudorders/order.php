@@ -74,16 +74,16 @@ include ('../../Querys/querys.php');
                                     <thead>
                                     <tr>
                                         <th data-hide="all">Orden</th>
-                                        <th data-hide="all">N° de Circuito</th>
+                                        <th data-toggle="true">N° de Circuito</th>
                                         <th data-hide="all">Cliente</th>
+                                        <th data-toggle="true">Técnico</th>
                                         <th data-toggle="true">Fecha</th>
-                                        <th data-toggle="true">Prioridad</th>
-                                        <th data-toggle="true">Tipo de Trabajo</th>
+                                        <th data-hide="phone">Prioridad</th>
+                                        <th data-hide="phone">Tipo de Trabajo</th>
                                         <th data-hide="all">Dirección</th>
                                         <th data-hide="all">Piso</th>
                                         <th data-hide="all">Dpto</th>
                                         <th data-hide="all">Estado</th>
-                                        <th data-hide="all">Tecnico Asignado</th>
                                         <th data-hide="all">Descripción</th>
 
                                         <th>Acción</th>
@@ -103,6 +103,7 @@ include ('../../Querys/querys.php');
                                         echo '<td>' . $row["id_order"] . '</td>';
                                         echo '<td>' . $row["circuit_number"] . '</td>';
                                         echo '<td>' . $row["client_name"] . ' ' . $row['client_lastname'] . '</td>';
+                                        echo '<td>' . $row["name_user"] . ' ' . $row["surname_user"] . '</td>';
                                         echo '<td>' . $order_datetime_formatted . '</td>';
                                         echo '<td>' . $row["priority"] . '</td>';
                                         echo '<td>' . $row["type_work"] . '</td>';
@@ -110,7 +111,6 @@ include ('../../Querys/querys.php');
                                         echo '<td>' . $floor . '</td>';
                                         echo '<td>' . $departament . '</td>';
                                         echo '<td>' . $row["state_order"] . '</td>';
-                                        echo '<td>' . $row["name_user"] . ' ' . $row["surname_user"] . '</td>';
                                         echo '<td>' . $row["order_description"] . '</td>';
                                         echo '<td>
                                                 <div class="btn-group" role="group">
