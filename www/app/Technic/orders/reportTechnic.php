@@ -138,53 +138,7 @@ if (isset($_POST['id'])) {
             </div>
         </div>
     </div>
-    <script>
-    // Script para agregar nuevas filas de material y cantidad
-    document.getElementById('add-material').addEventListener('click', function() {
-        const materialsSection = document.getElementById('materials-section');
-        const materialRow = document.createElement('div');
-        materialRow.classList.add('material-row');
-
-        // Clonar el select de materiales desde el DOM
-        const materialSelect = document.getElementById('material-template').cloneNode(true);
-        materialSelect.removeAttribute('id');  // Eliminar el id del nuevo select clonado para evitar duplicados
-
-        // Crear el contenedor de la nueva fila
-        materialRow.innerHTML = `
-            <div class="row mt-2">
-                <div class="col-md-7"></div> <!-- Aquí insertaremos el select clonado -->
-                <div class="col-md-3">
-                    <input type="number" name="quantities[]" class="form-control" placeholder="Cantidad">
-                </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-danger remove-material">Eliminar</button>
-                </div>
-            </div>
-        `;
-
-        // Insertar el select clonado en el div correspondiente
-        materialRow.querySelector('.col-md-7').appendChild(materialSelect);
-
-        // Agregar la nueva fila al contenedor
-        materialsSection.appendChild(materialRow);
-
-        // Agregar el evento de eliminación a los nuevos botones
-        addRemoveMaterialEvent(materialRow);
-    });
-
-    // Función para agregar el evento de eliminación a los botones de "Eliminar"
-    function addRemoveMaterialEvent(materialRow) {
-        materialRow.querySelector('.remove-material').addEventListener('click', function() {
-            materialRow.remove();
-        });
-    }
-
-    // Aplicar el evento a la primera fila existente si es necesario
-    document.querySelectorAll('.material-row').forEach(function(row) {
-        addRemoveMaterialEvent(row);
-    });
-</script>
-
+ 
     
     <script>
         let token = '<?php echo $token; ?>';

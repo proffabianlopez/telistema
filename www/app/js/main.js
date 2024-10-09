@@ -545,5 +545,82 @@ document.getElementById('show-normal').addEventListener('click', function() {
   });
 });
 
-// Mostrar solo las órdenes urgentes por defecto al cargar la página
-document.getElementById('show-urgent').click();
+
+
+// Ejecutar cuando el DOM esté completamente cargado
+  document.addEventListener('DOMContentLoaded', function() {
+    // Mostrar solo las órdenes urgentes por defecto al cargar la página
+    const urgentButton = document.getElementById('show-urgent');
+    if (urgentButton) {
+        urgentButton.click();
+    }
+  });
+
+ // Guardar una copia del select original al cargar la página
+const materialTemplate = document.getElementById('material-template').cloneNode(true);
+materialTemplate.removeAttribute('id'); // Eliminar el id para evitar duplicados
+
+// Script para agregar nuevas filas de material y cantidad
+document.getElementById('add-material').addEventListener('click', function() {
+    const materialsSection = document.getElementById('materials-section');
+    const materialRow = document.createElement('div');
+    materialRow.classList.add('material-row');
+
+    // Clonar el template guardado en lugar de clonar el select del DOM
+    const materialSelect = materialTemplate.cloneNode(true);
+
+    // Crear el contenedor de la nueva fila
+    materialRow.innerHTML = `
+        <div class="row mt-2">
+            <div class="col-md-7"></div> <!-- Aquí insertaremos el select clonado -->
+            <div class="col-md-3">
+                <input type="number" name="quantities[]" class="form-control" placeholder="Cantidad">
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger remove-material">Eliminar</button>
+            </div>
+        </div>
+    `;
+
+    // Insertar el select clonado en el div correspondiente
+    materialRow.querySelector('.col-md-7').appendChild(materialSelect);
+
+    // Agregar la nueva fila al contenedor
+    materialsSection.appendChild(materialRow);
+
+    // Agregar el evento de eliminación a los nuevos botones
+    addRemoveMaterialEvent(materialRow);
+});
+
+// Función para agregar el evento de eliminación a los botones de "Eliminar"
+function addRemoveMaterialEvent(materialRow) {
+    materialRow.querySelector('.remove-material').addEventListener('click', function() {
+        materialRow.remove();
+    });
+}
+
+// Aplicar el evento a la primera fila existente si es necesario
+document.querySelectorAll('.material-row').forEach(function(row) {
+    addRemoveMaterialEvent(row);
+});
+
+// Validar el formulario antes de enviarlo
+document.getElementById('change-editordertec-form').addEventListener('submit', function(event) {
+    let valid = true;
+    document.querySelectorAll('select[name="materials[]"]').forEach(function(select) {
+        if (select.value === '') {
+            valid = false;
+            alert('Debe seleccionar un material');
+        }
+    });
+    document.querySelectorAll('input[name="quantities[]"]').forEach(function(input) {
+        if (input.value === '' || input.value <= 0) {
+            valid = false;
+            alert('Debe ingresar una cantidad válida para cada material');
+        }
+    });
+    if (!valid) {
+        event.preventDefault();  // Evita el envío si no es válido
+    }
+});
+
