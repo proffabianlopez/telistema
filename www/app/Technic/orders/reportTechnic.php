@@ -57,9 +57,11 @@ if (isset($_POST['id'])) {
                                                                                                                             echo $row['id_order'];
                                                                                                                         } ?>" readonly>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="state_order">Estado <span class="text-danger">*</span></label>
                                         <select name="id_state_order" id="id_state_order" class="form-control">
+
                                             <?php if ($row["id_state_order"] === 2) : ?>
                                                 <!-- Mostrar si la orden ya está cancelada pero sin posibilidad de modificar -->
                                                 <option value="2" selected>Cancelada</option>
@@ -72,10 +74,12 @@ if (isset($_POST['id'])) {
                                                 Realizada</option>
                                         </select>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="order_description">Reporte <span class="text-danger">*</span></label>
                                         <textarea class="form-control validate-field vtextarea" id="report_technic" name="report_technic"></textarea>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="name_image" class="form-label">Imagen</label>
                                         <input type="file" class="form-control" id="name_image" name="name_image[]" accept="image/*" multiple>
@@ -122,6 +126,7 @@ if (isset($_POST['id'])) {
                                     </div>
                                 </div>
                             </div>
+
                             <div class="modal-footer">
                                 <button type="submit" class="ladda-button btn btn-primary" data-style="zoom-in">Actualizar</button>
                                 <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
@@ -138,11 +143,14 @@ if (isset($_POST['id'])) {
             </div>
         </div>
     </div>
+ 
+    
     <script>
         let token = '<?php echo $token; ?>';
         let email = '';
     </script>
     <script src="../../js/main.js"></script>
+
     <script>
         const materialTemplate = document.getElementById('material-template').cloneNode(true);
         materialTemplate.removeAttribute('id'); // Eliminar el id para evitar duplicados
@@ -211,7 +219,6 @@ if (isset($_POST['id'])) {
             }
         });
     </script>
-
 </body>
 
 </html>

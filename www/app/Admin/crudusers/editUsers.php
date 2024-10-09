@@ -107,8 +107,8 @@ if (isset($_POST['id'])) {
                                     <!-- Campo Teléfono -->
                                     <div class="form-group">
                                         <label for="phone_user">Teléfono <span class="text-danger">*</span></label>
-                                        <input type="tel" class="form-control validate-field vphone" id="phone_user"
-                                            name="phone_user" placeholder="5491234567890" value="<?php if (isset($row['phone_user'])) {
+                                        <input type="tel" class="form-control validate-field iti__tel-input" id="phone_user"
+                                            name="phone_user" value="<?php if (isset($row['phone_user'])) {
                                                 echo $row['phone_user'];
                                             } ?>"required>
 

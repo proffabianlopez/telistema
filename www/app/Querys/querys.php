@@ -311,6 +311,13 @@ define(
         WHERE technic_id = ? AND id_state_order = 3'
 );
 
+define(
+        'SQL_UPDATE_USER_AVATAR',
+        'UPDATE users
+        SET avatar_user = ?
+        WHERE id_user = ?'
+);
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //Orders
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -492,9 +499,18 @@ define('SQL_FROM_ORDERS', '
         clients cl ON o.id_client = cl.id_client');
 
 /////////////////////////////////////////////////////////////////////////////////////
-// Materials
+// MATERIALS
 //////////////////////////////////////////////////////////////////
 
+define('SQL_SELECT_STOCK', '
+        SELECT stock 
+        FROM materials 
+        WHERE id_material = ?');
+
+define('SQL_UPDATE_STOCK', '
+        UPDATE materials
+        SET stock = stock - ?
+        WHERE id_material = ? AND stock >= ?');
 
 define('SQL_SELECT_MATERIALS', '
         SELECT u. *
@@ -719,6 +735,12 @@ define('SQL_INSERT_IMG_ORDER',
         'INSERT INTO images (name_image, id_order)
         VALUES (?, ?)');
 
+define('SQL_SELECT_STATE_ORDERS', '
+        SELECT state_order 
+        FROM `states_orders` 
+        WHERE 1');
+
+
 define('SQL_SELECT_ORDERS_TECHNIC_ADMIN', '
     SELECT 
         o.id_order, 
@@ -750,8 +772,6 @@ define('SQL_SELECT_ORDERS_TECHNIC_ADMIN', '
         clients cl ON o.id_client = cl.id_client
     LEFT JOIN 
         images i ON o.id_order = i.id_order
-    WHERE 
-        so.id_state_order = 4
     ORDER BY 
         o.id_order DESC
 ');
