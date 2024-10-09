@@ -145,7 +145,6 @@ if (isset($_POST['id'])) {
         let email = '';
     </script>
     <script src="../../js/main.js"></script>
-
     <script>
         const materialTemplate = document.getElementById('material-template').cloneNode(true);
         materialTemplate.removeAttribute('id'); // Eliminar el id para evitar duplicados

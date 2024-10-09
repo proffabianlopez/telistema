@@ -53,7 +53,7 @@ $passwordGenerate = generatePassword(); ?>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="phone_user">Teléfono <span class="text-danger">*</span></label>
-                                    <input type="tel" class="form-control validate-field iti__tel-input" id="phone_user" name="phone_user">
+                                    <input type="tel" class="form-control validate-field" id="phone_user" name="phone_user">
                                 </div>
                             
                                 <div class="form-group">

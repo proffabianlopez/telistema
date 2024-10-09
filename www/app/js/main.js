@@ -153,15 +153,6 @@ $(document).ready(function () {
                 minlength: "Por favor, ingrese un minimo de 3 caracteres.",
               };
               break;
-              
-              case "vavatar":
-              rules[fieldName] = {
-                required: true,
-              };
-              messages[fieldName] = {
-                required: "Este campo es obligatorio.",
-              };
-              break;
 
               case "vname_product":
               rules[fieldName] = {
@@ -233,13 +224,6 @@ $(document).ready(function () {
       
       // Crear un objeto FormData para manejar la subida de archivos y otros datos del formulario
       var formData = new FormData(this);
-
-        // Para enviar el avatar
-        var avatar = $('#avatar')[0].files[0];
-        if(avatar) {
-          var files = $('#avatar')[0].files[0];
-          formData.append('avatar',files);
-        }
   
       if (!$(formId).valid()) {
         return; // Salir si el formulario no es válido
@@ -432,11 +416,6 @@ $(document).ready(function () {
       "#change-editadmin-form",
       "../crudusers/usersController.php?token=" + token + "&action=edit_user&email=" + email
   );
-  setupFormValidation("#change-adminavatar-form");
-  handleFormSubmit(
-      "#change-adminavatar-form",
-      "../crudusers/usersController.php?token=" + token + "&action=edit_user_avatar"
-  );
 
   // TECHNIC
   setupFormValidation("#change-edittechnic-form");
@@ -444,12 +423,6 @@ $(document).ready(function () {
       "#change-edittechnic-form",
       "../crudusers/usersController.php?token=" + token + "&action=edit_user&email=" + email
   );
-
-  setupFormValidation("#change-technicavatar-form");
-  handleFormSubmit(
-      "#change-technicavatar-form",
-      "../../Admin/crudusers/usersController.php?token=" + token + "&action=edit_user_avatar"
-  ); 
 
   // SUPPLIER
   setupFormValidation("#change-insertsupplier-form");
@@ -626,5 +599,4 @@ document.getElementById('show-urgent').click();
 //         }
 //     });
 // });
-
 

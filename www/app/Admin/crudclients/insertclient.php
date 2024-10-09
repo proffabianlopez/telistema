@@ -51,7 +51,7 @@ include ('../configsmtp/generate_config.php');
                   </div>
                   <div class="form-group">
                     <label for="phone">Teléfono <span class="text-danger">*</span></label>
-                    <input type="tel" class="form-control validate-field iti__tel-input" id="phone" name="phone">
+                    <input type="tel" class="form-control validate-field" id="phone" name="phone">
                   </div>
                   <div class="form-group">
                     <label for="mail">Email <span class="text-danger">*</span></label>
@@ -101,22 +101,20 @@ include ('../configsmtp/generate_config.php');
   </script>
   <script src="../../js/main.js"></script>
   <script>
-    //ABRIR LA VENTANA DE OPCINES CON CODIGO DE AREA
-    const input = document.querySelector("#phone");
-    const iti = window.intlTelInput(input, {
-      separateDialCode: true,
-      preferredCountries: ["ar", "us", "br", "mx"],
-      utilsScript: "../../js/utils.js"
-    });
-    
-    //GUARADAR EL CODIGO DE AREA Y EL NUMERO
-    document.getElementById('change-insertclient-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-      const fullNumber = iti.getNumber();
-      console.log("Número completo con código de área:", fullNumber);
-      document.getElementById('phone').value = fullNumber;
-      this.submit();
-    });
+  const input = document.querySelector("#phone");
+  const iti = window.intlTelInput(input, {
+    separateDialCode: true,
+    preferredCountries: ["ar", "us", "br", "mx"],
+    utilsScript: "../../js/utils.js"
+  });
+
+  document.getElementById('change-insertclient-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const fullNumber = iti.getNumber();
+    console.log("Número completo con código de área:", fullNumber);
+    document.getElementById('phone').value = fullNumber;
+    this.submit();
+  });
   </script>
 
 

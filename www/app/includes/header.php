@@ -12,14 +12,13 @@
     </title>
 
     <!-- Bootstrap CSS para icons-->
-     <link href="../../css/intlTelInput.css" rel="stylesheet">
     <link rel="stylesheet" href="../../boostrap/node_modules/bootstrap-icons/font/bootstrap-icons.css">
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="../../css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="../../css/animate.css" rel="stylesheet">
     <link href="../../css/style.css" rel="stylesheet">
-   
+    <link href="../../css/intlTelInput.css" rel="stylesheet">
 
     <!-- FooTable -->
     <link href="../../css/plugins/footable/footable.core.css" rel="stylesheet">
@@ -58,19 +57,6 @@
             right: 10px;
             transform: translateY(-50%);
             cursor: pointer;
-        }
-        
-        input.iti__tel-input {
-            width: 100% !important;/* Asegura que el input y el dropdown ocupen el ancho completo */
-        }
-
-        .iti__dropdown {
-            width: 100% !important; /* Ancho completo para el dropdown */
-        }
-        @media (max-width: 767px) {
-            .iti__dropdown {
-                width: 100% !important; /* Ancho completo en móvil */
-            }
         }
     </style>
 
