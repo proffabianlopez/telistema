@@ -489,6 +489,10 @@ $(document).ready(function () {
   
 });
 
+//////////////////////////////////////
+// ORDENES
+//////////////////////////
+
 
 document.getElementById('show-urgent').addEventListener('click', function() {
   // Mostrar solo órdenes urgentes
@@ -520,3 +524,11 @@ document.getElementById('show-normal').addEventListener('click', function() {
 
 // Mostrar solo las órdenes urgentes por defecto al cargar la página
 document.getElementById('show-urgent').click();
+
+
+
+
+//////////////////////////////////////
+// REPORTE DE MATERIALES
+//////////////////////////
+
