@@ -4,7 +4,7 @@ session_start();
 // Verifica si la sesión está iniciada y el token es válido
 if (!isset($_SESSION['is_login']) || !isset($_GET['token']) || $_GET['token'] !== $_SESSION['token']) {
     // Si no hay sesión o el token no es válido, redirige al usuario o muestra un mensaje de error
-     header("Location:../../includes/404/404.php");
+    header("Location:../../includes/404/404.php");
     exit();
 }
 
@@ -16,7 +16,7 @@ $response = [
 ];
 
 if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
-    if ($_SESSION['user_idRol'] != 1 ) {
+    if ($_SESSION['user_idRol'] != 1) {
         $response['message'] = 'Acceso denegado.';
         echo json_encode($response);
         exit;
@@ -27,9 +27,9 @@ if (isset($_SESSION['is_login']) && $_SESSION['is_login'] && $_SESSION['state_us
     exit;
 }
 
-include ('../../dbConnection.php');
-include ('../../Querys/querys.php');
-include ('../configsmtp/generate_config.php');
+include('../../dbConnection.php');
+include('../../Querys/querys.php');
+include('../configsmtp/generate_config.php');
 
 
 
@@ -63,7 +63,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql = SQL_UPDATE_ORDER;
             $stmt = $conn->prepare($sql);
             $stmt->bind_param(
-                "sssissiiiiiii", $order_date, $order_description, $address, $height, $floor, $departament, $cuicuit_number, $id_type_work, $id_client, $id_priority, $id_state_order, $technic_id, $id_order
+                "sssissiiiiiii",
+                $order_date,
+                $order_description,
+                $address,
+                $height,
+                $floor,
+                $departament,
+                $cuicuit_number,
+                $id_type_work,
+                $id_client,
+                $id_priority,
+                $id_state_order,
+                $technic_id,
+                $id_order
             );
             if ($stmt->execute()) {
                 $response['status'] = 'success';
@@ -108,7 +121,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         echo json_encode($response);
         exit;
-
     } elseif ($_POST['action'] === 'delete_order') {
         $id = explode('*', $_POST['id']);
         $id_order = $id[0];
