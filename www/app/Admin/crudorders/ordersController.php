@@ -97,7 +97,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $admin_id = $_POST['admin_id'];
             $technic_id = $_POST['technic_id'];
 
-            $stmt = $conn->prepare(SQL_INSERT_ORDER);
+            // Obtener la fecha actual
+            $current_date = date('Y-m-d');
+
+            // Verificar si el número de circuito ya existe en la fecha actual
+            $stmt = $conn->prepare(SQL_SELECT_NCUICUIT);
+            $stmt->bind_param("isi", $cuicuit_number, $current_date, $technic_id);
+            $stmt->execute();
+            $stmt->bind_result($count);
+            $stmt->fetch();
+            $stmt->close();
+
+            // Si existe, mostrar un mensaje de error
+            if ($count > 0) {
+                $response['message'] = 'El número de circuito ya existe para el día de hoy.';
+            }else{
+                $stmt = $conn->prepare(SQL_INSERT_ORDER);
             $stmt->bind_param("sssissiiiiiii", $order_date, $order_description, $address, $height, $floor, $departament, $cuicuit_number, $id_type_work, $id_client, $id_priority, $id_state_order, $admin_id, $technic_id);
             if ($stmt->execute()) {
                 $response['status'] = 'success';
@@ -105,6 +120,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $response['message'] = 'No se pudo agregar: ' . $stmt->error;
             }
+            
+        }
+
         }
         echo json_encode($response);
         exit;
