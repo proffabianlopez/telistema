@@ -32,7 +32,7 @@ include('../../dbConnection.php');
 include('../../Querys/querys.php');
 include('../../Admin/configsmtp/generate_config.php');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] === 'edit_order_technic') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($_POST['id_state_order'])) {
         $response['message'] = 'El campo Estado es obligatorio.';
     } elseif (empty($_POST['report_technic'])) {
@@ -186,3 +186,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] === 'edit_order_tec
 
 // Enviar la respuesta JSON
 echo json_encode($response);
+

@@ -20,7 +20,7 @@ if (!isset($_SESSION['token'])) {
 $token = $_SESSION['token'];
 
 define('TITLE', 'Mi Perfil');
-define('PAGE', 'Perfil');
+define('PAGE', 'perfil');
 include('../../includes/header.php');
 include('../../dbConnection.php');
 include('../../Querys/querys.php');

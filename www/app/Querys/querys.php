@@ -679,7 +679,7 @@ define('SQL_SELECT_ORDERS_TECHNIC', '
     LEFT JOIN 
         images i ON o.id_order = i.id_order
     WHERE 
-        o.technic_id = ? AND so.id_state_order = 4
+        o.technic_id = ?
     ORDER BY 
         o.id_order DESC
 ');
@@ -783,7 +783,15 @@ define(
         WHERE id_order = ?'
 );
 
-  
+
+define(
+    'SQL_UPDATE_STOCK','
+        UPDATE materials
+        SET stock = stock - ?
+        WHERE id_material = ?
+        AND stock >= ?;'
+);
+
 /////////////////////////////////////////////////////////////////////////////////////
 // orders_dashboard
 //////////////////////////////////////////////////////////////////

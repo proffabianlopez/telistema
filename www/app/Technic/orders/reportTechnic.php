@@ -61,17 +61,22 @@ if (isset($_POST['id'])) {
                                     <div class="form-group">
                                         <label for="state_order">Estado <span class="text-danger">*</span></label>
                                         <select name="id_state_order" id="id_state_order" class="form-control">
-                                        <?php if ($row["id_state_order"] === 2): ?>
-                                            <!-- Mostrar si la orden ya está cancelada pero sin posibilidad de modificar -->
-                                            <option value="2" selected>Cancelada</option>
-                                        <?php endif; ?>
-                                            <option value="3" <?php if ($row["id_state_order"] === 3) echo 'selected'; ?>>Pendiente</option>
-                                            <option value="4" <?php if ($row["id_state_order"] === 4) echo 'selected'; ?>>Realizada</option>
+
+                                            <?php if ($row["id_state_order"] === 2) : ?>
+                                                <!-- Mostrar si la orden ya está cancelada pero sin posibilidad de modificar -->
+                                                <option value="2" selected>Cancelada</option>
+                                            <?php endif; ?>
+                                            <option value="3" <?php if ($row["id_state_order"] === 3)
+                                                                    echo 'selected'; ?>>
+                                                Pendiente</option>
+                                            <option value="4" <?php if ($row["id_state_order"] === 4)
+                                                                    echo 'selected'; ?>>
+                                                Realizada</option>
                                         </select>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="report_technic">Reporte <span class="text-danger">*</span></label>
+                                        <label for="order_description">Reporte <span class="text-danger">*</span></label>
                                         <textarea class="form-control validate-field vtextarea" id="report_technic" name="report_technic"></textarea>
                                     </div>
 
@@ -88,23 +93,23 @@ if (isset($_POST['id'])) {
                                             <div class="material-row">
                                                 <div class="row">
                                                     <div class="col-md-7">
-                                                    <select name="materials[]" class="form-control" id="material-template">
-                                                        <option value=""></option>
-                                                        <?php
-                                                        $stmt = $conn->prepare(SQL_SELECT_MATERIALS);
-                                                        $stmt->execute();
-                                                        $result = $stmt->get_result();
-                                                        if ($result->num_rows > 0) {
-                                                            while ($row_material = $result->fetch_assoc()) {
-                                                                $id_material = $row_material["id_material"];
-                                                                $material_name = $row_material["material_name"];
-                                                                echo '<option value="' . htmlspecialchars($id_material) . '">' . htmlspecialchars($material_name) . '</option>';
+                                                        <select name="materials[]" class="form-control" id="material-template">
+                                                            <option value=""></option>
+                                                            <?php
+                                                            $stmt = $conn->prepare(SQL_SELECT_MATERIALS);
+                                                            $stmt->execute();
+                                                            $result = $stmt->get_result();
+                                                            if ($result->num_rows > 0) {
+                                                                while ($row_material = $result->fetch_assoc()) {
+                                                                    $id_material = $row_material["id_material"];
+                                                                    $material_name = $row_material["material_name"];
+                                                                    echo '<option value="' . htmlspecialchars($id_material) . '">' . htmlspecialchars($material_name) . '</option>';
+                                                                }
+                                                            } else {
+                                                                echo '<option>No hay materiales disponibles</option>';
                                                             }
-                                                        } else {
-                                                            echo '<option>No hay materiales disponibles</option>';
-                                                        }
-                                                        ?>
-                                                    </select>
+                                                            ?>
+                                                        </select>
 
                                                     </div>
                                                     <div class="col-md-3">
@@ -146,6 +151,74 @@ if (isset($_POST['id'])) {
     </script>
     <script src="../../js/main.js"></script>
 
+    <script>
+        const materialTemplate = document.getElementById('material-template').cloneNode(true);
+        materialTemplate.removeAttribute('id'); // Eliminar el id para evitar duplicados
+
+        // Script para agregar nuevas filas de material y cantidad
+        document.getElementById('add-material').addEventListener('click', function() {
+            const materialsSection = document.getElementById('materials-section');
+            const materialRow = document.createElement('div');
+            materialRow.classList.add('material-row');
+
+            // Clonar el template guardado en lugar de clonar el select del DOM
+            const materialSelect = materialTemplate.cloneNode(true);
+
+            // Crear el contenedor de la nueva fila
+            materialRow.innerHTML = `
+        <div class="row mt-2">
+            <div class="col-md-7"></div> <!-- Aquí insertaremos el select clonado -->
+            <div class="col-md-3">
+                <input type="number" name="quantities[]" class="form-control" placeholder="Cantidad">
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-danger remove-material">Eliminar</button>
+            </div>
+        </div>
+    `;
+
+            // Insertar el select clonado en el div correspondiente
+            materialRow.querySelector('.col-md-7').appendChild(materialSelect);
+
+            // Agregar la nueva fila al contenedor
+            materialsSection.appendChild(materialRow);
+
+            // Agregar el evento de eliminación a los nuevos botones
+            addRemoveMaterialEvent(materialRow);
+        });
+
+        // Función para agregar el evento de eliminación a los botones de "Eliminar"
+        function addRemoveMaterialEvent(materialRow) {
+            materialRow.querySelector('.remove-material').addEventListener('click', function() {
+                materialRow.remove();
+            });
+        }
+
+        // Aplicar el evento a la primera fila existente si es necesario
+        document.querySelectorAll('.material-row').forEach(function(row) {
+            addRemoveMaterialEvent(row);
+        });
+
+        // Validar el formulario antes de enviarlo
+        document.getElementById('change-editordertec-form').addEventListener('submit', function(event) {
+            let valid = true;
+            document.querySelectorAll('select[name="materials[]"]').forEach(function(select) {
+                if (select.value === '') {
+                    valid = false;
+                    alert('Debe seleccionar un material');
+                }
+            });
+            document.querySelectorAll('input[name="quantities[]"]').forEach(function(input) {
+                if (input.value === '' || input.value <= 0) {
+                    valid = false;
+                    alert('Debe ingresar una cantidad válida para cada material');
+                }
+            });
+            if (!valid) {
+                event.preventDefault(); // Evita el envío si no es válido
+            }
+        });
+    </script>
 </body>
 
 </html>
