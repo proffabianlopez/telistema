@@ -2,9 +2,12 @@
 .querys.php
 .vscode/
 /data
-/database_dump
 /Querys
 .env
-.yml
-.sql
-.zip
+*.yml
+*.sql
+database_dump/
+*.zip
+www/app/img/*
+*.png
+*.jpg
