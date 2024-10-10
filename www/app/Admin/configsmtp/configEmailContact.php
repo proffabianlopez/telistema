@@ -127,17 +127,24 @@ if (isset($_REQUEST['emailupdate'])) {
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
 
-                    <h2 class="text-center mb-4" style="font-weight: bold; color: #343a40;">Formulario de
+                    <h2 class="text-left mb-4" style="font-weight: bold; color: #343a40;">Formulario de
                         Actualización de Configuración de Email</h2>
-                    <p class="text-center mb-5" style="font-size: 1.1em; color: #6c757d;">Utilice este
-                        formulario para actualizar la configuración del servidor SMTP utilizado para el
-                        envío y recepción de correos electrónicos en su aplicación.</p>
-
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="../profileAdmin/AdminProfile.php">Perfil</a>
+                            </li>
+                            <li  class="active">
+                                <a href="configEmailContact.php"><strong>Email de Contacto</strong></a>
+                            </li>
+                        </ol>
                 </div>
-                <div class="col-lg-2">
-
-                </div>
+                
             </div>
+            <div class="ibox-content">
+                <p class="text-left mb-5" style="font-size: 1.2em; color: #6c757d;">Formulario para actualizar configuración del servidor SMTP, utilizado para el
+                        envío y recepción de correos electrónicos de su aplicación.</p>
+
+                </div>
             <div class="wrapper wrapper-content animated fadeInRight">
                 <div class="row">
 

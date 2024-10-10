@@ -50,6 +50,14 @@ include ('../../Querys/querys.php');
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>Stock</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="../crudbuys/buys.php">Compras</a>
+                        </li>
+                        <li class="active">
+                            <a href="materials.php"><strong>Materiales</strong></a>
+                        </li>
+                    </ol>
                 </div>
                 <div class="col-lg-2"></div>
             </div>
