@@ -43,11 +43,11 @@ include('../../includes/header.php');
             <div class="col-lg-10">
                 <h2>Reportes de Ordenes</h2>
                 <ol class="breadcrumb">
-                        <li class="active">
-                            <a href="order.php"><strong>Ordenes Asignadas</strong></a>
-                        </li>
                         <li>
-                            <a href="reportsOrders.php">Reportes</a>
+                            <a href="order.php">Ordenes Asignadas</a>
+                        </li>
+                        <li class="active">
+                            <a href="reportsOrders.php"><strong>Reportes</strong></a>
                         </li>
                     </ol>
             </div>
