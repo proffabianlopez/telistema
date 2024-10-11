@@ -185,7 +185,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->close();
         }
     }
-}
-
 // Enviar la respuesta JSON
 echo json_encode($response);
