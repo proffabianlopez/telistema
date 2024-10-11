@@ -84,7 +84,7 @@ if (isset($_POST['id'])) {
                   </div>
                   <div class="form-group">
                     <label for="phone">Telefono <span class="text-danger">*</span></label>
-                    <input type="tel" class="form-control validate-field" id="phone" name="phone" value="<?php if (isset($row['phone'])) {
+                    <input type="tel" class="form-control validate-field iti__tel-input" id="phone" name="phone" value="<?php if (isset($row['phone'])) {
                       echo $row['phone'];
                     } ?>">
                   </div>

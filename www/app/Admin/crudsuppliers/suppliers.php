@@ -48,7 +48,17 @@ include ('../../Querys/querys.php');
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>Proveedores</h2>
-
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="../crudusers/users.php">Usuarios</a>
+                        </li>
+                        <li>
+                            <a href="../crudclients/clients.php">Clientes</a>
+                        </li>
+                        <li class="active">
+                            <a href="suppliers.php"><strong>Proveedores</strong></a>
+                        </li>
+                    </ol>
                 </div>
                 <div class="col-lg-2">
 
@@ -61,7 +71,6 @@ include ('../../Querys/querys.php');
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <h5>Lista de proveedores</h5>
-
                             </div>
                             <div class="ibox-content">
 

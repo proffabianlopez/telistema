@@ -43,7 +43,16 @@ include('../../Querys/querys.php');
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>Compras</h2>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <a href="buys.php"><strong>Compras</strong></a>
+                            </li>
+                            <li>
+                                <a href="../crudmaterials/materials.php">Materiales</a>
+                            </li>
+                        </ol>
                 </div>
+            </div>
                 <div class="ibox-content">
                     <form id="searchForm" method="GET" action="">
                         <div class="row">

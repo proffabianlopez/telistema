@@ -45,7 +45,17 @@ include ('../../Querys/querys.php');
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
                     <h2>Usuarios</h2>
-
+                    <ol class="breadcrumb">
+                        <li class="active">
+                            <a href="users.php"><strong>Usuarios</strong></a>
+                        </li>
+                        <li>
+                            <a href="../crudclients/clients.php">Clientes</a>
+                        </li>
+                        <li>
+                            <a href="../crudsuppliers/suppliers.php">Proveedores</a>
+                        </li>
+                    </ol>
                 </div>
                 <div class="col-lg-2">
 
