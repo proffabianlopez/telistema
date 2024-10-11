@@ -47,7 +47,7 @@ if (isset($_POST['id'])) {
                     <h4 class="modal-title">Reporte de la Orden N°<?php echo $row['id_order'] ?></h4>
                 </div>
                 <div class="modal-body">
-                    <form id="change-editordertec-form" action="" method="POST" enctype="multipart/form-data">
+                    <form id="change-editordertec-form" action="edit_order_technic" method="POST" enctype="multipart/form-data">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-12">

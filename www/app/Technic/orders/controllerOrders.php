@@ -33,157 +33,158 @@ include('../../Querys/querys.php');
 include('../../Admin/configsmtp/generate_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (empty($_POST['id_state_order'])) {
-        $response['message'] = 'El campo Estado es obligatorio.';
-    } elseif (empty($_POST['report_technic'])) {
-        $response['message'] = 'El campo Reporte es obligatorio.';
-    } else {
-        $id_state_order = trim($_POST['id_state_order']);
-        $report_technic = $_POST['report_technic'];
-        $id_order = $_POST['id_order'];
+    if ($_GET['action'] === 'edit_order_technic') {
+        if (empty($_POST['id_state_order'])) {
+            $response['message'] = 'El campo Estado es obligatorio.';
+        } elseif (empty($_POST['report_technic'])) {
+            $response['message'] = 'El campo Reporte es obligatorio.';
+        } else {
+            $id_state_order = trim($_POST['id_state_order']);
+            $report_technic = $_POST['report_technic'];
+            $id_order = $_POST['id_order'];
 
-        // Verificar que solo se permiten los estados 3 y 4
-        if ($id_state_order != 3 && $id_state_order != 4) {
-            $response['message'] = 'Estado no válido. Solo se permiten "Pendiente" o "Realizada".';
-            echo json_encode($response);
-            exit;
-        }
-
-        // Validar si se enviaron materiales y cantidades
-        if (isset($_POST['materials']) && isset($_POST['quantities'])) {
-            $materials = $_POST['materials'];
-            $quantities = $_POST['quantities'];
-
-            foreach ($materials as $index => $material_id) {
-                $stock = $quantities[$index];
-
-                // Verificar si el material y la cantidad no están vacíos
-                if (!empty($material_id) && !empty($stock) && is_numeric($stock)) {
-                    // Actualizar stock en una sola operación
-                    $stmt_update = $conn->prepare(SQL_UPDATE_STOCK);
-                    if ($stmt_update === false) {
-                        $response['message'] = 'Error al preparar la consulta de actualización de materiales: ' . $conn->error;
-                        echo json_encode($response);
-                        exit;
-                    }
-
-                    // El tercer parámetro es la cantidad que se requiere restar
-                    $stmt_update->bind_param("iii", $stock, $material_id, $stock);
-                    if (!$stmt_update->execute()) {
-                        $response['message'] = "Error al actualizar la cantidad del material ID: $material_id o no hay suficiente stock.";
-                        echo json_encode($response);
-                        exit;
-                    }
-
-                    // Verificar si realmente se actualizó el stock
-                    if ($stmt_update->affected_rows === 0) {
-                        $response['message'] = "No se puede restar más de la cantidad disponible para el material ID: $material_id.";
-                        echo json_encode($response);
-                        exit;
-                    }
-                    $stmt_update->close();
-                }
-            }
-        }
-
-        // Validar si hay múltiples imágenes
-        if (isset($_FILES['name_image']) && !empty($_FILES['name_image']['name'][0])) {
-            $directorio_destino = '../../img/';
-
-            // Crear directorio si no existe
-            if (!file_exists($directorio_destino)) {
-                if (!mkdir($directorio_destino, 0777, true)) {
-                    $response['message'] = 'Error al crear el directorio de destino.';
-                    echo json_encode($response);
-                    exit;
-                }
+            // Verificar que solo se permiten los estados 3 y 4
+            if ($id_state_order != 3 && $id_state_order != 4) {
+                $response['message'] = 'Estado no válido. Solo se permiten "Pendiente" o "Realizada".';
+                echo json_encode($response);
+                exit;
             }
 
-            // Tipos de archivos permitidos
-            $tipos_permitidos = ['jpg', 'jpeg', 'png', 'gif'];
+            // Validar si se enviaron materiales y cantidades
+            if (isset($_POST['materials']) && isset($_POST['quantities'])) {
+                $materials = $_POST['materials'];
+                $quantities = $_POST['quantities'];
 
-            // Procesar cada imagen
-            foreach ($_FILES['name_image']['tmp_name'] as $key => $archivo_temporal) {
-                if ($_FILES['name_image']['error'][$key] === UPLOAD_ERR_OK) {
-                    $nombre_archivo = basename($_FILES['name_image']['name'][$key]);
-                    $ruta_imagen = $directorio_destino . $nombre_archivo;
+                foreach ($materials as $index => $material_id) {
+                    $stock = $quantities[$index];
 
-                    // Validar el tipo de archivo
-                    $tipo_archivo = strtolower(pathinfo($nombre_archivo, PATHINFO_EXTENSION));
-                    if (!in_array($tipo_archivo, $tipos_permitidos)) {
-                        $response['message'] = 'El tipo de archivo no es permitido: ' . $nombre_archivo;
-                        echo json_encode($response);
-                        exit;
-                    }
-
-                    // Comprobar si el archivo ya existe
-                    if (file_exists($ruta_imagen)) {
-                        $response['message'] = 'El archivo ' . $nombre_archivo . ' ya existe.';
-                        echo json_encode($response);
-                        exit;
-                    }
-
-                    // Mover archivo al directorio de destino
-                    if (move_uploaded_file($archivo_temporal, $ruta_imagen)) {
-                        // Insertar ruta de imagen en la base de datos
-                        $stmt = $conn->prepare(SQL_INSERT_IMG_ORDER);
-                        if ($stmt === false) {
-                            $response['message'] = 'Error en la preparación de la consulta: ' . $conn->error;
+                    // Verificar si el material y la cantidad no están vacíos
+                    if (!empty($material_id) && !empty($stock) && is_numeric($stock)) {
+                        // Actualizar stock en una sola operación
+                        $stmt_update = $conn->prepare(SQL_UPDATE_STOCK);
+                        if ($stmt_update === false) {
+                            $response['message'] = 'Error al preparar la consulta de actualización de materiales: ' . $conn->error;
                             echo json_encode($response);
                             exit;
                         }
-                        $stmt->bind_param("si", $ruta_imagen, $id_order);
-                        if (!$stmt->execute()) {
-                            $response['message'] = 'No se pudo agregar la imagen: ' . $stmt->error;
+
+                        // El tercer parámetro es la cantidad que se requiere restar
+                        $stmt_update->bind_param("iii", $stock, $material_id, $stock);
+                        if (!$stmt_update->execute()) {
+                            $response['message'] = "Error al actualizar la cantidad del material ID: $material_id o no hay suficiente stock.";
+                            echo json_encode($response);
+                            exit;
+                        }
+
+                        // Verificar si realmente se actualizó el stock
+                        if ($stmt_update->affected_rows === 0) {
+                            $response['message'] = "No se puede restar más de la cantidad disponible para el material ID: $material_id.";
+                            echo json_encode($response);
+                            exit;
+                        }
+                        $stmt_update->close();
+                    }
+                }
+            }
+
+            // Validar si hay múltiples imágenes
+            if (isset($_FILES['name_image']) && !empty($_FILES['name_image']['name'][0])) {
+                $directorio_destino = '../../img/';
+
+                // Crear directorio si no existe
+                if (!file_exists($directorio_destino)) {
+                    if (!mkdir($directorio_destino, 0777, true)) {
+                        $response['message'] = 'Error al crear el directorio de destino.';
+                        echo json_encode($response);
+                        exit;
+                    }
+                }
+
+                // Tipos de archivos permitidos
+                $tipos_permitidos = ['jpg', 'jpeg', 'png', 'gif'];
+
+                // Procesar cada imagen
+                foreach ($_FILES['name_image']['tmp_name'] as $key => $archivo_temporal) {
+                    if ($_FILES['name_image']['error'][$key] === UPLOAD_ERR_OK) {
+                        $nombre_archivo = basename($_FILES['name_image']['name'][$key]);
+                        $ruta_imagen = $directorio_destino . $nombre_archivo;
+
+                        // Validar el tipo de archivo
+                        $tipo_archivo = strtolower(pathinfo($nombre_archivo, PATHINFO_EXTENSION));
+                        if (!in_array($tipo_archivo, $tipos_permitidos)) {
+                            $response['message'] = 'El tipo de archivo no es permitido: ' . $nombre_archivo;
+                            echo json_encode($response);
+                            exit;
+                        }
+
+                        // Comprobar si el archivo ya existe
+                        if (file_exists($ruta_imagen)) {
+                            $response['message'] = 'El archivo ' . $nombre_archivo . ' ya existe.';
+                            echo json_encode($response);
+                            exit;
+                        }
+
+                        // Mover archivo al directorio de destino
+                        if (move_uploaded_file($archivo_temporal, $ruta_imagen)) {
+                            // Insertar ruta de imagen en la base de datos
+                            $stmt = $conn->prepare(SQL_INSERT_IMG_ORDER);
+                            if ($stmt === false) {
+                                $response['message'] = 'Error en la preparación de la consulta: ' . $conn->error;
+                                echo json_encode($response);
+                                exit;
+                            }
+                            $stmt->bind_param("si", $ruta_imagen, $id_order);
+                            if (!$stmt->execute()) {
+                                $response['message'] = 'No se pudo agregar la imagen: ' . $stmt->error;
+                                echo json_encode($response);
+                                exit;
+                            }
+                        } else {
+                            $response['message'] = 'Error al subir el archivo: ' . $nombre_archivo;
                             echo json_encode($response);
                             exit;
                         }
                     } else {
-                        $response['message'] = 'Error al subir el archivo: ' . $nombre_archivo;
+                        $response['message'] = 'Error en el archivo: ' . $_FILES['name_image']['name'][$key] . ' - Código de error: ' . $_FILES['name_image']['error'][$key];
                         echo json_encode($response);
                         exit;
                     }
-                } else {
-                    $response['message'] = 'Error en el archivo: ' . $_FILES['name_image']['name'][$key] . ' - Código de error: ' . $_FILES['name_image']['error'][$key];
-                    echo json_encode($response);
-                    exit;
                 }
+
+                // Mensaje de éxito después de procesar todas las imágenes
+                $response['message'] = 'Imágenes subidas correctamente.';
+            } else {
+                $response['message'] = 'No se han seleccionado imágenes.';
             }
 
-            // Mensaje de éxito después de procesar todas las imágenes
-            $response['message'] = 'Imágenes subidas correctamente.';
-        } else {
-            $response['message'] = 'No se han seleccionado imágenes.';
-        }
+            // Verificar el estado de la orden antes de actualizar
+            if ($id_state_order == 2) {
+                $response['message'] = 'No puedes modificar una orden que está cancelada.';
+                echo json_encode($response);
+                exit;
+            }
 
-        // Verificar el estado de la orden antes de actualizar
-        if ($id_state_order == 2) {
-            $response['message'] = 'No puedes modificar una orden que está cancelada.';
-            echo json_encode($response);
-            exit;
-        }
+            // Actualizar la orden
+            $sql = SQL_UPDATE_ORDER_TECHNIC;
+            $stmt = $conn->prepare($sql);
+            if ($stmt === false) {
+                $response['message'] = 'Error en la preparación de la consulta de actualización: ' . $conn->error;
+                echo json_encode($response);
+                exit;
+            }
 
-        // Actualizar la orden
-        $sql = SQL_UPDATE_ORDER_TECHNIC;
-        $stmt = $conn->prepare($sql);
-        if ($stmt === false) {
-            $response['message'] = 'Error en la preparación de la consulta de actualización: ' . $conn->error;
-            echo json_encode($response);
-            exit;
-        }
+            $stmt->bind_param("isi", $id_state_order, $report_technic, $id_order);
 
-        $stmt->bind_param("isi", $id_state_order, $report_technic, $id_order);
-
-        if ($stmt->execute()) {
-            $response['status'] = 'success';
-            $response['message'] = 'Actualizado con éxito';
-        } else {
-            $response['message'] = 'No se pudo actualizar: ' . $stmt->error;
+            if ($stmt->execute()) {
+                $response['status'] = 'success';
+                $response['message'] = 'Actualizado con éxito';
+            } else {
+                $response['message'] = 'No se pudo actualizar: ' . $stmt->error;
+            }
+            $stmt->close();
         }
-        $stmt->close();
     }
 }
 
 // Enviar la respuesta JSON
 echo json_encode($response);
-

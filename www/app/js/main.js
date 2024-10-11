@@ -233,14 +233,17 @@ $(document).ready(function () {
       
       // Crear un objeto FormData para manejar la subida de archivos y otros datos del formulario
       var formData = new FormData(this);
-
-        // Para enviar el avatar
-        var avatar = $('#avatar')[0].files[0];
-        if(avatar) {
-          var files = $('#avatar')[0].files[0];
-          formData.append('avatar',files);
-        }
   
+      // Para enviar el avatar
+      var avatarInput = $('#avatar')[0]; // Asegurarnos de que el elemento existe
+      if (avatarInput && avatarInput.files && avatarInput.files.length > 0) {
+        var avatarFile = avatarInput.files[0];
+        formData.append('avatar', avatarFile);
+      } else {
+        console.log("No se seleccionó ningún archivo.");
+      }
+  
+      // Verificar si el formulario es válido
       if (!$(formId).valid()) {
         return; // Salir si el formulario no es válido
       }
@@ -352,6 +355,7 @@ $(document).ready(function () {
       });
     });
   }
+  
 
   function buysFormSubmit(formId, actionUrl) {
     $(formId).on("submit", function (e) {
@@ -491,6 +495,7 @@ $(document).ready(function () {
     "#change-editordertec-form",
     "controllerOrders.php?token=" + token + "&action=edit_order_technic"
   );
+
   setupFormValidation("#change-insertorder-form");
   buysFormSubmit(
     "#change-insertorder-form",
