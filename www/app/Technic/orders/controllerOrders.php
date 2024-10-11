@@ -38,6 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (empty($_POST['report_technic'])) {
         $response['message'] = 'El campo Reporte es obligatorio.';
     } else {
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
+        $order_date = date('Y-m-d H:i:s');
         $id_state_order = trim($_POST['id_state_order']);
         $report_technic = $_POST['report_technic'];
         $id_order = $_POST['id_order'];
@@ -172,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        $stmt->bind_param("isi", $id_state_order, $report_technic, $id_order);
+        $stmt->bind_param("sisi", $order_date, $id_state_order, $report_technic, $id_order);
 
         if ($stmt->execute()) {
             $response['status'] = 'success';

@@ -715,6 +715,7 @@ define('SQL_UPDATE_ORDER_TECHNIC', '
         UPDATE 
                 orders
         SET 
+                order_date_finalized = ?,
                 id_state_order = ?,
                 report_technic  = ?
         WHERE   
