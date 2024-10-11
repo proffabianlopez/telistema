@@ -14,7 +14,7 @@ if (!isset($_SESSION['token'])) {
 }
 $token = $_SESSION['token'];
 
-define('TITLE', 'Ordenes');
+define('TITLE', 'Órdenes');
 define('PAGE', 'Ordenes technic');
 
 include('../../dbConnection.php');
@@ -42,16 +42,16 @@ include('../../includes/header.php');
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-          <h2>Historial de Ordenes</h2>
+          <h2>Historial de Órdenes</h2>
           <ol class="breadcrumb">
                     <li>
                         <a href="../dashboard/dashboard.php">Inicio</a>
                     </li>
                     <li>
-                        <a href="ordersTechnic.php">Ordenes de trabajo</a>
+                        <a href="ordersTechnic.php">Órdenes de trabajo</a>
                     </li>
                     <li class="active">
-                        <strong>Historial de Ordenes</strong>
+                        <strong>Historial de Órdenes</strong>
                     </li>
 
                 </ol>
@@ -62,7 +62,7 @@ include('../../includes/header.php');
                 <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Historial de Ordenes de trabajo</h5>
+                        <h5>Historial de Órdenes de trabajo</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -88,7 +88,7 @@ include('../../includes/header.php');
                                         echo ' <table class="table table-striped table-bordered table-hover dataTables-example" >
                                                     <thead>
                                                         <tr>
-                                                            <th data-toggle="true">N° de Orden</th>
+                                                            <th data-toggle="true">Órden</th>
                                                             <th data-hide="all">Cliente</th>
                                                             <th data-toggle="true">Fecha</th>
                                                             <th data-toggle="true">Descripción</th>

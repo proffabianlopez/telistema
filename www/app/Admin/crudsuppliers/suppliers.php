@@ -84,12 +84,12 @@ include ('../../Querys/querys.php');
                                     echo ' <table class="footable table table-stripped toggle-arrow-tiny">
                                 <thead>
                                 <tr>
-                                    <th data-hide="all">Id</th>
+                                    <th data-hide="all">Proveedor</th>
                                     <th data-toggle="true">Nombre</th>
-                                    <th data-hide="phone">Telefono</th>
+                                    <th data-hide="phone">Teléfono</th>
                                     <th data-hide="phone">Email</th>
-                                    <th data-hide="all">Direccion</th>
-                                    <th>Accion</th>
+                                    <th data-hide="all">Dirección</th>
+                                    <th>Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -119,7 +119,7 @@ include ('../../Querys/querys.php');
                                     echo '</tbody>
                                                 </table>';
                                 } else {
-                                    echo "0 Resultado";
+                                    echo "No se han encontrado proveedores registrados en el sistema hasta el momento.";
                                 }
 
                                 ?>

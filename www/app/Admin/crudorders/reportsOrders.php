@@ -41,10 +41,10 @@ include('../../includes/header.php');
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>Reportes de Ordenes</h2>
+                <h2>Reportes de Órdenes</h2>
                 <ol class="breadcrumb">
                         <li>
-                            <a href="order.php">Ordenes Asignadas</a>
+                            <a href="order.php">Órdenes Asignadas</a>
                         </li>
                         <li class="active">
                             <a href="reportsOrders.php"><strong>Reportes</strong></a>
@@ -90,7 +90,7 @@ include('../../includes/header.php');
         echo '<table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Orden N°</th>
+                <th>Órden</th>
                 <th style="width: 300px;">Imagen</th>
                 <th>Fecha</th>
                 <th>Reporte</th>

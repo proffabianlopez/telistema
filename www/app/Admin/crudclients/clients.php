@@ -42,14 +42,6 @@ include('../../Querys/querys.php');
                     <div class="navbar-header">
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
                     </div>
-                    <!-- <ul class="nav navbar-top-links navbar-right">
-                        <li>
-                            <a id="logout">
-                                <i class="fa fa-sign-out"></i> Cerrar Sesión
-                            </a>
-                        </li>
-                    </ul> -->
-
                 </nav>
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
@@ -93,15 +85,15 @@ include('../../Querys/querys.php');
                                     echo ' <table class="footable table table-stripped toggle-arrow-tiny">
                                 <thead>
                                 <tr>
-                                    <th data-hide="all">N°</th>
+                                    <th data-hide="all">Cliente</th>
                                     <th data-toggle="true">Nombre</th>
                                     <th data-hide="phone">Apellido</th>
-                                    <th data-hide="phone">Telefono</th>
+                                    <th data-hide="phone">Teléfono</th>
                                     <th data-hide="all">Email</th>
                                     <th data-hide="all">Dirección</th>
                                     <th data-hide="all">Piso</th>
                                     <th data-hide="all">Dpto</th>
-                                    <th>Accion</th>
+                                    <th>Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -136,7 +128,7 @@ include('../../Querys/querys.php');
                                     echo '</tbody>
                                     </table>';
                                 } else {
-                                    echo "0 Resultado";
+                                    echo "No se han encontrado clientes registrados en el sistema hasta el momento.";
                                 }
                                 ?>
                                 <tfoot>

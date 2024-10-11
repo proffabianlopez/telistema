@@ -83,13 +83,13 @@ if (isset($_POST['id'])) {
                       } ?>">
                   </div>
                   <div class="form-group">
-                    <label for="phone">Telefono <span class="text-danger">*</span></label>
+                    <label for="phone">Teléfono <span class="text-danger">*</span></label>
                     <input type="tel" class="form-control validate-field iti__tel-input" id="phone" name="phone" value="<?php if (isset($row['phone'])) {
                       echo $row['phone'];
                     } ?>">
                   </div>
                   <div class="form-group">
-                    <label for="mail">Email (No editable)</label>
+                    <label for="mail">Email</label>
                     <p class="form-control" id="mail" name="mail">
                                             <?php if (isset($row['mail'])) {
                                                 echo $row['mail'];
@@ -132,7 +132,7 @@ if (isset($_POST['id'])) {
             <div class="text-center" id="response-message"></div>
           </form>
           <div class="p-xxs font-italic bg-muted border-top-bottom text">
-            <span class="font-bold">NOTA:</span> Al editar una Cliente, asegúrese de revisar y actualizar correctamente
+            <span class="font-bold">NOTA:</span> Al editar una cliente, asegúrese de revisar y actualizar correctamente
             todos los campos. Los cambios realizados se reflejarán inmediatamente en el sistema.<br>
             <span class="text-danger">*</span> Campo Obligatorio
           </div>

@@ -36,9 +36,9 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
         <li class=" <?php if (PAGE == 'Ordenes Admin' || PAGE == 'Reportes Admin') {
                         echo 'active';
                     } ?>">
-            <a href="#"><i class="bi bi-receipt"></i><span class="nav-label">Ordenes de Trabajo</span><span class="fa arrow"></span></a>
+            <a href="#"><i class="bi bi-receipt"></i><span class="nav-label">Órdenes de Trabajo</span><span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
-                <li><a href="../crudorders/order.php">Ordenes Asignadas</a></li>
+                <li><a href="../crudorders/order.php">Órdenes Asignadas</a></li>
                 <li><a href="../crudorders/reportsOrders.php">Reportes </a></li>
             </ul>
         </li>
@@ -68,7 +68,7 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
             <a href="#"><i class="fa fa-gears"></i><span class="nav-label">Configuraciones</span><span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
                 <li><a href="../configsmtp/configEmailContact.php"><i class="fa fa-gears"></i>Email de Contacto</a></li>
-                <li><a href="../../Admin/profileAdmin/AdminProfile.php">Perfil </a></li>
+                <li><a href="../../Admin/profileAdmin/AdminProfile.php">Perfil</a></li>
             </ul>
         </li>
 
@@ -97,9 +97,9 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
         <li class=" <?php if (PAGE == 'Ordenes') {
                         echo 'active';
                     } ?>">
-            <a href="#"><i class="bi bi-receipt"></i><span class="nav-label">Ordenes Asignadas</span><span class="fa arrow"></span></a>
+            <a href="#"><i class="bi bi-receipt"></i><span class="nav-label">Órdenes Asignadas</span><span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
-                <li><a href="../../Technic/orders/ordersTechnic.php">Ordenes Asignadas</a></li>
+                <li><a href="../../Technic/orders/ordersTechnic.php">Órdenes Asignadas</a></li>
                 <li><a href="../../Technic/orders/reportsOrders.php">Reportes </a></li>
                 <li><a href="../../Technic/orders/historyOrders.php">Historial </a></li>
             </ul>

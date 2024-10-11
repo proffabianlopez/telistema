@@ -41,6 +41,13 @@ $passwordGenerate = generatePassword(); ?>
                                     <input type="text" class="form-control validate-field vname" id="surname_user" name="surname_user">
                                 </div>
                                 <div class="form-group">
+                                    <label for="phone_user">Teléfono <span class="text-danger">*</span></label>
+                                    <input type="tel" class="form-control validate-field iti__tel-input" id="phone_user" name="phone_user">
+                                </div>
+                            </div>
+                            <!-- Segunda columna -->
+                            <div class="col-md-6">
+                            <div class="form-group">
                                     <label for="name_user">Cargo <span class="text-danger">*</span></label>
 
                                     <select class="form-control" name="rol" id="rol">
@@ -48,14 +55,6 @@ $passwordGenerate = generatePassword(); ?>
                                         <option value="2">Técnico</option>
                                     </select>
                                 </div>
-                            </div>
-                            <!-- Segunda columna -->
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="phone_user">Teléfono <span class="text-danger">*</span></label>
-                                    <input type="tel" class="form-control validate-field iti__tel-input" id="phone_user" name="phone_user">
-                                </div>
-                            
                                 <div class="form-group">
                                     <label for="mail">Email <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control validate-field vemail" id="mail" name="mail">
@@ -77,10 +76,9 @@ $passwordGenerate = generatePassword(); ?>
                     </div>
                     <div class="text-center" id="response-message"></div>
                 </form>
-                <div class="p-xxs font-italic bg-muted border-top-bottom text ">
-                    <span class="font-bold">NOTA:</span> Al agregar un nuevo Usuario se enviará al email las
-                    credenciales para que pueda iniciar sesión. El sistema genera automáticamente una contraseña<br>
-                    <span class="text-danger">*</span> Campo Obligatorio
+                <div class="p-xxs font-italic bg-muted border-top-bottom text">
+                    <span class="font-bold">NOTA:</span> Al agregar un nuevo usuario, se enviarán las credenciales por correo electrónico para que pueda iniciar sesión. El sistema genera automáticamente una contraseña. Además, el administrador tendrá la posibilidad de cambiar la contraseña de todos sus usuarios en cualquier momento.<br>
+                    <span class="text-danger">*</span> Campo obligatorio
                 </div>
             </div>
         </div>
@@ -100,7 +98,7 @@ $passwordGenerate = generatePassword(); ?>
     utilsScript: "../../js/utils.js"
   });
 
-  document.getElementById('change-insertclient-form').addEventListener('submit', function(event) {
+  document.getElementById('change-insertuser-form').addEventListener('submit', function(event) {
     event.preventDefault();
     const fullNumber = iti.getNumber();
     console.log("Número completo con código de área:", fullNumber);

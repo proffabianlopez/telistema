@@ -96,25 +96,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $height = trim($_REQUEST['height']);
             $floor = trim($_REQUEST['floor']);
             $departament = trim($_REQUEST['departament']);
-
-
-            //     // Prepara la consulta
-            //     $stmt = $conn->prepare(SQL_INSERT_CLIENT);
-
-            //     // Asocia parámetros y ejecuta la consulta
-            //     $stmt->bind_param("ssssssssi", $name, $lastname, $phone, $mail, $address, $height, $floor, $departament, $id_state);
-
-            //     if ($stmt->execute()) {
-            //         $response['status'] = 'success';
-            //         $response['message'] = 'Agregado con éxito';
-            //     } else {
-            //         $response['message'] = 'No se pudo agregar: ' . $stmt->error;
-            //     }
-            // }
-            // echo json_encode($response);
-            // exit;
-
-
             // Verifica si el correo ya existe en la base de datos
             $stmt = $conn->prepare(SQL_SELECT_CLIENT_BY_EMAIL);
             $stmt->bind_param("s", $mail);

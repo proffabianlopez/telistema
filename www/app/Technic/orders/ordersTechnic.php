@@ -86,7 +86,7 @@ include('../../includes/header.php');
 
         <div class="col-lg-10">
 
-          <h2>Ordenes Asignadas</h2>
+          <h2>Órdenes Asignadas</h2>
 
           <ol class="breadcrumb">
 
@@ -98,13 +98,13 @@ include('../../includes/header.php');
 
             <li class="active">
 
-              <strong>Ordenes Asignadas</strong>
+              <strong>Órdenes Asignadas</strong>
 
             </li>
 
             <li>
 
-              <a href="historyOrders.php">Historial de Ordenes</a>
+              <a href="historyOrders.php">Historial de Órdenes</a>
 
             </li>
 

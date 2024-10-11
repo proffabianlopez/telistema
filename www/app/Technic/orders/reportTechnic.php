@@ -72,7 +72,7 @@ if (isset($_POST['id'])) {
 
                                     <div class="form-group">
                                         <label for="report_technic">Reporte <span class="text-danger">*</span></label>
-                                        <textarea class="form-control validate-field vtextarea" id="report_technic" name="report_technic"></textarea>
+                                        <textarea class="form-control validate-field vtextarea" id="report_technic" name="report_technic" style="resize: vertical; max-width: 100%; max-height: 200px; overflow: auto;"></textarea>
                                     </div>
 
                                     <div class="form-group">

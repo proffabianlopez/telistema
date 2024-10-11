@@ -42,11 +42,11 @@ include ('../../Querys/querys.php');
                 <!-- Primera columna -->
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="supplier_name">Razón Soacial o Nombre <span class="text-danger" >*</span></label>
+                    <label for="supplier_name">Razón Social o Nombre <span class="text-danger" >*</span></label>
                     <input type="text" class="form-control validate-field vname" id="supplier_name" name="supplier_name">
                   </div>
                   <div class="form-group">
-                    <label for="phone">Telefono <span class="text-danger" >*</span></label>
+                    <label for="phone">Teléfono <span class="text-danger" >*</span></label>
                     <input type="tel" class="form-control validate-field iti__tel-input" id="phone" name="phone">
                   </div>
                 </div>
@@ -71,7 +71,7 @@ include ('../../Querys/querys.php');
             <div class="text-center" id="response-message"></div>
           </form>
           <div class="p-xxs font-italic bg-muted border-top-bottom text ">
-            <span class="font-bold">NOTA:</span> Al agregar un nuevo Proveedor, asegúrese de completar todos los campos
+            <span class="font-bold">NOTA:</span> Al agregar un nuevo proveedor, asegúrese de completar todos los campos
             obligatorios. La información ingresada se reflejará inmediatamente en el sistema. <br>
             <span class="text-danger" >*</span> Campo Obligatorio
           </div>

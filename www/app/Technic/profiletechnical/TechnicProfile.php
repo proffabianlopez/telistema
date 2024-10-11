@@ -98,7 +98,7 @@ $stmtr->close();
                                     <?php echo htmlspecialchars($name_user); ?>
                                     <?php echo htmlspecialchars($surname); ?>
                                 </h2>
-                                <h4>Perfil del Técnico</h4>
+                                <h4>Técnico</h4>
                                 
                             </div>
                         </div>
@@ -120,7 +120,7 @@ $stmtr->close();
                         </tr>
                         <tr>
                             <td>
-                                <strong>Celular:</strong> <?php echo htmlspecialchars($phone_user); ?>
+                                <strong>Teléfono:</strong> <?php echo htmlspecialchars($phone_user); ?>
                             </td>
                         </tr>
                         <tr>

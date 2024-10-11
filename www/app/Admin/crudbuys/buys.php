@@ -69,17 +69,6 @@ include('../../Querys/querys.php');
                                     </select>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-3" id="state_name_container" style="display: none;">
-                                <div class="form-group">
-                                    <label for="state_name">Estado de Compra:</label>
-                                    <select name="state_name" id="state_name" class="form-control">
-                                        <option value="">Seleccionar</option>
-                                        <option value="Pendiente">Pendiente</option>
-                                        <option value="Completado">Completado</option>
-                                        <option value="Cancelado">Cancelado</option>
-                                    </select>
-                                </div>
-                            </div> -->
                             <div class="col-md-3" id="date_buy_container" style="display: none;">
                                 <div class="form-group">
                                     <label for="date_buy">Fecha:</label>

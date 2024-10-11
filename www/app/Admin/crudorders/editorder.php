@@ -184,12 +184,11 @@ if (isset($_POST['id'])) {
                                 </div>
                             </div>
                             <div class="form-group">
-                                        <label for="order_description">Descripción <span class="text-danger">*</span></label>
-                                        <textarea class="form-control validate-field vtextarea" id="order_description" name="order_description"
-                                            style="resize: none; max-width: 100%;"><?php if (isset($row['order_description'])) {
-                                                echo $row['order_description'];
-                                            } ?></textarea>
-                                </div>
+                                <label for="order_description">Descripción <span class="text-danger">*</span></label>
+                                <textarea class="form-control validate-field vtextarea" id="order_description" name="order_description"  style="resize: vertical; max-width: 100%; max-height: 200px; overflow: auto;"><?php if (isset($row['order_description'])) {
+                                    echo $row['order_description'];
+                                } ?></textarea>
+                            </div>
                             <div class="modal-footer">
                                 <button type="submit" class="ladda-button btn btn-primary"
                                     data-style="zoom-in">Actualizar</button>

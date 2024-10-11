@@ -85,11 +85,11 @@ include ('../configsmtp/generate_config.php');
               </div>
               <div class="text-center" id="response-message"></div>
           </form>
-          <div class="p-xxs font-italic bg-muted border-top-bottom text ">
-            <span class="font-bold">NOTA:</span> Al agregar un nuevo Cliente, asegúrese de completar todos los campos
-            obligatorios. La información ingresada se reflejará inmediatamente en el sistema.<br>
-            <span class="text-danger">*</span> Campo Obligatorio
+          <div class="p-xxs font-italic bg-muted border-top-bottom text">
+              <span class="font-bold">NOTA:</span> Al agregar un nuevo cliente, asegúrese de completar todos los campos obligatorios. La información ingresada se actualizará de manera inmediata en el sistema.<br>
+              <span class="text-danger">*</span> Campo obligatorio
           </div>
+
         </div>
       </div>
     </div>

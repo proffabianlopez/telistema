@@ -82,13 +82,17 @@ if (isset($_POST['id'])) {
                                             } ?>" required>
 
                                     </div>
+
+                                    <!-- Campo Teléfono -->
                                     <div class="form-group">
-                                        <label for="mail">Email </label>
-                                        <p class="form-control" id="mail" name="mail" disabled>
-                                            <?php if (isset($row['mail'])) {
-                                                echo $row['mail'];
-                                            } ?></p>
+                                        <label for="phone_user">Teléfono <span class="text-danger">*</span></label>
+                                        <input type="tel" class="form-control validate-field iti__tel-input" id="phone_user"
+                                            name="phone_user" value="<?php if (isset($row['phone_user'])) {
+                                                echo $row['phone_user'];
+                                            } ?>"required>
+
                                     </div>
+                                   
 
                                 </div>
                                 <!-- Segunda columna -->
@@ -103,16 +107,13 @@ if (isset($_POST['id'])) {
                                             </option>
                                         </select>
                                     </div>
-
-                                    <!-- Campo Teléfono -->
                                     <div class="form-group">
-                                        <label for="phone_user">Teléfono <span class="text-danger">*</span></label>
-                                        <input type="tel" class="form-control validate-field iti__tel-input" id="phone_user"
-                                            name="phone_user" value="<?php if (isset($row['phone_user'])) {
-                                                echo $row['phone_user'];
-                                            } ?>"required>
-
-                                    </div>
+                                        <label for="mail">Email </label>
+                                        <p class="form-control" id="mail" name="mail" disabled>
+                                            <?php if (isset($row['mail'])) {
+                                                echo $row['mail'];
+                                            } ?></p>
+                                    </div>        
                                 </div>
                             </div>
                         </div>
@@ -127,10 +128,8 @@ if (isset($_POST['id'])) {
                     </form>
 
                     <div class="p-xxs font-italic bg-muted border-top-bottom">
-                        <span class="font-bold">NOTA:</span> Al tiltar la casilla de Generar contraseña, se genera una
-                        nueva
-                        contraseña aleatoriamente y se enviará al email del Usuario<br>
-                        <span class="text-danger">*</span> Campo Obligatorio
+                        <span class="font-bold">NOTA:</span> Al editar un usuario, asegúrese de revisar y actualizar correctamente todos los campos. Los cambios realizados se verán reflejados de manera inmediata en el sistema. <br>
+                        <span class="text-danger">*</span> Campo Obligatorio.
                     </div>
                 </div>
             </div>
@@ -166,7 +165,7 @@ if (isset($_POST['id'])) {
       });
 
       // Cuando el formulario se envíe,se agrega el codigo de area
-      document.getElementById('change-editclient-form').addEventListener('submit', function(event) {
+      document.getElementById('change-edituser-form').addEventListener('submit', function(event) {
         event.preventDefault();
         const fullNumber = iti.getNumber();
         document.getElementById('phone_user').value = fullNumber;

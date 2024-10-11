@@ -67,7 +67,7 @@ include ('../../Querys/querys.php');
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>Lista de Usuarios</h5>
+                                <h5>Lista de usuarios</h5>
 
                             </div>
                             <div class="ibox-content">
@@ -81,13 +81,13 @@ include ('../../Querys/querys.php');
                                     echo ' <table class="footable table table-stripped toggle-arrow-tiny">
                                     <thead>
                                     <tr>
-                                        <th data-hide="all">Número</th>
+                                        <th data-hide="all">Usuario</th>
                                         <th data-toggle="true">Nombre</th>
                                         <th data-toggle="true">Apellido</th>
                                         <th data-hide="all">Email</th>
-                                        <th data-hide="all">Telefono</th>
+                                        <th data-hide="all">Teléfono</th>
                                         <th data-hide="phone">Cargo</th>
-                                        <th>Accion</th>
+                                        <th>Acción</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -125,7 +125,7 @@ include ('../../Querys/querys.php');
                                     echo '</tbody>
                                                 </table>';
                                 } else {
-                                    echo "0 Resultado";
+                                    echo "No se han encontrado usuarios registrados en el sistema hasta el momento.";
                                 }
                                 ?>
 

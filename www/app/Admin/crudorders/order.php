@@ -40,10 +40,10 @@ include ('../../Querys/querys.php');
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Ordenes de trabajo</h2>
+                    <h2>Órdenes de trabajo</h2>
                     <ol class="breadcrumb">
                         <li class="active">
-                            <a href="order.php"><strong>Ordenes Asignadas</strong></a>
+                            <a href="order.php"><strong>Órdenes Asignadas</strong></a>
                         </li>
                         <li>
                             <a href="reportsOrders.php">Reportes</a>
@@ -58,7 +58,7 @@ include ('../../Querys/querys.php');
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>Lista de ordenes de trabajo</h5>
+                                <h5>Lista de órdenes de trabajo</h5>
                             </div>
                             <div class="ibox-content">
                                 <?php
@@ -73,7 +73,7 @@ include ('../../Querys/querys.php');
                                     echo ' <table class="footable table table-stripped toggle-arrow-tiny">
                                     <thead>
                                     <tr>
-                                        <th data-hide="all">Orden</th>
+                                        <th data-hide="all">Órden</th>
                                         <th data-toggle="true">N° de Circuito</th>
                                         <th data-hide="all">Cliente</th>
                                         <th data-toggle="true">Técnico</th>
@@ -85,7 +85,6 @@ include ('../../Querys/querys.php');
                                         <th data-hide="all">Dpto</th>
                                         <th data-hide="all">Estado</th>
                                         <th data-hide="all">Descripción</th>
-
                                         <th>Acción</th>
                                     </tr>
                                     </thead>
@@ -128,7 +127,7 @@ include ('../../Querys/querys.php');
                                     echo '</tbody>
                                     </table>';
                                 } else {
-                                    echo "0 Resultado";
+                                    echo "No se han encontrado órdenes de trabajo registradas en el sistema hasta el momento.";
                                 }
                                 ?>
                                 <tfoot>

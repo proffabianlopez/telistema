@@ -77,8 +77,7 @@ $token = $_SESSION['token'];
                         <div class="text-center" id="response-message"></div>
                     </form>
                     <div class="p-xxs font-italic bg-muted border-top-bottom text "> <span
-                            class="font-bold">NOTA:</span> una contraseña segura debe contener por lo menos una
-                        MAYÚSCULA, numeros, un caracter especial y un largo de 12</div>
+                            class="font-bold">NOTA:</span> Una contraseña segura debe contener por lo menos una mayúscula, números, un carácter especial y tener una longitud de 12 caracteres.</div>
                 </div>
             </div>
         </div>
