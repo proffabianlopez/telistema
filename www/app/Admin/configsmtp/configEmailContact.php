@@ -113,16 +113,6 @@ if (isset($_REQUEST['emailupdate'])) {
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
 
                     </div>
-                   <!-- <ul class="nav navbar-top-links navbar-right">
-
-                        <li>
-                            <a href="../../logout.php">
-                                <i class="fa fa-sign-out"></i> Cerrar Sesión
-                            </a>
-                        </li>
-                    </ul>
-
-                </nav> -->
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
@@ -202,7 +192,6 @@ if (isset($_REQUEST['emailupdate'])) {
 
             </div>
             <div class="footer">
-
                 <div>
                     <strong>Copyright</strong> Telistema &copy; 2024
                 </div>

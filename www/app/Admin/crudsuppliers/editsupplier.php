@@ -64,7 +64,7 @@ if (isset($_POST['id'])) {
                 <!-- Primera columna -->
                 <div class="col-md-6">
                   <div style="display: none;" class="form-group">
-                    <label for="id_supplier">ID Proveedor</label>
+                    <label for="id_supplier">Proveedor</label>
                     <input type="text" class="form-control" id="id_supplier" name="id_supplier" value="<?php if (isset($row['id_supplier'])) {
                       echo $row['id_supplier'];
                     } ?>" readonly>
@@ -77,7 +77,7 @@ if (isset($_POST['id'])) {
                       } ?>">
                   </div>
                   <div class="form-group">
-                    <label for="mail">Email (no editable) </label>
+                    <label for="mail">Email</label>
                     <p class="form-control" id="mail" name="mail">
                       <?php if (isset($row['mail'])) {
                         echo $row['mail'];
@@ -114,7 +114,7 @@ if (isset($_POST['id'])) {
             <div class="text-center" id="response-message"></div>
           </form>
           <div class="p-xxs font-italic bg-muted border-top-bottom text">
-            <span class="font-bold">NOTA:</span> Al editar un Proveedor, asegúrese de revisar y actualizar correctamente
+            <span class="font-bold">NOTA:</span> Al editar un proveedor, asegúrese de revisar y actualizar correctamente
             todos los campos. Los cambios realizados se reflejarán inmediatamente en el sistema.<br>
             <span class="text-danger">*</span> Campo Obligatorio
           </div>

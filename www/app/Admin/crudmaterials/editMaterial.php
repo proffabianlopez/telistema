@@ -87,14 +87,6 @@ if (isset($_POST['id'])) {
                                                                                                                         } ?>"</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="stock">Cantidad</label>
-                                    <input type="text" class="form-control validate-field vammount" id="stock" name="stock" value="<?php if (isset($row['stock'])) {
-                                                                                                                            echo $row['stock'];
-                                                                                                                        } ?>">
-                                </div>
-                            </div>   
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label for="id_measure">Unidad de Medida <span class="text-danger">*</span></label>
                                         <select name="id_measure" id="id_measure" class="form-control">
                                                 <?php
@@ -127,6 +119,15 @@ if (isset($_POST['id'])) {
                                                 ?>
                                             </select></script>
                                 </div>
+                            </div>   
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="stock">Cantidad</label>
+                                    <input type="text" class="form-control validate-field vammount" id="stock" name="stock" value="<?php if (isset($row['stock'])) {
+                                                                                                                            echo $row['stock'];
+                                                                                                                        } ?>">
+                                </div>
+                                
                                 <div class="form-group">
                                     <label for="stock_alert">Alerta de Stock</label>
                                     <input type="text" class="form-control validate-field vammount" id="stock_alert" name="stock_alert" value="<?php if (isset($row['stock_alert'])) {
@@ -152,45 +153,6 @@ if (isset($_POST['id'])) {
             </div>
         </div>
     </div>
-
-    <!-- <script>
-        $(document).ready(function() {
-            var laddaButton;
-
-            $('#change-product-form').on('submit', function(e) {
-                e.preventDefault();
-                var formData = $(this).serialize();
-
-                laddaButton = Ladda.create(document.querySelector('.ladda-button'));
-                laddaButton.start();
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'materialsController.php?token=<?php echo $_SESSION["token"]; ?>&action=edit_product', // La URL de tu archivo PHP
-                    data: formData,
-                    dataType: 'json',
-                    success: function(response) {
-                        laddaButton.stop();
-                        var messageContainer = $('#response-message');
-                        if (response.status === 'success') {
-                            messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
-                        } else {
-                            messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
-                        }
-                    },
-                    error: function() {
-                        laddaButton.stop();
-                        $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX</div>');
-                    }
-                });
-            });
-
-            $('.reload').click(function() {
-                location.reload();
-            });
-        });
-    </script> -->
-
     <script>
         let token = '<?php echo $token; ?>';
         let email = '';

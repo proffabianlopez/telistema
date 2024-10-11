@@ -14,7 +14,7 @@ if (!isset($_SESSION['token'])) {
 }
 $token = $_SESSION['token'];
 
-define('TITLE', 'Ordenes');
+define('TITLE', 'Órdenes');
 define('PAGE', 'Ordenes technic');
 
 include('../../dbConnection.php');
@@ -41,7 +41,7 @@ include('../../includes/header.php');
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10">
-                <h2>Reportes de Ordenes</h2>
+                <h2>Reportes de Órdenes</h2>
             </div>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight ecommerce">
@@ -84,7 +84,7 @@ include('../../includes/header.php');
         echo '<table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Orden N°</th>
+                <th>Órden</th>
                 <th style="width: 300px;">Imagen</th>
                 <th>Fecha</th>
                 <th>Reporte</th>

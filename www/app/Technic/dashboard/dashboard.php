@@ -85,7 +85,7 @@ $stmtt->close();
                             <i class="fa fa-bell fa-4x"></i>
                             <h1 class="m-xs"><?php echo $criticas; ?></h1>
                             <h2 class="font-bold no-margins">
-                                Ordenes Urgentes Criticas
+                                Órdenes urgentes criticas
                                 <br>
                                 MAXIMA PRIORIDAD
                             </h2>
@@ -101,7 +101,7 @@ $stmtt->close();
                             <i class="fa fa-bell fa-4x"></i>
                             <h1 class="m-xs"><?php echo $pendientes; ?></h1>
                             <h2 class="font-bold no-margins">
-                                Ordenes Pendientes Diarias
+                                Órdenes pendientes diarias
                                 <br>
                                 TERMINAR EN EL DIA
                             </h2>
@@ -117,7 +117,7 @@ $stmtt->close();
                             <i class="fa fa-bell fa-4x"></i>
                             <h1 class="m-xs"><?php echo $anteriores; ?></h1>
                             <h2 class="font-bold no-margins">
-                                Ordenes Pendientes Anteriores
+                                Órdenes pendientes anteriores
                                 <br>
                                 A TERMINAR
                             </h2>
@@ -132,7 +132,7 @@ $stmtt->close();
                             <i class="fa fa-bell fa-4x"></i>
                             <h1 class="m-xs"><?php echo $realizadas; ?></h1>
                             <h2 class="font-bold no-margins">
-                                Ordenes realizadas
+                                Órdenes realizadas
                                 <br>
                                 TERMINADAS
                             </h2>

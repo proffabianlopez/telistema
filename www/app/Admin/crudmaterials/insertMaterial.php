@@ -52,16 +52,10 @@ include ('../configsmtp/generate_config.php');
                                     <input type="text" class="form-control reset" id="description" name="description">
                                 </div>
                                 <div class="form-group">
-                                    <label for="stock">Cantidad</label>
-                                    <input type="number" class="form-control validate-field vammount reset" id="stock" name="stock">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                        <label for="id_measure">Unidad de Medida <span class="text-danger">*</span></label>
-                                        <select name="id_measure" id="id_measure" class="form-control validate-field select reset">
-                                        <option value="" selected disabled></option>
-                                        <?php
+                                    <label for="id_measure">Unidad de Medida <span class="text-danger">*</span></label>
+                                    <select name="id_measure" id="id_measure" class="form-control validate-field select reset">
+                                    <option value="" selected disabled></option>
+                                    <?php
                                         // Verifica si existe el campo 'id_measure' en el array $row y asígnalo a $state
                                         $state = isset($row['id_measure']) ? $row['id_measure'] : null;
 
@@ -100,10 +94,15 @@ include ('../configsmtp/generate_config.php');
                                             $selected = ($stateId == $id_measure) ? "selected" : "";
                                             echo "<option value='$stateId' $selected>$stateName</option>";
                                         }
-                                        ?>
+                                    ?>
                                     </select>
-
-                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="stock">Cantidad</label>
+                                    <input type="number" class="form-control validate-field vammount reset" id="stock" name="stock">
+                                </div>
                                     <div class="form-group">
                                         <label for="stock_alert">Alerta de Stock</label>
                                         <input type="number" class="form-control validate-field vammount reset" id="stock_alert" name="stock_alert">
@@ -127,41 +126,6 @@ include ('../configsmtp/generate_config.php');
         </div>
     </div>
 </div>
-
-<!-- <script>
-$(document).ready(function () {
-    $('#add-product-form').on('submit', function (e) {
-        e.preventDefault();
-        var formData = $(this).serialize();
-        var laddaButton = Ladda.create(document.querySelector('.ladda-button'));
-        laddaButton.start();
-        $.ajax({
-            type: 'POST',
-            url: 'materialsController.php?token=<?php echo $token; ?>&action=add_product',
-            data: formData,
-            dataType: 'json',
-            success: function (response) {
-                laddaButton.stop();
-                var messageContainer = $('#response-message');
-                if (response.status === 'success') {
-                    messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
-                } else {
-                    messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
-                }
-            },
-            error: function (xhr, status, error) {
-                laddaButton.stop();
-                console.log(xhr.responseText);
-                $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX: ' + error + '<br>' + xhr.responseText + '</div>');
-            }
-        });
-    });
-    $('.reload').click(function () {
-        location.reload();
-    });
-});
-</script> -->
-
 <script>
     let token = '<?php echo $token; ?>';
     let email = '';

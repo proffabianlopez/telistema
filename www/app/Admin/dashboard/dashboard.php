@@ -152,11 +152,12 @@ if ($result->num_rows > 0) {
                 ?>
             </div>
         </div>
-
-        <div class="footer text-center">
-            <div>
-                <strong>Copyright</strong> Telistema &copy; 2024
-            </div>
+        <div class="footer">
+                <div class="pull-right">
+                </div>
+                <div>
+                    <strong>Copyright</strong> Telistema &copy; 2024
+                </div>
         </div>
     </div>
 </div>

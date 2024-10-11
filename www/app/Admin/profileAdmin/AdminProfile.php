@@ -96,7 +96,7 @@ if(!file_exists("../../img/avatars/" . $row['avatar_user']) || is_null($row['ava
                                         <?php echo htmlspecialchars($row['name_user']); ?>
                                         <?php echo htmlspecialchars($row['surname_user']); ?>
                                     </h2>
-                                    <h4>Perfil del Administrador</h4>
+                                    <h4>Administrador</h4>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +112,7 @@ if(!file_exists("../../img/avatars/" . $row['avatar_user']) || is_null($row['ava
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>Celular:</strong> <?php echo htmlspecialchars($row['phone_user']); ?>
+                                    <strong>Teléfono:</strong> <?php echo htmlspecialchars($row['phone_user']); ?>
                                 </td>
                             </tr>
                             <tr>
@@ -139,11 +139,11 @@ if(!file_exists("../../img/avatars/" . $row['avatar_user']) || is_null($row['ava
 
                     <div class="col-md-3 m-b-sm m-t-sm"  role="group">
                         <button id="edit-<?php echo ($row["id_user"] . '-' . $token); ?>" data-crud="admin" class="btn btn-primary modaledit-btn m-b-sm">
-                            Modificar mi perfil
+                            Modificar mi perfil   
                         </button>
                         <br class="mb-lg-2 mb-sm-1">
                         <button id="edit-<?php echo ($row["id_user"] . '-' . $token); ?>" data-crud="adminPassword" class="btn btn-primary modaledit-btn">
-                            Cambiar Contraseña
+                            Cambiar contraseña
                         </button>
                     </div>
                 </div>
@@ -170,26 +170,6 @@ if(!file_exists("../../img/avatars/" . $row['avatar_user']) || is_null($row['ava
             $('.footable').footable();
             $('.footable2').footable();
         });
-
-
-        // Cambiar contraseña Automatico Viejo
-
-       /* function openEditModal() {
-            // Realiza una solicitud AJAX para obtener el formulario de edición
-            $.ajax({
-                url: "../crudusers/modalpass.php?token=<?php echo $token; ?>", // Ruta al archivo de edición de usuario
-                type: "GET",
-                success: function (response) {
-                    // Muestra el formulario de edición en el contenedor
-                    $("#editpassword-form-container").html(response).slideDown();
-                    // Abre el modal
-                    $("#myModal6").modal("show");
-                },
-                error: function () {
-                    alert("Error al cargar el formulario de edición.");
-                }
-            });
-        }*/
     </script>
 </body>
 </html>

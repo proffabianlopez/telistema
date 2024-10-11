@@ -127,6 +127,7 @@ if (isset($_POST['id'])) {
                     </form>
 
                     <div class="p-xxs font-italic bg-muted border-top-bottom">
+                    <span class="font-bold">NOTA:</span> Al editar tu perfil, asegúrese de revisar y actualizar correctamente todos los campos. Los cambios realizados se verán reflejados de manera inmediata en el sistema. <br>
                         <span class="text-danger">*</span> Campo Obligatorio
                     </div>
                 </div>

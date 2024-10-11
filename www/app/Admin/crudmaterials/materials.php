@@ -38,14 +38,6 @@ include ('../../Querys/querys.php');
                     <div class="navbar-header">
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#"><i class="fa fa-bars"></i> </a>
                     </div>
-                    <!--<ul class="nav navbar-top-links navbar-right">
-                        <li>
-                        <a id="logout">
-                                <i class="fa fa-sign-out"></i> Cerrar Sesión
-                            </a>
-                        </li>
-                    </ul>
-                </nav> -->
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
@@ -66,11 +58,10 @@ include ('../../Querys/querys.php');
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
-                                <h5>Lista de Materiales</h5>
+                                <h5>Lista de materiales</h5>
                             </div>
                             <div class="ibox-content">
                                 <?php
-                                // Usar la consulta para seleccionar solo materiales activos
                                 $sql = SQL_SELECT_MATERIALS;
                                 $result = $conn->query($sql);
 
@@ -83,7 +74,7 @@ include ('../../Querys/querys.php');
                                         <th data-hide="all">Descripción</th>
                                         <th data-hide="phone">Medida</th>
                                         <th data-hide="phone">Estado</th>
-                                        <th class="text-right footable-visible footable-last-column">Accion</th>
+                                        <th class="text-right footable-visible footable-last-column">Acción</th>
                                     </tr>
                                     </thead>
                                     <tbody>';
@@ -159,7 +150,7 @@ include ('../../Querys/querys.php');
 
                                     echo '</tbody></table>';
                                 } else {
-                                    echo "0 Resultado.";
+                                    echo "No se han encontrado materiales registrados en el sistema hasta el momento.";
                                 }
                                 ?>
                                 <tfoot>
@@ -176,7 +167,6 @@ include ('../../Querys/querys.php');
             </div>
             <div class="footer">
                 <div class="pull-right">
-                    <!-- Contenido adicional si es necesario -->
                 </div>
                 <div>
                     <strong>Copyright</strong> Telistema &copy; 2024

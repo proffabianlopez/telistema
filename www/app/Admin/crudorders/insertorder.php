@@ -245,41 +245,6 @@ if (isset($_GET['id_client'])) {
             </div>
         </div>
     </div>
-    <!-- <script>
-        $(document).ready(function () {
-            $('#add-product-form').on('submit', function (e) {
-                e.preventDefault();
-                var formData = $(this).serialize();
-                var laddaButton = Ladda.create(document.querySelector('.ladda-button'));
-                laddaButton.start();
-                $.ajax({
-                    type: 'POST',
-                    url: 'ordersController.php?token=<?php echo $token; ?>&action=add_order',
-                    data: formData,
-                    dataType: 'json',
-                    success: function (response) {
-                        laddaButton.stop();
-                        var messageContainer = $('#response-message');
-                        if (response.status === 'success') {
-                            messageContainer.html('<div class="alert alert-success">' + response.message + '</div>');
-                            $('#add-product-form')[0].reset(); // Vaciar el formulario
-                        } else {
-                            messageContainer.html('<div class="alert alert-danger">' + response.message + '</div>');
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        laddaButton.stop();
-                        console.log(xhr.responseText);
-                        $('#response-message').html('<div class="alert alert-danger">Error en la solicitud AJAX: ' + error + '<br>' + xhr.responseText + '</div>');
-                    }
-                });
-            });
-            $('.reload').click(function () {
-                location.reload();
-            });
-        });
-    </script> -->
-
 <script>
     let token = '<?php echo $token; ?>';
     let email = '';
