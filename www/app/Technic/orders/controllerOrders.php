@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Validar si hay múltiples imágenes
             if (isset($_FILES['name_image']) && !empty($_FILES['name_image']['name'][0])) {
-                $directorio_destino = '../../img/';
+                $directorio_destino = '../../img/reports/';
 
                 // Crear directorio si no existe
                 if (!file_exists($directorio_destino)) {
