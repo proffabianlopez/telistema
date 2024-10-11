@@ -33,23 +33,24 @@ include('../../Querys/querys.php');
 include('../../Admin/configsmtp/generate_config.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($_GET['action'] === 'edit_order_technic') {
-        if (empty($_POST['id_state_order'])) {
-            $response['message'] = 'El campo Estado es obligatorio.';
-        } elseif (empty($_POST['report_technic'])) {
-            $response['message'] = 'El campo Reporte es obligatorio.';
-        } else {
-            $id_state_order = trim($_POST['id_state_order']);
-            $report_technic = $_POST['report_technic'];
-            $id_order = $_POST['id_order'];
+  
+    if (empty($_POST['id_state_order'])) {
+        $response['message'] = 'El campo Estado es obligatorio.';
+    } elseif (empty($_POST['report_technic'])) {
+        $response['message'] = 'El campo Reporte es obligatorio.';
+    } else {
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
+        $order_date = date('Y-m-d H:i:s');
+        $id_state_order = trim($_POST['id_state_order']);
+        $report_technic = $_POST['report_technic'];
+        $id_order = $_POST['id_order'];
 
-            // Verificar que solo se permiten los estados 3 y 4
-            if ($id_state_order != 3 && $id_state_order != 4) {
-                $response['message'] = 'Estado no válido. Solo se permiten "Pendiente" o "Realizada".';
-                echo json_encode($response);
-                exit;
-            }
-
+        // Verificar que solo se permiten los estados 3 y 4
+        if ($id_state_order != 3 && $id_state_order != 4) {
+            $response['message'] = 'Estado no válido. Solo se permiten "Pendiente" o "Realizada".';
+            echo json_encode($response);
+            exit;
+        }
             // Validar si se enviaron materiales y cantidades
             if (isset($_POST['materials']) && isset($_POST['quantities'])) {
                 $materials = $_POST['materials'];
@@ -173,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
 
-            $stmt->bind_param("isi", $id_state_order, $report_technic, $id_order);
+        $stmt->bind_param("sisi", $order_date, $id_state_order, $report_technic, $id_order);
 
             if ($stmt->execute()) {
                 $response['status'] = 'success';
