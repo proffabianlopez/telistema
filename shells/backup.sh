@@ -34,6 +34,21 @@ send_email() {
     fi
 }
 
+# Función para crear el directorio de backup si no existe
+create_backup_directory() {
+    if [ ! -d "$BACKUP_DIR_DB" ]; then
+        echo "\e[31m$(date +'%d %B %Y, %H:%M:%S') Directorio $BACKUP_DIR_DB No existe! Creando...\e[0m"
+        mkdir -p "$BACKUP_DIR_DB"
+        if [ $? -ne 0 ]; then
+            error_exit "No se pudo crear el directorio de backup"
+        fi
+        echo "\e[32m$(date +'%d %B %Y, %H:%M:%S') Directorio creado: $BACKUP_DIR_DB\e[0m"
+    else
+        echo "\e[32m$(date +'%d %B %Y, %H:%M:%S') Directorio $BACKUP_DIR_DB ya existe.\e[0m"
+    fi
+}
+
+
 
 # Función para generar el dump de MySQL
 backup_mysql() {
@@ -55,6 +70,7 @@ compress_backup() {
     rm -r $BACKUP_CLIENT._BKP_.$BACKUP_DATE.sql
     echo "\e[32m$(date +'%d %B %Y, %H:%M:%S') Paso 2: Completado!\e[0m"
 }
+
 
 # Función para mover el backup a la carpeta local
 move_local_backup() {
@@ -112,6 +128,7 @@ echo "--------------------------------------------------------------------------
 # Ejecución de funciones
 backup_mysql
 compress_backup
+create_backup_directory
 move_local_backup
 copy_to_vps
 clean_remote_backups
