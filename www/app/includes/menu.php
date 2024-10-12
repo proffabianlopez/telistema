@@ -40,6 +40,8 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
             <ul class="nav nav-second-level collapse">
                 <li><a href="../crudorders/order.php">Órdenes Asignadas</a></li>
                 <li><a href="../crudorders/reportsOrders.php">Reportes </a></li>
+                <li><a href="../crudorders/historyOrders.php">Historial </a></li>
+
             </ul>
         </li>
         <li class=" <?php if (PAGE == 'Usuarios' || PAGE == 'Clientes' || PAGE == 'Proveedores') {
