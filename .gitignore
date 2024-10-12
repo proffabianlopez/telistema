@@ -1,12 +1,12 @@
+www/app/img/*
+/database_dump/*
+/Querys/*
+/data
 .config.php
 .querys.php
 .vscode/
-/data
-/Querys
 .env
 *.yml
 *.sql
-database_dump/
 *.zip
-www/app/img/*
 *.jpg
