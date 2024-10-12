@@ -102,7 +102,6 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
             <a href="#"><i class="bi bi-receipt"></i><span class="nav-label">Órdenes Asignadas</span><span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
                 <li><a href="../../Technic/orders/ordersTechnic.php">Órdenes Asignadas</a></li>
-                <li><a href="../../Technic/orders/reportsOrders.php">Reportes </a></li>
                 <li><a href="../../Technic/orders/historyOrders.php">Historial </a></li>
             </ul>
         </li>
