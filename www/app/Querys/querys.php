@@ -441,12 +441,14 @@ define('SQL_SELECT_PRIORITYS_ORDERS', '
 define('SQL_SELECT_TECNS_ORDER_BY_ID', '
     SELECT *
     FROM users
-    WHERE id_user = ?');
+    WHERE id_user = ? 
+    AND id_state_user != 2');
 
 define('SQL_SELECT_TECNS_ORDERS', '
     SELECT *
     FROM users
-    WHERE id_rol = 2');
+    WHERE id_rol = 2
+    AND id_state_user != 2');
 
 define('SQL_SELECT_CLIENTS_ORDER_BY_ID', '
     SELECT *
@@ -790,13 +792,6 @@ define(
 );
 
 
-define(
-    'SQL_UPDATE_STOCK','
-        UPDATE materials
-        SET stock = stock - ?
-        WHERE id_material = ?
-        AND stock >= ?;'
-);
 
 /////////////////////////////////////////////////////////////////////////////////////
 // orders_dashboard

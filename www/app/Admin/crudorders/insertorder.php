@@ -27,9 +27,9 @@ include('../configsmtp/generate_config.php');
 
 
 
-if (isset($_GET['id_client'])) {
-    $id_client = $_GET['id_client'];
-}
+// if (isset($_GET['id_client'])) {
+//     $id_client = $_GET['id_client'];
+// }
 //     $id_client = $_SESSION['id_client'];
 //     if (isset($_POST['reqsubmit'])) {
 //         if (
@@ -119,18 +119,6 @@ if (isset($_GET['id_client'])) {
                                         <select class="form-control validate-field select reset" name="id_priority" id="id_priority">
                                             <option value="" selected></option>
                                             <?php
-                                            $priority = $row['id_priority'];
-                                            $stmt = $conn->prepare(SQL_SELECT_PRIORITYS_ORDER_BY_ID);
-                                            $stmt->bind_param("i", $priority);
-                                            $stmt->execute();
-                                            $result = $stmt->get_result();
-                                            $id_priority = null;
-
-                                            if ($result->num_rows > 0) {
-                                                $row_state = $result->fetch_assoc();
-                                                $id_priority = $row_state["id_priority"];
-                                            }
-
                                             $stmt = $conn->prepare(SQL_SELECT_PRIORITYS_ORDERS);
                                             $stmt->execute();
                                             $rows = $stmt->get_result();
@@ -149,18 +137,6 @@ if (isset($_GET['id_client'])) {
                                         <select name="technic_id" id="technic_id" class="form-control validate-field select reset">
                                         <option value=""></option>
                                             <?php
-                                            $user = $row['id_user'];
-                                            $stmt = $conn->prepare(SQL_SELECT_TECNS_ORDER_BY_ID);
-                                            $stmt->bind_param("i", $user);
-                                            $stmt->execute();
-                                            $result = $stmt->get_result();
-
-                                            if ($result->num_rows > 0) {
-                                                $row_user = $result->fetch_assoc();
-                                                $technic_id = $row_user["id_user"];
-                                                $name_technic = $row_user["name_user"];
-                                            }
-
                                             $stmt = $conn->prepare(SQL_SELECT_TECNS_ORDERS);
                                             $stmt->execute();
                                             $rows = $stmt->get_result();
@@ -187,19 +163,6 @@ if (isset($_GET['id_client'])) {
                                             <select name="id_type_work" id="id_type_work" class="form-control validate-field select reset">
                                                 <option value=""> </option>
                                                 <?php
-                                                $type_work = $row['id_type_work'];
-                                                $stmt = $conn->prepare(SQL_SELECT_TYPES_WORKS_ORDER_BY_ID);
-                                                $stmt->bind_param("i", $type_work);
-                                                $stmt->execute();
-                                                $result = $stmt->get_result();
-                                                if ($result->num_rows > 0) {
-                                                    $row_type_work = $result->fetch_assoc();
-                                                    $id_priority = $row_type_work["id_type_work"];
-                                                    $name_type_work = $row_type_work["type_work"];
-                                                } else {
-                                                    $id_priority = 1;
-                                                }
-
                                                 $stmt = $conn->prepare(SQL_SELECT_TYPES_WORKS_ORDERS);
                                                 $stmt->execute();
                                                 $rows = $stmt->get_result();
