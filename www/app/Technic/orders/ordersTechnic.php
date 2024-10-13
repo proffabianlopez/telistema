@@ -43,9 +43,6 @@ include('../../Querys/querys.php');
 include('../../includes/header.php');
 
 
-
-
-
 ?>
 
 
@@ -120,17 +117,7 @@ include('../../includes/header.php');
 
       <div class="wrapper wrapper-content animated fadeInRight">
 
-  <div class="row">
-
-    <div class="col-md-12 text-left">
-
-      <button id="show-urgent" class="btn btn-danger">Urgente</button>
-
-      <button id="show-normal" class="btn btn-primary">Normal</button>
-
-    </div>
-
-  </div>
+  
 
   <br>
 
@@ -170,11 +157,33 @@ include('../../includes/header.php');
 
         }
 
+        // Ordeno según la prioridad de las órdenes
+        function orderByPriority($orders) {
 
+          $orderedOrders = array();
+
+          foreach ($orders as $order) {
+
+              if($order['priority'] === 'Urgente') {
+
+                  array_unshift($orderedOrders, $order); // Las paso al principio del array
+
+              } else {
+
+                  $orderedOrders[] = $order; // sino van al final del array
+
+              }
+
+          }
+          return $orderedOrders;
+
+      } 
 
         // Función para mostrar órdenes
 
         function displayOrders($orders, $token) {
+
+          $orders = orderByPriority($orders); 
 
           foreach ($orders as $row) {
 
@@ -186,15 +195,10 @@ include('../../includes/header.php');
 
             $priorityClass = ($priority == 'Urgente') ? 'style="background-color: red;"' : '';
 
-
-
-            // Clases para filtrar
-
-            $orderClass = ($priority == 'Urgente') ? 'urgent-order' : 'normal-order';
-
+            
     ?>
 
-            <div class="col-md-3 order-box <?php echo $orderClass; ?>">
+            <div class="col-md-3 order-box">
 
               <div class="ibox">
 
