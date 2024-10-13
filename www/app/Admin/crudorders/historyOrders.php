@@ -54,7 +54,7 @@ include('../../includes/header.php');
                         <a href="../dashboard/dashboard.php">Inicio</a>
                     </li>
                     <li>
-                        <a href="ordersAdmin.php">Ordenes de trabajo</a>
+                        <a href="order.php">Ordenes de trabajo</a>
                     </li>
                     <li class="active">
                         <strong>Historial de Ordenes</strong>
@@ -82,48 +82,44 @@ include('../../includes/header.php');
                         <div class="table-responsive">
                             <?php
                                 if (isset($_SESSION['user_id'])) {
-                                    $id_admin = $_SESSION['user_id'];
-                                    $stmt = $conn->prepare(SQL_SELECT_ORDERS_TECHNIC);
-                                    if ($stmt === false) {
-                                    die('Error en la preparación de la consulta: ' . $conn->error);
-                                    }
-                                    $stmt->bind_param("i", $id_admin);
-                                    $stmt->execute();
-                                    $result = $stmt->get_result();
-                                    if ($result->num_rows > 0) {
-                                        echo ' <table class="table table-striped table-bordered table-hover dataTables-example" >
-                                                    <thead>
-                                                        <tr>
-                                                            <th data-toggle="true">N° de Orden</th>
-                                                            <th data-hide="all">Cliente</th>
-                                                            <th data-toggle="true">Fecha</th>
-                                                            <th data-toggle="true">Descripción</th>
-                                                            <th data-hide="all">Dirección</th>
-                                                            <th>Estado</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        ';
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        $order_datetime = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date']);
-                                                            $order_datetime_formatted = $order_datetime->format('d/m/Y H:i');
-                                                            $floor = isset($row["floor"]) && $row["floor"] !== '' ? $row["floor"] : '-';
-                                                            $departament = isset($row["departament"]) && $row["departament"] !== '' ? $row["departament"] : '-';
-                                                        
-                                                            echo '<tr>';
-                                                            echo '<td>' . $row["id_order"] . '</td>';
-                                                            echo '<td>' . $row["client_name"] . ' ' . $row['client_lastname'] . '</td>';
-                                                            echo '<td>' . $order_datetime_formatted . '</td>';
-                                                            echo '<td>' . $row["order_description"] . '</td>';
-                                                            echo '<td>' . $row["address"] . ' ' . $row["height"] . '</td>';
-                                                            echo '<td>'  . $row["state_order"] .  '</td>';
-                                                        }
-                                                        echo '</tbody>
-                                                    </table>';
-                                                }
-                                    }else {
-                                        echo '<div class="col-md-12"><p>No hay órdenes de trabajo disponibles.</p></div>';
-                                }
+                                  $stmt = $conn->prepare(SQL_ALL_ORDERS_MONTH);
+                                  if ($stmt === false) {
+                                      die('Error en la preparación de la consulta: ' . $conn->error);
+                                  }
+                                  
+                                  // Ejecuta la consulta sin parámetros
+                                  if (!$stmt->execute()) {
+                                      die('Error en la ejecución de la consulta: ' . $stmt->error);
+                                  }
+                                  
+                                  $result = $stmt->get_result();
+                                  if ($result->num_rows > 0) {
+                                      echo '<table class="table table-striped table-bordered table-hover dataTables-example">';
+                                      echo '<thead><tr><th>N° de Orden</th><th>Cliente</th><th>Fecha</th><th>Descripción</th><th>Dirección</th><th>Estado</th><th>Tecnico</th></tr></thead>';
+                                      echo '<tbody>';
+                                      
+                                      while ($row = $result->fetch_assoc()) {
+                                          $order_datetime = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date']);
+                                          $order_datetime_formatted = $order_datetime->format('d/m/Y H:i');
+                                          $floor = $row["floor"] ? $row["floor"] : '-';
+                                          $departament = $row["departament"] ? $row["departament"] : '-';
+                                          
+                                          echo '<tr>';
+                                          echo '<td>' . $row["id_order"] . '</td>';
+                                          echo '<td>' . $row["client_name"] . ' ' . $row['client_lastname'] . '</td>';
+                                          echo '<td>' . $order_datetime_formatted . '</td>';
+                                          echo '<td>' . $row["order_description"] . '</td>';
+                                          echo '<td>' . $row["address"] . ' ' . $row["height"] . '</td>';
+                                          echo '<td>' . $row["state_order"] . '</td>';
+                                          echo '<td>' . $row["name_user"] . ' ' . $row["surname_user"] . '</td>';
+                                          echo '</tr>';
+                                      }
+                                      
+                                      echo '</tbody></table>';
+                                  } else {
+                                      echo '<div class="col-md-12"><p>No hay órdenes de trabajo disponibles.</p></div>';
+                                  }
+                              }
                             ?>
                         </div>
                     </div>

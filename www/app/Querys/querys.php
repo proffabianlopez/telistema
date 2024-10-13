@@ -690,6 +690,40 @@ define('SQL_SELECT_ORDERS_TECHNIC', '
     ORDER BY 
         o.id_order DESC
 ');
+// Traigo todas las ordenes del último mes, contando el actual.
+define('SQL_ALL_ORDERS_MONTH', '
+    SELECT 
+    o.id_order, 
+    o.order_date,
+    o.order_description,
+    o.address, 
+    o.height,
+    o.floor, 
+    o.departament,
+    o.id_client,
+    p.priority,
+    so.state_order,
+    u.name_user,
+    u.surname_user,
+    cl.client_name,
+    cl.client_lastname
+FROM 
+    orders o
+JOIN 
+    prioritys p ON o.id_priority = p.id_priority
+LEFT JOIN 
+    states_orders so ON o.id_state_order = so.id_state_order
+LEFT JOIN 
+    users u ON o.technic_id = u.id_user
+LEFT JOIN
+    clients cl ON o.id_client = cl.id_client
+WHERE o.order_date >= CURDATE() - INTERVAL 30 DAY
+    AND o.order_date < CURDATE() + INTERVAL 1 DAY
+
+
+
+');
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //Orders Tecnic
