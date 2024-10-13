@@ -728,38 +728,45 @@ WHERE o.order_date >= CURDATE() - INTERVAL 30 DAY
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //Orders Tecnic
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-define('SQL_ORDER_BY_ID_TEC', '
+
+// Traigo las ordenes para el tecnico de los ultimos 5 dias.
+
+define('SQL_ORDER_BY_ID_TEC', ' 
     SELECT 
-        o.id_order, 
-        o.order_date,
-        o.order_description,
-        o.address, 
-        o.height,
-        o.floor, 
-        o.departament,
-        o.id_client, 
-        p.priority,
-        so.state_order,
-        u.name_user,
-        u.surname_user,
-        cl.client_name,
-        cl.client_lastname
-    FROM 
-        orders o
-    JOIN 
-        prioritys p ON o.id_priority = p.id_priority
-    LEFT JOIN 
-        states_orders so ON o.id_state_order = so.id_state_order
-    LEFT JOIN 
-        users u ON o.technic_id = u.id_user
-    LEFT JOIN
-        clients cl ON o.id_client = cl.id_client
-    WHERE 
-        o.technic_id = ?
-    AND 
-        o.id_state_order NOT IN (4, 5)
-    AND 
-        o.order_date >= NOW() - INTERVAL 1 DAY
+    o.id_order, 
+    o.order_date,
+    o.order_description,
+    o.address, 
+    o.height,
+    o.floor, 
+    o.departament,
+    o.id_client, 
+    p.priority,
+    so.state_order,
+    u.name_user,
+    u.surname_user,
+    cl.client_name,
+    cl.client_lastname
+FROM 
+    orders o
+JOIN 
+    prioritys p ON o.id_priority = p.id_priority
+LEFT JOIN 
+    states_orders so ON o.id_state_order = so.id_state_order
+LEFT JOIN 
+    users u ON o.technic_id = u.id_user
+LEFT JOIN 
+    clients cl ON o.id_client = cl.id_client
+WHERE 
+    o.technic_id = ?
+AND 
+    o.id_state_order NOT IN (4, 5)
+AND 
+    o.order_date >= NOW() - INTERVAL 5 DAY
+ORDER BY 
+    o.order_date DESC
+LIMIT 25;
+
 ');
 
 
