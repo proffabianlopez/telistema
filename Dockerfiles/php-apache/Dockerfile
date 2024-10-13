@@ -17,4 +17,8 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
 
 RUN a2enmod rewrite
 
+# Añadir configuraciones personalizadas de PHP
+RUN echo "upload_max_filesize = 10M" > /usr/local/etc/php/conf.d/uploads.ini && \
+    echo "post_max_size = 20M" >> /usr/local/etc/php/conf.d/uploads.ini
+
 LABEL description="PHP + Apache + PDO"
