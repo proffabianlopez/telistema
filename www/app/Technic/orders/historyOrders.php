@@ -84,39 +84,32 @@ include('../../includes/header.php');
                                     $stmt->bind_param("i", $id_technic);
                                     $stmt->execute();
                                     $result = $stmt->get_result();
+
                                     if ($result->num_rows > 0) {
-                                        echo ' <table class="table table-striped table-bordered table-hover dataTables-example" >
-                                                    <thead>
-                                                        <tr>
-                                                            <th data-toggle="true">Órden</th>
-                                                            <th data-hide="all">Cliente</th>
-                                                            <th data-toggle="true">Fecha</th>
-                                                            <th data-toggle="true">Descripción</th>
-                                                            <th data-hide="all">Dirección</th>
-                                                            <th>Estado</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        ';
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        $order_datetime = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date']);
-                                                            $order_datetime_formatted = $order_datetime->format('d/m/Y H:i');
-                                                            $floor = isset($row["floor"]) && $row["floor"] !== '' ? $row["floor"] : '-';
-                                                            $departament = isset($row["departament"]) && $row["departament"] !== '' ? $row["departament"] : '-';
-                                                        
-                                                            echo '<tr>';
-                                                            echo '<td>' . $row["id_order"] . '</td>';
-                                                            echo '<td>' . $row["client_name"] . ' ' . $row['client_lastname'] . '</td>';
-                                                            echo '<td>' . $order_datetime_formatted . '</td>';
-                                                            echo '<td>' . $row["order_description"] . '</td>';
-                                                            echo '<td>' . $row["address"] . ' ' . $row["height"] . '</td>';
-                                                            echo '<td>'  . $row["state_order"] .  '</td>';
-                                                        }
-                                                        echo '</tbody>
-                                                    </table>';
-                                                }
-                                    }else {
+                                        echo '<table class="table table-striped table-bordered table-hover dataTables-example">';
+                                        echo '<thead><tr><th>Cliente</th><th>Fecha</th><th>Descripción</th><th>Dirección</th><th>Estado</th></tr></thead>';
+                                        echo '<tbody>';
+                                        
+                                        while ($row = $result->fetch_assoc()) {
+                                            $order_datetime = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date']);
+                                            $order_datetime_formatted = $order_datetime->format('d/m/Y H:i');
+                                            $floor = $row["floor"] ? $row["floor"] : '-';
+                                            $departament = $row["departament"] ? $row["departament"] : '-';
+                                            
+                                            echo '<tr>';
+                                            
+                                            echo '<td>' . $row["client_name"] . ' ' . $row['client_lastname'] . '</td>';
+                                            echo '<td>' . $order_datetime_formatted . '</td>';
+                                            echo '<td>' . $row["order_description"] . '</td>';
+                                            echo '<td>' . $row["address"] . ' ' . $row["height"] . '</td>';
+                                            echo '<td>' . $row["state_order"] . '</td>';
+                                            echo '</tr>';
+                                        }
+                                        
+                                        echo '</tbody></table>';
+                                    } else {
                                         echo '<div class="col-md-12"><p>No hay órdenes de trabajo disponibles.</p></div>';
+                                    }
                                 }
                             ?>
                         </div>
