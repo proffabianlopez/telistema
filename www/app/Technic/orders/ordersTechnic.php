@@ -123,7 +123,7 @@ include('../../includes/header.php');
                                     <span class="product-price" style="<?php echo $priorityBackgroundStyle; ?>">
                                         <?php echo strtoupper($priority); ?>
                                     </span>
-                                    <strong>N° De Circuito: <?php echo $row["circuit_number"];?></strong>
+                                    <strong>N° De Circuito: <?php echo $counter;?></strong>
                                     <div class="small m-t-xs">
                                         <strong>Fecha: </strong><?php echo $order_datetime; ?><br>
                                         <strong>Dirección: </strong><?php echo $row["address"] . " " . $row["height"]; ?><br>
