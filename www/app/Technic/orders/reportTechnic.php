@@ -194,25 +194,7 @@ if (isset($_POST['id'])) {
             addRemoveMaterialEvent(row);
         });
 
-        // Validar el formulario antes de enviarlo
-        document.getElementById('change-editordertec-form').addEventListener('submit', function(event) {
-            let valid = true;
-            document.querySelectorAll('select[name="materials[]"]').forEach(function(select) {
-                if (select.value === '') {
-                    valid = false;
-                    alert('Debe seleccionar un material');
-                }
-            });
-            document.querySelectorAll('input[name="quantities[]"]').forEach(function(input) {
-                if (input.value === '' || input.value <= 0) {
-                    valid = false;
-                    alert('Debe ingresar una cantidad válida para cada material');
-                }
-            });
-            if (!valid) {
-                event.preventDefault(); // Evita el envío si no es válido
-            }
-        });
+       
     </script>
 
 </body>
