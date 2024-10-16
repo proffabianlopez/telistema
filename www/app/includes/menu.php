@@ -87,15 +87,6 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
             </a>
         </li>
 
-        <li class=" <?php if (PAGE == 'Technic Profile') {
-                        echo 'active';
-                    } ?>">
-            <a href="../../Technic/profiletechnical/TechnicProfile.php">
-                <i class="bi bi-person-circle"></i></i><span class="nav-label">
-                    Perfil <span class="sr-only">(current)</span></span>
-            </a>
-        </li>
-
         <li class=" <?php if (PAGE == 'Ordenes') {
                         echo 'active';
                     } ?>">
@@ -105,7 +96,15 @@ if ($_SESSION['is_login'] && $_SESSION['state_user'] == 'activo') {
                 <li><a href="../../Technic/orders/historyOrders.php">Historial </a></li>
             </ul>
         </li>
-
+        
+        <li class=" <?php if (PAGE == 'Technic Profile') {
+                        echo 'active';
+                    } ?>">
+            <a href="../../Technic/profiletechnical/TechnicProfile.php">
+                <i class="bi bi-person-circle"></i></i><span class="nav-label">
+                    Perfil <span class="sr-only">(current)</span></span>
+            </a>
+        </li>
     <?php } ?>
 
     <li>
