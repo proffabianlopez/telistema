@@ -794,40 +794,49 @@ define('SQL_SELECT_STATE_ORDERS', '
         WHERE 1');
 
 
-define('SQL_SELECT_ORDERS_TECHNIC_ADMIN', '
-    SELECT 
-        o.id_order, 
-        o.order_date, 
-        o.order_description,
-        o.address, 
-        o.height,
-        o.floor, 
-        o.departament,
-        o.report_technic,
-        o.id_client, 
-        p.priority,
-        so.state_order,
-        u.name_user,
-        u.surname_user,
-        cl.client_name,
-        cl.client_lastname,
-        i.name_image,
-        i.id_order
-    FROM 
-        orders o
-    INNER JOIN 
-        prioritys p ON o.id_priority = p.id_priority
-    LEFT JOIN 
-        states_orders so ON o.id_state_order = so.id_state_order
-    LEFT JOIN 
-        users u ON o.technic_id = u.id_user
-    LEFT JOIN
-        clients cl ON o.id_client = cl.id_client
-    LEFT JOIN 
-        images i ON o.id_order = i.id_order
-    ORDER BY 
-        o.id_order DESC
-');
+        define('SQL_SELECT_ORDERS_TECHNIC_ADMIN', '
+        SELECT 
+            o.id_order, 
+            o.order_date, 
+            o.order_description,
+            o.address, 
+            o.height,
+            o.floor, 
+            o.departament,
+            o.report_technic,
+            o.order_date_finalized,
+            o.circuit_number,
+            t_w.type_work,
+            o.id_client, 
+            p.priority,
+            so.state_order,
+            u.name_user,
+            u.surname_user,
+            cl.client_name,
+            cl.client_lastname,
+            i.name_image,
+            i.id_order
+        FROM 
+            orders o
+        INNER JOIN 
+            prioritys p ON o.id_priority = p.id_priority
+        LEFT JOIN 
+            states_orders so ON o.id_state_order = so.id_state_order
+        LEFT JOIN 
+            users u ON o.technic_id = u.id_user
+        LEFT JOIN
+            clients cl ON o.id_client = cl.id_client
+        LEFT JOIN 
+            images i ON o.id_order = i.id_order
+        LEFT JOIN
+            types_works t_w ON o.id_type_work = t_w.id_type_work
+        WHERE 
+            i.name_image IS NOT NULL 
+            AND o.report_technic IS NOT NULL 
+            AND o.order_date IS NOT NULL
+        ORDER BY 
+            o.id_order DESC
+    ');    
 
 define(
         'SQL_SELECT_IMG_TECHNIC',
