@@ -107,7 +107,9 @@ if (isset($_POST['id'])) {
                                 </div>
                             </div>
                             <div class="modal-footer">
+                                <button type="button" class="btn btn-white reload" data-dismiss="modal">Cerrar</button>
                             </div>
+
                             <div class="text-center" id="response-message"></div>
                         </div>
                     </form>
