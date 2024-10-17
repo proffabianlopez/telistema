@@ -69,8 +69,11 @@ if(!file_exists("../../img/avatars/" . $row['avatar_user']) || is_null($row['ava
                 <div class="col-lg-10">
                     <h2>Mi Perfil</h2>
                         <ol class="breadcrumb">
+                            <li>
+                                <a href="../dashboard/dashboard.php">Inicio</strong></a>
+                            </li>
                             <li class="active">
-                                <a href="AdminProfile.php"><strong>Perfil</strong></a>
+                                <strong>Perfil</strong>
                             </li>
                             <li>
                                 <a href="../configsmtp/configEmailContact.php">Email de Contacto</a>

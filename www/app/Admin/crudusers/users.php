@@ -46,8 +46,11 @@ include ('../../Querys/querys.php');
                 <div class="col-lg-10">
                     <h2>Usuarios</h2>
                     <ol class="breadcrumb">
+                        <li>
+                            <a href="../dashboard/dashboard.php">Inicio</strong></a>
+                        </li>
                         <li class="active">
-                            <a href="users.php"><strong>Usuarios</strong></a>
+                            <strong>Usuarios</strong>
                         </li>
                         <li>
                             <a href="../crudclients/clients.php">Clientes</a>

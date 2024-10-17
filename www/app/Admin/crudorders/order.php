@@ -18,16 +18,16 @@ $token = $_SESSION['token'];
 
 define('TITLE', 'Ordenes');
 define('PAGE', 'Ordenes Admin');
-include ('../../includes/header.php');
-include ('../../dbConnection.php');
-include ('../../Querys/querys.php');
+include('../../includes/header.php');
+include('../../dbConnection.php');
+include('../../Querys/querys.php');
 ?>
 
 <body>
     <div id="wrapper">
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="sidebar-collapse">
-                <?php include ('../../includes/menu.php') ?>
+                <?php include('../../includes/menu.php') ?>
             </div>
         </nav>
         <div id="page-wrapper" class="gray-bg">
@@ -42,11 +42,17 @@ include ('../../Querys/querys.php');
                 <div class="col-lg-10">
                     <h2>Órdenes de trabajo</h2>
                     <ol class="breadcrumb">
+                        <li>
+                            <a href="../dashboard/dashboard.php">Inicio</strong></a>
+                        </li>
                         <li class="active">
-                            <a href="order.php"><strong>Órdenes Asignadas</strong></a>
+                            <strong>Órdenes Asignadas</strong>
                         </li>
                         <li>
                             <a href="reportsOrders.php">Reportes</a>
+                        </li>
+                        <li>
+                            <a href="historyOrders.php">Historial de Órdenes</a>
                         </li>
                     </ol>
                 </div>
@@ -93,11 +99,11 @@ include ('../../Querys/querys.php');
                                     while ($row = $result->fetch_assoc()) {
                                         $order_datetime = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date']);
                                         $order_datetime_formatted = $order_datetime->format('d/m/Y');
-                                        
+
                                         // Si son null, coloca un "-"
                                         $floor = isset($row["floor"]) && $row["floor"] !== '' ? $row["floor"] : '-';
                                         $departament = isset($row["departament"]) && $row["departament"] !== '' ? $row["departament"] : '-';
-                                    
+
                                         echo '<tr>';
                                         echo '<td>' . $row["id_order"] . '</td>';
                                         echo '<td>' . $row["circuit_number"] . '</td>';
@@ -159,25 +165,26 @@ include ('../../Querys/querys.php');
 
     <div id="edit-form-container" style="display: none;"></div>
     <?php
-    include ('../../includes/footer.php');
+    include('../../includes/footer.php');
     ?>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('.footable').footable();
             $('.footable2').footable();
         });
+
         function openNewOrderModal() {
             // Realiza una solicitud AJAX para obtener el formulario de edición
             $.ajax({
                 url: "insertorder.php?token=<?php echo $token; ?>", // Ruta al archivo de inserción de orden
                 type: "GET",
-                success: function (response) {
+                success: function(response) {
                     // Muestra el formulario de inserción en el contenedor
                     $("#edit-form-container").html(response).slideDown();
                     // Abre el modal
                     $("#myModal6").modal("show");
                 },
-                error: function () {
+                error: function() {
                     alert("Error al cargar el formulario.");
                 }
             });

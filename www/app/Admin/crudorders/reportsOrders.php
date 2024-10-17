@@ -44,10 +44,16 @@ include('../../includes/header.php');
                 <h2>Reportes de Órdenes</h2>
                 <ol class="breadcrumb">
                     <li>
+                        <a href="../dashboard/dashboard.php">Inicio</strong></a>
+                    </li>
+                    <li>
                         <a href="order.php">Órdenes Asignadas</a>
                     </li>
                     <li class="active">
-                        <a href="reportsOrders.php"><strong>Reportes</strong></a>
+                        <strong>Reportes</strong>
+                    </li>
+                    <li>
+                        <a href="historyOrders.php">Historial de Ordenes</a>
                     </li>
                 </ol>
             </div>

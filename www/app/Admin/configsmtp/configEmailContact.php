@@ -121,10 +121,13 @@ if (isset($_REQUEST['emailupdate'])) {
                         Actualización de Configuración de Email</h2>
                         <ol class="breadcrumb">
                             <li>
+                                <a href="../dashboard/dashboard.php">Inicio</strong></a>
+                            </li>
+                            <li>
                                 <a href="../profileAdmin/AdminProfile.php">Perfil</a>
                             </li>
                             <li  class="active">
-                                <a href="configEmailContact.php"><strong>Email de Contacto</strong></a>
+                                <strong>Email de Contacto</strong>
                             </li>
                         </ol>
                 </div>

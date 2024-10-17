@@ -44,10 +44,13 @@ include ('../../Querys/querys.php');
                     <h2>Stock</h2>
                     <ol class="breadcrumb">
                         <li>
+                            <a href="../dashboard/dashboard.php">Inicio</strong></a>
+                        </li>
+                        <li>
                             <a href="../crudbuys/buys.php">Compras</a>
                         </li>
                         <li class="active">
-                            <a href="materials.php"><strong>Materiales</strong></a>
+                            <strong>Materiales</strong>
                         </li>
                     </ol>
                 </div>

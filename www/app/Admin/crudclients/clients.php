@@ -49,10 +49,13 @@ include('../../Querys/querys.php');
                     <h2>Clientes</h2>
                         <ol class="breadcrumb">
                             <li>
+                                <a href="../dashboard/dashboard.php">Inicio</strong></a>
+                            </li>
+                            <li>
                                 <a href="../crudusers/users.php">Usuarios</a>
                             </li>
                             <li class="active">
-                                <a href="clients.php"><strong>Clientes</strong></a>
+                                <strong>Clientes</strong>
                             </li>
                             <li>
                                 <a href="../crudsuppliers/suppliers.php">Proveedores</a>
