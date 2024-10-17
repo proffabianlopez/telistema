@@ -63,20 +63,87 @@ include('../../includes/header.php');
             </li>
           </ol>
         </div>
-      </div>
-      <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-              <div class="ibox-title">
-                <h5>Historial de Ordenes de trabajo</h5>
-                <div class="ibox-tools">
-                  <a class="collapse-link">
-                    <i class="fa fa-chevron-up"></i>
-                  </a>
-                  <a href="ordersAdmin.php">
-                    <i class="fa fa-times"></i>
-                  </a>
+  </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Historial de Ordenes de trabajo</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a  href="ordersAdmin.php">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <?php
+                                if (isset($_SESSION['user_id'])) {
+                                  $stmt = $conn->prepare(SQL_ALL_ORDERS_MONTH);
+                                  if ($stmt === false) {
+                                      die('Error en la preparación de la consulta: ' . $conn->error);
+                                  }
+                                  
+                                  // Ejecuta la consulta sin parámetros
+                                  if (!$stmt->execute()) {
+                                      die('Error en la ejecución de la consulta: ' . $stmt->error);
+                                  }
+                                  
+                                  $result = $stmt->get_result();
+                                  if ($result->num_rows > 0) {
+                                      echo '<table class="table table-striped table-bordered table-hover dataTables-example">';
+                                      echo '<thead>
+                                                <tr>
+                                                    <th style="width: 50px;">Órden</th>
+                                                    <th>Cliente</th>
+                                                    <th>Fechas</th>
+                                                    <th style="width: 70px;">Trabajo</th>
+                                                    <th>Dirección</th>
+                                                    <th style="width: 70px;">Estado</th>
+                                                    <th>Tecnico</th>
+                                                </tr>
+                                              </thead>';
+                                      echo '<tbody>';
+                                      
+                                        while ($row = $result->fetch_assoc()) {
+                                          $order_date = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date']);
+                                          $order_date_finalized = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date_finalized']);
+                                          
+                                          // Verificar si las fechas son válidas antes de aplicar el formato
+                                          if ($order_date) {
+                                              $order_datetime_formatted = $order_date->format('d/m/Y');
+                                          } else {
+                                              $order_datetime_formatted = 'Fecha inválida'; // O cualquier valor predeterminado
+                                          }
+                                      
+                                          if ($order_date_finalized) {
+                                              $order_datetime_formatted2 = $order_date_finalized->format('d/m/Y');
+                                          } else {
+                                              $order_datetime_formatted2 = 'En proceso'; // O cualquier valor predeterminado
+                                          }
+                                          echo '<tr>';
+                                          echo '<td>' . $row["id_order"] . '</td>';
+                                          echo '<td>' . $row["client_name"] . ' ' . $row['client_lastname'] . '</td>';
+                                          echo '<td>' . $order_datetime_formatted . " - " . $order_datetime_formatted2 .'</td>';
+                                          echo '<td>' . $row["type_work"] . '</td>';
+                                          echo '<td>' . $row["address"] . ' ' . $row["height"] . '</td>';
+                                          echo '<td>' . $row["state_order"] . '</td>';
+                                          echo '<td>' . $row["name_user"] . ' ' . $row["surname_user"] . '</td>';
+                                          echo '</tr>';
+                                      }
+                                      
+                                      echo '</tbody></table>';
+                                  } else {
+                                      echo '<div class="col-md-12"><p>No hay órdenes de trabajo disponibles.</p></div>';
+                                  }
+                              }
+                            ?>
+                        </div>
+                    </div>
                 </div>
               </div>
               <div class="ibox-content">

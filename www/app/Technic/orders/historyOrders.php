@@ -87,20 +87,44 @@ include('../../includes/header.php');
 
                                     if ($result->num_rows > 0) {
                                         echo '<table class="table table-striped table-bordered table-hover dataTables-example">';
-                                        echo '<thead><tr><th>Cliente</th><th>Fecha</th><th>Descripción</th><th>Dirección</th><th>Estado</th></tr></thead>';
+                                        echo '<thead>
+                                                  <tr>
+                                                    <th style="width: 50px;">Órder</th>
+                                                    <th>Cliente</th>
+                                                    <th>Fechas</th>
+                                                    <th>Trabajo</th>
+                                                    <th>Descripción</th>
+                                                    <th>Reporte</th>
+                                                    <th>Dirección</th>
+                                                    <th>Estado</th>
+                                                  </tr>
+                                                </thead>';
                                         echo '<tbody>';
                                         
                                         while ($row = $result->fetch_assoc()) {
-                                            $order_datetime = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date']);
-                                            $order_datetime_formatted = $order_datetime->format('d/m/Y H:i');
-                                            $floor = $row["floor"] ? $row["floor"] : '-';
-                                            $departament = $row["departament"] ? $row["departament"] : '-';
+                                          $order_date = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date']);
+                                          $order_date_finalized = DateTime::createFromFormat('Y-m-d H:i:s', $row['order_date_finalized']);
+                                          
+                                          // Verificar si las fechas son válidas antes de aplicar el formato
+                                          if ($order_date) {
+                                              $order_datetime_formatted = $order_date->format('d/m/Y');
+                                          } else {
+                                              $order_datetime_formatted = 'Fecha inválida'; // O cualquier valor predeterminado
+                                          }
+                                      
+                                          if ($order_date_finalized) {
+                                              $order_datetime_formatted2 = $order_date_finalized->format('d/m/Y');
+                                          } else {
+                                              $order_datetime_formatted2 = 'En proceso'; // O cualquier valor predeterminado
+                                          }
                                             
                                             echo '<tr>';
-                                            
+                                            echo '<td>' . $row["id_order"] . '</td>';
                                             echo '<td>' . $row["client_name"] . ' ' . $row['client_lastname'] . '</td>';
-                                            echo '<td>' . $order_datetime_formatted . '</td>';
+                                            echo '<td>' . $order_datetime_formatted . " - " . $order_datetime_formatted2 .'</td>';
+                                            echo '<td>' . $row["type_work"] . '</td>';
                                             echo '<td>' . $row["order_description"] . '</td>';
+                                            echo '<td>' . $row["report_technic"] . '</td>';
                                             echo '<td>' . $row["address"] . ' ' . $row["height"] . '</td>';
                                             echo '<td>' . $row["state_order"] . '</td>';
                                             echo '</tr>';
