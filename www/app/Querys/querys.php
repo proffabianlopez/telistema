@@ -664,6 +664,8 @@ define('SQL_SELECT_ORDERS_TECHNIC', '
         o.floor, 
         o.departament,
         o.report_technic,
+        o.order_date_finalized,
+        t_w.type_work,
         o.id_client, 
         p.priority,
         so.state_order,
@@ -683,8 +685,10 @@ define('SQL_SELECT_ORDERS_TECHNIC', '
         users u ON o.technic_id = u.id_user
     LEFT JOIN
         clients cl ON o.id_client = cl.id_client
-    LEFT JOIN 
+    JOIN 
         images i ON o.id_order = i.id_order
+    LEFT JOIN
+        types_works t_w ON o.id_type_work = t_w.id_type_work
     WHERE 
         o.technic_id = ?
     ORDER BY 

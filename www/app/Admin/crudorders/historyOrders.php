@@ -95,7 +95,7 @@ include('../../includes/header.php');
                                       echo '<table class="table table-striped table-bordered table-hover dataTables-example">';
                                       echo '<thead>
                                                 <tr>
-                                                    <th style="width: 50px;">Orden</th>
+                                                    <th style="width: 50px;">Órden</th>
                                                     <th>Cliente</th>
                                                     <th>Fechas</th>
                                                     <th style="width: 70px;">Trabajo</th>
