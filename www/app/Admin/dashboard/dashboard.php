@@ -57,6 +57,20 @@ if ($result->num_rows > 0) {
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-12">
                 <h2>Inicio</h2>
+                <ol class="breadcrumb">
+                        <li class="active">
+                            <strong>Inicio</strong>
+                        </li>
+                        <li>
+                            <a href="../crudorders/order.php">Órdenes de Trabajo</a>
+                        </li>
+                        <li>
+                            <a href="../crudusers/users.php">Miembros</a>
+                        </li>
+                        <li>
+                            <a href="../crudmaterials/materials.php">Tienda</a>
+                        </li>
+                    </ol>
             </div>
         </div>
 

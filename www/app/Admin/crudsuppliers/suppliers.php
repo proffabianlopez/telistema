@@ -50,13 +50,16 @@ include ('../../Querys/querys.php');
                     <h2>Proveedores</h2>
                     <ol class="breadcrumb">
                         <li>
+                            <a href="../dashboard/dashboard.php">Inicio</strong></a>
+                        </li>
+                        <li>
                             <a href="../crudusers/users.php">Usuarios</a>
                         </li>
                         <li>
                             <a href="../crudclients/clients.php">Clientes</a>
                         </li>
                         <li class="active">
-                            <a href="suppliers.php"><strong>Proveedores</strong></a>
+                            <strong>Proveedores</strong>
                         </li>
                     </ol>
                 </div>
