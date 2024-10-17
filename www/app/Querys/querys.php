@@ -700,6 +700,8 @@ define('SQL_ALL_ORDERS_MONTH', '
     o.height,
     o.floor, 
     o.departament,
+    o.order_date_finalized,
+    t_w.type_work,
     o.id_client,
     p.priority,
     so.state_order,
@@ -717,11 +719,10 @@ LEFT JOIN
     users u ON o.technic_id = u.id_user
 LEFT JOIN
     clients cl ON o.id_client = cl.id_client
+LEFT JOIN
+    types_works t_w ON o.id_type_work = t_w.id_type_work
 WHERE o.order_date >= CURDATE() - INTERVAL 30 DAY
     AND o.order_date < CURDATE() + INTERVAL 1 DAY
-
-
-
 ');
 
 
@@ -794,7 +795,7 @@ define('SQL_SELECT_STATE_ORDERS', '
         WHERE 1');
 
 
-        define('SQL_SELECT_ORDERS_TECHNIC_ADMIN', '
+define('SQL_SELECT_ORDERS_TECHNIC_ADMIN', '
         SELECT 
             o.id_order, 
             o.order_date, 
